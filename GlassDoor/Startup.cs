@@ -1,3 +1,4 @@
+using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -27,17 +28,15 @@ namespace GlassDoor
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //***
-            services.AddScoped<JwtHandler>(); 
             //User Manager Service
-            services.AddIdentity<ApplicationUser, IdentityRole>(
-                opt =>
+            services.AddIdentity<ApplicationUser, IdentityRole>(opt =>
                 {
                     opt.Password.RequireNonAlphanumeric = false;
-                }
-                ).AddEntityFrameworkStores<ApplicationDbContext>();
 
-            
+                    opt.Lockout.AllowedForNewUsers = true;
+                    opt.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(2);
+                    opt.Lockout.MaxFailedAccessAttempts = 3;
+                }).AddEntityFrameworkStores<ApplicationDbContext>();
 
             //Adding DB Context with MSSQL
             services.AddDbContext<ApplicationDbContext>(options =>
@@ -69,7 +68,7 @@ namespace GlassDoor
             services.AddControllers();
 
             services.AddScoped<IUnitOfWork, HttpUnitOfWork>();
-
+            services.AddScoped<JwtHandler>();
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>

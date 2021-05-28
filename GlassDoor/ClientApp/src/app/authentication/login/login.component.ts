@@ -3,6 +3,7 @@ import { AuthenticationService } from "../../shared/services/authentication.serv
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { UserForAuthenticationDto } from '../../interfaces/user/user-for-authentication-dto';
+import { EnvironmentUrlService } from "../../shared/services/environment-url.service";
 
 @Component({
   selector: 'app-login',
@@ -15,7 +16,7 @@ export class LoginComponent implements OnInit {
   public showError: boolean;
   private _returnUrl: string;
 
-  constructor(private _authService: AuthenticationService, private _router: Router, private _route: ActivatedRoute) { }
+  constructor(private _authService: AuthenticationService, private _router: Router, private _route: ActivatedRoute, private _envUrl: EnvironmentUrlService) { }
 
   ngOnInit(): void {
     this.loginForm = new FormGroup({
@@ -39,15 +40,16 @@ export class LoginComponent implements OnInit {
     const login = { ...loginFormValue };
     const userForAuth: UserForAuthenticationDto = {
       email: login.username,
-      password: login.password
+      password: login.password,
+      clientURI: `${this._envUrl.urlAddress}/authentication/forgotpassword`,
     }
 
     this._authService.loginUser('api/accounts/login', userForAuth)
       .subscribe(res => {
-          localStorage.setItem("token", res['token']);
-          this._authService.sendAuthStateChangeNotification(res['isAuthSuccessful']);
-          this._router.navigate([this._returnUrl]);
-        },
+        localStorage.setItem("token", res['token']);
+        this._authService.sendAuthStateChangeNotification(res['isAuthSuccessful']);
+        this._router.navigate([this._returnUrl]);
+      },
         (error) => {
           this.errorMessage = error;
           this.showError = true;
