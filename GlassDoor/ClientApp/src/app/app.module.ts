@@ -7,11 +7,15 @@ import { AppComponent } from './app.component';
 import { MenuComponent } from "./menu/menu.component";
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ErrorHandlerService } from "./shared/services/error-handler.service";
+import { HomeComponent } from "./home/home.component";
+import { NotFoundComponent } from "./error-pages/not-found/not-found.component";
 
 @NgModule({
   declarations: [
     AppComponent,
-    MenuComponent
+    MenuComponent,
+    HomeComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,

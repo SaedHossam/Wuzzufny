@@ -1,6 +1,5 @@
-
 import { Router, ActivatedRoute } from '@angular/router';
-import { AuthenticationService } from './../../shared/services/authentication.service';
+import { AuthenticationService } from "../../shared/services/authentication.service";
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { UserForAuthenticationDto } from '../../interfaces/user/user-for-authentication-dto';
@@ -45,13 +44,14 @@ export class LoginComponent implements OnInit {
 
     this._authService.loginUser('api/accounts/login', userForAuth)
       .subscribe(res => {
-        localStorage.setItem("token", res['token']);
-        this._router.navigate([this._returnUrl]);
-      },
+          localStorage.setItem("token", res['token']);
+          this._authService.sendAuthStateChangeNotification(res['isAuthSuccessful']);
+          this._router.navigate([this._returnUrl]);
+        },
         (error) => {
           this.errorMessage = error;
           this.showError = true;
-        })
+        });
   }
 
 }
