@@ -38,7 +38,12 @@ namespace GlassDoor
             //Configuration from AppSettings
             services.Configure<Jwt>(Configuration.GetSection("JWT"));
             //User Manager Service
-            services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddIdentity<ApplicationUser, IdentityRole>(
+                opt =>
+                {
+                    opt.Password.RequireNonAlphanumeric = false;
+                }
+                ).AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddScoped<IUserService, UserService>();
 
             //Adding DB Context with MSSQL
@@ -69,7 +74,15 @@ namespace GlassDoor
                     };
                 });
 
+            services.AddAutoMapper(typeof(Startup));
             services.AddControllers();
+
+            // In production, the Angular files will be served from this directory
+            services.AddSpaStaticFiles(configuration =>
+            {
+                configuration.RootPath = "ClientApp/dist";
+            });
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "GlassDoor", Version = "v1" });
@@ -96,6 +109,23 @@ namespace GlassDoor
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+            });
+
+            app.UseSpa(spa =>
+            {
+                // To learn more about options for serving an Angular SPA from ASP.NET Core,
+                // see https://go.microsoft.com/fwlink/?linkid=864501
+
+                spa.Options.SourcePath = "ClientApp";
+
+                if (env.IsDevelopment())
+                {
+                    // Live reload not working for .net5 and ng11 for now,
+                    // see https://github.com/dotnet/aspnetcore/issues/29478
+                    // spa.UseAngularCliServer(npmScript: "start");
+                    // spa.Options.StartupTimeout = TimeSpan.FromSeconds(180); // Increase the timeout if angular app is taking longer to startup
+                    spa.UseProxyToSpaDevelopmentServer("http://localhost:4200"); // Use this instead to use the angular cli server
+                }
             });
         }
     }

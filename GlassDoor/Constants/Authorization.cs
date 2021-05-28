@@ -17,6 +17,6 @@ namespace GlassDoor.Constants
         public const string default_username = "admin";
         public const string default_email = "admin@glassdoor.com";
         public const string default_password = "Pa$$w0rd.";
-        public const Roles default_role = Roles.Administrator;
+        public const Roles default_role = Roles.Employee;
     }
 }
