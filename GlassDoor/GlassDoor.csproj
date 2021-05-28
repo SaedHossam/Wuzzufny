@@ -34,6 +34,11 @@
 
   <ItemGroup>
     <Folder Include="ClientApp\src\app\interfaces\user\" />
+    <Folder Include="Services\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DAL\DAL.csproj" />
   </ItemGroup>
 
 </Project>

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using GlassDoor.Models;
+using DAL.Models;
 using GlassDoor.ViewModels;
 using Microsoft.AspNetCore.Identity;
 

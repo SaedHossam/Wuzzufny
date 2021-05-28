@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DAL;
 using Microsoft.AspNetCore.Authorization;
 
 namespace GlassDoor.Controllers
@@ -19,10 +20,12 @@ namespace GlassDoor.Controllers
         };
 
         private readonly ILogger<WeatherForecastController> _logger;
+        private IUnitOfWork _unitOfWork;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger, IUnitOfWork unitOfWork)
         {
             _logger = logger;
+            _unitOfWork = unitOfWork;
         }
 
         [HttpGet]

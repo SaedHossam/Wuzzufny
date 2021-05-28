@@ -4,15 +4,13 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace GlassDoor.Models
+namespace GlassDoor.ViewModels
 {
-    public class AddRoleModel
+    public class TokenRequestModel
     {
         [Required]
         public string Email { get; set; }
         [Required]
         public string Password { get; set; }
-        [Required]
-        public string Role { get; set; }
     }
 }

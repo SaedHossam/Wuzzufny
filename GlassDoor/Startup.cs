@@ -12,9 +12,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DAL;
+using DAL.Models;
 using GlassDoor.Contexts;
-using GlassDoor.Models;
-using GlassDoor.Services;
 using GlassDoor.Settings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -44,13 +44,12 @@ namespace GlassDoor
                     opt.Password.RequireNonAlphanumeric = false;
                 }
                 ).AddEntityFrameworkStores<ApplicationDbContext>();
-            services.AddScoped<IUserService, UserService>();
 
             //Adding DB Context with MSSQL
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection"),
-                    b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
+                    b => b.MigrationsAssembly("GlassDoor")));
             //Adding Athentication - JWT
             services.AddAuthentication(options =>
                 {
@@ -76,6 +75,9 @@ namespace GlassDoor
 
             services.AddAutoMapper(typeof(Startup));
             services.AddControllers();
+
+            services.AddScoped<IUnitOfWork, HttpUnitOfWork>();
+
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
