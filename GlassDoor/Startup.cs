@@ -28,7 +28,7 @@ namespace GlassDoor
         public void ConfigureServices(IServiceCollection services)
         {
             //***
-            services.AddScoped<JwtHandler>(); 
+            services.AddScoped<JwtHandler>();
             //User Manager Service
             services.AddIdentity<ApplicationUser, IdentityRole>(
                 opt =>
@@ -37,7 +37,14 @@ namespace GlassDoor
                 }
                 ).AddEntityFrameworkStores<ApplicationDbContext>();
 
-            
+            // Add Google Authentication
+            services.AddAuthentication().AddGoogle("google", opt =>
+            {
+                var googleAuth = Configuration.GetSection("Authentication:Google");
+                opt.ClientId = googleAuth["ClientId"];
+                opt.ClientSecret = googleAuth["ClientSecret"];
+                opt.SignInScheme = IdentityConstants.ExternalScheme;
+            });
 
             //Adding DB Context with MSSQL
             services.AddDbContext<ApplicationDbContext>(options =>
@@ -64,6 +71,7 @@ namespace GlassDoor
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.GetSection("securityKey").Value))
                 };
             });
+
 
             services.AddAutoMapper(typeof(Startup));
             services.AddControllers();

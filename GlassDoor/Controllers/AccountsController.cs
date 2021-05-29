@@ -10,6 +10,7 @@ using GlassDoor.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using GlassDoor.JwtFeatures;
 using System.IdentityModel.Tokens.Jwt;
+using GlassDoor.Constants;
 
 namespace GlassDoor.Controllers
 {
@@ -35,7 +36,7 @@ namespace GlassDoor.Controllers
                 return BadRequest();
 
             var user = _mapper.Map<ApplicationUser>(userForRegistration);
-
+            
             var result = await _userManager.CreateAsync(user, userForRegistration.Password);
             if (!result.Succeeded)
             {
@@ -43,7 +44,8 @@ namespace GlassDoor.Controllers
 
                 return BadRequest(new RegistrationResponseDto { Errors = errors });
             }
-
+            // Add default Role = Employee
+            await _userManager.AddToRoleAsync(user, Authorization.Roles.Employee.ToString());
             return StatusCode(201);
         }
 
@@ -55,12 +57,49 @@ namespace GlassDoor.Controllers
             if (user == null || !await _userManager.CheckPasswordAsync(user, userForAuthentication.Password))
                 return Unauthorized(new AuthResponseDto { ErrorMessage = "Invalid Authentication" });
 
-            var signingCredentials = _jwtHandler.GetSigningCredentials();
-            var claims = _jwtHandler.GetClaims(user);
-            var tokenOptions = _jwtHandler.GenerateTokenOptions(signingCredentials, claims);
-            var token = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
+            var token =await _jwtHandler.GenerateToken(user);
 
             return Ok(new AuthResponseDto { IsAuthSuccessful = true, Token = token });
+        }
+
+        [HttpPost("ExternalLogin")]
+        public async Task<IActionResult> ExternalLogin([FromBody] ExternalAuthDto externalAuth)
+        {
+            var payload = await _jwtHandler.VerifyGoogleToken(externalAuth);
+            if (payload == null)
+                return BadRequest("Invalid External Authentication.");
+
+            var info = new UserLoginInfo(externalAuth.Provider, payload.Subject, externalAuth.Provider);
+
+            var user = await _userManager.FindByLoginAsync(info.LoginProvider, info.ProviderKey);
+            if (user == null)
+            {
+                user = await _userManager.FindByEmailAsync(payload.Email);
+
+                if (user == null)
+                {
+                    user = new ApplicationUser { Email = payload.Email, UserName = payload.Email, FirstName = payload.GivenName, LastName = payload.FamilyName};
+                    await _userManager.CreateAsync(user);
+
+                    //TODO: prepare and send an email for the email confirmation
+
+                    await _userManager.AddToRoleAsync(user, Authorization.Roles.Employee.ToString());
+                    await _userManager.AddLoginAsync(user, info);
+                }
+                else
+                {
+                    await _userManager.AddLoginAsync(user, info);
+                }
+            }
+
+            if (user == null)
+                return BadRequest("Invalid External Authentication.");
+
+            //check for the Locked out account
+
+
+            var token = await _jwtHandler.GenerateToken(user);
+            return Ok(new AuthResponseDto { Token = token, IsAuthSuccessful = true });
         }
     }
 }
