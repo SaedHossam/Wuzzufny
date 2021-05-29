@@ -3,6 +3,8 @@ import { AuthenticationService } from "../../shared/services/authentication.serv
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { UserForAuthenticationDto } from '../../interfaces/user/user-for-authentication-dto';
+import { SocialUser } from 'angularx-social-login';
+import { ExternalAuthDto } from '../../interfaces/external-auth/external-auth-dto';
 
 @Component({
   selector: 'app-login',
@@ -53,5 +55,34 @@ export class LoginComponent implements OnInit {
           this.showError = true;
         });
   }
+
+  public externalLogin = () => {
+    this.showError = false;
+    this._authService.signInWithGoogle()
+      .then(res => {
+        const user: SocialUser = { ...res };
+        console.log(user);
+        const externalAuth: ExternalAuthDto = {
+          provider: user.provider,
+          idToken: user.idToken
+        }
+        this.validateExternalAuth(externalAuth);
+      }, error => console.log(error))
+  }
+
+  private validateExternalAuth(externalAuth: ExternalAuthDto) {
+    this._authService.externalLogin('api/accounts/externallogin', externalAuth)
+      .subscribe(res => {
+        localStorage.setItem("token", res.token);
+        this._authService.sendAuthStateChangeNotification(res.isAuthSuccessful);
+        this._router.navigate([this._returnUrl]);
+      },
+        error => {
+          this.errorMessage = error;
+          this.showError = true;
+          this._authService.signOutExternal();
+        });
+  }
+
 
 }

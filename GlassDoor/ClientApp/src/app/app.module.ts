@@ -10,6 +10,10 @@ import { ErrorHandlerService } from "./shared/services/error-handler.service";
 import { HomeComponent } from "./home/home.component";
 import { NotFoundComponent } from "./error-pages/not-found/not-found.component";
 
+import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
+import { GoogleLoginProvider } from 'angularx-social-login';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -21,13 +25,28 @@ import { NotFoundComponent } from "./error-pages/not-found/not-found.component";
     BrowserModule,
     AppRoutingModule,
     NgbModule,
-    HttpClientModule
+    HttpClientModule,
+    SocialLoginModule 
   ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
       useClass: ErrorHandlerService,
       multi: true
+    },
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: false,
+        providers: [
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider(
+              '265437536059-jbtlo3po0rg4thkudi9ouchckrahf172.apps.googleusercontent.com'
+            )
+          },
+        ],
+      } as SocialAuthServiceConfig
     }
   ],
   bootstrap: [AppComponent]
