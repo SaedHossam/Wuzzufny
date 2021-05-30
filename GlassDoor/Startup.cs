@@ -13,6 +13,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using GlassDoor.JwtFeatures;
+using GlassDoor.services.email;
+using Microsoft.AspNetCore.Http.Features;
 
 namespace GlassDoor
 {
@@ -76,7 +78,19 @@ namespace GlassDoor
             services.AddAutoMapper(typeof(Startup));
             services.AddControllers();
 
+            var emailConfig = Configuration
+                .GetSection("EmailConfiguration")
+                .Get<EmailConfiguration>();
+            services.AddSingleton(emailConfig);
+
             services.AddScoped<IUnitOfWork, HttpUnitOfWork>();
+            services.AddScoped<IEmailSender, EmailSender>();
+
+            services.Configure<FormOptions>(o => {
+                o.ValueLengthLimit = int.MaxValue;
+                o.MultipartBodyLengthLimit = int.MaxValue;
+                o.MemoryBufferThreshold = int.MaxValue;
+            });
             services.AddScoped<JwtHandler>();
 
             // In production, the Angular files will be served from this directory
