@@ -1,22 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using DAL.Models.Interfaces;
+using System.Threading.Tasks;
+using DAL.Core;
+using DAL.Models;
 
-namespace DAL.Models
+namespace GlassDoor.ViewModels
 {
-    public class Job: IAuditableEntity
+    public class JobViewModel
     {
         public int Id { get; set; }
         public string Title { get; set; }
-        public string EmploymentType { get; set; }
+        public EmploymentType EmploymentType { get; set; }
         public int? NumberOfVacancies { get; set; }
         public string Location { get; set; }
 
-       // public int TotalApplications => Applications.Count;
+        public int TotalApplications => Applications.Count;
         public int TotalClicks { get; set; }
-        //public int AcceptedApplications => Applications.Count(a => a.Status.Equals("Accepted"));
-        //public int RejectedApplications => Applications.Count(a => a.Status.Equals("Rejected"));
+        public int AcceptedApplications => Applications.Count(a => a.Status.Equals("Accepted"));
+        public int RejectedApplications => Applications.Count(a => a.Status.Equals("Rejected"));
         public int ViewedApplications { get; set; }
         public int WithdrawnApplications { get; set; }
 

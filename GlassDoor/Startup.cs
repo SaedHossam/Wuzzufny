@@ -15,6 +15,8 @@ using Microsoft.IdentityModel.Tokens;
 using GlassDoor.JwtFeatures;
 using GlassDoor.services.email;
 using Microsoft.AspNetCore.Http.Features;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace GlassDoor
 {
@@ -57,6 +59,11 @@ namespace GlassDoor
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection"),
                     b => b.MigrationsAssembly("GlassDoor")));
+
+            // Json 
+            services.AddMvc(option => option.EnableEndpointRouting = false)
+                .SetCompatibilityVersion(CompatibilityVersion.Latest)
+                .AddNewtonsoftJson(opt => opt.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
 
             var jwtSettings = Configuration.GetSection("JwtSettings");
             services.AddAuthentication(opt =>

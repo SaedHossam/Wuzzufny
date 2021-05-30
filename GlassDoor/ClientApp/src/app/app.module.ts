@@ -1,5 +1,8 @@
-import { NgModule } from '@angular/core';
+import { NgModule, ErrorHandler } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 import { BrowserModule } from '@angular/platform-browser';
+import { CommonModule } from "@angular/common";
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -18,6 +21,10 @@ import { HomeComponent } from './home/home.component';
 
 import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
 import { GoogleLoginProvider } from 'angularx-social-login';
+import { ApplyJobComponent } from './components/apply-job/apply-job.component';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+
 
 
 
@@ -31,14 +38,19 @@ export function tokenGetter() {
     MenuComponent,
     NotFoundComponent,
     PrivacyComponent,
-    ForbiddenComponent
+    ForbiddenComponent,
+    ApplyJobComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     NgbModule,
     HttpClientModule,
- 
+    NgxPaginationModule,
+    Ng2SearchPipeModule,
+    FormsModule,
+    CommonModule,
 
     JwtModule.forRoot({
       config: {

@@ -1,5 +1,78 @@
-<p class="homeText">{{homeText}}</p>
+<nav class="navbar">
+  <input class="form-control" type="text" name="title" [(ngModel)]=" title" (ngModelChange)="Search()"
+         placeholder=" Enter job title for search" />
+</nav>
+<table class="table table-bordered table-hover m-4">
+  <thead>
+    <tr>
+      <th scope="col">
+        ID
+      </th>
+      <th scope="col">
+        Title
+      </th>
+      <th scope="col">
+        NumberOfVacancies
+      </th>
+      <th scope="col">
+        Employment Type
+      </th>
 
+      <th scope="col">
+        Location
+      </th>
+      <th scope="col">
+        Total Clicks
+      </th>
+      <th scope="col">
+        Created Date
+      </th>
+      <th scope="col">
+        Update Date Date
+      </th>
+
+      <th scope="col">
+        viewedApplications
+      </th>
+      <th scope="col">
+        withdrawnApplications
+      </th>
+      <th scope="col">
+        createdBy
+      </th>
+      <th scope="col">
+        updatedBy
+      </th>
+
+
+      <th>Opertions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of jobs| paginate: { itemsPerPage:2, currentPage: page, totalItems: totalLength }">
+      <td>{{item.id}}</td>
+      <td>{{item.title}}</td>
+      <td>{{item.numberOfVacancies}}</td>
+      <td>{{item.employmentType}}</td>
+      <td>{{item.location}}</td>
+      <td>{{item.totalClicks}}</td>
+      <td>{{item.createdDate}}</td>
+      <td>{{item.updatedDate}}</td>
+      <td>{{item.viewedApplications}}</td>
+      <td>{{item.withdrawnApplications}}</td>
+      <td>{{item.createdBy}}</td>
+      <td>{{item.updatedBy}}</td>
+
+
+
+      <td>
+        <a [routerLink]="['/apply/',item.id]">
+          Apply Now
+        </a>
+      </td>
+    </tr>
+  </tbody>
+</table>
 
 
 
