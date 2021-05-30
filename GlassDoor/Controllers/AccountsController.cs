@@ -10,6 +10,8 @@ using GlassDoor.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using GlassDoor.JwtFeatures;
 using System.IdentityModel.Tokens.Jwt;
+using Microsoft.AspNetCore.Authorization;
+using GlassDoor.Constants;
 
 namespace GlassDoor.Controllers
 {
@@ -44,6 +46,8 @@ namespace GlassDoor.Controllers
                 return BadRequest(new RegistrationResponseDto { Errors = errors });
             }
 
+            await _userManager.AddToRoleAsync(user, Authorization.Roles.Employee.ToString());
+
             return StatusCode(201);
         }
 
@@ -56,11 +60,26 @@ namespace GlassDoor.Controllers
                 return Unauthorized(new AuthResponseDto { ErrorMessage = "Invalid Authentication" });
 
             var signingCredentials = _jwtHandler.GetSigningCredentials();
-            var claims = _jwtHandler.GetClaims(user);
+            //var claims = _jwtHandler.GetClaims(user);
+            
+            var claims = await _jwtHandler.GetClaims(user);
             var tokenOptions = _jwtHandler.GenerateTokenOptions(signingCredentials, claims);
             var token = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
 
             return Ok(new AuthResponseDto { IsAuthSuccessful = true, Token = token });
+        }
+
+
+        [HttpGet("Privacy")]
+         //[Authorize]
+        [Authorize(Roles = "Administrator")]
+        public IActionResult Privacy()
+        {
+            var claims = User.Claims
+                .Select(c => new { c.Type, c.Value })
+                .ToList();
+
+            return Ok(claims);
         }
     }
 }

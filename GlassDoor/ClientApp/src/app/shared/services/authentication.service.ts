@@ -5,7 +5,7 @@ import { EnvironmentUrlService } from "./environment-url.service";
 import { UserForAuthenticationDto } from '../../interfaces/user/user-for-authentication-dto';
 import { UserForRegistrationDto } from "../../interfaces/user/user-for-registration-dto";
 import { RegistrationResponseDto } from "../../interfaces/response/registration-response-dto.model";
-
+import { JwtHelperService } from '@auth0/angular-jwt';
 @Injectable({
   providedIn: 'root'
 })
@@ -14,10 +14,17 @@ export class AuthenticationService {
   private _authChangeSub = new Subject<boolean>();
   public authChanged = this._authChangeSub.asObservable();
 
-  constructor(private _http: HttpClient, private _envUrl: EnvironmentUrlService) { }
+  constructor(private _http: HttpClient, private _envUrl: EnvironmentUrlService, private _jwtHelper: JwtHelperService) { }
 
   public registerUser = (route: string, body: UserForRegistrationDto) => {
     return this._http.post<RegistrationResponseDto>(this.createCompleteRoute(route, this._envUrl.urlAddress), body);
+  }
+
+  //
+  public isUserAuthenticated = (): boolean => {
+    const token = localStorage.getItem("token");
+
+    return token && !this._jwtHelper.isTokenExpired(token);
   }
 
   public sendAuthStateChangeNotification = (isAuthenticated: boolean) => {
@@ -35,5 +42,13 @@ export class AuthenticationService {
   public logout = () => {
     localStorage.removeItem("token");
     this.sendAuthStateChangeNotification(false);
+  }
+
+  public isUserAdmin = (): boolean => {
+    const token = localStorage.getItem("token");
+    const decodedToken = this._jwtHelper.decodeToken(token);
+    const role = decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role']
+
+    return role === 'Administrator';
   }
 }

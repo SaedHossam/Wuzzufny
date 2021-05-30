@@ -39,9 +39,11 @@ namespace DAL
 
             //builder.Entity<Employee>().HasOne<ApplicationUser>(e => e.User).WithOne(au => au.Employee)
             //    .OnDelete(DeleteBehavior.NoAction);
-            
+
             //builder.Entity<CompanyManager>().HasOne<ApplicationUser>(cm => cm.User).WithOne(au => au.CompanyManager)
             //    .OnDelete(DeleteBehavior.NoAction);
+
+            
         }
 
 
