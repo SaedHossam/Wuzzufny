@@ -5,6 +5,7 @@ import { PasswordConfirmationValidatorService } from
   "../../shared/custom-validators/password-confirmation-validator.service";
 import { UserForRegistrationDto } from "../../interfaces/user/user-for-registration-dto.model";
 import { Router } from '@angular/router';
+import { EnvironmentUrlService } from "../../shared/services/environment-url.service";
 
 @Component({
   selector: 'app-register-user',
@@ -15,8 +16,10 @@ export class RegisterUserComponent implements OnInit {
   public registerForm: FormGroup;
   public errorMessage: string = '';
   public showError: boolean;
+  public showSuccess: boolean;
+  public successMessage: string;
 
-  constructor(private _authService: AuthenticationService, private _passConfValidator: PasswordConfirmationValidatorService, private _router: Router) { }
+  constructor(private _authService: AuthenticationService, private _passConfValidator: PasswordConfirmationValidatorService, private _router: Router, private _envUrl: EnvironmentUrlService) { }
 
   ngOnInit(): void {
     this.registerForm = new FormGroup({
@@ -48,13 +51,17 @@ export class RegisterUserComponent implements OnInit {
       lastName: formValues.lastName,
       email: formValues.email,
       password: formValues.password,
-      confirmPassword: formValues.confirm
+      confirmPassword: formValues.confirm,
+      clientURI: this._envUrl.urlAddress + '/authentication/emailconfirmation'
     };
 
     this._authService.registerUser("api/accounts/registration", user)
       .subscribe(_ => {
         console.log("Successful registration");
-        this._router.navigate(["/authentication/login"]);
+        // this._router.navigate(["/authentication/login"]);
+
+        this.showSuccess = true;
+        this.successMessage = 'The confirmation link has been sent, please check your email to confirm your account.'
       },
         error => {
           this.errorMessage = error;

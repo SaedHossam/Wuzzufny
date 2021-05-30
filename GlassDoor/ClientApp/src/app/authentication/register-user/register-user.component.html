@@ -6,7 +6,11 @@
       <span [innerHTML]="errorMessage"></span>
     </div>
 
-    <form [formGroup]="registerForm" autocomplete="off" novalidate (ngSubmit)="registerUser(registerForm.value)">
+    <div *ngIf="showSuccess" class="alert alert-success" role="alert">
+      {{successMessage}}
+    </div>
+
+    <form  *ngIf="!showSuccess" [formGroup]="registerForm" autocomplete="off" novalidate (ngSubmit)="registerUser(registerForm.value)">
       <div class="form-group row">
         <label for="firstName" class="col-form-label col-sm-2">First Name:</label>
         <div class="col-md-5">

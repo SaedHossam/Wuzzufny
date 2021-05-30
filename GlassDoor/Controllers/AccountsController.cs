@@ -49,6 +49,16 @@ namespace GlassDoor.Controllers
                 return BadRequest(new RegistrationResponseDto { Errors = errors });
             }
 
+            var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+            var param = new Dictionary<string, string>
+            {
+                {"token", token },
+                {"email", user.Email }
+            };
+            var callback = QueryHelpers.AddQueryString(userForRegistration.ClientURI, param);
+            var message = new Message(new string[] { userForRegistration.Email }, "Email Confirmation token", callback, null, false);
+            await _emailSender.SendEmailAsync(message);
+
             return StatusCode(201);
         }
 
@@ -57,7 +67,11 @@ namespace GlassDoor.Controllers
         {
             var user = await _userManager.FindByEmailAsync(userForAuthentication.Email);
 
-            if (user == null || !await _userManager.CheckPasswordAsync(user, userForAuthentication.Password))
+            if (user == null)
+                return BadRequest("Invalid Request");
+            if (!await _userManager.IsEmailConfirmedAsync(user))
+                return Unauthorized(new AuthResponseDto { ErrorMessage = "Email is not confirmed" });
+            if (!await _userManager.CheckPasswordAsync(user, userForAuthentication.Password))
                 return Unauthorized(new AuthResponseDto { ErrorMessage = "Invalid Authentication" });
 
             var signingCredentials = _jwtHandler.GetSigningCredentials();
@@ -110,6 +124,20 @@ namespace GlassDoor.Controllers
 
                 return BadRequest(new { Errors = errors });
             }
+
+            return Ok();
+        }
+
+        [HttpGet("EmailConfirmation")]
+        public async Task<IActionResult> EmailConfirmation([FromQuery] string email, [FromQuery] string token)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user == null)
+                return BadRequest("Invalid Email Confirmation Request");
+
+            var confirmResult = await _userManager.ConfirmEmailAsync(user, token);
+            if (!confirmResult.Succeeded)
+                return BadRequest("Invalid Email Confirmation Request");
 
             return Ok();
         }
