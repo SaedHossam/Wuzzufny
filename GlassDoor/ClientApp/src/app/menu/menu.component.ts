@@ -12,7 +12,14 @@ export class MenuComponent implements OnInit {
   public isUserAuthenticated: boolean;
   public isExternalAuth: boolean;
 
-  constructor(private _authService: AuthenticationService, private _router: Router, private _socialAuthService: SocialAuthService) { }
+
+  constructor(private _authService: AuthenticationService, private _router: Router, private _socialAuthService: SocialAuthService) {
+    this._authService.authChanged
+      .subscribe(res => {
+        this.isUserAuthenticated = res;
+      })
+  }
+  
 
   ngOnInit(): void {
     this._authService.authChanged

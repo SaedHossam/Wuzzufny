@@ -89,6 +89,8 @@ namespace GlassDoor
             services.AddScoped<IUnitOfWork, HttpUnitOfWork>();
             services.AddScoped<IEmailSender, EmailSender>();
 
+            services.AddScoped<JwtHandler>();
+
             services.Configure<FormOptions>(o => {
                 o.ValueLengthLimit = int.MaxValue;
                 o.MultipartBodyLengthLimit = int.MaxValue;

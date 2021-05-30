@@ -9,10 +9,11 @@ import { ForgotPasswordDto } from "../../interfaces/resetPassword/forgot-passwor
 import { ResetPasswordDto } from "../../interfaces/resetPassword/reset-password-dto.model";
 import { CustomEncoder } from "../custom-encoder";
 
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 import { GoogleLoginProvider, SocialAuthService } from "angularx-social-login";
 import { ExternalAuthDto } from "../../interfaces/external-auth/external-auth-dto";
-import { AuthResponseDto } from "../../interfaces/response/auth-response-dto";
+import { AuthResponseDto } from "../../interfaces/response/auth-response-dto.model";
 
 @Injectable({
   providedIn: 'root'
@@ -22,11 +23,18 @@ export class AuthenticationService {
   private _authChangeSub = new Subject<boolean>();
   public authChanged = this._authChangeSub.asObservable();
 
-  constructor(private _http: HttpClient, private _envUrl: EnvironmentUrlService, private _externalAuthService: SocialAuthService) { }
+  constructor(private _http: HttpClient, private _envUrl: EnvironmentUrlService, private _externalAuthService: SocialAuthService, private _jwtHelper: JwtHelperService) { }
   // private _jwtHelper: JwtHelperService
 
   public registerUser = (route: string, body: UserForRegistrationDto) => {
     return this._http.post<RegistrationResponseDto>(this.createCompleteRoute(route, this._envUrl.urlAddress), body);
+  }
+
+  //
+  public isUserAuthenticated = (): boolean => {
+    const token = localStorage.getItem("token");
+
+    return token && !this._jwtHelper.isTokenExpired(token);
   }
 
   public sendAuthStateChangeNotification = (isAuthenticated: boolean) => {
@@ -56,6 +64,14 @@ export class AuthenticationService {
 
   public externalLogin = (route: string, body: ExternalAuthDto) => {
     return this._http.post<AuthResponseDto>(this.createCompleteRoute(route, this._envUrl.urlAddress), body);
+  }
+
+  public isUserAdmin = (): boolean => {
+    const token = localStorage.getItem("token");
+    const decodedToken = this._jwtHelper.decodeToken(token);
+    const role = decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role']
+
+    return role === 'Administrator';
   }
 
   public forgotPassword = (route: string, body: ForgotPasswordDto) => {

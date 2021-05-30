@@ -37,12 +37,19 @@ namespace GlassDoor.JwtFeatures
             return new SigningCredentials(secret, SecurityAlgorithms.HmacSha256);
         }
 
-        public List<Claim> GetClaims(IdentityUser user)
+        public async Task< List<Claim>> GetClaims(ApplicationUser user)
         {
             var claims = new List<Claim>
         {
             new Claim(ClaimTypes.Name, user.Email)
         };
+
+            // this is new 
+            var roles = await _userManager.GetRolesAsync(user);
+            foreach (var role in roles)
+            {
+                claims.Add(new Claim(ClaimTypes.Role, role));
+            }
 
             return claims;
         }
@@ -62,7 +69,7 @@ namespace GlassDoor.JwtFeatures
         public async Task<string> GenerateToken(ApplicationUser user)
         {
             var signingCredentials = GetSigningCredentials();
-            var claims = GetClaims(user);
+            var claims = await GetClaims(user);
             var tokenOptions = GenerateTokenOptions(signingCredentials, claims);
             var token = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
 
