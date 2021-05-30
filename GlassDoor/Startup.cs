@@ -38,7 +38,10 @@ namespace GlassDoor
                     opt.Lockout.AllowedForNewUsers = true;
                     opt.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(2);
                     opt.Lockout.MaxFailedAccessAttempts = 3;
-                }).AddEntityFrameworkStores<ApplicationDbContext>();
+                }).AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
+
+            services.Configure<DataProtectionTokenProviderOptions>(opt =>
+                opt.TokenLifespan = TimeSpan.FromHours(2));
 
             // Add Google Authentication
             services.AddAuthentication().AddGoogle("google", opt =>
@@ -91,7 +94,6 @@ namespace GlassDoor
                 o.MultipartBodyLengthLimit = int.MaxValue;
                 o.MemoryBufferThreshold = int.MaxValue;
             });
-            services.AddScoped<JwtHandler>();
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>

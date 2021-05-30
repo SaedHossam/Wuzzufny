@@ -2,9 +2,11 @@ import { Subject } from "rxjs"
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { EnvironmentUrlService } from "./environment-url.service";
-import { UserForAuthenticationDto } from '../../interfaces/user/user-for-authentication-dto';
-import { UserForRegistrationDto } from "../../interfaces/user/user-for-registration-dto";
+import { UserForAuthenticationDto } from '../../interfaces/user/user-for-authentication-dto.model';
+import { UserForRegistrationDto } from "../../interfaces/user/user-for-registration-dto.model";
 import { RegistrationResponseDto } from "../../interfaces/response/registration-response-dto.model";
+import { ForgotPasswordDto } from "../../interfaces/resetPassword/forgot-password-dto.model";
+import { ResetPasswordDto } from "../../interfaces/resetPassword/reset-password-dto.model";
 
 
 import { GoogleLoginProvider, SocialAuthService } from "angularx-social-login";
@@ -53,5 +55,13 @@ export class AuthenticationService {
 
   public externalLogin = (route: string, body: ExternalAuthDto) => {
     return this._http.post<AuthResponseDto>(this.createCompleteRoute(route, this._envUrl.urlAddress), body);
+  }
+
+  public forgotPassword = (route: string, body: ForgotPasswordDto) => {
+    return this._http.post(this.createCompleteRoute(route, this._envUrl.urlAddress), body);
+  }
+
+  public resetPassword = (route: string, body: ResetPasswordDto) => {
+    return this._http.post(this.createCompleteRoute(route, this._envUrl.urlAddress), body);
   }
 }

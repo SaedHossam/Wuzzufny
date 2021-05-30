@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { PasswordConfirmationValidatorService } from
   "../../shared/custom-validators/password-confirmation-validator.service";
-import { UserForRegistrationDto } from "../../interfaces/user/user-for-registration-dto";
+import { UserForRegistrationDto } from "../../interfaces/user/user-for-registration-dto.model";
 import { Router } from '@angular/router';
 
 @Component({
