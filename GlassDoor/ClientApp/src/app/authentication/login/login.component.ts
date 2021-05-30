@@ -2,7 +2,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { AuthenticationService } from "../../shared/services/authentication.service";
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { UserForAuthenticationDto } from '../../interfaces/user/user-for-authentication-dto';
+import { UserForAuthenticationDto } from '../../interfaces/user/user-for-authentication-dto.model';
 
 @Component({
   selector: 'app-login',

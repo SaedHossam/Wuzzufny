@@ -1,3 +1,4 @@
+using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -37,9 +38,10 @@ namespace GlassDoor
                 {
                     opt.Password.RequireNonAlphanumeric = false;
                 }
-                ).AddEntityFrameworkStores<ApplicationDbContext>();
+                ).AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
 
-            
+            services.Configure<DataProtectionTokenProviderOptions>(opt =>
+                opt.TokenLifespan = TimeSpan.FromHours(2));
 
             //Adding DB Context with MSSQL
             services.AddDbContext<ApplicationDbContext>(options =>
