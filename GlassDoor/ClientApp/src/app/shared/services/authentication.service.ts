@@ -1,5 +1,5 @@
 import { Subject } from "rxjs"
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { EnvironmentUrlService } from "./environment-url.service";
 import { UserForAuthenticationDto } from '../../interfaces/user/user-for-authentication-dto.model';
@@ -7,6 +7,7 @@ import { UserForRegistrationDto } from "../../interfaces/user/user-for-registrat
 import { RegistrationResponseDto } from "../../interfaces/response/registration-response-dto.model";
 import { ForgotPasswordDto } from "../../interfaces/resetPassword/forgot-password-dto.model";
 import { ResetPasswordDto } from "../../interfaces/resetPassword/reset-password-dto.model";
+import { CustomEncoder } from "../custom-encoder";
 
 
 import { GoogleLoginProvider, SocialAuthService } from "angularx-social-login";
@@ -63,5 +64,12 @@ export class AuthenticationService {
 
   public resetPassword = (route: string, body: ResetPasswordDto) => {
     return this._http.post(this.createCompleteRoute(route, this._envUrl.urlAddress), body);
+  }
+
+  public confirmEmail = (route: string, token: string, email: string) => {
+    let params = new HttpParams({ encoder: new CustomEncoder() })
+    params = params.append('token', token);
+    params = params.append('email', email);
+    return this._http.get(this.createCompleteRoute(route, this._envUrl.urlAddress), { params: params });
   }
 }

@@ -41,7 +41,7 @@ namespace GlassDoor.Controllers
                 return BadRequest();
 
             var user = _mapper.Map<ApplicationUser>(userForRegistration);
-            
+
             var result = await _userManager.CreateAsync(user, userForRegistration.Password);
             if (!result.Succeeded)
             {
@@ -49,6 +49,17 @@ namespace GlassDoor.Controllers
 
                 return BadRequest(new RegistrationResponseDto { Errors = errors });
             }
+
+            var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+            var param = new Dictionary<string, string>
+            {
+                {"token", token },
+                {"email", user.Email }
+            };
+            var callback = QueryHelpers.AddQueryString(userForRegistration.ClientURI, param);
+            var message = new Message(new string[] { userForRegistration.Email }, "Email Confirmation token", callback, null, false);
+            await _emailSender.SendEmailAsync(message);
+
             // Add default Role = Employee
             await _userManager.AddToRoleAsync(user, Authorization.Roles.Employee.ToString());
             return StatusCode(201);
@@ -174,6 +185,20 @@ namespace GlassDoor.Controllers
             }
 
             await _userManager.SetLockoutEndDateAsync(user, new DateTime(2000, 1, 1));
+            return Ok();
+        }
+
+        [HttpGet("EmailConfirmation")]
+        public async Task<IActionResult> EmailConfirmation([FromQuery] string email, [FromQuery] string token)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user == null)
+                return BadRequest("Invalid Email Confirmation Request");
+
+            var confirmResult = await _userManager.ConfirmEmailAsync(user, token);
+            if (!confirmResult.Succeeded)
+                return BadRequest("Invalid Email Confirmation Request");
+
             return Ok();
         }
     }
