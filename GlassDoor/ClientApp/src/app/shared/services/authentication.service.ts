@@ -74,6 +74,22 @@ export class AuthenticationService {
     return role === 'Administrator';
   }
 
+  public isUserEmployee = (): boolean => {
+    const token = localStorage.getItem("token");
+    const decodedToken = this._jwtHelper.decodeToken(token);
+    const role = decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role']
+
+    return role === 'Employee';
+  }
+
+  public isUserCompany = (): boolean => {
+    const token = localStorage.getItem("token");
+    const decodedToken = this._jwtHelper.decodeToken(token);
+    const role = decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role']
+
+    return role === 'Company';
+  }
+
   public forgotPassword = (route: string, body: ForgotPasswordDto) => {
     return this._http.post(this.createCompleteRoute(route, this._envUrl.urlAddress), body);
   }

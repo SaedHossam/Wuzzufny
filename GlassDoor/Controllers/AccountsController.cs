@@ -75,7 +75,7 @@ namespace GlassDoor.Controllers
 
             if (user == null)
                 return BadRequest("Authentication failed. Wrong Username or Password");
-           
+
             if (!await _userManager.IsEmailConfirmedAsync(user))
                 return Unauthorized(new AuthResponseDto { ErrorMessage = "Email is not confirmed" });
 
@@ -95,11 +95,11 @@ namespace GlassDoor.Controllers
 
                 return Unauthorized(new AuthResponseDto { ErrorMessage = "Invalid Authentication" });
             }
-    
+
 
             var signingCredentials = _jwtHandler.GetSigningCredentials();
             //var claims = _jwtHandler.GetClaims(user);
-            
+
             var claims = await _jwtHandler.GetClaims(user);
             var tokenOptions = _jwtHandler.GenerateTokenOptions(signingCredentials, claims);
             var token = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
@@ -210,10 +210,8 @@ namespace GlassDoor.Controllers
             return Ok();
         }
 
-
+        [Authorize]
         [HttpGet("Privacy")]
-         //[Authorize]
-        [Authorize(Roles = "Administrator")]
         public IActionResult Privacy()
         {
             var claims = User.Claims

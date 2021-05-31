@@ -18,12 +18,46 @@ namespace GlassDoor.Contexts
             await roleManager.CreateAsync(new IdentityRole(Authorization.Roles.Company.ToString()));
 
             //Seed Default User
-            var defaultUser = new ApplicationUser { UserName = Authorization.default_username, Email = Authorization.default_email, EmailConfirmed = true, PhoneNumberConfirmed = true };
-
-            if (userManager.Users.All(u => u.Id != defaultUser.Id))
+            var adminUser = new ApplicationUser
             {
-                await userManager.CreateAsync(defaultUser, Authorization.default_password);
-                await userManager.AddToRoleAsync(defaultUser, Authorization.default_role.ToString());
+                UserName = Authorization.AdminUserName,
+                Email = Authorization.AdminEmail,
+                EmailConfirmed = true,
+                PhoneNumberConfirmed = true
+            };
+
+            if (userManager.Users.All(u => u.Id != adminUser.Id))
+            {
+                await userManager.CreateAsync(adminUser, Authorization.AdminPassword);
+                await userManager.AddToRoleAsync(adminUser, Authorization.AdminRole.ToString());
+            }
+
+            var companyUser = new ApplicationUser
+            {
+                UserName = Authorization.CompanyUserName,
+                Email = Authorization.CompanyEmail,
+                EmailConfirmed = true,
+                PhoneNumberConfirmed = true
+            };
+
+            if (userManager.Users.All(u => u.Id != companyUser.Id))
+            {
+                await userManager.CreateAsync(companyUser, Authorization.CompanyPassword);
+                await userManager.AddToRoleAsync(companyUser, Authorization.CompanyRole.ToString());
+            }
+
+            var employeeUser = new ApplicationUser
+            {
+                UserName = Authorization.EmployeeUserName,
+                Email = Authorization.EmployeeEmail,
+                EmailConfirmed = true,
+                PhoneNumberConfirmed = true
+            };
+
+            if (userManager.Users.All(u => u.Id != employeeUser.Id))
+            {
+                await userManager.CreateAsync(employeeUser, Authorization.EmployeePassword);
+                await userManager.AddToRoleAsync(employeeUser, Authorization.EmployeeRole.ToString());
             }
         }
     }

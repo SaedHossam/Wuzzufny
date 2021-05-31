@@ -11,6 +11,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace GlassDoor.JwtFeatures
 {
@@ -20,13 +21,15 @@ namespace GlassDoor.JwtFeatures
         private readonly IConfigurationSection _jwtSettings;
         private readonly IConfigurationSection _goolgeSettings;
         private readonly UserManager<ApplicationUser> _userManager;
+        private IHttpContextAccessor _httpAccessor;
 
-        public JwtHandler(IConfiguration configuration, UserManager<ApplicationUser> userManager)
+        public JwtHandler(IConfiguration configuration, UserManager<ApplicationUser> userManager, IHttpContextAccessor httpAccessor)
         {
             _configuration = configuration;
             _jwtSettings = _configuration.GetSection("JwtSettings");
             _userManager = userManager;
             _goolgeSettings = _configuration.GetSection("GoogleAuthSettings");
+            _httpAccessor = httpAccessor;
         }
 
         public SigningCredentials GetSigningCredentials()
@@ -37,11 +40,13 @@ namespace GlassDoor.JwtFeatures
             return new SigningCredentials(secret, SecurityAlgorithms.HmacSha256);
         }
 
-        public async Task< List<Claim>> GetClaims(ApplicationUser user)
+        public async Task<List<Claim>> GetClaims(ApplicationUser user)
         {
             var claims = new List<Claim>
         {
-            new Claim(ClaimTypes.Name, user.Email)
+            new Claim(ClaimTypes.Email, user.Email),
+            new Claim(ClaimTypes.PrimarySid, user.Id),
+
         };
 
             // this is new 
@@ -93,6 +98,11 @@ namespace GlassDoor.JwtFeatures
                 Console.WriteLine(ex.Message);
                 return null;
             }
+        }
+
+        public string GetUserId()
+        {
+            return _httpAccessor.HttpContext?.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.PrimarySid)?.Value;
         }
     }
 }

@@ -50,6 +50,18 @@ export class LoginComponent implements OnInit {
       .subscribe(res => {
         localStorage.setItem("token", res['token']);
         this._authService.sendAuthStateChangeNotification(res['isAuthSuccessful']);
+
+        if (this._returnUrl === "/") {
+          if (this._authService.isUserAdmin()) {
+            this._returnUrl = 'admin';
+          }
+          else if (this._authService.isUserEmployee()) {
+            this._returnUrl = 'employee';
+          }
+          else if (this._authService.isUserCompany()) {
+            this._returnUrl = 'company';
+          }
+        }
         this._router.navigate([this._returnUrl]);
       },
         (error) => {
