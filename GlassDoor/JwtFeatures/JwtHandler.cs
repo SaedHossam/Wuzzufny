@@ -43,11 +43,10 @@ namespace GlassDoor.JwtFeatures
         public async Task<List<Claim>> GetClaims(ApplicationUser user)
         {
             var claims = new List<Claim>
-        {
-            new Claim(ClaimTypes.Email, user.Email),
-            new Claim(ClaimTypes.PrimarySid, user.Id),
-
-        };
+            {
+                new Claim(ClaimTypes.Email, user.Email),
+                new Claim(ClaimTypes.NameIdentifier, user.Id),
+            };
 
             // this is new 
             var roles = await _userManager.GetRolesAsync(user);
@@ -98,11 +97,6 @@ namespace GlassDoor.JwtFeatures
                 Console.WriteLine(ex.Message);
                 return null;
             }
-        }
-
-        public string GetUserId()
-        {
-            return _httpAccessor.HttpContext?.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.PrimarySid)?.Value;
         }
     }
 }
