@@ -15,12 +15,13 @@ namespace GlassDoor.ViewModels
 
             CreateMap<UserForRegistrationDto, ApplicationUser>()
                 .ForMember(u => u.UserName, opt => opt.MapFrom(x => x.Email));
+            CreateMap<PostJobDto, Job>();
 
-            CreateMap<PostJobDto, Job>()
-                .BeforeMap((PostJobDto, Job) =>
-                CreateMap<JobDetailsDto, JobDetails>())
-            .BeforeMap((JobDetailsDto, JobDetails) =>
-            CreateMap<SkillsDto, Skill>());
+            //CreateMap<PostJobDto, Job>()
+            //    .BeforeMap((PostJobDto, Job) =>
+            //    CreateMap<JobDetailsDto, JobDetails>())
+            //.BeforeMap((JobDetailsDto, JobDetails) =>
+            //CreateMap<SkillsDto, Skill>());
 
 
         }
