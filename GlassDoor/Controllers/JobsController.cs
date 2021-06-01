@@ -9,6 +9,7 @@ using DAL;
 using DAL.Models;
 using GlassDoor.ViewModels;
 using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 
 namespace GlassDoor.Controllers
 {
@@ -20,11 +21,13 @@ namespace GlassDoor.Controllers
 
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public JobsController( IMapper mapper, IUnitOfWork unitOfWork)
+        public JobsController( IMapper mapper, IUnitOfWork unitOfWork, UserManager<ApplicationUser> userManager)
         {
             _mapper = mapper;
             _unitOfWork = unitOfWork;
+            _userManager = userManager;
         }
 
         // GET: api/Jobs
@@ -82,15 +85,30 @@ namespace GlassDoor.Controllers
         // POST: api/Jobs
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public  ActionResult<PostJobDto> PostJob([FromBody]PostJobDto postedjob)
+        public async Task<ActionResult<PostJobDto>> PostJob([FromBody]PostJobDto postedjob)
         {
             if (postedjob == null || !ModelState.IsValid) 
                 return BadRequest();
 
             var job = _mapper.Map<Job>(postedjob);
+
+            //job.CreatedBy =  _userManager.GetUserId(HttpContext.User);
+
+            //var user = await _userManager.GetUserAsync(HttpContext.User);
+
+            //Job job = new Job();
+            //job.Title = postedjob.Title;
+            //job.EmploymentType = postedjob.EmploymentType;
+            //job.NumberOfVacancies = postedjob.NumberOfVacancies;
+            //job.Location = postedjob.Location;
+            //job.CreatedDate = DateTime.Now;
+            //job.JobDetails = postedjob.JobDetails;
+            //job.JobDetails.JobId = job.Id;
+            //job.Skills = postedjob.Skills;
             _unitOfWork.Jobs.Add(job);
-             return Ok(job);
-                    }
+            _unitOfWork.SaveChanges();
+            return Ok(job);
+        }
 
         // DELETE: api/Jobs/5
         [HttpDelete("{id}")]

@@ -13,6 +13,6 @@ namespace DAL
         public HttpUnitOfWork(ApplicationDbContext context, IHttpContextAccessor httpAccessor) : base(context)
         {
             context.CurrentUserId = httpAccessor.HttpContext.User.Claims
-                .FirstOrDefault(c => c.Type == ClaimTypes.PrimarySid)?.Value; }
+                .FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value; }
     }
 }

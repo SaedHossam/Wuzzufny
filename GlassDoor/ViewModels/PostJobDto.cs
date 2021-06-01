@@ -16,8 +16,8 @@ namespace GlassDoor.ViewModels
         public string Location { get; set; }
         public string CreatedBy { get; set; }
         public DateTime CreatedDate { get; set; }
-        public JobDetails JobDetailsDto { get; set; }
-        public ICollection<Skill> SkillsDto { get; set; }
+        public JobDetails JobDetails { get; set; }
+        public ICollection<Skill> Skills { get; set; }
 
     }
 }

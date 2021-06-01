@@ -43,10 +43,10 @@ namespace GlassDoor.JwtFeatures
         public async Task<List<Claim>> GetClaims(ApplicationUser user)
         {
             var claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.Email, user.Email),
-                new Claim(ClaimTypes.NameIdentifier, user.Id),
-            };
+        {
+            new Claim(ClaimTypes.Email, user.Email),
+            new Claim(ClaimTypes.NameIdentifier, user.Id),
+        };
 
             // this is new 
             var roles = await _userManager.GetRolesAsync(user);
