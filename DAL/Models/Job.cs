@@ -13,10 +13,10 @@ namespace DAL.Models
         public int? NumberOfVacancies { get; set; }
         public string Location { get; set; }
 
-        public int TotalApplications => Applications.Count;
+        public int TotalApplications => Applications?.Count ?? 0;
         public int TotalClicks { get; set; }
-        public int AcceptedApplications => Applications.Count(a => a.Status.Equals("Accepted"));
-        public int RejectedApplications => Applications.Count(a => a.Status.Equals("Rejected"));
+        public int? AcceptedApplications => Applications?.Count(a => a.Status.Equals("Accepted"));
+        public int? RejectedApplications => Applications?.Count(a => a.Status.Equals("Rejected"));
         public int ViewedApplications { get; set; }
         public int WithdrawnApplications { get; set; }
 
