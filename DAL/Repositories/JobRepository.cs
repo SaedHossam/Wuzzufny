@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DAL.Models;
 using DAL.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace DAL.Repositories
 {
@@ -14,5 +15,15 @@ namespace DAL.Repositories
         { }
 
         private ApplicationDbContext _appContext => (ApplicationDbContext)_context;
+
+
+        public IEnumerable<Job> GetAllJobData()
+        {
+            return _appContext.Jobs
+                .Include(a => a.Applications)
+                .Include(j => j.JobDetails)
+                .Include(c => c.Company).Include(s=>s.Skills)
+                .ToList();
+        }
     }
 }

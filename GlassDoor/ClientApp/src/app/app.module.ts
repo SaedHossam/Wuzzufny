@@ -20,9 +20,15 @@ import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-logi
 import { GoogleLoginProvider } from 'angularx-social-login';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { CalendarModule} from "primeng/calendar";
-import { FormsModule } from "@angular/forms"
-import { PasswordModule} from "primeng/password"
+
+import { FormsModule } from "@angular/forms";
+
+//import { ViewJobComponent } from './modules/employee/components/view-job/view-job.component';
+import { ApplyJobComponent } from './modules/employee/components/apply-job/apply-job.component';
+//import { CalendarModule } from "primeng/calendar";
+//import { PasswordModule } from "primeng/password";
+import { ButtonModule } from 'primeng/button';
+
 
 export function tokenGetter() {
   return localStorage.getItem("token");
@@ -35,7 +41,9 @@ export function tokenGetter() {
     NotFoundComponent,
     PrivacyComponent,
     ForbiddenComponent,
-    HomeComponent
+    HomeComponent,
+    //ViewJobComponent,
+    ApplyJobComponent,
   ],
   imports: [
     BrowserModule,
@@ -44,8 +52,11 @@ export function tokenGetter() {
     HttpClientModule,
     BrowserAnimationsModule,
     FormsModule,
-    CalendarModule,
-    PasswordModule,
+    ButtonModule,
+  //  CalendarModule,
+    //PasswordModule,
+  
+    
 
     JwtModule.forRoot({
       config: {
