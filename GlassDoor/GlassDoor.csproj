@@ -37,6 +37,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="ClientApp\src\app\interfaces\company-register\" />
     <Folder Include="ClientApp\src\app\modules\" />
   </ItemGroup>
 

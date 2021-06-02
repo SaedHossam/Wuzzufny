@@ -11,7 +11,8 @@ namespace DAL
         IJobRepository Jobs { get; }
         IJobDetailsRepository JobsDetails { get; }
         ISkillRepository Skills { get; }
-
+        IIndustryRepository Industry { get; }
+        ICompanySizeRepository CompanySize { get; }
 
         int SaveChanges();
     }

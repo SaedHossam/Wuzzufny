@@ -20,9 +20,18 @@ import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-logi
 import { GoogleLoginProvider } from 'angularx-social-login';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { CalendarModule } from "primeng/calendar";
-import { FormsModule } from "@angular/forms"
-import { PasswordModule} from "primeng/password"
+import { CalendarModule} from "primeng/calendar";
+import { FormsModule, ReactiveFormsModule  } from "@angular/forms"
+import { PasswordModule} from "primeng/password";
+import { RecruitmentComponent } from './recruitment/recruitment.component';
+import { EmployerRegisterComponent } from './employer-register/employer-register.component'
+import { InputNumberModule } from 'primeng/inputnumber';
+import { CompanyService } from "./shared/services/company.service";
+import { PasswordConfirmationValidatorService } from
+  "./shared/custom-validators/password-confirmation-validator.service";
+import { DropdownModule } from 'primeng/dropdown';
+import { IdustryService } from "./shared/services/idustry.service";
+
 
 export function tokenGetter() {
   return localStorage.getItem("token");
@@ -35,7 +44,9 @@ export function tokenGetter() {
     NotFoundComponent,
     PrivacyComponent,
     ForbiddenComponent,
-    HomeComponent
+    HomeComponent,
+    RecruitmentComponent,
+    EmployerRegisterComponent
   ],
   imports: [
     BrowserModule,
@@ -44,8 +55,11 @@ export function tokenGetter() {
     HttpClientModule,
     BrowserAnimationsModule,
     FormsModule,
+    ReactiveFormsModule ,
     CalendarModule,
     PasswordModule,
+    InputNumberModule,
+    DropdownModule,
 
     JwtModule.forRoot({
       config: {
@@ -77,7 +91,10 @@ export function tokenGetter() {
           },
         ],
       } as SocialAuthServiceConfig
-    }
+    },
+    CompanyService,
+    PasswordConfirmationValidatorService,
+    IdustryService
   ],
   bootstrap: [AppComponent]
 })

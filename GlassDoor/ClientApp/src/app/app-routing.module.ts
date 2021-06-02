@@ -10,15 +10,19 @@ import { AdminGuard } from './shared/guards/admin.guard';
 import { AuthGuard } from './shared/guards/auth.guard';
 import { CompanyGuard } from "./shared/guards/company.guard";
 import { EmployeeGuard } from "./shared/guards/employee.guard";
+import { RecruitmentComponent } from "./recruitment/recruitment.component";
+import { EmployerRegisterComponent } from "./employer-register/employer-register.component";
 
 const routes: Routes = [
-  { path: 'home', component: HomeComponent},
+  { path: 'home', component: HomeComponent },
   { path: 'authentication', loadChildren: () => import("../app/authentication/authentication.module").then(m => m.AuthenticationModule) },
-  { path: 'admin', loadChildren: () => import("./modules/admin/admin.module").then(m => m.AdminModule), canActivate: [AuthGuard, AdminGuard]  },
-  { path: 'company', loadChildren: () => import("./modules/company/company.module").then(m => m.CompanyModule), canActivate: [AuthGuard, CompanyGuard]  },
-  { path: 'employee', loadChildren: () => import("./modules/employee/employee.module").then(m => m.EmployeeModule), canActivate: [AuthGuard, EmployeeGuard]  },
+  { path: 'admin', loadChildren: () => import("./modules/admin/admin.module").then(m => m.AdminModule), canActivate: [AuthGuard, AdminGuard] },
+  { path: 'company', loadChildren: () => import("./modules/company/company.module").then(m => m.CompanyModule), canActivate: [AuthGuard, CompanyGuard] },
+  { path: 'employee', loadChildren: () => import("./modules/employee/employee.module").then(m => m.EmployeeModule), canActivate: [AuthGuard, EmployeeGuard] },
   { path: 'privacy', component: PrivacyComponent, canActivate: [AuthGuard] },
   { path: 'forbidden', component: ForbiddenComponent },
+  { path: 'recruitment', component: RecruitmentComponent },
+  { path: 'employer-register', component: EmployerRegisterComponent },
   { path: '404', component: NotFoundComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', redirectTo: '/404', pathMatch: 'full' },
