@@ -1,4 +1,5 @@
-<h1>{{job.title}} Job</h1>
+
+<!--<h1>{{job.title}} Job</h1>
 <p> <strong>Number of Vancies: </strong>{{job.numberOfVacancies}}</p>
 <p> <strong>Career Level: </strong>{{carrerLevel}}</p>
 <p> <strong>Experience Nedded: </strong>{{experienceNedded}} <strong>year</strong></p>
@@ -21,4 +22,30 @@
 </div>
 <button class="btn btn-info">Apply Now</button>
 <br />
-<a routerLink="/jobs">back to home</a>
+<a routerLink="/jobs">back to home</a>-->
+
+
+
+<p-card [style]="{ 'margin-bottom': '2em'}">
+  <div class="JobTitleAndImg">
+    <h1>{{job.title}} - {{ getNameFromJson(job.location).country  }} - {{ getNameFromJson(job.location).name  }}</h1>
+    <span>
+      <img />
+    </span>
+  </div>
+  <p>
+    <a style="font-size:21px;" href="#"><span class="p-button-label" style="color: #0065FF">{{job.company.name}} </span></a>
+    <button style="height:1.7rem;width:1.7rem;margin-left:6px" pButton pRipple type="button" icon="pi pi-check" class="p-button-rounded"></button>
+    - <strong>{{job.company.locations}}</strong>
+  </p>
+  <p>{{getStringFromEnum(job.employmentType)}}</p>
+  <small>Posted : {{getPrintedDate(job.createdDate)}}</small>
+  <div>
+    <hr />
+  </div>
+  <div>
+    <button style="margin:0 10px 0 10px" pButton pRipple type="button" label="Apply"></button>
+    <button pButton pRipple type="button" label="Save" class="p-button-warning"></button>
+  </div>
+</p-card>
+

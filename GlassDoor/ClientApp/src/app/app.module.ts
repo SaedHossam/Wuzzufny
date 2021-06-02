@@ -30,6 +30,7 @@ import { ApplyJobComponent } from './modules/employee/components/apply-job/apply
 import { ButtonModule } from 'primeng/button';
 
 
+
 export function tokenGetter() {
   return localStorage.getItem("token");
 }
@@ -42,8 +43,8 @@ export function tokenGetter() {
     PrivacyComponent,
     ForbiddenComponent,
     HomeComponent,
-    //ViewJobComponent,
-    ApplyJobComponent,
+
+
   ],
   imports: [
     BrowserModule,
