@@ -19,7 +19,10 @@ import { HomeComponent } from './home/home.component';
 import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
 import { GoogleLoginProvider } from 'angularx-social-login';
 
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CalendarModule} from "primeng/calendar";
+import { FormsModule } from "@angular/forms"
+import { PasswordModule} from "primeng/password"
 
 export function tokenGetter() {
   return localStorage.getItem("token");
@@ -31,14 +34,18 @@ export function tokenGetter() {
     MenuComponent,
     NotFoundComponent,
     PrivacyComponent,
-    ForbiddenComponent
+    ForbiddenComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     NgbModule,
     HttpClientModule,
- 
+    BrowserAnimationsModule,
+    FormsModule,
+    CalendarModule,
+    PasswordModule,
 
     JwtModule.forRoot({
       config: {

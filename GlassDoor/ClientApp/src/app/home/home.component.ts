@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { PasswordModule } from 'primeng/password';
 
 
 @Component({
@@ -8,6 +9,8 @@ import { Component, OnInit } from "@angular/core";
 })
 export class HomeComponent implements OnInit {
   public homeText: string;
+  public value1: Date;
+  public value2: String;
 
   constructor() { }
 
