@@ -20,7 +20,7 @@ import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-logi
 import { GoogleLoginProvider } from 'angularx-social-login';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { CalendarModule} from "primeng/calendar";
+import { CalendarModule } from "primeng/calendar";
 import { FormsModule } from "@angular/forms"
 import { PasswordModule} from "primeng/password"
 

@@ -9,9 +9,13 @@ namespace DAL.Models
     {
         public int Id { get; set; }
         public string Title { get; set; }
-        public string EmploymentType { get; set; }
+        public int JobTypeId { get; set; }
+        public JobType JobType { get; set; }
         public int? NumberOfVacancies { get; set; }
-        public string Location { get; set; }
+        public int CityId { get; set; }
+        public City City{ get; set; }
+        public int CountryId { get; set; }
+        public Country Country { get; set; }
 
         public int TotalApplications => Applications?.Count ?? 0;
         public int TotalClicks { get; set; }
@@ -19,6 +23,8 @@ namespace DAL.Models
         public int? RejectedApplications => Applications?.Count(a => a.Status.Equals("Rejected"));
         public int ViewedApplications { get; set; }
         public int WithdrawnApplications { get; set; }
+        public int JobStatusId { get; set; }
+        public JobStatus JobStatus { get; set; }
 
         public string CreatedBy { get; set; }
         public string UpdatedBy { get; set; }

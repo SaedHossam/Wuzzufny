@@ -60,7 +60,12 @@ namespace GlassDoor
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection"),
-                    b => b.MigrationsAssembly("GlassDoor")));
+                    b =>
+                    {
+                        b.UseNetTopologySuite();
+                        b.MigrationsAssembly("GlassDoor");
+                    }
+                    ));
 
             var jwtSettings = Configuration.GetSection("JwtSettings");
             services.AddAuthentication(opt =>
@@ -95,7 +100,8 @@ namespace GlassDoor
 
             services.AddScoped<JwtHandler>();
 
-            services.Configure<FormOptions>(o => {
+            services.Configure<FormOptions>(o =>
+            {
                 o.ValueLengthLimit = int.MaxValue;
                 o.MultipartBodyLengthLimit = int.MaxValue;
                 o.MemoryBufferThreshold = int.MaxValue;
