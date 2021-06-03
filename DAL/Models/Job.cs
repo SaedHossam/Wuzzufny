@@ -23,8 +23,7 @@ namespace DAL.Models
         public int? RejectedApplications => Applications?.Count(a => a.Status.Equals("Rejected"));
         public int ViewedApplications { get; set; }
         public int WithdrawnApplications { get; set; }
-        public int JobStatusId { get; set; }
-        public JobStatus JobStatus { get; set; }
+        public bool IsOpen { get; set; }
 
         public string CreatedBy { get; set; }
         public string UpdatedBy { get; set; }

@@ -13,6 +13,8 @@ namespace DAL.Models
 
         public ICollection<City> Cities { get; set; }
         public ICollection<Job> Jobs { get; set; }
-        public ICollection<Employee> Employees { get; set; }
+
+        public ICollection<Employee> EmployeesNationality { get; set; }
+        public ICollection<Employee> EmployeesLocation { get; set; }
     }
 }

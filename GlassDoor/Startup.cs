@@ -6,8 +6,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using System.Text;
+using System.Threading.Tasks;
 using DAL;
 using DAL.Models;
+using GlassDoor.Contexts;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -122,6 +124,14 @@ namespace GlassDoor
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            var jsonTextCities = System.IO.File.ReadAllText(@"cities.json");
+            Seeding.Seed<Country>(jsonTextCities, app.ApplicationServices);
+
+            var jsonTextcurrencies = System.IO.File.ReadAllText(@"currencies.json");
+            Seeding.Seed<Currency>(jsonTextcurrencies, app.ApplicationServices);
+
+
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -143,18 +153,18 @@ namespace GlassDoor
 
             app.UseSpa(spa =>
             {
-                // To learn more about options for serving an Angular SPA from ASP.NET Core,
-                // see https://go.microsoft.com/fwlink/?linkid=864501
+    // To learn more about options for serving an Angular SPA from ASP.NET Core,
+    // see https://go.microsoft.com/fwlink/?linkid=864501
 
-                spa.Options.SourcePath = "ClientApp";
+    spa.Options.SourcePath = "ClientApp";
 
                 if (env.IsDevelopment())
                 {
-                    // Live reload not working for .net5 and ng11 for now,
-                    // see https://github.com/dotnet/aspnetcore/issues/29478
-                    // spa.UseAngularCliServer(npmScript: "start");
-                    // spa.Options.StartupTimeout = TimeSpan.FromSeconds(180); // Increase the timeout if angular app is taking longer to startup
-                    spa.UseProxyToSpaDevelopmentServer("http://localhost:4200"); // Use this instead to use the angular cli server
+        // Live reload not working for .net5 and ng11 for now,
+        // see https://github.com/dotnet/aspnetcore/issues/29478
+        // spa.UseAngularCliServer(npmScript: "start");
+        // spa.Options.StartupTimeout = TimeSpan.FromSeconds(180); // Increase the timeout if angular app is taking longer to startup
+        spa.UseProxyToSpaDevelopmentServer("http://localhost:4200"); // Use this instead to use the angular cli server
                 }
             });
         }

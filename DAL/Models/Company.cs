@@ -14,6 +14,7 @@ namespace DAL.Models
         public CompanyType CompanyType { get; set; }
         public CompanyIndustry CompanyIndustry { get; set; }
         public CompanySize CompanySize { get; set; }
+        public bool IsActive { get; set; }
         public ICollection<City> Locations { get; set; }
         public ICollection<Job> Jobs { get; set; }
         public ICollection<CompanyManager> CompanyManagers { get; set; }

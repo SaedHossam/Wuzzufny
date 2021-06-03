@@ -4,15 +4,17 @@ using DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NetTopologySuite.Geometries;
 
 namespace GlassDoor.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210602202017_employee-company-job")]
+    partial class employeecompanyjob
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -209,9 +211,6 @@ namespace GlassDoor.Migrations
                     b.Property<int?>("CompanyTypeId")
                         .HasColumnType("int");
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Logo")
                         .HasColumnType("nvarchar(max)");
 
@@ -371,16 +370,16 @@ namespace GlassDoor.Migrations
                     b.Property<string>("CV")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("CareerLevelId")
+                    b.Property<int>("CareerLevelId")
                         .HasColumnType("int");
 
                     b.Property<int?>("CityId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("CountryId")
+                    b.Property<int>("CountryId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("EducationLevelId")
+                    b.Property<int>("EducationLevelId")
                         .HasColumnType("int");
 
                     b.Property<int>("ExperienceYears")
@@ -401,7 +400,7 @@ namespace GlassDoor.Migrations
                     b.Property<string>("MobileNumber")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("NationalityId")
+                    b.Property<int>("NationalityId")
                         .HasColumnType("int");
 
                     b.Property<string>("Photo")
@@ -454,8 +453,8 @@ namespace GlassDoor.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("IsOpen")
-                        .HasColumnType("bit");
+                    b.Property<int>("JobStatusId")
+                        .HasColumnType("int");
 
                     b.Property<int>("JobTypeId")
                         .HasColumnType("int");
@@ -488,6 +487,8 @@ namespace GlassDoor.Migrations
                     b.HasIndex("CompanyId");
 
                     b.HasIndex("CountryId");
+
+                    b.HasIndex("JobStatusId");
 
                     b.HasIndex("JobTypeId");
 
@@ -571,6 +572,21 @@ namespace GlassDoor.Migrations
                     b.HasIndex("SalaryRateId");
 
                     b.ToTable("JobsDetails");
+                });
+
+            modelBuilder.Entity("DAL.Models.JobStatus", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("JobStatuses");
                 });
 
             modelBuilder.Entity("DAL.Models.JobType", b =>
@@ -976,7 +992,9 @@ namespace GlassDoor.Migrations
                 {
                     b.HasOne("DAL.Models.CareerLevel", "CareerLevel")
                         .WithMany("Employees")
-                        .HasForeignKey("CareerLevelId");
+                        .HasForeignKey("CareerLevelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("DAL.Models.City", "City")
                         .WithMany("Employees")
@@ -985,16 +1003,20 @@ namespace GlassDoor.Migrations
                     b.HasOne("DAL.Models.Country", "Country")
                         .WithMany("EmployeesLocation")
                         .HasForeignKey("CountryId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.HasOne("DAL.Models.EducationLevel", "EducationLevel")
                         .WithMany("Employees")
-                        .HasForeignKey("EducationLevelId");
+                        .HasForeignKey("EducationLevelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("DAL.Models.Country", "Nationality")
                         .WithMany("EmployeesNationality")
                         .HasForeignKey("NationalityId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.HasOne("DAL.Models.ApplicationUser", "User")
                         .WithOne("Employee")
@@ -1031,6 +1053,12 @@ namespace GlassDoor.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("DAL.Models.JobStatus", "JobStatus")
+                        .WithMany("Jobs")
+                        .HasForeignKey("JobStatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("DAL.Models.JobType", "JobType")
                         .WithMany("Jobs")
                         .HasForeignKey("JobTypeId")
@@ -1043,12 +1071,14 @@ namespace GlassDoor.Migrations
 
                     b.Navigation("Country");
 
+                    b.Navigation("JobStatus");
+
                     b.Navigation("JobType");
                 });
 
             modelBuilder.Entity("DAL.Models.JobDetails", b =>
                 {
-                    b.HasOne("DAL.Models.CareerLevel", "CareerLevel")
+                    b.HasOne("DAL.Models.CareerLevel", "CarrerLevel")
                         .WithMany("JobDetails")
                         .HasForeignKey("CareerLevelId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1084,7 +1114,7 @@ namespace GlassDoor.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("CareerLevel");
+                    b.Navigation("CarrerLevel");
 
                     b.Navigation("Category");
 
@@ -1336,6 +1366,11 @@ namespace GlassDoor.Migrations
             modelBuilder.Entity("DAL.Models.JobCategory", b =>
                 {
                     b.Navigation("JobDetails");
+                });
+
+            modelBuilder.Entity("DAL.Models.JobStatus", b =>
+                {
+                    b.Navigation("Jobs");
                 });
 
             modelBuilder.Entity("DAL.Models.JobType", b =>

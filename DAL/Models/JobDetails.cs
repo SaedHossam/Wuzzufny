@@ -6,7 +6,7 @@
         public int? ExperienceNeededMin { get; set; }
         public int? ExperienceNeededMax { get; set; }
         public int CareerLevelId { get; set; }
-        public CareerLevel CarrerLevel { get; set; }
+        public CareerLevel CareerLevel { get; set; }
         public int EducationLevelId { get; set; }
         public EducationLevel EducationLevel { get; set; }
         public int? SalaryMin { get; set; }

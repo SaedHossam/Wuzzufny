@@ -10,6 +10,7 @@ using GlassDoor.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using GlassDoor.JwtFeatures;
 using System.IdentityModel.Tokens.Jwt;
+using DAL;
 using Microsoft.AspNetCore.Authorization;
 using GlassDoor.Constants;
 using GlassDoor.services.email;
@@ -25,14 +26,16 @@ namespace GlassDoor.Controllers
         private readonly IMapper _mapper;
         private readonly JwtHandler _jwtHandler;
         private readonly IEmailSender _emailSender;
+        private readonly IUnitOfWork _unitOfWork;
 
 
-        public AccountsController(UserManager<ApplicationUser> userManager, IMapper mapper, JwtHandler jwtHandler, IEmailSender emailSender)
+        public AccountsController(UserManager<ApplicationUser> userManager, IMapper mapper, JwtHandler jwtHandler, IEmailSender emailSender, IUnitOfWork unitOfWork)
         {
             _userManager = userManager;
             _mapper = mapper;
             _jwtHandler = jwtHandler;
             _emailSender = emailSender;
+            _unitOfWork = unitOfWork;
         }
 
         [HttpPost("Registration")]
@@ -52,6 +55,10 @@ namespace GlassDoor.Controllers
             }
 
             await _userManager.AddToRoleAsync(user, Authorization.Roles.Employee.ToString());
+
+            var employee = new Employee() { UserId = user.Id };
+            _unitOfWork.Employees.Add(employee);
+            _unitOfWork.SaveChanges();
 
             var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
             var param = new Dictionary<string, string>
@@ -125,13 +132,17 @@ namespace GlassDoor.Controllers
 
                 if (user == null)
                 {
-                    user = new ApplicationUser { Email = payload.Email, UserName = payload.Email, FirstName = payload.GivenName, LastName = payload.FamilyName};
+                    user = new ApplicationUser { Email = payload.Email, UserName = payload.Email, FirstName = payload.GivenName, LastName = payload.FamilyName };
                     await _userManager.CreateAsync(user);
 
                     //TODO: prepare and send an email for the email confirmation
 
                     await _userManager.AddToRoleAsync(user, Authorization.Roles.Employee.ToString());
                     await _userManager.AddLoginAsync(user, info);
+
+                    var employee = new Employee() { UserId = user.Id };
+                    _unitOfWork.Employees.Add(employee);
+                    _unitOfWork.SaveChanges();
                 }
                 else
                 {

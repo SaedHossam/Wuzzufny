@@ -14,7 +14,6 @@ namespace DAL
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public string CurrentUserId { get; set; }
-
         public DbSet<Job> Jobs { get; set; }
         public DbSet<JobDetails> JobsDetails { get; set; }
         public DbSet<Application> Applications { get; set; }
@@ -22,7 +21,22 @@ namespace DAL
         public DbSet<Company> Companies { get; set; }
         public DbSet<Employee> Employees { get; set; }
         public DbSet<CompanyManager> CompanyManagers { get; set; }
-
+        public DbSet<CareerLevel> CareerLevels { get; set; }
+        public DbSet<City> Cities { get; set; }
+        public DbSet<CompanyIndustry> CompanyIndustries { get; set; }
+        public DbSet<CompanyLinks> CompanyLinks { get; set; }
+        public DbSet<CompanySize> CompanySizes { get; set; }
+        public DbSet<CompanyType> CompanyTypes { get; set; }
+        public DbSet<Country> Countries { get; set; }
+        public DbSet<Currency> Currencies { get; set; }
+        public DbSet<EducationLevel> EducationLevels { get; set; }
+        public DbSet<EmployeeLinks> EmployeeLinks { get; set; }
+        public DbSet<JobType> JobTypes { get; set; }
+        public DbSet<Language> Languages { get; set; }
+        public DbSet<SalaryRate> SalaryRates { get; set; }
+        public DbSet<SocialLinks> SocialLinks { get; set; }
+        public DbSet<UserLanguage> UserLanguages { get; set; }
+        public DbSet<JobCategory> JobCategories { get; set; }
 
         public ApplicationDbContext(DbContextOptions options) : base(options)
         { }
@@ -31,6 +45,20 @@ namespace DAL
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+
+            builder.Entity<Employee>()
+                .HasOne(e => e.Nationality)
+                .WithMany(c => c.EmployeesNationality)
+                .HasForeignKey(e => e.NationalityId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<Employee>()
+                .HasOne(e => e.Country)
+                .WithMany(c => c.EmployeesLocation)
+                .HasForeignKey(e => e.CountryId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+
 
             //builder.Entity<ApplicationUser>().HasOne<Employee>(au => au.Employee).WithOne(e => e.User)
             //    .OnDelete(DeleteBehavior.Cascade);
@@ -43,7 +71,7 @@ namespace DAL
             //builder.Entity<CompanyManager>().HasOne<ApplicationUser>(cm => cm.User).WithOne(au => au.CompanyManager)
             //    .OnDelete(DeleteBehavior.NoAction);
 
-            
+
         }
 
 
