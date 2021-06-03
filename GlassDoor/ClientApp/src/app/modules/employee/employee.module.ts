@@ -9,10 +9,16 @@ import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { CardModule, } from 'primeng/card';
 import { ViewJobComponent } from './components/view-job/view-job.component';
+import { RippleModule } from 'primeng/ripple';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 
 @NgModule({
   declarations: [
     ViewJobComponent,
+    ApplyJobComponent,
+  
     
   ],
   imports: [
@@ -22,7 +28,11 @@ import { ViewJobComponent } from './components/view-job/view-job.component';
 //PasswordModule,
     FormsModule,
     ButtonModule,
-    CardModule
+    CardModule,
+    RippleModule,
+    BrowserModule,
+    BrowserAnimationsModule,
+
   ]
 })
 export class EmployeeModule { }
