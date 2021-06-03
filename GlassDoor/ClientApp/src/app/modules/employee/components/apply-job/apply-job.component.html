@@ -1,0 +1,24 @@
+<h1>{{job.title}} Job</h1>
+<p> <strong>Number of Vancies: </strong>{{job.numberOfVacancies}}</p>
+<p> <strong>Career Level: </strong>{{carrerLevel}}</p>
+<p> <strong>Experience Nedded: </strong>{{experienceNedded}} <strong>year</strong></p>
+<p> <strong>Salary: </strong>{{salary}} <strong>EG</strong></p>
+<p> <strong>Category: </strong>{{category}}</p>
+<p> <strong>SubCategory: </strong>{{subCategory}}</p>
+<p> <strong>Description: </strong>{{description}}</p>
+<p> <strong>Requirements: </strong>{{requirements}}</p>
+<p> <strong>Responsibilities: </strong>{{responsibilities}}</p>
+<p> <strong>EducationLevel: </strong>{{educationLevel}}</p>
+<p> <strong>Status: </strong>{{status}}</p>
+<p> <strong>Location: </strong>{{job.location}}</p>
+<div>
+  <h3>Skills:</h3>
+  <ul>
+    <li *ngFor=" let item of skills">{{item.name}}</li>
+  </ul>
+
+
+</div>
+<button class="btn btn-info">Apply Now</button>
+<br />
+<a routerLink="/jobs">back to home</a>

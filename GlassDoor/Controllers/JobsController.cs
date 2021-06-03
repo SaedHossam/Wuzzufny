@@ -9,9 +9,9 @@ using DAL;
 using DAL.Models;
 using GlassDoor.ViewModels;
 using AutoMapper;
-using Microsoft.AspNetCore.Identity;
+using glassDoor.ViewModels;
 
-namespace GlassDoor.Controllers
+namespace glassDoor.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -21,9 +21,9 @@ namespace GlassDoor.Controllers
 
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
-        private readonly UserManager<ApplicationUser> _userManager;
+      //  private readonly ApplicationDbContext _context;
 
-        public JobsController( IMapper mapper, IUnitOfWork unitOfWork, UserManager<ApplicationUser> userManager)
+        public JobsController(IMapper mapper, IUnitOfWork unitOfWork)
         {
             _mapper = mapper;
             _unitOfWork = unitOfWork;
@@ -32,16 +32,20 @@ namespace GlassDoor.Controllers
 
         // GET: api/Jobs
         [HttpGet]
-        public  ActionResult<IEnumerable<Job>> GetJobs()
+        public async Task<ActionResult<IEnumerable<Job>>> GetJobs()
         {
-            return  _unitOfWork.Jobs.GetAll().ToList();
+            var allJobData =  _unitOfWork.Jobs.GetAllJobData();
+            return Ok( _mapper.Map<IEnumerable<JobViewModel>>(allJobData));
         }
 
-        // GET: api/Jobs/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Job>> GetJob(int id)
+        // GET: api/Jobs/GetJobDetails/5
+        [HttpGet("GetJobDetails/{id}")]
+        public async Task<ActionResult<Job>> GetJobDetails(int id)
         {
-            var job = await _context.Jobs.FindAsync(id);
+            var job = _unitOfWork.Jobs.GetAllJobData()
+               
+               .Where(jo => jo.Id == id).FirstOrDefault();
+
 
             if (job == null)
             {
@@ -50,6 +54,22 @@ namespace GlassDoor.Controllers
 
             return job;
         }
+
+        // GET: api/Jobs/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Job>> GetJob(int id)
+        {
+            var job =  _unitOfWork.Jobs.Find(a=>a.Id == id).FirstOrDefault();
+           
+
+            if (job == null)
+            {
+                return NotFound();
+            }
+
+            return job;
+        }
+        /*
 
         // PUT: api/Jobs/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
@@ -85,29 +105,12 @@ namespace GlassDoor.Controllers
         // POST: api/Jobs
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<PostJobDto>> PostJob([FromBody]PostJobDto postedjob)
+        public async Task<ActionResult<Job>> PostJob(Job job)
         {
-            if (postedjob == null || !ModelState.IsValid) 
-                return BadRequest();
+            _context.Jobs.Add(job);
+            await _context.SaveChangesAsync();
 
-            var job = _mapper.Map<Job>(postedjob);
-
-            //job.CreatedBy =  _userManager.GetUserId(HttpContext.User);
-
-            //var user = await _userManager.GetUserAsync(HttpContext.User);
-
-            //Job job = new Job();
-            //job.Title = postedjob.Title;
-            //job.EmploymentType = postedjob.EmploymentType;
-            //job.NumberOfVacancies = postedjob.NumberOfVacancies;
-            //job.Location = postedjob.Location;
-            //job.CreatedDate = DateTime.Now;
-            //job.JobDetails = postedjob.JobDetails;
-            //job.JobDetails.JobId = job.Id;
-            //job.Skills = postedjob.Skills;
-            _unitOfWork.Jobs.Add(job);
-            _unitOfWork.SaveChanges();
-            return Ok(job);
+            return CreatedAtAction("GetJob", new { id = job.Id }, job);
         }
 
         // DELETE: api/Jobs/5
@@ -129,6 +132,7 @@ namespace GlassDoor.Controllers
         private bool JobExists(int id)
         {
             return _context.Jobs.Any(e => e.Id == id);
-        }
+        }*/
     }
+
 }
