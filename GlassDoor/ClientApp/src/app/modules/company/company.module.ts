@@ -7,6 +7,7 @@ import { PostJobComponent } from './components/post-job/post-job.component';
 import { FormsModule } from '@angular/forms';
 import { CalendarModule } from 'primeng/calendar';
 import { PasswordModule } from 'primeng/password';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -20,6 +21,7 @@ import { PasswordModule } from 'primeng/password';
     FormsModule,
     CalendarModule,
     PasswordModule,
+    
   ]
 })
 export class CompanyModule { }

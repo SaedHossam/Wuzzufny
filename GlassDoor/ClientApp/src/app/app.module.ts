@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -22,7 +22,7 @@ import { GoogleLoginProvider } from 'angularx-social-login';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CalendarModule } from "primeng/calendar";
 import { FormsModule } from "@angular/forms"
-import { PasswordModule} from "primeng/password"
+import { PasswordModule } from "primeng/password"
 
 export function tokenGetter() {
   return localStorage.getItem("token");
@@ -46,6 +46,7 @@ export function tokenGetter() {
     FormsModule,
     CalendarModule,
     PasswordModule,
+    
 
     JwtModule.forRoot({
       config: {

@@ -22,12 +22,13 @@ namespace GlassDoor.Controllers
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
         private readonly UserManager<ApplicationUser> _userManager;
-
-        public JobsController( IMapper mapper, IUnitOfWork unitOfWork, UserManager<ApplicationUser> userManager)
+        private readonly ApplicationDbContext _DB;
+        public JobsController( IMapper mapper, IUnitOfWork unitOfWork, UserManager<ApplicationUser> userManager,ApplicationDbContext DB)
         {
             _mapper = mapper;
             _unitOfWork = unitOfWork;
             _userManager = userManager;
+            this._DB = DB;
         }
 
         // GET: api/Jobs
@@ -35,6 +36,24 @@ namespace GlassDoor.Controllers
         public  ActionResult<IEnumerable<Job>> GetJobs()
         {
             return  _unitOfWork.Jobs.GetAll().ToList();
+        }
+
+        [HttpGet("SeedAngular")]
+        public ActionResult<SeedAngular> GetAllConstants()
+        {
+            SeedAngular s = new SeedAngular()
+            {
+                jobTypes = _DB.JobTypes.ToList(),
+                jobCategories = _DB.JobCategories.ToList(),
+                countries = _DB.Countries.ToList(),
+                cities = _DB.Cities.ToList(),
+                Currencies = _DB.Currencies.ToList(),
+                salaryRates = _DB.SalaryRates.ToList(),
+                Skills = _DB.Skills.ToList(),
+                careerLevels=_DB.CareerLevels.ToList()
+
+            };
+            return s;
         }
 
         // GET: api/Jobs/5
@@ -91,20 +110,7 @@ namespace GlassDoor.Controllers
                 return BadRequest();
 
             var job = _mapper.Map<Job>(postedjob);
-
-            //job.CreatedBy =  _userManager.GetUserId(HttpContext.User);
-
-            //var user = await _userManager.GetUserAsync(HttpContext.User);
-
-            //Job job = new Job();
-            //job.Title = postedjob.Title;
-            //job.EmploymentType = postedjob.EmploymentType;
-            //job.NumberOfVacancies = postedjob.NumberOfVacancies;
-            //job.Location = postedjob.Location;
-            //job.CreatedDate = DateTime.Now;
-            //job.JobDetails = postedjob.JobDetails;
-            //job.JobDetails.JobId = job.Id;
-            //job.Skills = postedjob.Skills;
+    
             _unitOfWork.Jobs.Add(job);
             _unitOfWork.SaveChanges();
             return Ok(job);
