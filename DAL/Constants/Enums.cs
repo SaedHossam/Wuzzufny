@@ -8,11 +8,12 @@ namespace DAL.Models
 {
     public static class Enums
     {
-        public enum Gender {Male, Female}
+        public enum Gender { Male, Female }
 
-        public enum MilitaryStatus {NotApplicable, Exempted, Completed, Postponed}
+        public enum MilitaryStatus { NotApplicable, Exempted, Completed, Postponed }
 
-        public enum CurrentJobStatus { Unemployed, Looking, Interested, NotLooking}
+        public enum CurrentJobStatus { Unemployed, Looking, Interested, NotLooking }
 
+        public enum CompanyRequestStatus { UnderReview, Accepted, Rejected }
     }
 }

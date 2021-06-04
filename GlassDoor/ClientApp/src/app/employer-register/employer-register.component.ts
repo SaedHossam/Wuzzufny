@@ -4,7 +4,7 @@ import { PasswordConfirmationValidatorService } from
   "../shared/custom-validators/password-confirmation-validator.service";
 import { CompanyForRegistrationDto } from "../interfaces/company-register/company-for-registration-dto.model";
 import { CompanyService } from "../shared/services/company.service"
-import { IdustryService } from "../shared/services/idustry.service";
+import { CompanyIndustryService } from "../shared/services/company-industry.service";
 import { Industry } from "../interfaces/shared/industry.model";
 import { ComapnySize } from "../interfaces/shared/comapny-size.model";
 import { CompanySizeService } from "../shared/services/company-size.service";
@@ -25,26 +25,25 @@ export class EmployerRegisterComponent implements OnInit {
   public companySizes: ComapnySize[];
 
   constructor(private _passConfValidator: PasswordConfirmationValidatorService,
-    private _companyService: CompanyService, private _idustryService: IdustryService, private _companySizeService: CompanySizeService) { }
+    private _companyService: CompanyService, private _companyIndustryService: CompanyIndustryService, private _companySizeService: CompanySizeService) { }
 
   ngOnInit(): void {
     this.registerForm = new FormGroup({
       companyName: new FormControl(''),
-      companyIndustry: new FormControl(''),
-      companySize: new FormControl(''),
+      companyIndustry: new FormControl('', [Validators.required]),
+      companySize: new FormControl('', [Validators.required]),
       firstName: new FormControl(''),
       lastName: new FormControl(''),
       title: new FormControl(''),
-      mobile: new FormControl(null, [Validators.pattern("[01][0-9]{9}")]),
+      mobile: new FormControl(null, [Validators.pattern("[01][0-9]{10}")]),
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [Validators.required]),
-      confirmPassword: new FormControl(''),
       confirm: new FormControl('')
     });
 
     this.registerForm.get('confirm').setValidators([Validators.required, this._passConfValidator.validateConfirmPassword(this.registerForm.get('password'))]);
 
-    this._idustryService.getIndustries().subscribe(industries => {
+    this._companyIndustryService.getIndustries().subscribe(industries => {
       this.industries = industries;
     },
       error => {
@@ -76,11 +75,11 @@ export class EmployerRegisterComponent implements OnInit {
     const formValues = { ...registerFormValue };
 
     const company: CompanyForRegistrationDto = {
-      companyName: formValues.companyName,
-      companyIndustry: formValues.companyIndustry,
-      companySize: formValues.companySize,
+      name: formValues.companyName,
+      companyIndustryId: formValues.companyIndustry,
+      companySizeId: formValues.companySize,
       title: formValues.title,
-      mobile: formValues.mobile,
+      phoneNumber: formValues.mobile,
       firstName: formValues.firstName,
       lastName: formValues.lastName,
       email: formValues.email,

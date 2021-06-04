@@ -37,6 +37,7 @@ namespace DAL
         public DbSet<SocialLinks> SocialLinks { get; set; }
         public DbSet<UserLanguage> UserLanguages { get; set; }
         public DbSet<JobCategory> JobCategories { get; set; }
+        public DbSet<CompanyRequestStatus> CompanyRequestStatus { get; set; }
 
         public ApplicationDbContext(DbContextOptions options) : base(options)
         { }

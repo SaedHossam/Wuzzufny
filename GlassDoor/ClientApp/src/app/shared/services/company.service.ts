@@ -12,6 +12,6 @@ export class CompanyService {
   constructor(private _http: HttpClient, private _envUrl: EnvironmentUrlService) { }
 
   public registerCompany = (body: CompanyForRegistrationDto) => {
-    return this._http.post(this._envUrl + '/api/company/register', body);
+    return this._http.post(this._envUrl.urlAddress + '/api/accounts/CompanyRegistration', body);
   }
 }

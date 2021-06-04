@@ -32,6 +32,7 @@ namespace DAL
         private ISalaryRateRepository _salaryRate;
         private ISocialLinksRepository _socialLinks;
         private IUserLanguageRepository _userLanguage;
+        private ICompanyRequestStatusRepository _companyRequestStatus;
 
         public UnitOfWork(ApplicationDbContext context)
         {
@@ -63,6 +64,7 @@ namespace DAL
         public ISalaryRateRepository SalaryRate => _salaryRate ??= new SalaryRateRepository(_context);
         public ISocialLinksRepository SocialLinks => _socialLinks ??= new SocialLinksRepository(_context);
         public IUserLanguageRepository UserLanguage => _userLanguage ??= new UserLanguageRepository(_context);
+        public ICompanyRequestStatusRepository CompanyRequestStatus => _companyRequestStatus ??= new CompanyRequestStatusRepository(_context);
 
 
 

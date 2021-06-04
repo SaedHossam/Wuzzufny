@@ -70,8 +70,6 @@ namespace GlassDoor.Controllers
             var message = new Message(new string[] { userForRegistration.Email }, "Email Confirmation token", callback, null, false);
             await _emailSender.SendEmailAsync(message);
 
-            // Add default Role = Employee
-            await _userManager.AddToRoleAsync(user, Authorization.Roles.Employee.ToString());
             return StatusCode(201);
         }
 
@@ -84,7 +82,16 @@ namespace GlassDoor.Controllers
                 return BadRequest("Authentication failed. Wrong Username or Password");
 
             if (!await _userManager.IsEmailConfirmedAsync(user))
-                return Unauthorized(new AuthResponseDto { ErrorMessage = "Email is not confirmed" });
+            {
+                if (await _userManager.IsInRoleAsync(user, Authorization.Roles.Company.ToString()))
+                {
+                    return Unauthorized(new AuthResponseDto {ErrorMessage = "This account still under review"});
+                }
+                else
+                {
+                    return Unauthorized(new AuthResponseDto { ErrorMessage = "Email is not confirmed" });
+                }
+            }
 
             //you can check here if the account is locked out in case the user enters valid credentials after locking the account.
             if (await _userManager.IsLockedOutAsync(user))
@@ -146,13 +153,15 @@ namespace GlassDoor.Controllers
                 }
                 else
                 {
+                    if (await _userManager.IsInRoleAsync(user, Authorization.Roles.Company.ToString()) &&
+                        !user.EmailConfirmed)
+                    {
+                        return BadRequest("Invalid External Authentication., your account is under review");
+                    }
+
                     await _userManager.AddLoginAsync(user, info);
                 }
             }
-
-            if (user == null)
-                return BadRequest("Invalid External Authentication.");
-
             //check for the Locked out account
 
 
@@ -230,6 +239,40 @@ namespace GlassDoor.Controllers
                 .ToList();
 
             return Ok(claims);
+        }
+
+        [HttpPost("CompanyRegistration")]
+        public async Task<IActionResult> RegisterCompany([FromBody] CompanyForRegistrationDto companyForRegistration)
+        {
+            if (companyForRegistration == null || !ModelState.IsValid)
+                return BadRequest();
+
+            var user = _mapper.Map<ApplicationUser>(companyForRegistration);
+
+            var result = await _userManager.CreateAsync(user, companyForRegistration.Password);
+            if (!result.Succeeded)
+            {
+                var errors = result.Errors.Select(e => e.Description);
+
+                return BadRequest(new RegistrationResponseDto { Errors = errors });
+            }
+
+            await _userManager.AddToRoleAsync(user, Authorization.Roles.Company.ToString());
+
+            var company = _mapper.Map<Company>(companyForRegistration);
+            company.RequestStatusId = _unitOfWork.CompanyRequestStatus.GetSingleOrDefault(cr =>
+                cr.Name == Enums.CompanyRequestStatus.UnderReview.ToString()).Id;
+
+            var companyManager = new CompanyManager() { UserId = user.Id, Title = companyForRegistration.Title, Company = company };
+            _unitOfWork.CompaniesManagers.Add(companyManager);
+
+            _unitOfWork.SaveChanges();
+
+            var message = new Message(new string[] { companyForRegistration.Email }, "Company account under review",
+                "we received your request and will get back to you  as soon as it is reviewed", null, false);
+            await _emailSender.SendEmailAsync(message);
+
+            return StatusCode(201);
         }
     }
 }

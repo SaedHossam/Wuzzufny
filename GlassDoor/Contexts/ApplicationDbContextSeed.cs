@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DAL;
 using DAL.Models;
 using GlassDoor.Constants;
 using JsonNet.PrivateSettersContractResolvers;
@@ -214,6 +215,19 @@ namespace GlassDoor.Contexts
                 };
 
                 await context.SalaryRates.AddRangeAsync(salaryRates);
+                await context.SaveChangesAsync();
+            }
+
+            if (!context.CompanyRequestStatus.Any())
+            {
+                var companyRequestStatuses = new List<CompanyRequestStatus>()
+                {
+                    new CompanyRequestStatus(){Name = Enums.CompanyRequestStatus.UnderReview.ToString()},
+                    new CompanyRequestStatus(){Name = Enums.CompanyRequestStatus.Accepted.ToString()},
+                    new CompanyRequestStatus(){Name = Enums.CompanyRequestStatus.Rejected.ToString()}
+                };
+
+                await context.CompanyRequestStatus.AddRangeAsync(companyRequestStatuses);
                 await context.SaveChangesAsync();
             }
 

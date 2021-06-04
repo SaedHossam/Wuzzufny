@@ -6,11 +6,11 @@ import { Industry } from "../../interfaces/shared/industry.model";
 @Injectable({
   providedIn: 'root'
 })
-export class IdustryService {
+export class CompanyIndustryService {
 
   constructor(private _http: HttpClient, private _envUrl: EnvironmentUrlService) { }
 
   public getIndustries = () => {
-    return this._http.get<Industry[]>(this._envUrl.urlAddress + '/api/industry');
+    return this._http.get<Industry[]>(this._envUrl.urlAddress + '/api/CompanyIndustries');
   }
 }

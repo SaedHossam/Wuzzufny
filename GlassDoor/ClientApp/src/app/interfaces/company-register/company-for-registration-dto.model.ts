@@ -1,11 +1,11 @@
 export interface CompanyForRegistrationDto {
-  companyName: string;
-  companyIndustry: string;
-  companySize: number;
+  name: string;
+  companyIndustryId: number;
+  companySizeId: number;
   firstName: string;
   lastName: string;
   title: string;
-  mobile: string;
+  phoneNumber: string;
   email: string;
   password: string;
   confirmPassword: string;

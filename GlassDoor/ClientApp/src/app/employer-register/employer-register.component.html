@@ -21,14 +21,14 @@
         <label for="companyIndustry" class="col-form-label col-sm-2">Company Industry:</label>
         <div class="col-md-5">
           <!--<input type="text" id="companyIndustry" formControlName="companyIndustry" class="form-control" />-->
-          <p-dropdown [options]="industries" optionLabel="name"></p-dropdown>
+          <p-dropdown [options]="industries" formControlName="companyIndustry" optionLabel="name" optionValue="id" placeholder="Select an industry" ></p-dropdown>
         </div>
       </div>
       <div class="form-group row">
         <label for="companySize" class="col-form-label col-sm-2">Company Size:</label>
         <div class="col-md-5">
           <!--<input type="number" id="companySize" formControlName="companySize" class="form-control" />-->
-          <p-dropdown [options]="companySizes" optionLabel="name"></p-dropdown>
+          <p-dropdown [options]="companySizes" formControlName="companySize" optionLabel="name" optionValue="id" placeholder="Select your company size" ></p-dropdown>
         </div>
       </div>
       <div class="form-group row">

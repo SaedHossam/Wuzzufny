@@ -6,12 +6,11 @@ using GlassDoor.ViewModels.shared;
 
 namespace GlassDoor.ViewModels
 {
-    public class CompanySizeDto: GenericDto
+    public class CompanyIndustryDto : GenericDto
     {
-
     }
 
-    public class CompanySizeCreateDto
+    public class CompanyIndustryCreateDto
     {
         public string Name { get; set; }
     }

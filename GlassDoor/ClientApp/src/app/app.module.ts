@@ -30,7 +30,7 @@ import { CompanyService } from "./shared/services/company.service";
 import { PasswordConfirmationValidatorService } from
   "./shared/custom-validators/password-confirmation-validator.service";
 import { DropdownModule } from 'primeng/dropdown';
-import { IdustryService } from "./shared/services/idustry.service";
+import { CompanyIndustryService } from "./shared/services/company-industry.service";
 
 
 export function tokenGetter() {
@@ -94,7 +94,7 @@ export function tokenGetter() {
     },
     CompanyService,
     PasswordConfirmationValidatorService,
-    IdustryService
+    CompanyIndustryService
   ],
   bootstrap: [AppComponent]
 })

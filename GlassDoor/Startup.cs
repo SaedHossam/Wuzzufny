@@ -140,6 +140,11 @@ namespace GlassDoor
             }
 
             app.UseHttpsRedirection();
+            //app.UseStaticFiles();
+            //if (!env.IsDevelopment())
+            //{
+            //    app.UseSpaStaticFiles();
+            //}
 
             app.UseRouting();
 
@@ -153,18 +158,18 @@ namespace GlassDoor
 
             app.UseSpa(spa =>
             {
-    // To learn more about options for serving an Angular SPA from ASP.NET Core,
-    // see https://go.microsoft.com/fwlink/?linkid=864501
+                // To learn more about options for serving an Angular SPA from ASP.NET Core,
+                // see https://go.microsoft.com/fwlink/?linkid=864501
 
-    spa.Options.SourcePath = "ClientApp";
+                spa.Options.SourcePath = "ClientApp";
 
                 if (env.IsDevelopment())
                 {
-        // Live reload not working for .net5 and ng11 for now,
-        // see https://github.com/dotnet/aspnetcore/issues/29478
-        // spa.UseAngularCliServer(npmScript: "start");
-        // spa.Options.StartupTimeout = TimeSpan.FromSeconds(180); // Increase the timeout if angular app is taking longer to startup
-        spa.UseProxyToSpaDevelopmentServer("http://localhost:4200"); // Use this instead to use the angular cli server
+                    // Live reload not working for .net5 and ng11 for now,
+                    // see https://github.com/dotnet/aspnetcore/issues/29478
+                    // spa.UseAngularCliServer(npmScript: "start");
+                    // spa.Options.StartupTimeout = TimeSpan.FromSeconds(180); // Increase the timeout if angular app is taking longer to startup
+                    spa.UseProxyToSpaDevelopmentServer("http://localhost:4200"); // Use this instead to use the angular cli server
                 }
             });
         }
