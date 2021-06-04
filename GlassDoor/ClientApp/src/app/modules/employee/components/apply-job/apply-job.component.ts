@@ -14,8 +14,8 @@ import { JobService } from '../../../../shared/services/job.service';
 export class ApplyJobComponent implements OnInit {
 
   constructor(private service: JobService, private ac: ActivatedRoute,
-    private primengConfig: PrimeNGConfig  ) { }
-  job: any = new Job();
+    private primengConfig: PrimeNGConfig) { }
+  jobD: any = new JobDetails();
 
 
   carrerLevel: string;
@@ -34,19 +34,19 @@ export class ApplyJobComponent implements OnInit {
     this.primengConfig.ripple = true;
     this.ac.params.subscribe(p => {
       this.service.getJobById(p.id).subscribe(a => {
-        this.job = a;
+        this.jobD = a;
 
-        this.carrerLevel = this.job.jobDetails.carrerLevel;
-        this.experienceNedded = this.job.jobDetails.experienceNedded;
-        this.category = this.job.jobDetails.category;
-        this.subCategory = this.job.jobDetails.subCategory;
-        this.description = this.job.jobDetails.description;
-        this.requirements = this.job.jobDetails.requirements;
-        this.educationLevel = this.job.jobDetails.educationLevel;
-        this.status = this.job.jobDetails.status;
-        this.salary = this.job.jobDetails.salary;
-        this.responsibilities = this.job.jobDetails.responsibilities;
-        this.skills = this.job.skills;
+        this.carrerLevel = this.jobD.jobDetails.carrerLevel;
+        this.experienceNedded = this.jobD.jobDetails.experienceNedded;
+        this.category = this.jobD.jobDetails.category;
+        this.subCategory = this.jobD.jobDetails.subCategory;
+        this.description = this.jobD.jobDetails.description;
+        this.requirements = this.jobD.jobDetails.requirements;
+        this.educationLevel = this.jobD.jobDetails.educationLevel;
+        this.status = this.jobD.jobDetails.status;
+        this.salary = this.jobD.jobDetails.salary;
+        this.responsibilities = this.jobD.jobDetails.responsibilities;
+        this.skills = this.jobD.skills;
         
       });
     });
@@ -87,12 +87,12 @@ export class ApplyJobComponent implements OnInit {
     }
   }
 
-  getNameFromJson(value: string) {
+  /*getNameFromJson(value: string) {
     return JSON.parse(value);
-  }
+  }*/
 
 
-  getStringFromEnum(value: number) {
+  /*getStringFromEnum(value: number) {
     switch (value) {
       case 0:
         return "FullTime";
@@ -103,7 +103,7 @@ export class ApplyJobComponent implements OnInit {
       case 3:
         return "Internship";
     }
-  }
+  }*/
 
 }
        

@@ -9,5 +9,6 @@ namespace DAL.Repositories.Interfaces
 {
     public interface IJobDetailsRepository : IRepository<JobDetails>
     {
+        public JobDetails GetJobDetails(int id);
     }
 }

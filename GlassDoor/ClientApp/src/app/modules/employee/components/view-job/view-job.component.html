@@ -10,14 +10,17 @@
   <small>{{ getNameFromJson(item.location).name  }}</small>
 </p-card>-->
 
+
+
+
 <p-card *ngFor="let item of jobs" header="{{item.title}} " subheader=" {{item.company.name}}" [style]="{width: '360px'}" styleClass="p-card-shadow">
   <ng-template pTemplate="header">
     <img alt="Card" src="../../../../../assets/Images/usercard.png" />
   </ng-template>
   <p>
-    <i class="pi pi-map-marker" style="color:skyblue"></i><!--{{getNameFromJson(item.location).country  }} |--> {{ getNameFromJson(item.location).name  }}&nbsp;
-    <i class="pi pi-check" style="color:darkseagreen"></i> {{item.applications[0].status}} &nbsp;
-    <i class="pi pi-flag" style="color: #0D89EC;font-size: 0.9rem"></i> {{getStringFromEnum(item.employmentType)}}&nbsp;
+    <i class="pi pi-map-marker" style="color:skyblue"></i> {{item.country.name}} , {{ item.city.name}}&nbsp;
+    <i class="pi pi-check" style="color:darkseagreen"></i> {{returnOpenJobsOnly(item.isOpen)}} &nbsp;
+    <i class="pi pi-flag" style="color: #0D89EC;font-size: 0.9rem"></i> {{item.jobType.name}}&nbsp;
   </p>
   <p><i class="pi pi-calendar"></i> {{getPrintedDate(item.createdDate)}}&nbsp;</p>
   <p>
@@ -31,6 +34,9 @@
     <p-button label="Save" icon="pi pi-bookmark" styleClass="p-button-secondary" [style]="{'margin-left': '.5em'}"></p-button>
   </ng-template>
 </p-card>
+
+
+
 
 <!--<i class="pi pi-lock-open"></i>
 <i _ngcontent-ogm-c50="" class="pi pi-chart-line"></i>

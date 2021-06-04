@@ -11,36 +11,12 @@ export class ViewJobComponent implements OnInit {
 
   jobs: Job[] = [];
 
-  totalLength: any;//paging
-  page: number = 1;//paging
-
-
-  // searching
-  title: any;
-
   constructor(public service: JobService) { }
 
   ngOnInit(): void {
     this.service.getJobs().subscribe(a => {
       this.jobs = a;
-      this.totalLength = a.length;// paging
-      console.log(this.totalLength);
     })
-
-  }
-
-  // Search start region
-  Search() {
-    if (this.title == "") {
-      this.ngOnInit();
-    }
-    else {
-      this.jobs = this.jobs.filter(res => {
-        return res.title.toLocaleLowerCase().match(this.title.toLocaleLowerCase());
-      });
-    }
-
-
   }
 
 
@@ -77,12 +53,17 @@ export class ViewJobComponent implements OnInit {
     }
   }
 
-  getNameFromJson(value: string) {
-    return JSON.parse(value);
+  returnOpenJobsOnly(check: boolean) {
+    return check == true ? "Open" : "CLOSED";
   }
 
 
-  getStringFromEnum(value: number) {
+  /*getNameFromJson(value: string) {
+    return JSON.parse(value);
+  }*/
+
+
+ /* getStringFromEnum(value: number) {
     switch (value) {
       case 0:
         return "FullTime";
@@ -93,6 +74,6 @@ export class ViewJobComponent implements OnInit {
       case 3:
         return "Internship";
     }
-  }
+  }*/
 
 }

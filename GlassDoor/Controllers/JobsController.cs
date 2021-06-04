@@ -27,7 +27,7 @@ namespace glassDoor.Controllers
         {
             _mapper = mapper;
             _unitOfWork = unitOfWork;
-            _userManager = userManager;
+           // _userManager = userManager;
         }
 
         // GET: api/Jobs
@@ -40,19 +40,17 @@ namespace glassDoor.Controllers
 
         // GET: api/Jobs/GetJobDetails/5
         [HttpGet("GetJobDetails/{id}")]
-        public async Task<ActionResult<Job>> GetJobDetails(int id)
+        public async Task<ActionResult<JobDetails>> GetJobDetails(int id)
         {
-            var job = _unitOfWork.Jobs.GetAllJobData()
-               
-               .Where(jo => jo.Id == id).FirstOrDefault();
+            var job = _unitOfWork.Jobs.GetJobById(id);
 
+            var jobDetails = _unitOfWork.JobsDetails.GetJobDetails(job.Id);
 
             if (job == null)
-            {
                 return NotFound();
-            }
 
-            return job;
+            return Ok(_mapper.Map<JobDetailsDto>(jobDetails));
+
         }
 
         // GET: api/Jobs/5

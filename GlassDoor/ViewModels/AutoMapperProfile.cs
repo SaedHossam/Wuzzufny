@@ -18,6 +18,9 @@ namespace GlassDoor.ViewModels
                 .ForMember(u => u.UserName, opt => opt.MapFrom(x => x.Email));
             CreateMap<Job, JobViewModel>()
                .ReverseMap();
+
+            CreateMap<JobDetails, JobDetailsDto>().ReverseMap();
+          
         }
     }
 }
