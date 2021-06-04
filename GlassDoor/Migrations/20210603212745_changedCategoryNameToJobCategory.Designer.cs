@@ -4,15 +4,17 @@ using DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NetTopologySuite.Geometries;
 
 namespace GlassDoor.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210603212745_changedCategoryNameToJobCategory")]
+    partial class changedCategoryNameToJobCategory
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -60,7 +62,7 @@ namespace GlassDoor.Migrations
                     b.Property<bool>("IsWithdrawn")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("JobCityId")
+                    b.Property<int?>("JobId")
                         .HasColumnType("int");
 
                     b.Property<string>("Status")
@@ -76,7 +78,7 @@ namespace GlassDoor.Migrations
 
                     b.HasIndex("EmployeeId");
 
-                    b.HasIndex("JobCityId");
+                    b.HasIndex("JobId");
 
                     b.ToTable("Applications");
                 });
@@ -434,10 +436,12 @@ namespace GlassDoor.Migrations
 
             modelBuilder.Entity("DAL.Models.Job", b =>
                 {
-                    b.Property<int>("CityId")
-                        .HasColumnType("int");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("CityId1")
+                    b.Property<int>("CityId")
                         .HasColumnType("int");
 
                     b.Property<int?>("CompanyId")
@@ -451,9 +455,6 @@ namespace GlassDoor.Migrations
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
 
                     b.Property<bool>("IsOpen")
                         .HasColumnType("bit");
@@ -482,9 +483,9 @@ namespace GlassDoor.Migrations
                     b.Property<int>("WithdrawnApplications")
                         .HasColumnType("int");
 
-                    b.HasKey("CityId");
+                    b.HasKey("Id");
 
-                    b.HasIndex("CityId1");
+                    b.HasIndex("CityId");
 
                     b.HasIndex("CompanyId");
 
@@ -730,13 +731,13 @@ namespace GlassDoor.Migrations
 
             modelBuilder.Entity("JobSkill", b =>
                 {
-                    b.Property<int>("JobsCityId")
+                    b.Property<int>("JobsId")
                         .HasColumnType("int");
 
                     b.Property<int>("SkillsId")
                         .HasColumnType("int");
 
-                    b.HasKey("JobsCityId", "SkillsId");
+                    b.HasKey("JobsId", "SkillsId");
 
                     b.HasIndex("SkillsId");
 
@@ -921,7 +922,7 @@ namespace GlassDoor.Migrations
 
                     b.HasOne("DAL.Models.Job", "Job")
                         .WithMany("Applications")
-                        .HasForeignKey("JobCityId");
+                        .HasForeignKey("JobId");
 
                     b.Navigation("Employee");
 
@@ -1018,7 +1019,7 @@ namespace GlassDoor.Migrations
                 {
                     b.HasOne("DAL.Models.City", "City")
                         .WithMany("Jobs")
-                        .HasForeignKey("CityId1")
+                        .HasForeignKey("CityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1166,7 +1167,7 @@ namespace GlassDoor.Migrations
                 {
                     b.HasOne("DAL.Models.Job", null)
                         .WithMany()
-                        .HasForeignKey("JobsCityId")
+                        .HasForeignKey("JobsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using DAL.Models.Interfaces;
 
@@ -12,8 +14,11 @@ namespace DAL.Models
         public int JobTypeId { get; set; }
         public JobType JobType { get; set; }
         public int? NumberOfVacancies { get; set; }
+
+        //[Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int CityId { get; set; }
         public City City{ get; set; }
+
         public int CountryId { get; set; }
         public Country Country { get; set; }
 

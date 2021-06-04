@@ -11,14 +11,12 @@ namespace GlassDoor.ViewModels
     {
         [Required]
         public string Title { get; set; }
-        public string EmploymentType { get; set; }
+        public int JobTypeId { get; set; }
         public int? NumberOfVacancies { get; set; }
-        public string Location { get; set; }
-        public string CreatedBy { get; set; }
-        public DateTime CreatedDate { get; set; }
+        public int CityId { get; set; }
+        public int CountryId { get; set; }
         public JobDetails JobDetails { get; set; }
         public ICollection<Skill> Skills { get; set; }
-
     }
 }
 
