@@ -13,7 +13,6 @@ namespace GlassDoor.ViewModels
         {
             CreateMap<UserForRegistrationDto, ApplicationUser>()
                 .ForMember(u => u.UserName, opt => opt.MapFrom(x => x.Email));
-            CreateMap<Industry, IndustryDto>().ReverseMap();
             CreateMap<CompanySize, CompanySizeDto>().ReverseMap();
             CreateMap<CompanySizeCreateDto, CompanySize>();
             CreateMap<CompanyIndustry, CompanyIndustryDto>().ReverseMap();
