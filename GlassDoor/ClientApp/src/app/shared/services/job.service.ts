@@ -18,12 +18,16 @@ export class JobService {
     return this.http.get<Job[]>(this._envUrl.urlAddress + '/api/jobs');
   }
 
-  getJobById(id: number) {
-    return this.http.get<Job>(this._envUrl.urlAddress + '/api/jobs/GetJobDetails/' + id);
-  }
-  //getjobdbyid(id: number) {
-  //  return this.http.get<JobDetails>(this._envUrl.urlAddress + '/api/jobdetails/' + id);
+  //getJobById(id: number) {
+  //  return this.http.get<Job>(this._envUrl.urlAddress + '/api/jobs/GetJobDetails/' + id);
   //}
+  getjobdbyid(id: number) {
+    return this.http.get<JobDetails>(this._envUrl.urlAddress + '/api/jobDetails/GetJobDetails/' + id);
+  }
 
+
+  searchForAJob(term: string, loc: string): Observable<Job[]>{
+    return this.http.get<Job[]>(this._envUrl.urlAddress + '/api/jobs/Search/' + term + '/' + loc);
+  }
 }
 

@@ -11,6 +11,8 @@ namespace DAL.Repositories.Interfaces
     {
         IEnumerable<Job> GetAllJobData();
         public Job GetJobById(int id);
+
+       
        
     }
 }

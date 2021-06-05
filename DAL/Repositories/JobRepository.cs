@@ -32,8 +32,10 @@ namespace DAL.Repositories
         {
             return _appContext.Jobs.Include(s=>s.Skills).Include(c=>c.Company).Include(c=>c.City).Include(c=>c.Country)
                 .Include(j=>j.JobType)
-                .Where(a=>a.Id==id).FirstOrDefault();
+                .FirstOrDefault(a=>a.Id == id);
                 
         }
+
+        
     }
 }

@@ -10,6 +10,7 @@ using DAL.Models;
 using GlassDoor.ViewModels;
 using AutoMapper;
 using glassDoor.ViewModels;
+using DAL.Constants;
 
 namespace glassDoor.Controllers
 {
@@ -39,19 +40,7 @@ namespace glassDoor.Controllers
         }
 
         // GET: api/Jobs/GetJobDetails/5
-        [HttpGet("GetJobDetails/{id}")]
-        public async Task<ActionResult<JobDetails>> GetJobDetails(int id)
-        {
-            var job = _unitOfWork.Jobs.GetJobById(id);
-
-            var jobDetails = _unitOfWork.JobsDetails.GetJobDetails(job.Id);
-
-            if (job == null)
-                return NotFound();
-
-            return Ok(_mapper.Map<JobDetailsDto>(jobDetails));
-
-        }
+        
 
         // GET: api/Jobs/5
         [HttpGet("{id}")]
@@ -67,6 +56,26 @@ namespace glassDoor.Controllers
 
             return job;
         }
+        
+
+        [HttpGet("Search/{term}/{loc}")]
+        public async Task <ActionResult<IEnumerable< Job>>> Search(string term, string loc)
+        {
+
+            var res = _unitOfWork.Jobs.GetAllJobData().Where(i => i.Title.Contains(term, StringComparison.InvariantCultureIgnoreCase)
+                || i.Company.Name.Contains(term,StringComparison.InvariantCultureIgnoreCase )
+                || i.Country.Name.Contains(loc, StringComparison.InvariantCultureIgnoreCase)
+                || i.City.Name.Contains(loc, StringComparison.InvariantCultureIgnoreCase)).ToList();
+            return res;
+
+           // var result = _unitOfWork.Jobs.GetAllJobData().Where(j => j.Title.Contains(term.NoMatterLowerOrUpper())
+          
+            
+            
+           // return  result ;
+      
+        }
+
         /*
 
         // PUT: api/Jobs/5

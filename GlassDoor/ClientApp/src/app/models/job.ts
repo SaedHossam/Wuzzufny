@@ -1,5 +1,6 @@
 
 import { from } from 'rxjs';
+import { Country } from './country';
 import { JobDetails } from './job-details';
 import { Skills } from './skills';
 ;
@@ -10,6 +11,7 @@ export class Job {
   constructor(id?: number, title?: string, employmentType?: string, numberOfVacancies?: number, location?: string,
     totalClicks?: number,/* acceptedApplications?: number, rejectedApplications?: number,*/ viewedApplications?: number, withdrawnApplications?: number,
     createdBy?: string, updatedBy?: string, createdDate?: Date, updatedDate?: Date, jobDetails?: JobDetails, skills?: Skills,
+    country?: Country
  ) {
 
     this.id = id;
@@ -29,6 +31,7 @@ export class Job {
     this.updatedDate = updatedDate;
     this.jobDetails = jobDetails;
     this.skills = skills;
+    this.country = country;
 
   }
 
@@ -50,6 +53,7 @@ export class Job {
   public updatedDate: Date;
   public jobDetails: JobDetails;
   public skills: Skills;
+  public country: Country;
 
   
 

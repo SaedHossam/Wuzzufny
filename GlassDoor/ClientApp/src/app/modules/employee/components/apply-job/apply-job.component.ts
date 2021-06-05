@@ -15,38 +15,39 @@ export class ApplyJobComponent implements OnInit {
 
   constructor(private service: JobService, private ac: ActivatedRoute,
     private primengConfig: PrimeNGConfig) { }
-  jobD: any = new JobDetails();
+  jobD: JobDetails = new JobDetails();
 
-
-  carrerLevel: string;
-  experienceNedded: number;
-  salary: number;
-  category: string;
-  subCategory: string;
-  description: string;
-  requirements: string;
-  responsibilities: string;
-  educationLevel: string;
-  status: string;
-  skills: string[] = [];
+  //salaryCurrency: string;
+  //carrerLevel: string;
+  //experienceNedded: number;
+  //salary: number;
+  //category: string;
+  //subCategory: string;
+  //description: string;
+  //requirements: string;
+  //responsibilities: string;
+  //educationLevel: string;
+  //status: string;
+  //skills: string[] = [];
 
   ngOnInit(): void {
     this.primengConfig.ripple = true;
     this.ac.params.subscribe(p => {
-      this.service.getJobById(p.id).subscribe(a => {
+      this.service.getjobdbyid(p.id).subscribe(a => {
         this.jobD = a;
 
-        this.carrerLevel = this.jobD.jobDetails.carrerLevel;
-        this.experienceNedded = this.jobD.jobDetails.experienceNedded;
-        this.category = this.jobD.jobDetails.category;
-        this.subCategory = this.jobD.jobDetails.subCategory;
-        this.description = this.jobD.jobDetails.description;
-        this.requirements = this.jobD.jobDetails.requirements;
-        this.educationLevel = this.jobD.jobDetails.educationLevel;
-        this.status = this.jobD.jobDetails.status;
-        this.salary = this.jobD.jobDetails.salary;
-        this.responsibilities = this.jobD.jobDetails.responsibilities;
-        this.skills = this.jobD.skills;
+        console.log(this.jobD);
+        //this.carrerLevel = this.jobD.jobDetails.carrerLevel;
+        //this.experienceNedded = this.jobD.jobDetails.experienceNedded;
+        //this.category = this.jobD.jobDetails.category;
+        //this.subCategory = this.jobD.jobDetails.subCategory;
+        //this.description = this.jobD.jobDetails.description;
+        //this.requirements = this.jobD.jobDetails.requirements;
+        //this.educationLevel = this.jobD.jobDetails.educationLevel;
+        //this.status = this.jobD.jobDetails.status;
+        //this.salary = this.jobD.jobDetails.salary;
+        //this.responsibilities = this.jobD.jobDetails.responsibilities;
+        //this.skills = this.jobD.skills;
         
       });
     });

@@ -18,12 +18,12 @@ namespace GlassDoor.ViewModels
         public EducationLevel EducationLevel { get; set; }
         public int? SalaryMin { get; set; }
         public int? SalaryMax { get; set; }
-        public int SalaryCurrencyId { get; set; }
+       // public int SalaryCurrencyId { get; set; }
         public Currency SalaryCurrency { get; set; }
-        public int SalaryRateId { get; set; }
+        //public int SalaryRateId { get; set; }
         public SalaryRate SalaryRate { get; set; }
 
-        public int JobCategoryId { get; set; }
+       // public int JobCategoryId { get; set; }
         public JobCategory Category { get; set; }
 
         public string Description { get; set; }

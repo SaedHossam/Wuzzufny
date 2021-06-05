@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DAL;
 using DAL.Models;
+using AutoMapper;
+using GlassDoor.ViewModels;
 
 namespace GlassDoor.Controllers
 {
@@ -15,10 +17,14 @@ namespace GlassDoor.Controllers
     public class JobDetailsController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
 
-        public JobDetailsController(ApplicationDbContext context)
+        public JobDetailsController(ApplicationDbContext context, IUnitOfWork unitOfWork, IMapper mapper)
         {
             _context = context;
+            _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
 
         // GET: api/JobDetails
@@ -28,20 +34,20 @@ namespace GlassDoor.Controllers
             return await _context.JobsDetails.ToListAsync();
         }
 
-        // GET: api/JobDetails/5
-        [HttpGet("{id}")]
+        [HttpGet("GetJobDetails/{id}")]
         public async Task<ActionResult<JobDetails>> GetJobDetails(int id)
         {
-            var jobDetails = await _context.JobsDetails.FindAsync(id);
+            //var job = _unitOfWork.Jobs.GetJobById(id);
+            var details = _unitOfWork.JobsDetails.GetJobDetails(id);
 
-            if (jobDetails == null)
-            {
+            //var jobDetails = _unitOfWork.JobsDetails.GetJobDetails(job.Id);
+
+            if (details == null)
                 return NotFound();
-            }
 
-            return jobDetails;
+            return  Ok(_mapper.Map<JobDetailsDto>(details));
+
         }
-
         // PUT: api/JobDetails/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]

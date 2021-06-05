@@ -10,15 +10,17 @@ import { JobService } from '../../../../shared/services/job.service';
 export class ViewJobComponent implements OnInit {
 
   jobs: Job[] = [];
-
+  title: string;
+  loc: string;
   constructor(public service: JobService) { }
 
   ngOnInit(): void {
     this.service.getJobs().subscribe(a => {
-      this.jobs = a;
+      this.jobs = a;   
     })
   }
 
+  
 
   public printDateOnly(date: Date) {
 
@@ -58,22 +60,14 @@ export class ViewJobComponent implements OnInit {
   }
 
 
-  /*getNameFromJson(value: string) {
-    return JSON.parse(value);
-  }*/
-
-
- /* getStringFromEnum(value: number) {
-    switch (value) {
-      case 0:
-        return "FullTime";
-      case 1:
-        return "PartTime";
-      case 2:
-        return "FreeLance";
-      case 3:
-        return "Internship";
+  searchAJob() {
+    if (this.title == "")
+      this.ngOnInit();
+    this.service.searchForAJob(this.title, this.loc).subscribe(a => {
+      this.jobs = a;
+      //console.log(a);
     }
-  }*/
+    ) 
+  }
 
 }

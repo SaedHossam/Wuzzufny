@@ -19,9 +19,11 @@ namespace DAL.Repositories
 
         public JobDetails GetJobDetails(int id)
         {
-            return _appContext.JobsDetails.Include(c=>c.CareerLevel).Include(e=>e.EducationLevel).Include(s => s.SalaryCurrency).Include(c=>c.Category)
-                .Where(a => a.JobId == id).FirstOrDefault()
-               ;
+            //return _appContext.JobsDetails.Include(j=>j.Job).Include(c=>c.CareerLevel).Include(e=>e.EducationLevel).Include(s => s.SalaryCurrency).Include(c=>c.Category)
+            //    .FirstOrDefault(a => a.JobId == id);
+            return _appContext.JobsDetails.Include(a=>a.Job).ThenInclude(c=>c.Country).ThenInclude(c=>c.Cities).FirstOrDefault(a=>a.JobId == id);
+
+
         }
 
     }
