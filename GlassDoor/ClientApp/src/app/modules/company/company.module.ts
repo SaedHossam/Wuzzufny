@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { CompanyRoutingModule } from './company-routing.module';
 import { HomeComponent } from './components/home/home.component';
 import { PostJobComponent } from './components/post-job/post-job.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CalendarModule } from 'primeng/calendar';
 import { PasswordModule } from 'primeng/password';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
@@ -21,6 +21,8 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
     FormsModule,
     CalendarModule,
     PasswordModule,
+    ReactiveFormsModule,
+    
     
   ]
 })

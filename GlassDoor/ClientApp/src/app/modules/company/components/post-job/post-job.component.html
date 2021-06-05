@@ -1,1 +1,147 @@
-<p>post-job works!</p>
+<h1>Post a job</h1>
+<div class="row">
+    <div class="col-6"> 
+<form [formGroup]="postjobform" autocomplete="off" novalidate (ngSubmit)="postjob(postjobform)" >
+
+    <div class="form-group">
+      <label for="title">Job title</label>
+      <input type="text" class="form-control"  placeholder="title"  formControlName="title">
+      <small  class="form-text text-muted">please Enter descriptive job title.</small>
+    </div>
+    
+    <div class="form-group">
+      <label for="jobTypeId">Job type</label>
+      <select  name="jobTypeId" class="form-control"  formControlName="jobTypeId" >        
+        <option *ngFor="let i of DB.jobTypes" [value]="i.id">
+          {{i.name}}
+        </option>
+    </select>
+      <small  class="form-text text-muted">choose a job type</small>
+    </div>
+
+    <div class="form-group">
+      <label for="countryId">Country Name</label>
+      <select  name="countryId" class="form-control"  formControlName="countryId" >        
+        <option *ngFor="let i of DB.countries" [value]="i.id">
+          {{i.name}}
+        </option>
+    </select>
+      <small  class="form-text text-muted">choose the country for work </small>
+    </div>
+
+    <div class="form-group">
+      <label for="cityId">City</label>
+      <select  name="cityId" class="form-control"  formControlName="cityId" >        
+        <option *ngFor="let i of DB.cities" [value]="i.id">
+          {{i.name}}
+        </option>
+    </select>
+      <small  class="form-text text-muted">choose a the city </small>
+    </div>
+
+    <div class="form-group">
+      <label for="numberOfVacancies">Number of Vacancies</label>
+      <input type="number" class="form-control"  placeholder="Number of vacancies"  formControlName="numberOfVacancies">
+      <small  class="form-text text-muted">please Enter the number of vacancies.</small>
+    </div>
+
+ <div class="form-group">
+      <label for="experienceNeededMin">Minmum experience needed</label>
+      <input type="number" class="form-control"  placeholder="Number of years"  formControlName="experienceNeededMin">
+      <small  class="form-text text-muted">please Enter the number of years.</small>
+    </div>
+
+    <div class="form-group">
+      <label for="experienceNeededMax">Maximum experience needed</label>
+      <input type="number" class="form-control"  placeholder="Number of years"  formControlName="experienceNeededMax">
+      <small  class="form-text text-muted">please Enter the number of years.</small>
+    </div>
+
+    <div class="form-group">
+      <label for="careerLevelId">Career level</label>
+      <select  name="careerLevelId" class="form-control"  formControlName="careerLevelId" >        
+        <option *ngFor="let i of DB.careerLevels" [value]="i.id">
+          {{i.name}}
+        </option>
+    </select>
+      <small  class="form-text text-muted">choose the career level </small>
+    </div>
+
+    <div class="form-group">
+      <label for="educationLevelId">Education Level</label>
+      <select  name="educationLevelId" class="form-control"  formControlName="educationLevelId" >        
+        <option *ngFor="let i of DB.educationLevels" [value]="i.id">
+          {{i.name}}
+        </option>
+    </select>
+      <small  class="form-text text-muted">choose a the city </small>
+    </div>
+
+    <div class="form-group">
+      <label for="salaryMin">Minmum Salary </label>
+      <input type="number" class="form-control"  placeholder="Amount of money"  formControlName="salaryMin">
+      <small  class="form-text text-muted">please Enter the amount of money.</small>
+    </div>
+
+    <div class="form-group">
+      <label for="salaryMax">Minmum Salary</label>
+      <input type="number" class="form-control"  placeholder="Amount of money"  formControlName="salaryMax">
+      <small  class="form-text text-muted">please Enter the number of years.</small>
+    </div>
+
+    <div class="form-group">
+      <label for="salaryCurrencyId">Currency</label>
+      <select  name="salaryCurrencyId" class="form-control"  formControlName="salaryCurrencyId" >        
+        <option *ngFor="let i of DB.currencies" [value]="i.id">
+          {{i.name}}
+        </option>
+    </select>
+      <small  class="form-text text-muted">choose a the currency </small>
+    </div>
+
+    <div class="form-group">
+      <label for="salaryRateId">Salary Rate</label>
+      <select  name="salaryRateId" class="form-control"  formControlName="salaryRateId" >        
+        <option *ngFor="let i of DB.salaryRates" [value]="i.id">
+          {{i.name}}
+        </option>
+    </select>
+      <small  class="form-text text-muted">choose the salary rate </small>
+    </div>
+
+    <div class="form-group">
+      <label for="jobCategoryId">Job Categoty</label>
+      <select  name="jobCategoryId" class="form-control"  formControlName="jobCategoryId" >        
+        <option *ngFor="let i of DB.jobCategories" [value]="i.id">
+          {{i.name}}
+        </option>
+    </select>
+      <small  class="form-text text-muted">choose job category </small>
+    </div>
+
+    <div class="form-group">
+      <label for="description">Job description </label>
+      <textarea  class="form-control"  placeholder="Job description "  formControlName="description"></textarea>
+      <small  class="form-text text-muted">please Enter the job description.</small>
+    </div>
+
+    <div class="form-group">
+      <label for="requirements">Job Requirements </label>
+      <textarea  class="form-control"  placeholder="Job Requirements "  formControlName="requirements"></textarea>
+      <small  class="form-text text-muted">please Enter the job requirements.</small>
+    </div>
+
+    <div class="form-group">
+      <label for="responsibilities">Job Responsabilities </label>
+      <textarea  class="form-control"  placeholder="Job responsibilities "  formControlName="responsibilities"></textarea>
+      <small  class="form-text text-muted">please Enter the job Responsabilities.</small>
+    </div>
+
+    <div class="chip">
+      Tag 220
+      <i class="close fas fa-times"></i>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
+</div>

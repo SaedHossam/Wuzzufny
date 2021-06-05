@@ -50,8 +50,8 @@ namespace GlassDoor.Controllers
                 Currencies = _DB.Currencies.ToList(),
                 salaryRates = _DB.SalaryRates.ToList(),
                 Skills = _DB.Skills.ToList(),
-                careerLevels=_DB.CareerLevels.ToList()
-
+                careerLevels = _DB.CareerLevels.ToList(),
+                EducationLevels = _DB.EducationLevels.ToList()
             };
             return s;
         }

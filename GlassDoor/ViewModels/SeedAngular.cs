@@ -13,11 +13,11 @@ namespace GlassDoor.ViewModels
         public ICollection<Country> countries { get; set; }
         public ICollection<City> cities { get; set; }
         public ICollection<CareerLevel> careerLevels { get; set; }
+        public ICollection<EducationLevel> EducationLevels { get; set; }
         public ICollection<Currency> Currencies { get; set; }
         public ICollection<SalaryRate> salaryRates { get; set; }
         public ICollection<Skill> Skills { get; set; }
     
-
 
 
 
