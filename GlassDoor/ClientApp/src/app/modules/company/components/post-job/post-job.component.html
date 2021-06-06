@@ -84,7 +84,7 @@
     </div>
 
     <div class="form-group">
-      <label for="salaryMax">Minmum Salary</label>
+      <label for="salaryMax">Maximum Salary</label>
       <input type="number" class="form-control"  placeholder="Amount of money"  formControlName="salaryMax">
       <small  class="form-text text-muted">please Enter the number of years.</small>
     </div>
@@ -119,25 +119,31 @@
       <small  class="form-text text-muted">choose job category </small>
     </div>
 
-    <div class="form-group">
-      <label for="description">Job description </label>
-      <textarea  class="form-control"  placeholder="Job description "  formControlName="description"></textarea>
-      <small  class="form-text text-muted">please Enter the job description.</small>
-    </div>
 
     <div class="form-group">
-      <label for="requirements">Job Requirements </label>
-      <textarea  class="form-control"  placeholder="Job Requirements "  formControlName="requirements"></textarea>
+      <label for="requirements">Job Description</label>
+      <p-editor formControlName="description" [style]="{'height':'320px'}"> </p-editor>
       <small  class="form-text text-muted">please Enter the job requirements.</small>
     </div>
 
     <div class="form-group">
-      <label for="responsibilities">Job Responsabilities </label>
-      <textarea  class="form-control"  placeholder="Job responsibilities "  formControlName="responsibilities"></textarea>
+      <label for="requirements">Job Requirements </label>
+      <p-editor formControlName="requirements" [style]="{'height':'320px'}"> </p-editor>
+      <small  class="form-text text-muted">please Enter the job requirements.</small>
+    </div>
+    
+    <div class="form-group">
+      <label for="requirements">Job responsibilities </label>
+      <p-editor formControlName="responsibilities" [style]="{'height':'320px'}"> </p-editor>
       <small  class="form-text text-muted">please Enter the job Responsabilities.</small>
     </div>
 
-    <p-autoComplete formControlName="skills" [suggestions]="results" field="name" (completeMethod)="search($event)" [multiple]="true"></p-autoComplete>
+    <div class="form-group">
+      <label for="requirements">Job Skills </label>
+      <br>
+      <p-autoComplete formControlName="skills" [suggestions]="results" field="name" (completeMethod)="search($event)" [multiple]="true"></p-autoComplete>
+      <small  class="form-text text-muted">please choose skills.</small>
+    </div>
 
   
 

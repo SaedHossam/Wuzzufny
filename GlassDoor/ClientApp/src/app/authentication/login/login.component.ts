@@ -29,7 +29,13 @@ export class LoginComponent implements OnInit {
     this._returnUrl = this._route.snapshot.queryParams['returnUrl'] || '/';
   }
 
-  
+  public validateControl = (controlName: string) => {
+    return this.loginForm.controls[controlName].invalid && this.loginForm.controls[controlName].touched
+  }
+
+  public hasError = (controlName: string, errorName: string) => {
+    return this.loginForm.controls[controlName].hasError(errorName)
+  }
 
   public loginUser = (loginFormValue) => {
     this.showError = false;
@@ -44,7 +50,7 @@ export class LoginComponent implements OnInit {
       .subscribe(res => {
         localStorage.setItem("token", res['token']);
         this._authService.sendAuthStateChangeNotification(res['isAuthSuccessful']);
-        this._router.navigate([this.returnUrl()]);
+        this._router.navigate([this._returnUrl]);
       },
         (error) => {
           this.errorMessage = error;
@@ -71,7 +77,7 @@ export class LoginComponent implements OnInit {
       .subscribe(res => {
         localStorage.setItem("token", res.token);
         this._authService.sendAuthStateChangeNotification(res.isAuthSuccessful);
-        this._router.navigate([this.returnUrl()]);
+        this._router.navigate([this._returnUrl]);
       },
         error => {
           this.errorMessage = error;
@@ -80,19 +86,5 @@ export class LoginComponent implements OnInit {
         });
   }
 
-  private returnUrl(): string {
-    if (this._returnUrl === "/") {
-      if (this._authService.isUserAdmin()) {
-        this._returnUrl = 'admin';
-      }
-      else if (this._authService.isUserEmployee()) {
-        this._returnUrl = 'employee';
-      }
-      else if (this._authService.isUserCompany()) {
-        this._returnUrl = 'company';
-      }
-    }
 
-    return this._returnUrl;
-  }
 }

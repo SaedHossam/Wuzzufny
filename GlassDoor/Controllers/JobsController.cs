@@ -29,6 +29,7 @@ namespace GlassDoor.Controllers
             _unitOfWork = unitOfWork;
             _userManager = userManager;
             _context = DB;
+            _DB = DB;
         }
 
         // GET: api/Jobs

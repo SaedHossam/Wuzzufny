@@ -10,7 +10,7 @@ import { PasswordModule } from 'primeng/password';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import {ChipsModule} from 'primeng/chips';
 import {AutoCompleteModule} from 'primeng/autocomplete';
-
+import {EditorModule} from 'primeng/editor';
 
 @NgModule({
   declarations: [
@@ -26,6 +26,7 @@ import {AutoCompleteModule} from 'primeng/autocomplete';
     ReactiveFormsModule,
     ChipsModule,
     AutoCompleteModule,
+    EditorModule,
   ]
 })
 export class CompanyModule { }
