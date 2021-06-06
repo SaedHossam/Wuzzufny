@@ -41,20 +41,20 @@
 
     <div class="form-group">
       <label for="numberOfVacancies">Number of Vacancies</label>
-      <input type="number" class="form-control"  placeholder="Number of vacancies"  formControlName="numberOfVacancies">
+      <input type="number" class="form-control" min="1"  placeholder="Number of vacancies"  formControlName="numberOfVacancies">
       <small  class="form-text text-muted">please Enter the number of vacancies.</small>
     </div>
 
  <div class="form-group">
       <label for="experienceNeededMin">Minmum experience needed</label>
-      <input type="number" class="form-control"  placeholder="Number of years"  formControlName="experienceNeededMin">
+      <input type="number" class="form-control" min="0" placeholder="Number of years"  formControlName="experienceNeededMin">
       <small  class="form-text text-muted">please Enter the number of years.</small>
     </div>
 
     <div class="form-group">
       <label for="experienceNeededMax">Maximum experience needed</label>
-      <input type="number" class="form-control"  placeholder="Number of years"  formControlName="experienceNeededMax">
-      <small  class="form-text text-muted">please Enter the number of years.</small>
+      <input type="number" class="form-control" min="0"  placeholder="Number of years"  formControlName="experienceNeededMax">
+      <small  class="form-text text-muted">please Enter the numb er of years.</small>
     </div>
 
     <div class="form-group">
