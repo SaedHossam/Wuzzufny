@@ -9,6 +9,7 @@ namespace GlassDoor.ViewModels
 {
     public class PostJobDto
     {
+        public int? Id { get; set; }
         [Required]
         public string Title { get; set; }
         public int JobTypeId { get; set; }

@@ -29,13 +29,7 @@ export class LoginComponent implements OnInit {
     this._returnUrl = this._route.snapshot.queryParams['returnUrl'] || '/';
   }
 
-  public validateControl = (controlName: string) => {
-    return this.loginForm.controls[controlName].invalid && this.loginForm.controls[controlName].touched
-  }
-
-  public hasError = (controlName: string, errorName: string) => {
-    return this.loginForm.controls[controlName].hasError(errorName)
-  }
+  
 
   public loginUser = (loginFormValue) => {
     this.showError = false;

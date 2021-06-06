@@ -18,6 +18,8 @@ namespace GlassDoor.ViewModels
 
             CreateMap<PostJobDto, Job>();
 
+            CreateMap<Job, Job>();
+
         }
     }
 }

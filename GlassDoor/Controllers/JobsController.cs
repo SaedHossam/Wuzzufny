@@ -28,7 +28,7 @@ namespace GlassDoor.Controllers
             _mapper = mapper;
             _unitOfWork = unitOfWork;
             _userManager = userManager;
-            this._DB = DB;
+            _context = DB;
         }
 
         // GET: api/Jobs
@@ -73,18 +73,22 @@ namespace GlassDoor.Controllers
         // PUT: api/Jobs/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutJob(int id, Job job)
+        public async Task<IActionResult> PutJob(int id, [FromBody] PostJobDto postedjob)
         {
-            if (id != job.Id)
+            if (id != postedjob.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(job).State = EntityState.Modified;
+            var job = _mapper.Map<Job>(postedjob);
+            var oldJob = _context.Jobs.Include(j => j.JobDetails).FirstOrDefault(j => j.Id == id);
+            job.JobDetails.Id = oldJob.JobDetails.Id;
+            //update job
+            _mapper.Map<Job, Job>(job, oldJob);
 
             try
             {
-                await _context.SaveChangesAsync();
+                _unitOfWork.SaveChanges();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -97,7 +101,6 @@ namespace GlassDoor.Controllers
                     throw;
                 }
             }
-
             return NoContent();
         }
 
