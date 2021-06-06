@@ -137,10 +137,10 @@
       <small  class="form-text text-muted">please Enter the job Responsabilities.</small>
     </div>
 
-    <div class="chip">
-      Tag 220
-      <i class="close fas fa-times"></i>
-    </div>
+    <p-autoComplete formControlName="skills" [suggestions]="results" field="name" (completeMethod)="search($event)" [multiple]="true"></p-autoComplete>
+
+  
+
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>
 </div>

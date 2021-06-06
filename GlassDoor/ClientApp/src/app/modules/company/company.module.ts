@@ -8,6 +8,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CalendarModule } from 'primeng/calendar';
 import { PasswordModule } from 'primeng/password';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import {ChipsModule} from 'primeng/chips';
+import {AutoCompleteModule} from 'primeng/autocomplete';
 
 
 @NgModule({
@@ -22,8 +24,8 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
     CalendarModule,
     PasswordModule,
     ReactiveFormsModule,
-    
-    
+    ChipsModule,
+    AutoCompleteModule,
   ]
 })
 export class CompanyModule { }

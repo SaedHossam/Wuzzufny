@@ -4,6 +4,7 @@ import { SeedAngular } from '../../models/seed-angular';
 import { CustomFormsModule } from 'ng2-validation'
 import { FormControl, Validators, FormGroup, FormBuilder, RequiredValidator, FormArray } from '@angular/forms';
 import { EnvironmentUrlService } from 'src/app/shared/services/environment-url.service';
+import { Skills } from '../../models/skills';
 
 
 @Component({
@@ -17,6 +18,9 @@ export class PostJobComponent implements OnInit {
   employeeform: FormGroup;
  public  postjobform:FormGroup;
   constructor(private http: HttpClient ,private _envUrl:EnvironmentUrlService) { }
+  texts: string[];
+  results: Skills[];
+
   ngOnInit(): void {
    this.postjobform =new FormGroup({
       'title':new FormControl(null,[Validators.required]),
@@ -36,7 +40,7 @@ export class PostJobComponent implements OnInit {
       'description':new FormControl(null,[Validators.required]),
       'requirements':new FormControl(null,[Validators.required]),
       'responsibilities':new FormControl(null,[Validators.required]),
-      'skills':new FormArray(null,[Validators.required])
+      'skills':new FormControl(null,[Validators.required])
 
     });
     this.http.get<SeedAngular>(this._envUrl.urlAddress+"/api/jobs/SeedAngular").subscribe(a=>{
@@ -45,8 +49,21 @@ export class PostJobComponent implements OnInit {
     
   
   }
+
+
+  search(event) {
+    this.http.get<SeedAngular>(this._envUrl.urlAddress+"/api/jobs/SeedAngular").subscribe(a=>{
+      this.results = a.skills;
+  })}
 public postjob=(postjobform)=>{
   console.log(postjobform)
   }
+ 
+  // search($event){
+  //   this.http.get<SeedAngular>(this._envUrl.urlAddress+"/api/jobs/SeedAngular").subscribe(a=>{
+  //     this.results = a.skills})
+  // }
 
-}
+  }  
+  
+
