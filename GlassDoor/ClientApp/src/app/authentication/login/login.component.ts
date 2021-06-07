@@ -50,7 +50,7 @@ export class LoginComponent implements OnInit {
       .subscribe(res => {
         localStorage.setItem("token", res['token']);
         this._authService.sendAuthStateChangeNotification(res['isAuthSuccessful']);
-        this._router.navigate([this._returnUrl]);
+        this._router.navigate([this.returnUrl()]);
       },
         (error) => {
           this.errorMessage = error;
@@ -77,7 +77,7 @@ export class LoginComponent implements OnInit {
       .subscribe(res => {
         localStorage.setItem("token", res.token);
         this._authService.sendAuthStateChangeNotification(res.isAuthSuccessful);
-        this._router.navigate([this._returnUrl]);
+        this._router.navigate([this.returnUrl()]);
       },
         error => {
           this.errorMessage = error;
@@ -86,5 +86,19 @@ export class LoginComponent implements OnInit {
         });
   }
 
+  private returnUrl(): string {
+    if (this._returnUrl === "/") {
+      if (this._authService.isUserAdmin()) {
+        this._returnUrl = 'admin';
+      }
+      else if (this._authService.isUserEmployee()) {
+        this._returnUrl = 'employee';
+      }
+      else if (this._authService.isUserCompany()) {
+        this._returnUrl = 'company';
+      }
+    }
 
+    return this._returnUrl;
+  }
 }

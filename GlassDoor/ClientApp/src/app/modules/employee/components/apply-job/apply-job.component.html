@@ -60,9 +60,8 @@
     <p>
       Duties :
     </p>
-    <p>
-      {{jobD.description}}
-    </p>
+    <div [innerHTML]="jobD.description">
+    </div>
   </div>
 </p-card>
 
@@ -73,9 +72,8 @@
     <h3>
       Job Requirements
     </h3>
-    <p>
-      {{jobD.requirements}}
-    </p>
+    <div [innerHTML]="jobD.requirements">
+    </div>
   </div>
 </p-card>
 
@@ -84,8 +82,7 @@
     <h3>
       Job Responsibilities
     </h3>
-    <p>
-      {{jobD.responsibilities}}
-    </p>
+    <div [innerHTML]="jobD.responsibilities">
+    </div>
   </div>
 </p-card>

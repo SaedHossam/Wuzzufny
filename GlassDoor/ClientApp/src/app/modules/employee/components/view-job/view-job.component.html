@@ -48,7 +48,7 @@
 
   <div class="container">
     <div class="row">
-      <div class="col-xs-6 mx-2 my-3" *ngFor="let item of jobs">
+      <div class="p-col-4 mx-2 my-3" *ngFor="let item of jobs">
         <p-card header="{{item.title}} " subheader=" {{item.companyName}}" [style]="{width: '330px'}" styleClass="p-card-shadow">
           <ng-template pTemplate="header">
             <img alt="Card" src="../../../../../assets/Images/usercard.png" />
@@ -56,6 +56,7 @@
           <p>
             <i class="pi pi-map-marker" style="color:skyblue"></i> {{item.jobCountryName}} , {{ item.jobCityName}}&nbsp;
             <i class="pi pi-check" style="color:darkseagreen"></i> {{returnOpenJobsOnly(item.isOpen)}} &nbsp;
+            <br/>
             <i class="pi pi-flag" style="color: #0D89EC;font-size: 0.9rem"></i> {{item.jobTypeName}}&nbsp;
           </p>
           <p><i class="pi pi-calendar"></i> {{getPrintedDate(item.createdDate)}}&nbsp;</p>

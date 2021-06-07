@@ -24,13 +24,13 @@ namespace DAL.Repositories
                 .Include(c => c.CareerLevel)
                 .Include(e => e.EducationLevel)
                 .Include(s => s.SalaryCurrency)
-                .Include(c => c.Category)
+                .Include(c => c.JobCategory)
                 .Include(c => c.Job.Country)
-                .Include(c=>c.Job.City)
-                .Include(c=>c.Job.Skills)
-                .Include(s=>s.SalaryRate)
-                .Include(c=>c.Job.Company)
-                .Include(c=>c.Job.JobType)
+                .Include(c => c.Job.City)
+                .Include(c => c.Job.Skills).ThenInclude(js => js.Skills)
+                .Include(s => s.SalaryRate)
+                .Include(c => c.Job.Company)
+                .Include(c => c.Job.JobType)
                 .FirstOrDefault(a => a.JobId == id);
 
 
