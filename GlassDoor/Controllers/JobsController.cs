@@ -9,6 +9,7 @@ using DAL;
 using DAL.Models;
 using GlassDoor.ViewModels;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 
 namespace GlassDoor.Controllers
@@ -22,26 +23,46 @@ namespace GlassDoor.Controllers
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
         private readonly UserManager<ApplicationUser> _userManager;
-
-        public JobsController( IMapper mapper, IUnitOfWork unitOfWork, UserManager<ApplicationUser> userManager)
+        private readonly ApplicationDbContext _DB;
+        public JobsController(IMapper mapper, IUnitOfWork unitOfWork, UserManager<ApplicationUser> userManager, ApplicationDbContext DB)
         {
             _mapper = mapper;
             _unitOfWork = unitOfWork;
             _userManager = userManager;
+            _context = DB;
+            _DB = DB;
         }
 
         // GET: api/Jobs
         [HttpGet]
-        public  ActionResult<IEnumerable<Job>> GetJobs()
+        public ActionResult<IEnumerable<Job>> GetJobs()
         {
-            return  _unitOfWork.Jobs.GetAll().ToList();
+            return _unitOfWork.Jobs.GetAll().ToList();
+        }
+
+        [HttpGet("SeedAngular")]
+        public ActionResult<SeedAngular> GetAllConstants()
+        {
+            SeedAngular s = new SeedAngular()
+            {
+                jobTypes = _DB.JobTypes.ToList(),
+                jobCategories = _DB.JobCategories.ToList(),
+                countries = _DB.Countries.ToList(),
+                cities = _DB.Cities.ToList(),
+                Currencies = _DB.Currencies.ToList(),
+                salaryRates = _DB.SalaryRates.ToList(),
+                Skills = _DB.Skills.ToList(),
+                careerLevels = _DB.CareerLevels.ToList(),
+                EducationLevels = _DB.EducationLevels.ToList()
+            };
+            return s;
         }
 
         // GET: api/Jobs/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Job>> GetJob(int id)
         {
-            var job = await _context.Jobs.FindAsync(id);
+            var job = await _context.Jobs.Include(j => j.Skills).ThenInclude(js => js.Skills).FirstOrDefaultAsync(j => j.Id == id);
 
             if (job == null)
             {
@@ -54,18 +75,22 @@ namespace GlassDoor.Controllers
         // PUT: api/Jobs/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutJob(int id, Job job)
+        public async Task<IActionResult> PutJob(int id, [FromBody] PostJobDto postedjob)
         {
-            if (id != job.Id)
+            if (id != postedjob.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(job).State = EntityState.Modified;
+            var job = _mapper.Map<Job>(postedjob);
+            var oldJob = _context.Jobs.Include(j => j.JobDetails).FirstOrDefault(j => j.Id == id);
+            job.JobDetails.Id = oldJob.JobDetails.Id;
+            //update job
+            _mapper.Map<Job, Job>(job, oldJob);
 
             try
             {
-                await _context.SaveChangesAsync();
+                _unitOfWork.SaveChanges();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -78,33 +103,23 @@ namespace GlassDoor.Controllers
                     throw;
                 }
             }
-
             return NoContent();
         }
 
         // POST: api/Jobs
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<PostJobDto>> PostJob([FromBody]PostJobDto postedjob)
+        [Authorize(Roles = "Company")]
+        public async Task<ActionResult<PostJobDto>> PostJob([FromBody] PostJobDto postedjob)
         {
-            if (postedjob == null || !ModelState.IsValid) 
+            if (postedjob == null || !ModelState.IsValid)
                 return BadRequest();
 
             var job = _mapper.Map<Job>(postedjob);
 
-            //job.CreatedBy =  _userManager.GetUserId(HttpContext.User);
-
-            //var user = await _userManager.GetUserAsync(HttpContext.User);
-
-            //Job job = new Job();
-            //job.Title = postedjob.Title;
-            //job.EmploymentType = postedjob.EmploymentType;
-            //job.NumberOfVacancies = postedjob.NumberOfVacancies;
-            //job.Location = postedjob.Location;
-            //job.CreatedDate = DateTime.Now;
-            //job.JobDetails = postedjob.JobDetails;
-            //job.JobDetails.JobId = job.Id;
-            //job.Skills = postedjob.Skills;
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            var companyId = _unitOfWork.CompaniesManagers.Find(c => c.UserId == user.Id).First().Id;
+            job.CompanyId = companyId;
             _unitOfWork.Jobs.Add(job);
             _unitOfWork.SaveChanges();
             return Ok(job);

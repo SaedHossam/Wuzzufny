@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using DAL.Models.Interfaces;
 
@@ -12,8 +14,10 @@ namespace DAL.Models
         public int JobTypeId { get; set; }
         public JobType JobType { get; set; }
         public int? NumberOfVacancies { get; set; }
+
         public int CityId { get; set; }
         public City City{ get; set; }
+
         public int CountryId { get; set; }
         public Country Country { get; set; }
 
@@ -29,10 +33,11 @@ namespace DAL.Models
         public string UpdatedBy { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime UpdatedDate { get; set; }
+        public int CompanyId { get; set; }
 
         public Company Company { get; set; }
         public JobDetails JobDetails { get; set; }
-        public ICollection<Skill> Skills { get; set; }
+        public ICollection<JobSkill> Skills { get; set; }
         public ICollection<Application> Applications { get; set; }
     }
 }

@@ -4,15 +4,17 @@ using DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NetTopologySuite.Geometries;
 
 namespace GlassDoor.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210603210004_seed")]
+    partial class seed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -209,6 +211,9 @@ namespace GlassDoor.Migrations
                     b.Property<int?>("CompanyTypeId")
                         .HasColumnType("int");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Logo")
                         .HasColumnType("nvarchar(max)");
 
@@ -217,9 +222,6 @@ namespace GlassDoor.Migrations
 
                     b.Property<string>("Phone")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("RequestStatusId")
-                        .HasColumnType("int");
 
                     b.Property<DateTime>("YearFounded")
                         .HasColumnType("datetime2");
@@ -231,8 +233,6 @@ namespace GlassDoor.Migrations
                     b.HasIndex("CompanySizeId");
 
                     b.HasIndex("CompanyTypeId");
-
-                    b.HasIndex("RequestStatusId");
 
                     b.ToTable("Companies");
                 });
@@ -259,11 +259,8 @@ namespace GlassDoor.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("CompanyId")
+                    b.Property<int?>("CompanyId")
                         .HasColumnType("int");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
@@ -277,21 +274,6 @@ namespace GlassDoor.Migrations
                         .HasFilter("[UserId] IS NOT NULL");
 
                     b.ToTable("CompanyManagers");
-                });
-
-            modelBuilder.Entity("DAL.Models.CompanyRequestStatus", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("CompanyRequestStatus");
                 });
 
             modelBuilder.Entity("DAL.Models.CompanySize", b =>
@@ -970,28 +952,18 @@ namespace GlassDoor.Migrations
                         .WithMany("Companies")
                         .HasForeignKey("CompanyTypeId");
 
-                    b.HasOne("DAL.Models.CompanyRequestStatus", "RequestStatus")
-                        .WithMany("Companies")
-                        .HasForeignKey("RequestStatusId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("CompanyIndustry");
 
                     b.Navigation("CompanySize");
 
                     b.Navigation("CompanyType");
-
-                    b.Navigation("RequestStatus");
                 });
 
             modelBuilder.Entity("DAL.Models.CompanyManager", b =>
                 {
                     b.HasOne("DAL.Models.Company", "Company")
                         .WithMany("CompanyManagers")
-                        .HasForeignKey("CompanyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CompanyId");
 
                     b.HasOne("DAL.Models.ApplicationUser", "User")
                         .WithOne("CompanyManager")
@@ -1090,7 +1062,7 @@ namespace GlassDoor.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DAL.Models.JobCategory", "JobCategory")
+                    b.HasOne("DAL.Models.JobCategory", "Category")
                         .WithMany("JobDetails")
                         .HasForeignKey("JobCategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1116,11 +1088,11 @@ namespace GlassDoor.Migrations
 
                     b.Navigation("CareerLevel");
 
+                    b.Navigation("Category");
+
                     b.Navigation("EducationLevel");
 
                     b.Navigation("Job");
-
-                    b.Navigation("JobCategory");
 
                     b.Navigation("SalaryCurrency");
 
@@ -1310,11 +1282,6 @@ namespace GlassDoor.Migrations
                 });
 
             modelBuilder.Entity("DAL.Models.CompanyIndustry", b =>
-                {
-                    b.Navigation("Companies");
-                });
-
-            modelBuilder.Entity("DAL.Models.CompanyRequestStatus", b =>
                 {
                     b.Navigation("Companies");
                 });

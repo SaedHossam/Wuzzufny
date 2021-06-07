@@ -34,6 +34,10 @@ namespace GlassDoor.ViewModels
             CreateMap<SkillsDto, Skill>().ReverseMap();
             CreateMap<SalaryRateDto, SalaryRate>().ReverseMap();
 
+            CreateMap<PostJobDto, Job>();
+
+            CreateMap<Job, Job>();
+
         }
     }
 }
