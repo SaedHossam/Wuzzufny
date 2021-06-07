@@ -1,22 +1,22 @@
 
 
+<p-card [style]="{ 'margin-bottom': '2em'}">
 
-<h1>STILL WORKING </h1>
-
-<!--<p-card [style]="{ 'margin-bottom': '2em'}">
   <div class="JobTitleAndImg">
-    <h1>{{jobD.job.title}} - {{ jobD.job.country.name}} - {{ jobD.job.city.name  }}</h1>
+    <h1>{{jobD.jobTitle}} - {{ jobD.jobCountry}} - {{ jobD.jobCity}}</h1>
     <span>
       <img />
     </span>
   </div>
   <p>
-    <a style="font-size:21px;" href="#"><span class="p-button-label" style="color: #0065FF">{{jobD.job.company.name}} </span></a>
-    <button style="height:1.7rem;width:1.7rem;margin-left:6px" pButton pRipple type="button" icon="pi pi-check" class="p-button-rounded"></button>-->
+    <a style="font-size:21px;" href="#"><span class="p-button-label" style="color: #0065FF">{{jobD.companyName}} </span></a>
+    <button style="height:1.7rem;width:1.7rem;margin-left:6px" pButton pRipple type="button" icon="pi pi-check" class="p-button-rounded"></button>
     <!--- <strong>{{job.company.locations}}</strong>-->
-  <!--</p>
-  <p>{{jobD.job.jobType.name}}</p>
-  <small>Posted : {{getPrintedDate(jobD.job.createdDate)}}</small>
+  </p>
+  <p>{{jobD.jobType}}</p>
+  bD
+  al
+  <small>Posted : {{getPrintedDate(jobD.createdDate)}}</small>
   <div>
     <hr />
   </div>
@@ -35,19 +35,19 @@
       Experience Needed : {{jobD.experienceNeededMin}} : {{jobD.experienceNeededMax}}
     </p>
     <p>
-      Career Level : {{jobD.careerLevel.name}}
+      Career Level : {{jobD.careerLevelName}}
     </p>
     <p>
-      Education Level : {{jobD.educationLevel.name}}
+      Education Level : {{jobD.educationLevelName}}
     </p>
     <p>
-      Salary : {{jobD.salaryMin}} : {{jobD.salaryMax}} {{jobD.salaryCurrency.name}} - {{jobD.salaryCurrency.code}}
+      Salary : {{jobD.salaryMin}} : {{jobD.salaryMax}} {{jobD.salaryCurrencyName}} - {{jobD.salaryCurrencyCode}}
     </p>
     <p>
-      Job Categories : {{jobD.category.name}}
+      Job Categories : {{jobD.category}}
     </p>
     <p>Skills And Tools: </p>
-    <ul style="display:inline-block" *ngFor=" let item of jobD.job.skills" >
+    <ul style="display:inline-block" *ngFor=" let item of jobD.skillsNames">
       <li> {{item.name}} </li>
     </ul>
   </div>
@@ -60,7 +60,7 @@
   <div class="JobTitleAndImg">
     <h3>Job Description</h3>
     <p>
-      Duties : 
+      Duties :
     </p>
     <p>
       {{jobD.description}}
@@ -79,4 +79,15 @@
       {{jobD.requirements}}
     </p>
   </div>
-</p-card>-->
+</p-card>
+
+<p-card [style]="{ 'margin-bottom': '2em'}">
+  <div class="JobTitleAndImg">
+    <h3>
+      Job Responsibilities
+    </h3>
+    <p>
+      {{jobD.responsibilities}}
+    </p>
+  </div>
+</p-card>

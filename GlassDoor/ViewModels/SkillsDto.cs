@@ -7,6 +7,7 @@ namespace GlassDoor.ViewModels
 {
     public class SkillsDto
     {
+        public int Id { get; set; }
         public string Name { get; set; }
 
     }

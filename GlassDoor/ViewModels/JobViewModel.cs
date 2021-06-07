@@ -38,12 +38,12 @@ namespace glassDoor.ViewModels
 
         public int Id { get; set; }
         public string Title { get; set; }
-        public JobType JobType { get; set; }
+        public string JobTypeName { get; set; }
         public int? NumberOfVacancies { get; set; }
-        public City City { get; set; }
-        public Country Country { get; set; }
+        public string JobCityName { get; set; }
+        public string JobCountryName { get; set; }
         public bool IsOpen { get; set; }
         public DateTime CreatedDate { get; set; }
-        public Company Company { get; set; }
+        public string CompanyName { get; set; }
     }
 }

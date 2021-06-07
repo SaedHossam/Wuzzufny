@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { MessageService, PrimeNGConfig } from 'primeng/api';
-import { Job } from '../../../../models/job';
-import { JobDetails } from '../../../../models/job-details';
+import {PrimeNGConfig } from 'primeng/api';
+import { JobDetailsDto } from '../../../../models/job-details-dto';
 import { JobService } from '../../../../shared/services/job.service';
 
 
@@ -15,44 +14,24 @@ export class ApplyJobComponent implements OnInit {
 
   constructor(private service: JobService, private ac: ActivatedRoute,
     private primengConfig: PrimeNGConfig) { }
-  jobD: JobDetails = new JobDetails();
+  jobD: JobDetailsDto = new JobDetailsDto();
+ 
+ 
+  
 
-  //salaryCurrency: string;
-  //carrerLevel: string;
-  //experienceNedded: number;
-  //salary: number;
-  //category: string;
-  //subCategory: string;
-  //description: string;
-  //requirements: string;
-  //responsibilities: string;
-  //educationLevel: string;
-  //status: string;
-  //skills: string[] = [];
 
   ngOnInit(): void {
     this.primengConfig.ripple = true;
     this.ac.params.subscribe(p => {
       this.service.getjobdbyid(p.id).subscribe(a => {
         this.jobD = a;
-
         console.log(this.jobD);
-        //this.carrerLevel = this.jobD.jobDetails.carrerLevel;
-        //this.experienceNedded = this.jobD.jobDetails.experienceNedded;
-        //this.category = this.jobD.jobDetails.category;
-        //this.subCategory = this.jobD.jobDetails.subCategory;
-        //this.description = this.jobD.jobDetails.description;
-        //this.requirements = this.jobD.jobDetails.requirements;
-        //this.educationLevel = this.jobD.jobDetails.educationLevel;
-        //this.status = this.jobD.jobDetails.status;
-        //this.salary = this.jobD.jobDetails.salary;
-        //this.responsibilities = this.jobD.jobDetails.responsibilities;
-        //this.skills = this.jobD.skills;
         
+        /*this.countryName = this.jobD.job.country.name;*/
       });
     });
   }
-
+  
   
 
   public printDateOnly(date: Date) {

@@ -10,7 +10,7 @@ import { JobService } from '../../../../shared/services/job.service';
 export class ViewJobComponent implements OnInit {
 
   jobs: Job[] = [];
-  title: string;
+  jobTitle: string;
   loc: string;
   constructor(public service: JobService) { }
 
@@ -61,11 +61,9 @@ export class ViewJobComponent implements OnInit {
 
 
   searchAJob() {
-    if (this.title == "")
-      this.ngOnInit();
-    this.service.searchForAJob(this.title, this.loc).subscribe(a => {
+    this.service.searchForAJob(this.jobTitle, this.loc).subscribe(a => {
       this.jobs = a;
-      //console.log(a);
+      console.log(this.jobs);
     }
     ) 
   }

@@ -3,15 +3,13 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Job } from '../../models/job';
 import { EnvironmentUrlService } from './environment-url.service';
-import { JobDetails } from '../../models/job-details';
+import { JobDetailsDto } from '../../models/job-details-dto';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class JobService {
- // readonly ApiUrl = "https://localhost:44390/api";
-
 
   constructor(public http: HttpClient, private _envUrl: EnvironmentUrlService) { }
   getJobs(): Observable<Job[]> {
@@ -22,7 +20,7 @@ export class JobService {
   //  return this.http.get<Job>(this._envUrl.urlAddress + '/api/jobs/GetJobDetails/' + id);
   //}
   getjobdbyid(id: number) {
-    return this.http.get<JobDetails>(this._envUrl.urlAddress + '/api/jobDetails/GetJobDetails/' + id);
+    return this.http.get<JobDetailsDto>(this._envUrl.urlAddress + '/api/jobDetails/GetJobDetails/' + id);
   }
 
 

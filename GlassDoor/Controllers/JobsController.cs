@@ -33,7 +33,7 @@ namespace glassDoor.Controllers
 
         // GET: api/Jobs
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Job>>> GetJobs()
+        public async Task<ActionResult<IEnumerable<JobViewModel>>> GetJobs()
         {
             var allJobData =  _unitOfWork.Jobs.GetAllJobData();
             return Ok( _mapper.Map<IEnumerable<JobViewModel>>(allJobData));
@@ -59,21 +59,14 @@ namespace glassDoor.Controllers
         
 
         [HttpGet("Search/{term}/{loc}")]
-        public async Task <ActionResult<IEnumerable< Job>>> Search(string term, string loc)
+        public async Task <ActionResult<IEnumerable< JobViewModel>>> Search(string term, string loc)
         {
-
             var res = _unitOfWork.Jobs.GetAllJobData().Where(i => i.Title.Contains(term, StringComparison.InvariantCultureIgnoreCase)
                 || i.Company.Name.Contains(term,StringComparison.InvariantCultureIgnoreCase )
                 || i.Country.Name.Contains(loc, StringComparison.InvariantCultureIgnoreCase)
                 || i.City.Name.Contains(loc, StringComparison.InvariantCultureIgnoreCase)).ToList();
-            return res;
-
-           // var result = _unitOfWork.Jobs.GetAllJobData().Where(j => j.Title.Contains(term.NoMatterLowerOrUpper())
-          
+                return Ok(_mapper.Map<IEnumerable<JobViewModel>>(res));
             
-            
-           // return  result ;
-      
         }
 
         /*

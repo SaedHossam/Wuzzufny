@@ -23,11 +23,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { FormsModule } from "@angular/forms";
 
-//import { ViewJobComponent } from './modules/employee/components/view-job/view-job.component';
-import { ApplyJobComponent } from './modules/employee/components/apply-job/apply-job.component';
-//import { CalendarModule } from "primeng/calendar";
-//import { PasswordModule } from "primeng/password";
-import { ButtonModule } from 'primeng/button';
+
 
 
 
@@ -53,9 +49,10 @@ export function tokenGetter() {
     HttpClientModule,
     BrowserAnimationsModule,
     FormsModule,
-    ButtonModule,
+   // ButtonModule,
   //  CalendarModule,
     //PasswordModule,
+    //ToastModule,
   
     
 
@@ -89,7 +86,8 @@ export function tokenGetter() {
           },
         ],
       } as SocialAuthServiceConfig
-    }
+    },
+   // ConfirmationService, MessageService
   ],
   bootstrap: [AppComponent]
 })

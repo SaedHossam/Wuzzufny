@@ -12,6 +12,9 @@ import { ViewJobComponent } from './components/view-job/view-job.component';
 import { RippleModule } from 'primeng/ripple';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ConfirmPopupModule } from 'primeng/confirmpopup';
+
+
 
 
 @NgModule({
@@ -21,6 +24,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   
     
   ],
+
   imports: [
     CommonModule,
     EmployeeRoutingModule,
@@ -32,6 +36,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     RippleModule,
     BrowserModule,
     BrowserAnimationsModule,
+    ConfirmPopupModule,
+
+
 
   ]
 })
