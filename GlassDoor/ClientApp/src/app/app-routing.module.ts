@@ -16,8 +16,7 @@ import { EmployeeGuard } from "./shared/guards/employee.guard";
 const routes: Routes = [
 
   { path: 'home', component: HomeComponent },
-  { path: 'jobs', component: ViewJobComponent },
-  { path: 'apply/:id', component: ApplyJobComponent },
+ 
   { path: 'authentication', loadChildren: () => import("../app/authentication/authentication.module").then(m => m.AuthenticationModule) },
   { path: 'admin', loadChildren: () => import("./modules/admin/admin.module").then(m => m.AdminModule), canActivate: [AuthGuard, AdminGuard]  },
   { path: 'company', loadChildren: () => import("./modules/company/company.module").then(m => m.CompanyModule), canActivate: [AuthGuard, CompanyGuard]  },
