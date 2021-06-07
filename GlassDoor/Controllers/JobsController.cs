@@ -11,6 +11,8 @@ using GlassDoor.ViewModels;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using glassDoor.ViewModels;
+using DAL.Constants;
 
 namespace GlassDoor.Controllers
 {
@@ -35,9 +37,10 @@ namespace GlassDoor.Controllers
 
         // GET: api/Jobs
         [HttpGet]
-        public ActionResult<IEnumerable<Job>> GetJobs()
+        public async Task<ActionResult<IEnumerable<JobViewModel>>> GetJobs()
         {
-            return _unitOfWork.Jobs.GetAll().ToList();
+            var allJobData =  _unitOfWork.Jobs.GetAllJobData();
+            return Ok( _mapper.Map<IEnumerable<JobViewModel>>(allJobData));
         }
 
         [HttpGet("SeedAngular")]
@@ -62,7 +65,8 @@ namespace GlassDoor.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Job>> GetJob(int id)
         {
-            var job = await _context.Jobs.Include(j => j.Skills).ThenInclude(js => js.Skills).FirstOrDefaultAsync(j => j.Id == id);
+            var job =  _unitOfWork.Jobs.Find(a=>a.Id == id).FirstOrDefault();
+           
 
             if (job == null)
             {
@@ -70,6 +74,18 @@ namespace GlassDoor.Controllers
             }
 
             return job;
+        }
+        
+
+        [HttpGet("Search/{term}/{loc}")]
+        public async Task <ActionResult<IEnumerable< JobViewModel>>> Search(string term, string loc)
+        {
+            var res = _unitOfWork.Jobs.GetAllJobData().Where(i => i.Title.Contains(term, StringComparison.InvariantCultureIgnoreCase)
+                || i.Company.Name.Contains(term,StringComparison.InvariantCultureIgnoreCase )
+                || i.Country.Name.Contains(loc, StringComparison.InvariantCultureIgnoreCase)
+                || i.City.Name.Contains(loc, StringComparison.InvariantCultureIgnoreCase)).ToList();
+                return Ok(_mapper.Map<IEnumerable<JobViewModel>>(res));
+            
         }
 
         // PUT: api/Jobs/5

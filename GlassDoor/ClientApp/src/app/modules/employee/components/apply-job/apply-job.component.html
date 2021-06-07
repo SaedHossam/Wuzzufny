@@ -1,0 +1,91 @@
+
+
+<p-card [style]="{ 'margin-bottom': '2em'}">
+
+  <div class="JobTitleAndImg">
+    <h1>{{jobD.jobTitle}} - {{ jobD.jobCountry}} - {{ jobD.jobCity}}</h1>
+    <span>
+      <img />
+    </span>
+  </div>
+  <p>
+    <a style="font-size:21px;" href="#"><span class="p-button-label" style="color: #0065FF">{{jobD.companyName}} </span></a>
+    <button style="height:1.7rem;width:1.7rem;margin-left:6px" pButton pRipple type="button" icon="pi pi-check" class="p-button-rounded"></button>
+    <!--- <strong>{{job.company.locations}}</strong>-->
+  </p>
+  <p>{{jobD.jobType}}</p>
+  <small>Posted : {{getPrintedDate(jobD.createdDate)}}</small>
+  <div>
+    <hr />
+  </div>
+  <div>
+    <button style="margin:0 10px 0 10px" pButton pRipple type="button" label="Apply"></button>
+    <button pButton pRipple type="button" label="Save" class="p-button-warning"></button>
+  </div>
+</p-card>
+
+
+
+<p-card [style]="{ 'margin-bottom': '2em'}">
+  <div class="JobTitleAndImg">
+    <h3>Job Details</h3>
+    <p>
+      Experience Needed : {{jobD.experienceNeededMin}} : {{jobD.experienceNeededMax}}
+    </p>
+    <p>
+      Career Level : {{jobD.careerLevelName}}
+    </p>
+    <p>
+      Education Level : {{jobD.educationLevelName}}
+    </p>
+    <p>
+      Salary : {{jobD.salaryMin}} : {{jobD.salaryMax}} {{jobD.salaryCurrencyName}} - {{jobD.salaryCurrencyCode}}
+    </p>
+    <p>
+      Job Categories : {{jobD.category}}
+    </p>
+    <p>Skills And Tools: </p>
+    <ul style="display:inline-block" *ngFor=" let item of jobD.skillsNames">
+      <li> {{item.name}} </li>
+    </ul>
+  </div>
+</p-card>
+
+
+
+
+<p-card [style]="{ 'margin-bottom': '2em'}">
+  <div class="JobTitleAndImg">
+    <h3>Job Description</h3>
+    <p>
+      Duties :
+    </p>
+    <p>
+      {{jobD.description}}
+    </p>
+  </div>
+</p-card>
+
+
+
+<p-card [style]="{ 'margin-bottom': '2em'}">
+  <div class="JobTitleAndImg">
+    <h3>
+      Job Requirements
+    </h3>
+    <p>
+      {{jobD.requirements}}
+    </p>
+  </div>
+</p-card>
+
+<p-card [style]="{ 'margin-bottom': '2em'}">
+  <div class="JobTitleAndImg">
+    <h3>
+      Job Responsibilities
+    </h3>
+    <p>
+      {{jobD.responsibilities}}
+    </p>
+  </div>
+</p-card>

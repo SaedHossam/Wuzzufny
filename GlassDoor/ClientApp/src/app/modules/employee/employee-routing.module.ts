@@ -1,10 +1,25 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomeComponent } from "./components/home/home.component";
+import { ApplyJobComponent } from './components/apply-job/apply-job.component';
+import { ViewJobComponent } from './components/view-job/view-job.component';
+import { HomeComponent } from './home/home.component';
+
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
+  { path: 'jobs', component: ViewJobComponent },
+  { path: 'apply/:id', component: ApplyJobComponent },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
+
+
+  {
+get component() {
+          return this._component;
+      },
+set component(value) {
+          this._component = value;
+      },
+ },
   ];
 
 @NgModule({

@@ -5,6 +5,8 @@ import { RegisterUserComponent } from "./authentication/register-user/register-u
 import { NotFoundComponent } from "./error-pages/not-found/not-found.component";
 import { ForbiddenComponent } from './forbidden/forbidden.component';
 import { HomeComponent } from './home/home.component';
+import { ApplyJobComponent } from './modules/employee/components/apply-job/apply-job.component';
+import { ViewJobComponent } from './modules/employee/components/view-job/view-job.component';
 import { PrivacyComponent } from './privacy/privacy.component';
 import { AdminGuard } from './shared/guards/admin.guard';
 import { AuthGuard } from './shared/guards/auth.guard';

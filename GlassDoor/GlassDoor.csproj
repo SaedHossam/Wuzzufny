@@ -47,6 +47,7 @@
   <ItemGroup>
     <Folder Include="ClientApp\src\app\interfaces\company-register\" />
     <Folder Include="ClientApp\src\app\modules\" />
+    <Folder Include="ClientApp\src\app\models\enums\" />
   </ItemGroup>
 
 </Project>

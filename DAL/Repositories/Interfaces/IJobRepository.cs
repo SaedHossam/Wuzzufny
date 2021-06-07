@@ -9,5 +9,10 @@ namespace DAL.Repositories.Interfaces
 {
     public interface IJobRepository : IRepository<Job>
     {
+        IEnumerable<Job> GetAllJobData();
+        //public Job GetJobById(int id);
+
+       
+       
     }
 }
