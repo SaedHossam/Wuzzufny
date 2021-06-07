@@ -15,13 +15,10 @@ import { AuthGuard } from './shared/guards/auth.guard';
 import { PrivacyComponent } from './privacy/privacy.component';
 import { ForbiddenComponent } from './forbidden/forbidden.component';
 import { HomeComponent } from './home/home.component';
-
 import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
 import { GoogleLoginProvider } from 'angularx-social-login';
-
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
 import { FormsModule } from "@angular/forms";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 
@@ -47,8 +44,8 @@ export function tokenGetter() {
     AppRoutingModule,
     NgbModule,
     HttpClientModule,
-    BrowserAnimationsModule,
     FormsModule,
+    BrowserAnimationsModule,
    // ButtonModule,
   //  CalendarModule,
     //PasswordModule,

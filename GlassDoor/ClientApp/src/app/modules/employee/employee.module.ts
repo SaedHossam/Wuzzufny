@@ -10,9 +10,7 @@ import { ButtonModule } from 'primeng/button';
 import { CardModule, } from 'primeng/card';
 import { ViewJobComponent } from './components/view-job/view-job.component';
 import { RippleModule } from 'primeng/ripple';
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ConfirmPopupModule } from 'primeng/confirmpopup';
+import { HomeComponent } from './home/home.component';
 
 
 
@@ -21,22 +19,16 @@ import { ConfirmPopupModule } from 'primeng/confirmpopup';
   declarations: [
     ViewJobComponent,
     ApplyJobComponent,
-  
-    
+    HomeComponent
   ],
 
   imports: [
     CommonModule,
     EmployeeRoutingModule,
-    //CalendarModule,
-//PasswordModule,
     FormsModule,
     ButtonModule,
     CardModule,
     RippleModule,
-    BrowserModule,
-    BrowserAnimationsModule,
-    ConfirmPopupModule,
 
 
 
