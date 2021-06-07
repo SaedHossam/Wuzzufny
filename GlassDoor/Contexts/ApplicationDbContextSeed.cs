@@ -253,17 +253,12 @@ namespace GlassDoor.Contexts
 
                 context.Companies.Add(company);
                 context.SaveChanges();
-            }
 
-            if (!context.CompanyManagers.Any())
-            {
                 var companyManager = new CompanyManager()
                 {
                     UserId = companyUser.Id,
                     CompanyId = context.Companies.First().Id,
                     Title = "Hr",
-                    User = companyUser,
-                    Company = context.Companies.First()
                 };
                 context.CompanyManagers.Add(companyManager);
                 context.SaveChanges();
