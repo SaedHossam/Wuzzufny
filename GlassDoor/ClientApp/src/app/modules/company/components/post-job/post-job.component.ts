@@ -6,7 +6,7 @@ import { FormControl, Validators, FormGroup, FormBuilder, RequiredValidator, For
 import { EnvironmentUrlService } from 'src/app/shared/services/environment-url.service';
 import { Skills } from '../../models/skills';
 import { PostJobDto } from '../../models/post-job-dto';
-
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-post-job',
@@ -42,7 +42,7 @@ export class PostJobComponent implements OnInit {
   
   employeeform: FormGroup;
  public  postjobform:FormGroup;
-  constructor(private http: HttpClient ,private _envUrl:EnvironmentUrlService) { }
+  constructor(private http: HttpClient, private _envUrl: EnvironmentUrlService, private _router: Router) { }
  public results: Skills[];
   ngOnInit(): void {
    this.postjobform =new FormGroup({
@@ -105,11 +105,13 @@ this.postJobDto.jobDetails.jobCategoryId=postjobform.value.jobCategoryId;
 this.postJobDto.jobDetails.description=postjobform.value.description;
 this.postJobDto.jobDetails.requirements=postjobform.value.requirements;
 this.postJobDto.jobDetails.responsibilities=postjobform.value.responsibilities;
-this.postJobDto.skills=postjobform.value.skills;
-
+  this.postJobDto.skills = postjobform.value.skills.map(function (val, index) {
+    return { SkillsId: val.id};
+  });
+  console.log(this.postJobDto.skills);
 
   this.http.post(this._envUrl.urlAddress+"/api/jobs",this.postJobDto).subscribe(a=>{
-    
+    this._router.navigate(['/company/']);
   })
 
   }

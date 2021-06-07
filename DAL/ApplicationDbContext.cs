@@ -38,6 +38,11 @@ namespace DAL
         public DbSet<UserLanguage> UserLanguages { get; set; }
         public DbSet<JobCategory> JobCategories { get; set; }
 
+
+        public DbSet<JobSkill> JobSkill { get; set; }
+
+
+
         public ApplicationDbContext(DbContextOptions options) : base(options)
         { }
 
@@ -58,6 +63,7 @@ namespace DAL
                 .HasForeignKey(e => e.CountryId)
                 .OnDelete(DeleteBehavior.NoAction);
 
+            builder.Entity<JobSkill>().HasKey(js => new { js.JobsId, js.SkillsId });
 
 
             //builder.Entity<ApplicationUser>().HasOne<Employee>(au => au.Employee).WithOne(e => e.User)

@@ -9,6 +9,7 @@ using DAL;
 using DAL.Models;
 using GlassDoor.ViewModels;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 
 namespace GlassDoor.Controllers
@@ -23,7 +24,7 @@ namespace GlassDoor.Controllers
         private readonly IUnitOfWork _unitOfWork;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ApplicationDbContext _DB;
-        public JobsController( IMapper mapper, IUnitOfWork unitOfWork, UserManager<ApplicationUser> userManager,ApplicationDbContext DB)
+        public JobsController(IMapper mapper, IUnitOfWork unitOfWork, UserManager<ApplicationUser> userManager, ApplicationDbContext DB)
         {
             _mapper = mapper;
             _unitOfWork = unitOfWork;
@@ -34,9 +35,9 @@ namespace GlassDoor.Controllers
 
         // GET: api/Jobs
         [HttpGet]
-        public  ActionResult<IEnumerable<Job>> GetJobs()
+        public ActionResult<IEnumerable<Job>> GetJobs()
         {
-            return  _unitOfWork.Jobs.GetAll().ToList();
+            return _unitOfWork.Jobs.GetAll().ToList();
         }
 
         [HttpGet("SeedAngular")]
@@ -61,7 +62,7 @@ namespace GlassDoor.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Job>> GetJob(int id)
         {
-            var job = await _context.Jobs.FindAsync(id);
+            var job = await _context.Jobs.Include(j => j.Skills).ThenInclude(js => js.Skills).FirstOrDefaultAsync(j => j.Id == id);
 
             if (job == null)
             {
@@ -108,13 +109,17 @@ namespace GlassDoor.Controllers
         // POST: api/Jobs
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<PostJobDto>> PostJob([FromBody]PostJobDto postedjob)
+        [Authorize(Roles = "Company")]
+        public async Task<ActionResult<PostJobDto>> PostJob([FromBody] PostJobDto postedjob)
         {
-            if (postedjob == null || !ModelState.IsValid) 
+            if (postedjob == null || !ModelState.IsValid)
                 return BadRequest();
 
             var job = _mapper.Map<Job>(postedjob);
-    
+
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            var companyId = _unitOfWork.CompaniesManagers.Find(c => c.UserId == user.Id).First().Id;
+            job.CompanyId = companyId;
             _unitOfWork.Jobs.Add(job);
             _unitOfWork.SaveChanges();
             return Ok(job);

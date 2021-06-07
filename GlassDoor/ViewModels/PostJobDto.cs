@@ -17,7 +17,7 @@ namespace GlassDoor.ViewModels
         public int CityId { get; set; }
         public int CountryId { get; set; }
         public JobDetails JobDetails { get; set; }
-        public ICollection<Skill> Skills { get; set; }
+        public ICollection<JobSkill> Skills { get; set; }
     }
 }
 

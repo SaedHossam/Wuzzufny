@@ -15,7 +15,6 @@ namespace DAL.Models
         public JobType JobType { get; set; }
         public int? NumberOfVacancies { get; set; }
 
-        //[Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int CityId { get; set; }
         public City City{ get; set; }
 
@@ -34,10 +33,11 @@ namespace DAL.Models
         public string UpdatedBy { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime UpdatedDate { get; set; }
+        public int CompanyId { get; set; }
 
         public Company Company { get; set; }
         public JobDetails JobDetails { get; set; }
-        public ICollection<Skill> Skills { get; set; }
+        public ICollection<JobSkill> Skills { get; set; }
         public ICollection<Application> Applications { get; set; }
     }
 }

@@ -2,3 +2,8 @@ label{
     font-size: 22px;
     color:black;
 }
+
+em {
+  color: #000;
+  font-weight: normal;
+}
