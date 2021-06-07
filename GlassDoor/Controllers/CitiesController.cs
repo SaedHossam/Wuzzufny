@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DAL;
 using DAL.Models;
+using AutoMapper;
+using GlassDoor.ViewModels;
 
 namespace GlassDoor.Controllers
 {
@@ -14,25 +16,27 @@ namespace GlassDoor.Controllers
     [ApiController]
     public class CitiesController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private IMapper _mapper;
+        private IUnitOfWork _unitOfWork;
 
-        public CitiesController(ApplicationDbContext context)
+        public CitiesController(IMapper mapper, IUnitOfWork unitOfWork)
         {
-            _context = context;
+            _mapper = mapper;
+            _unitOfWork = unitOfWork;
         }
 
         // GET: api/Cities
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<City>>> GetCities()
+        public async Task<ActionResult<IEnumerable<CityDto>>> GetCities()
         {
-            return await _context.Cities.ToListAsync();
+            return Ok(_mapper.Map<IEnumerable<CityDto>>(_unitOfWork.City.GetAll()));
         }
 
         // GET: api/Cities/5
         [HttpGet("{id}")]
         public async Task<ActionResult<City>> GetCity(int id)
         {
-            var city = await _context.Cities.FindAsync(id);
+            var city = _unitOfWork.City.Get(id);
 
             if (city == null)
             {
@@ -52,11 +56,10 @@ namespace GlassDoor.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(city).State = EntityState.Modified;
-
+            _unitOfWork.City.Update(city);
             try
             {
-                await _context.SaveChangesAsync();
+                _unitOfWork.SaveChanges();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -73,36 +76,39 @@ namespace GlassDoor.Controllers
             return NoContent();
         }
 
-        // POST: api/Cities
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        //// POST: api/Cities
+        //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<City>> PostCity(City city)
         {
-            _context.Cities.Add(city);
-            await _context.SaveChangesAsync();
+            _unitOfWork.City.Add(city);
+            _unitOfWork.SaveChanges();
 
             return CreatedAtAction("GetCity", new { id = city.Id }, city);
         }
 
-        // DELETE: api/Cities/5
+        //// DELETE: api/Cities/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCity(int id)
         {
-            var city = await _context.Cities.FindAsync(id);
+            var city = _unitOfWork.City.Get(id);
             if (city == null)
             {
                 return NotFound();
             }
 
-            _context.Cities.Remove(city);
-            await _context.SaveChangesAsync();
+            _unitOfWork.City.Remove(city);
+            _unitOfWork.SaveChanges();
 
             return NoContent();
         }
 
         private bool CityExists(int id)
         {
-            return _context.Cities.Any(e => e.Id == id);
+            return _unitOfWork.City.Get(id) != null;
         }
+
+        // Todo: Get All Cities in Country
+
     }
 }

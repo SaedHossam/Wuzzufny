@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DAL;
 using DAL.Models;
+using AutoMapper;
+using GlassDoor.ViewModels;
 
 namespace GlassDoor.Controllers
 {
@@ -14,25 +16,26 @@ namespace GlassDoor.Controllers
     [ApiController]
     public class SkillsController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
-
-        public SkillsController(ApplicationDbContext context)
+        private IMapper _mapper;
+        private IUnitOfWork _unitOfWork;
+        public SkillsController(IMapper mapper, IUnitOfWork unitOfWork)
         {
-            _context = context;
+            _mapper = mapper;
+            _unitOfWork = unitOfWork;
         }
 
         // GET: api/Skills
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Skill>>> GetSkills()
+        public ActionResult<IEnumerable<SkillsDto>> GetSkills()
         {
-            return await _context.Skills.ToListAsync();
+            return Ok(_mapper.Map<IEnumerable<SkillsDto>>(_unitOfWork.Skills.GetAll()));
         }
 
         // GET: api/Skills/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Skill>> GetSkill(int id)
+        public ActionResult<SkillsDto> GetSkill(int id)
         {
-            var skill = await _context.Skills.FindAsync(id);
+            var skill = _mapper.Map<SkillsDto>(_unitOfWork.Skills.Get(id));
 
             if (skill == null)
             {
@@ -45,18 +48,18 @@ namespace GlassDoor.Controllers
         // PUT: api/Skills/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutSkill(int id, Skill skill)
+        public IActionResult PutSkill(int id, SkillsDto skill)
         {
             if (id != skill.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(skill).State = EntityState.Modified;
+            _unitOfWork.Skills.Update(_mapper.Map<Skill>(skill));
 
             try
             {
-                await _context.SaveChangesAsync();
+                _unitOfWork.SaveChanges();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -76,33 +79,33 @@ namespace GlassDoor.Controllers
         // POST: api/Skills
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Skill>> PostSkill(Skill skill)
+        public ActionResult<Skill> PostSkill(SkillsDto skill)
         {
-            _context.Skills.Add(skill);
-            await _context.SaveChangesAsync();
+            _unitOfWork.Skills.Add(_mapper.Map<Skill>(skill));
+            _unitOfWork.SaveChanges();
 
             return CreatedAtAction("GetSkill", new { id = skill.Id }, skill);
         }
 
         // DELETE: api/Skills/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteSkill(int id)
+        public IActionResult DeleteSkill(int id)
         {
-            var skill = await _context.Skills.FindAsync(id);
+            var skill = _unitOfWork.Skills.Get(id);
             if (skill == null)
             {
                 return NotFound();
             }
 
-            _context.Skills.Remove(skill);
-            await _context.SaveChangesAsync();
+            _unitOfWork.Skills.Remove(skill);
+            _unitOfWork.SaveChanges();
 
             return NoContent();
         }
 
         private bool SkillExists(int id)
         {
-            return _context.Skills.Any(e => e.Id == id);
+            return _unitOfWork.Skills.Get(id) != null;
         }
     }
 }

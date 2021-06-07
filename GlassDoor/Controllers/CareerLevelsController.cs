@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DAL;
 using DAL.Models;
+using AutoMapper;
+using GlassDoor.ViewModels;
 
 namespace GlassDoor.Controllers
 {
@@ -14,25 +16,29 @@ namespace GlassDoor.Controllers
     [ApiController]
     public class CareerLevelsController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private IMapper _mapper;
+        private IUnitOfWork _unitOfWork;
 
-        public CareerLevelsController(ApplicationDbContext context)
+
+        public CareerLevelsController(IMapper mapper, IUnitOfWork unitOfWork)
         {
-            _context = context;
+            _mapper = mapper;
+            _unitOfWork = unitOfWork;
         }
 
         // GET: api/CareerLevels
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<CareerLevel>>> GetCareerLevels()
+        public async Task<ActionResult<IEnumerable<CareerLevelDto>>> GetCareerLevels()
         {
-            return await _context.CareerLevels.ToListAsync();
+            //return await _context.CareerLevels.ToListAsync();
+            return Ok(_mapper.Map<IEnumerable<CareerLevelDto>>(_unitOfWork.CareerLevel.GetAll()));
         }
 
         // GET: api/CareerLevels/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<CareerLevel>> GetCareerLevel(int id)
+        public async Task<ActionResult<CareerLevelDto>> GetCareerLevel(int id)
         {
-            var careerLevel = await _context.CareerLevels.FindAsync(id);
+            var careerLevel = _mapper.Map<CareerLevelDto>(_unitOfWork.CareerLevel.Get(id));
 
             if (careerLevel == null)
             {
@@ -45,18 +51,20 @@ namespace GlassDoor.Controllers
         // PUT: api/CareerLevels/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCareerLevel(int id, CareerLevel careerLevel)
+        public async Task<IActionResult> PutCareerLevel(int id, CareerLevelDto careerLevelDto)
         {
-            if (id != careerLevel.Id)
+            if (id != careerLevelDto.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(careerLevel).State = EntityState.Modified;
+            var companySize = _mapper.Map<CareerLevel>(careerLevelDto);
+
+            _unitOfWork.CareerLevel.Update(companySize);
 
             try
             {
-                await _context.SaveChangesAsync();
+                _unitOfWork.SaveChanges();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -76,11 +84,11 @@ namespace GlassDoor.Controllers
         // POST: api/CareerLevels
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<CareerLevel>> PostCareerLevel(CareerLevel careerLevel)
+        public async Task<ActionResult<CareerLevelDto>> PostCareerLevel(CareerLevelDto careerLevelDto)
         {
-            _context.CareerLevels.Add(careerLevel);
-            await _context.SaveChangesAsync();
-
+            var careerLevel = _mapper.Map<CareerLevel>(careerLevelDto);
+            _unitOfWork.CareerLevel.Add(careerLevel);
+            _unitOfWork.SaveChanges();
             return CreatedAtAction("GetCareerLevel", new { id = careerLevel.Id }, careerLevel);
         }
 
@@ -88,21 +96,21 @@ namespace GlassDoor.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCareerLevel(int id)
         {
-            var careerLevel = await _context.CareerLevels.FindAsync(id);
+            var careerLevel = _unitOfWork.CareerLevel.Get(id);
             if (careerLevel == null)
             {
                 return NotFound();
             }
 
-            _context.CareerLevels.Remove(careerLevel);
-            await _context.SaveChangesAsync();
+            _unitOfWork.CareerLevel.Remove(careerLevel);
+            _unitOfWork.SaveChanges();
 
             return NoContent();
         }
 
         private bool CareerLevelExists(int id)
         {
-            return _context.CareerLevels.Any(e => e.Id == id);
+            return _unitOfWork.CareerLevel.Get(id) != null;
         }
     }
 }

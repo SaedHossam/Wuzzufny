@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DAL;
 using DAL.Models;
+using AutoMapper;
+using GlassDoor.ViewModels;
 
 namespace GlassDoor.Controllers
 {
@@ -14,25 +16,27 @@ namespace GlassDoor.Controllers
     [ApiController]
     public class EducationLevelsController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private IMapper _mapper;
+        private IUnitOfWork _unitOfWork;
 
-        public EducationLevelsController(ApplicationDbContext context)
+        public EducationLevelsController(IMapper mapper, IUnitOfWork unitOfWork)
         {
-            _context = context;
+            _mapper = mapper;
+            _unitOfWork = unitOfWork;
         }
 
         // GET: api/EducationLevels
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<EducationLevel>>> GetEducationLevels()
+        public ActionResult<IEnumerable<EducationLevelDto>> GetEducationLevels()
         {
-            return await _context.EducationLevels.ToListAsync();
+            return Ok(_mapper.Map<IEnumerable<EducationLevelDto>>(_unitOfWork.EducationLevel.GetAll()));
         }
 
         // GET: api/EducationLevels/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<EducationLevel>> GetEducationLevel(int id)
+        public ActionResult<EducationLevelDto> GetEducationLevel(int id)
         {
-            var educationLevel = await _context.EducationLevels.FindAsync(id);
+            var educationLevel = _mapper.Map<EducationLevelDto>(_unitOfWork.EducationLevel.Get(id));
 
             if (educationLevel == null)
             {
@@ -42,21 +46,21 @@ namespace GlassDoor.Controllers
             return educationLevel;
         }
 
-        // PUT: api/EducationLevels/5
+        //PUT: api/EducationLevels/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutEducationLevel(int id, EducationLevel educationLevel)
+        public IActionResult PutEducationLevel(int id, EducationLevel educationLevel)
         {
             if (id != educationLevel.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(educationLevel).State = EntityState.Modified;
+            _unitOfWork.EducationLevel.Update(educationLevel);
 
             try
             {
-                await _context.SaveChangesAsync();
+                _unitOfWork.SaveChanges();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -73,36 +77,37 @@ namespace GlassDoor.Controllers
             return NoContent();
         }
 
-        // POST: api/EducationLevels
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        //POST: api/EducationLevels
+        //To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<EducationLevel>> PostEducationLevel(EducationLevel educationLevel)
+        public ActionResult<EducationLevelDto> PostEducationLevel(EducationLevelDto educationLevel)
         {
-            _context.EducationLevels.Add(educationLevel);
-            await _context.SaveChangesAsync();
+            // Todo: Check this api, it returns EducationLevel as EducationLevelDto
+            _unitOfWork.EducationLevel.Add(_mapper.Map<EducationLevel>(educationLevel));
+            _unitOfWork.SaveChanges();
 
             return CreatedAtAction("GetEducationLevel", new { id = educationLevel.Id }, educationLevel);
         }
 
-        // DELETE: api/EducationLevels/5
+        //DELETE: api/EducationLevels/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteEducationLevel(int id)
+        public IActionResult DeleteEducationLevel(int id)
         {
-            var educationLevel = await _context.EducationLevels.FindAsync(id);
+            var educationLevel = _unitOfWork.EducationLevel.Get(id);
             if (educationLevel == null)
             {
                 return NotFound();
             }
 
-            _context.EducationLevels.Remove(educationLevel);
-            await _context.SaveChangesAsync();
+            _unitOfWork.EducationLevel.Remove(educationLevel);
+            _unitOfWork.SaveChanges();
 
             return NoContent();
         }
 
         private bool EducationLevelExists(int id)
         {
-            return _context.EducationLevels.Any(e => e.Id == id);
+            return _unitOfWork.EducationLevel.Get(id) != null;
         }
     }
 }

@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DAL;
 using DAL.Models;
+using AutoMapper;
+using GlassDoor.ViewModels;
 
 namespace GlassDoor.Controllers
 {
@@ -14,25 +16,27 @@ namespace GlassDoor.Controllers
     [ApiController]
     public class SalaryRatesController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private IMapper _mapper;
+        private IUnitOfWork _unitOfWork;
 
-        public SalaryRatesController(ApplicationDbContext context)
+        public SalaryRatesController(IMapper mapper, IUnitOfWork unitOfWork)
         {
-            _context = context;
+            _mapper = mapper;
+            _unitOfWork = unitOfWork;
         }
 
         // GET: api/SalaryRates
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<SalaryRate>>> GetSalaryRates()
+        public ActionResult<IEnumerable<SalaryRateDto>> GetSalaryRates()
         {
-            return await _context.SalaryRates.ToListAsync();
+            return Ok(_mapper.Map<IEnumerable<SalaryRateDto>>(_unitOfWork.SalaryRate.GetAll()));
         }
 
         // GET: api/SalaryRates/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<SalaryRate>> GetSalaryRate(int id)
+        public ActionResult<SalaryRateDto> GetSalaryRate(int id)
         {
-            var salaryRate = await _context.SalaryRates.FindAsync(id);
+            var salaryRate = _mapper.Map<SalaryRateDto>(_unitOfWork.SalaryRate.Get(id));
 
             if (salaryRate == null)
             {
@@ -45,18 +49,18 @@ namespace GlassDoor.Controllers
         // PUT: api/SalaryRates/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutSalaryRate(int id, SalaryRate salaryRate)
+        public IActionResult PutSalaryRate(int id, SalaryRateDto salaryRate)
         {
             if (id != salaryRate.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(salaryRate).State = EntityState.Modified;
+            _unitOfWork.SalaryRate.Update(_mapper.Map<SalaryRate>(salaryRate));
 
             try
             {
-                await _context.SaveChangesAsync();
+                _unitOfWork.SaveChanges();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -76,33 +80,33 @@ namespace GlassDoor.Controllers
         // POST: api/SalaryRates
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<SalaryRate>> PostSalaryRate(SalaryRate salaryRate)
+        public ActionResult<SalaryRate> PostSalaryRate(SalaryRateDto salaryRate)
         {
-            _context.SalaryRates.Add(salaryRate);
-            await _context.SaveChangesAsync();
+            _unitOfWork.SalaryRate.Add(_mapper.Map<SalaryRate>(salaryRate));
+            _unitOfWork.SaveChanges();
 
             return CreatedAtAction("GetSalaryRate", new { id = salaryRate.Id }, salaryRate);
         }
 
         // DELETE: api/SalaryRates/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteSalaryRate(int id)
+        public IActionResult DeleteSalaryRate(int id)
         {
-            var salaryRate = await _context.SalaryRates.FindAsync(id);
+            var salaryRate = _unitOfWork.SalaryRate.Get(id);
             if (salaryRate == null)
             {
                 return NotFound();
             }
 
-            _context.SalaryRates.Remove(salaryRate);
-            await _context.SaveChangesAsync();
+            _unitOfWork.SalaryRate.Remove(salaryRate);
+            _unitOfWork.SaveChanges();
 
             return NoContent();
         }
 
         private bool SalaryRateExists(int id)
         {
-            return _context.SalaryRates.Any(e => e.Id == id);
+            return _unitOfWork.SalaryRate.Get(id) != null;
         }
     }
 }

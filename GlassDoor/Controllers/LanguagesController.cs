@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DAL;
 using DAL.Models;
+using AutoMapper;
+using GlassDoor.ViewModels;
 
 namespace GlassDoor.Controllers
 {
@@ -14,25 +16,27 @@ namespace GlassDoor.Controllers
     [ApiController]
     public class LanguagesController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private IMapper _mapper;
+        private IUnitOfWork _unitOfWork;
 
-        public LanguagesController(ApplicationDbContext context)
+        public LanguagesController(IMapper mapper, IUnitOfWork unitOfWork)
         {
-            _context = context;
+            _mapper = mapper;
+            _unitOfWork = unitOfWork;
         }
 
         // GET: api/Languages
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Language>>> GetLanguages()
+        public ActionResult<IEnumerable<LanguageDto>> GetLanguages()
         {
-            return await _context.Languages.ToListAsync();
+            return Ok(_mapper.Map<IEnumerable<LanguageDto>>(_unitOfWork.Language.GetAll()));
         }
 
         // GET: api/Languages/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Language>> GetLanguage(int id)
+        public ActionResult<LanguageDto> GetLanguage(int id)
         {
-            var language = await _context.Languages.FindAsync(id);
+            var language = _mapper.Map<LanguageDto>(_unitOfWork.Language.Get(id));
 
             if (language == null)
             {
@@ -45,18 +49,18 @@ namespace GlassDoor.Controllers
         // PUT: api/Languages/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutLanguage(int id, Language language)
+        public IActionResult PutLanguage(int id, Language language)
         {
             if (id != language.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(language).State = EntityState.Modified;
+            _unitOfWork.Language.Update(language);
 
             try
             {
-                await _context.SaveChangesAsync();
+                _unitOfWork.SaveChanges();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -76,33 +80,33 @@ namespace GlassDoor.Controllers
         // POST: api/Languages
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Language>> PostLanguage(Language language)
+        public ActionResult<Language> PostLanguage(Language language)
         {
-            _context.Languages.Add(language);
-            await _context.SaveChangesAsync();
+            _unitOfWork.Language.Add(language);
+            _unitOfWork.SaveChanges();
 
             return CreatedAtAction("GetLanguage", new { id = language.Id }, language);
         }
 
         // DELETE: api/Languages/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteLanguage(int id)
+        public IActionResult DeleteLanguage(int id)
         {
-            var language = await _context.Languages.FindAsync(id);
+            var language = _unitOfWork.Language.Get(id);
             if (language == null)
             {
                 return NotFound();
             }
 
-            _context.Languages.Remove(language);
-            await _context.SaveChangesAsync();
+            _unitOfWork.Language.Remove(language);
+            _unitOfWork.SaveChanges();
 
             return NoContent();
         }
 
         private bool LanguageExists(int id)
         {
-            return _context.Languages.Any(e => e.Id == id);
+            return _unitOfWork.Language.Get(id) != null;
         }
     }
 }

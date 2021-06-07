@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DAL;
 using DAL.Models;
+using AutoMapper;
+using GlassDoor.ViewModels;
 
 namespace GlassDoor.Controllers
 {
@@ -14,25 +16,27 @@ namespace GlassDoor.Controllers
     [ApiController]
     public class CurrenciesController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private IMapper _mapper;
+        private IUnitOfWork _unitOfWork;
 
-        public CurrenciesController(ApplicationDbContext context)
+        public CurrenciesController(IMapper mapper, IUnitOfWork unitOfWork)
         {
-            _context = context;
+            _mapper = mapper;
+            _unitOfWork = unitOfWork;
         }
 
         // GET: api/Currencies
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Currency>>> GetCurrencies()
+        public ActionResult<IEnumerable<CurrencyDto>> GetCurrencies()
         {
-            return await _context.Currencies.ToListAsync();
+            return Ok(_mapper.Map<IEnumerable<CurrencyDto>>(_unitOfWork.Currency.GetAll()));
         }
 
         // GET: api/Currencies/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Currency>> GetCurrency(int id)
+        public ActionResult<CurrencyDto> GetCurrency(int id)
         {
-            var currency = await _context.Currencies.FindAsync(id);
+            var currency = _mapper.Map<CurrencyDto>(_unitOfWork.Currency.Get(id));
 
             if (currency == null)
             {
@@ -42,21 +46,21 @@ namespace GlassDoor.Controllers
             return currency;
         }
 
-        // PUT: api/Currencies/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        //// PUT: api/Currencies/5
+        //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCurrency(int id, Currency currency)
+        public IActionResult PutCurrency(int id, Currency currency)
         {
             if (id != currency.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(currency).State = EntityState.Modified;
+            _unitOfWork.Currency.Update(currency);
 
             try
             {
-                await _context.SaveChangesAsync();
+                _unitOfWork.SaveChanges();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -76,33 +80,33 @@ namespace GlassDoor.Controllers
         // POST: api/Currencies
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Currency>> PostCurrency(Currency currency)
+        public ActionResult<Currency> PostCurrency(Currency currency)
         {
-            _context.Currencies.Add(currency);
-            await _context.SaveChangesAsync();
+            _unitOfWork.Currency.Add(currency);
+            _unitOfWork.SaveChanges();
 
             return CreatedAtAction("GetCurrency", new { id = currency.Id }, currency);
         }
 
         // DELETE: api/Currencies/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCurrency(int id)
+        public IActionResult DeleteCurrency(int id)
         {
-            var currency = await _context.Currencies.FindAsync(id);
+            var currency = _unitOfWork.Currency.Get(id);
             if (currency == null)
             {
                 return NotFound();
             }
 
-            _context.Currencies.Remove(currency);
-            await _context.SaveChangesAsync();
+            _unitOfWork.Currency.Remove(currency);
+            _unitOfWork.SaveChanges();
 
             return NoContent();
         }
 
         private bool CurrencyExists(int id)
         {
-            return _context.Currencies.Any(e => e.Id == id);
+            return _unitOfWork.Currency.Get(id) != null;
         }
     }
 }

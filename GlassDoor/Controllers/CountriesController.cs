@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DAL;
 using DAL.Models;
+using AutoMapper;
+using GlassDoor.ViewModels;
 
 namespace GlassDoor.Controllers
 {
@@ -14,36 +16,38 @@ namespace GlassDoor.Controllers
     [ApiController]
     public class CountriesController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private IMapper _mapper;
+        private IUnitOfWork _unitOfWork;
 
-        public CountriesController(ApplicationDbContext context)
+        public CountriesController(IMapper mapper, IUnitOfWork unitOfWork)
         {
-            _context = context;
+            _mapper = mapper;
+            _unitOfWork = unitOfWork;
         }
 
         // GET: api/Countries
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Country>>> GetCountries()
+        public async Task<ActionResult<IEnumerable<CountryDto>>> GetCountries()
         {
-            return await _context.Countries.ToListAsync();
+            return Ok(_mapper.Map<IEnumerable<CountryDto>>(_unitOfWork.Country.GetAll()));
         }
 
         // GET: api/Countries/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Country>> GetCountry(int id)
+        public async Task<ActionResult<CountryDto>> GetCountry(int id)
         {
-            var country = await _context.Countries.FindAsync(id);
-
+            var country = _mapper.Map <CountryDto>(_unitOfWork.Country.Get(id));
+            var cities = _mapper.Map<IEnumerable<CityDto>>(_unitOfWork.City.GetAll().Where(c => c.CountryId == id).ToList());
             if (country == null)
             {
                 return NotFound();
             }
-
+            country.Cities = cities;
             return country;
         }
 
-        // PUT: api/Countries/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        //// PUT: api/Countries/5
+        //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCountry(int id, Country country)
         {
@@ -52,11 +56,11 @@ namespace GlassDoor.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(country).State = EntityState.Modified;
+            _unitOfWork.Country.Update(country);
 
             try
             {
-                await _context.SaveChangesAsync();
+                _unitOfWork.SaveChanges();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -73,13 +77,13 @@ namespace GlassDoor.Controllers
             return NoContent();
         }
 
-        // POST: api/Countries
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        //// POST: api/Countries
+        //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Country>> PostCountry(Country country)
         {
-            _context.Countries.Add(country);
-            await _context.SaveChangesAsync();
+            _unitOfWork.Country.Add(country);
+            _unitOfWork.SaveChanges();
 
             return CreatedAtAction("GetCountry", new { id = country.Id }, country);
         }
@@ -88,21 +92,21 @@ namespace GlassDoor.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCountry(int id)
         {
-            var country = await _context.Countries.FindAsync(id);
+            var country = _unitOfWork.Country.Get(id);
             if (country == null)
             {
                 return NotFound();
             }
 
-            _context.Countries.Remove(country);
-            await _context.SaveChangesAsync();
+            _unitOfWork.Country.Remove(country);
+            _unitOfWork.SaveChanges();
 
             return NoContent();
         }
 
         private bool CountryExists(int id)
         {
-            return _context.Countries.Any(e => e.Id == id);
+            return _unitOfWork.Country.Get(id) != null ;
         }
     }
 }

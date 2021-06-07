@@ -20,6 +20,20 @@ namespace GlassDoor.ViewModels
             CreateMap<CompanyForRegistrationDto, Company>();
             CreateMap<CompanyForRegistrationDto, ApplicationUser>()
                 .ForMember(u => u.UserName, opt => opt.MapFrom(x => x.Email));
+            
+            CreateMap<CareerLevelDto, CareerLevel>().ReverseMap();
+            CreateMap<CityDto, City>().ReverseMap();
+            CreateMap<CompanyTypeDto, CompanyType>().ReverseMap();
+            CreateMap<CountryDto, Country>()
+                .ForMember(c => c.Cities, opt => opt.MapFrom(s => s.Cities))
+                .ReverseMap();
+            CreateMap<CurrencyDto, Currency>().ReverseMap();
+            CreateMap<EducationLevelDto, EducationLevel>().ReverseMap();
+            CreateMap<JobCategoryDto, JobCategory>().ReverseMap();
+            CreateMap<LanguageDto, Language>().ReverseMap();
+            CreateMap<SkillsDto, Skill>().ReverseMap();
+            CreateMap<SalaryRateDto, SalaryRate>().ReverseMap();
+
         }
     }
 }

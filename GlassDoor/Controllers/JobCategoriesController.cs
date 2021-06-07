@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DAL;
 using DAL.Models;
+using AutoMapper;
+using GlassDoor.ViewModels;
 
 namespace GlassDoor.Controllers
 {
@@ -14,25 +16,27 @@ namespace GlassDoor.Controllers
     [ApiController]
     public class JobCategoriesController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private IMapper _mapper;
+        private IUnitOfWork _unitOfWork;
 
-        public JobCategoriesController(ApplicationDbContext context)
+        public JobCategoriesController(IMapper mapper, IUnitOfWork unitOfWork)
         {
-            _context = context;
+            _mapper = mapper;
+            _unitOfWork = unitOfWork;
         }
 
         // GET: api/JobCategories
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<JobCategory>>> GetJobCategories()
+        public ActionResult<IEnumerable<JobCategoryDto>> GetJobCategories()
         {
-            return await _context.JobCategories.ToListAsync();
+            return Ok(_mapper.Map<IEnumerable<JobCategoryDto>>(_unitOfWork.JobCategory.GetAll()));
         }
 
         // GET: api/JobCategories/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<JobCategory>> GetJobCategory(int id)
+        public ActionResult<JobCategoryDto> GetJobCategory(int id)
         {
-            var jobCategory = await _context.JobCategories.FindAsync(id);
+            var jobCategory = _mapper.Map<JobCategoryDto>(_unitOfWork.JobCategory.Get(id));
 
             if (jobCategory == null)
             {
@@ -45,18 +49,18 @@ namespace GlassDoor.Controllers
         // PUT: api/JobCategories/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutJobCategory(int id, JobCategory jobCategory)
+        public IActionResult PutJobCategory(int id, JobCategory jobCategory)
         {
             if (id != jobCategory.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(jobCategory).State = EntityState.Modified;
+            _unitOfWork.JobCategory.Update(jobCategory);
 
             try
             {
-                await _context.SaveChangesAsync();
+                _unitOfWork.SaveChanges();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -76,33 +80,33 @@ namespace GlassDoor.Controllers
         // POST: api/JobCategories
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<JobCategory>> PostJobCategory(JobCategory jobCategory)
+        public ActionResult<JobCategory> PostJobCategory(JobCategory jobCategory)
         {
-            _context.JobCategories.Add(jobCategory);
-            await _context.SaveChangesAsync();
+            _unitOfWork.JobCategory.Add(jobCategory);
+            _unitOfWork.SaveChanges();
 
             return CreatedAtAction("GetJobCategory", new { id = jobCategory.Id }, jobCategory);
         }
 
         // DELETE: api/JobCategories/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteJobCategory(int id)
+        public IActionResult DeleteJobCategory(int id)
         {
-            var jobCategory = await _context.JobCategories.FindAsync(id);
+            var jobCategory = _unitOfWork.JobCategory.Get(id);
             if (jobCategory == null)
             {
                 return NotFound();
             }
 
-            _context.JobCategories.Remove(jobCategory);
-            await _context.SaveChangesAsync();
+            _unitOfWork.JobCategory.Remove(jobCategory);
+            _unitOfWork.SaveChanges();
 
             return NoContent();
         }
 
         private bool JobCategoryExists(int id)
         {
-            return _context.JobCategories.Any(e => e.Id == id);
+            return _unitOfWork.JobCategory.Get(id) != null;
         }
     }
 }

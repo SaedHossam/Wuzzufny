@@ -6,13 +6,14 @@ using System.Threading.Tasks;
 
 namespace GlassDoor.ViewModels
 {
-    // TODO: rename to SkillDto(without 's')
-    public class SkillsDto : GenericDto
+    public class CityDto : GenericDto
     {
-
+        public int CountryId { get; set; }
     }
-    public class SkillsCreateDto
+
+    public class CityCreateDto
     {
         public string Name { get; set; }
+        public int CountryId { get; set; }
     }
 }

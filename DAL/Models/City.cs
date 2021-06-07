@@ -18,6 +18,7 @@ namespace DAL.Models
         //    SRID = 4326
         //}
 
+        public int CountryId { get; set; }
         public Country Country { get; set; }
         public ICollection<Company> Companies { get; set; }
         public ICollection<Job> Jobs { get; set; }

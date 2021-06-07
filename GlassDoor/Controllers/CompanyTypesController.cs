@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DAL;
 using DAL.Models;
+using AutoMapper;
+using GlassDoor.ViewModels;
 
 namespace GlassDoor.Controllers
 {
@@ -14,25 +16,27 @@ namespace GlassDoor.Controllers
     [ApiController]
     public class CompanyTypesController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private IMapper _mapper;
+        private IUnitOfWork _unitOfWork;
 
-        public CompanyTypesController(ApplicationDbContext context)
+        public CompanyTypesController(IMapper mapper, IUnitOfWork unitOfWork)
         {
-            _context = context;
+            _mapper = mapper;
+            _unitOfWork = unitOfWork;
         }
 
         // GET: api/CompanyTypes
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<CompanyType>>> GetCompanyTypes()
+        public async Task<ActionResult<IEnumerable<CompanyTypeDto>>> GetCompanyTypes()
         {
-            return await _context.CompanyTypes.ToListAsync();
+            return Ok(_mapper.Map<IEnumerable<CompanyTypeDto>>(_unitOfWork.CompanyType.GetAll()));
         }
 
         // GET: api/CompanyTypes/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<CompanyType>> GetCompanyType(int id)
+        public async Task<ActionResult<CompanyTypeDto>> GetCompanyType(int id)
         {
-            var companyType = await _context.CompanyTypes.FindAsync(id);
+            var companyType = _mapper.Map<CompanyTypeDto>(_unitOfWork.CompanyType.Get(id));
 
             if (companyType == null)
             {
@@ -42,8 +46,8 @@ namespace GlassDoor.Controllers
             return companyType;
         }
 
-        // PUT: api/CompanyTypes/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        //// PUT: api/CompanyTypes/5
+        //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCompanyType(int id, CompanyType companyType)
         {
@@ -52,11 +56,11 @@ namespace GlassDoor.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(companyType).State = EntityState.Modified;
+            _unitOfWork.CompanyType.Update(companyType);
 
             try
             {
-                await _context.SaveChangesAsync();
+                _unitOfWork.SaveChanges();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -73,13 +77,13 @@ namespace GlassDoor.Controllers
             return NoContent();
         }
 
-        // POST: api/CompanyTypes
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        //// POST: api/CompanyTypes
+        //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<CompanyType>> PostCompanyType(CompanyType companyType)
         {
-            _context.CompanyTypes.Add(companyType);
-            await _context.SaveChangesAsync();
+            _unitOfWork.CompanyType.Add(companyType);
+            _unitOfWork.SaveChanges();
 
             return CreatedAtAction("GetCompanyType", new { id = companyType.Id }, companyType);
         }
@@ -88,21 +92,21 @@ namespace GlassDoor.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCompanyType(int id)
         {
-            var companyType = await _context.CompanyTypes.FindAsync(id);
+            var companyType = _unitOfWork.CompanyType.Get(id);
             if (companyType == null)
             {
                 return NotFound();
             }
 
-            _context.CompanyTypes.Remove(companyType);
-            await _context.SaveChangesAsync();
+            _unitOfWork.CompanyType.Remove(companyType);
+            _unitOfWork.SaveChanges();
 
             return NoContent();
         }
 
         private bool CompanyTypeExists(int id)
         {
-            return _context.CompanyTypes.Any(e => e.Id == id);
+            return _unitOfWork.CompanyType.Get(id) != null;
         }
     }
 }
