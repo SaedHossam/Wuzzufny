@@ -32,10 +32,6 @@ import { PasswordConfirmationValidatorService } from
 import { DropdownModule } from 'primeng/dropdown';
 import { CompanyIndustryService } from "./shared/services/company-industry.service";
 
-import { CalendarModule } from "primeng/calendar";
-import { FormsModule } from "@angular/forms"
-import { PasswordModule } from "primeng/password"
-
 export function tokenGetter() {
   return localStorage.getItem("token");
 }

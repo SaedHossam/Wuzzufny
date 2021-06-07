@@ -9,7 +9,7 @@ namespace DAL.Models
         public string Name { get; set; }
         public string Logo { get; set; }
         public string AboutUs { get; set; }
-        public DateTime YearFounded { get; set; }
+        public DateTime? YearFounded { get; set; }
         public string Phone { get; set; }
         public int? CompanyTypeId { get; set; }
         public CompanyType CompanyType { get; set; }

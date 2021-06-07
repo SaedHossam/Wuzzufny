@@ -15,7 +15,8 @@ namespace GlassDoor.Contexts
 {
     public class ApplicationDbContextSeed
     {
-        public static async Task SeedEssentialsAsync(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IHost host)
+        public static async Task SeedEssentialsAsync(UserManager<ApplicationUser> userManager,
+            RoleManager<IdentityRole> roleManager, IHost host)
         {
             //Seed Roles
             await roleManager.CreateAsync(new IdentityRole(Authorization.Roles.Administrator.ToString()));
@@ -73,11 +74,11 @@ namespace GlassDoor.Contexts
             {
                 var skills = new List<Skill>()
                 {
-                    new Skill(){Name = "html"},
-                    new Skill(){Name = "css"},
-                    new Skill(){Name = "JavaScript"},
-                    new Skill(){Name = "C#"},
-                    new Skill(){Name = "bootstrap"},
+                    new Skill() {Name = "html"},
+                    new Skill() {Name = "css"},
+                    new Skill() {Name = "JavaScript"},
+                    new Skill() {Name = "C#"},
+                    new Skill() {Name = "bootstrap"},
 
                 };
 
@@ -128,14 +129,14 @@ namespace GlassDoor.Contexts
 
             if (!context.CompanyTypes.Any())
             {
-                var  companyTypes = new List<CompanyType>()
+                var companyTypes = new List<CompanyType>()
                 {
-                    new CompanyType(){Name = "Public Company"},
-                    new CompanyType(){Name = "Privately held"},
-                    new CompanyType(){Name = "Recruitment Agency"},
-                    new CompanyType(){Name = "Educational Institution"},
-                    new CompanyType(){Name = "Government Agency"},
-                    new CompanyType(){Name = "Non-profit"},
+                    new CompanyType() {Name = "Public Company"},
+                    new CompanyType() {Name = "Privately held"},
+                    new CompanyType() {Name = "Recruitment Agency"},
+                    new CompanyType() {Name = "Educational Institution"},
+                    new CompanyType() {Name = "Government Agency"},
+                    new CompanyType() {Name = "Non-profit"},
                 };
 
                 await context.CompanyTypes.AddRangeAsync(companyTypes);
@@ -146,12 +147,12 @@ namespace GlassDoor.Contexts
             {
                 var educationLevels = new List<EducationLevel>()
                 {
-                    new EducationLevel(){Name = "Bachelor's Degree"},
-                    new EducationLevel(){Name = "Master's Degree"},
-                    new EducationLevel(){Name = "Doctorate Degree"},
-                    new EducationLevel(){Name = "High School"},
-                    new EducationLevel(){Name = "Vocational"},
-                    new EducationLevel(){Name = "Diploma"}
+                    new EducationLevel() {Name = "Bachelor's Degree"},
+                    new EducationLevel() {Name = "Master's Degree"},
+                    new EducationLevel() {Name = "Doctorate Degree"},
+                    new EducationLevel() {Name = "High School"},
+                    new EducationLevel() {Name = "Vocational"},
+                    new EducationLevel() {Name = "Diploma"}
                 };
 
                 await context.EducationLevels.AddRangeAsync(educationLevels);
@@ -162,11 +163,11 @@ namespace GlassDoor.Contexts
             {
                 var jobCategories = new List<JobCategory>()
                 {
-                    new JobCategory(){Name = "Front End"},
-                    new JobCategory(){Name = "Back End"},
-                    new JobCategory(){Name = "Full Stack"},
-                    new JobCategory(){Name = "Mobile Native"},
-                    new JobCategory(){Name = "Mobile Cross platform"}
+                    new JobCategory() {Name = "Front End"},
+                    new JobCategory() {Name = "Back End"},
+                    new JobCategory() {Name = "Full Stack"},
+                    new JobCategory() {Name = "Mobile Native"},
+                    new JobCategory() {Name = "Mobile Cross platform"}
                 };
 
                 await context.JobCategories.AddRangeAsync(jobCategories);
@@ -178,12 +179,12 @@ namespace GlassDoor.Contexts
             {
                 var jobTypes = new List<JobType>()
                 {
-                    new JobType(){Name = "Full Time"},
-                    new JobType(){Name = "Part Time"},
-                    new JobType(){Name = "Freelance / Project"},
-                    new JobType(){Name = "Shift Based"},
-                    new JobType(){Name = "Work From Home"},
-                    new JobType(){Name = "Volunteering"},
+                    new JobType() {Name = "Full Time"},
+                    new JobType() {Name = "Part Time"},
+                    new JobType() {Name = "Freelance / Project"},
+                    new JobType() {Name = "Shift Based"},
+                    new JobType() {Name = "Work From Home"},
+                    new JobType() {Name = "Volunteering"},
 
                 };
 
@@ -195,8 +196,8 @@ namespace GlassDoor.Contexts
             {
                 var languages = new List<Language>()
                 {
-                    new Language(){Name="Arabic"},
-                    new Language(){Name="English"}
+                    new Language() {Name = "Arabic"},
+                    new Language() {Name = "English"}
                 };
 
                 await context.Languages.AddRangeAsync(languages);
@@ -207,11 +208,11 @@ namespace GlassDoor.Contexts
             {
                 var salaryRates = new List<SalaryRate>()
                 {
-                    new SalaryRate(){Name = "Per Hour"},
-                    new SalaryRate(){Name = "Per Day"},
-                    new SalaryRate(){Name = "Per Week"},
-                    new SalaryRate(){Name = "Per Month"},
-                    new SalaryRate(){Name = "Per Year"}
+                    new SalaryRate() {Name = "Per Hour"},
+                    new SalaryRate() {Name = "Per Day"},
+                    new SalaryRate() {Name = "Per Week"},
+                    new SalaryRate() {Name = "Per Month"},
+                    new SalaryRate() {Name = "Per Year"}
                 };
 
                 await context.SalaryRates.AddRangeAsync(salaryRates);
@@ -222,19 +223,51 @@ namespace GlassDoor.Contexts
             {
                 var companyRequestStatuses = new List<CompanyRequestStatus>()
                 {
-                    new CompanyRequestStatus(){Name = Enums.CompanyRequestStatus.UnderReview.ToString()},
-                    new CompanyRequestStatus(){Name = Enums.CompanyRequestStatus.Accepted.ToString()},
-                    new CompanyRequestStatus(){Name = Enums.CompanyRequestStatus.Rejected.ToString()}
+                    new CompanyRequestStatus() {Name = Enums.CompanyRequestStatus.UnderReview.ToString()},
+                    new CompanyRequestStatus() {Name = Enums.CompanyRequestStatus.Accepted.ToString()},
+                    new CompanyRequestStatus() {Name = Enums.CompanyRequestStatus.Rejected.ToString()}
                 };
 
                 await context.CompanyRequestStatus.AddRangeAsync(companyRequestStatuses);
                 await context.SaveChangesAsync();
             }
 
-            //var empId = context.Users.
-            var employee = new Employee() { UserId = employeeUser.Id };
-            context.Employees.Add(employee);
-            var x = context.SaveChanges();
+            if (!context.Employees.Any())
+            {
+                var employee = new Employee() { UserId = employeeUser.Id };
+                context.Employees.Add(employee);
+                context.SaveChanges();
+            }
+
+            if (!context.Companies.Any())
+            {
+                var company = new Company()
+                {
+                    Name = "company",
+                    CompanyIndustryId = context.CompanyIndustries.First().Id,
+                    CompanySizeId = context.CompanySizes.First().Id,
+                    CompanyTypeId = context.CompanyTypes.First().Id,
+                    RequestStatusId = context.CompanyRequestStatus
+                        .First(r => r.Name == Enums.CompanyRequestStatus.Accepted.ToString()).Id
+                };
+
+                context.Companies.Add(company);
+                context.SaveChanges();
+            }
+
+            if (!context.CompanyManagers.Any())
+            {
+                var companyManager = new CompanyManager()
+                {
+                    UserId = companyUser.Id,
+                    CompanyId = context.Companies.First().Id,
+                    Title = "Hr",
+                    User = companyUser,
+                    Company = context.Companies.First()
+                };
+                context.CompanyManagers.Add(companyManager);
+                context.SaveChanges();
+            }
         }
     }
 }

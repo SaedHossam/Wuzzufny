@@ -66,6 +66,12 @@ namespace DAL
 
             builder.Entity<JobSkill>().HasKey(js => new { js.JobsId, js.SkillsId });
 
+            builder.Entity<City>()
+                .HasOne(c => c.Country)
+                .WithMany(co => co.Cities)
+                .HasForeignKey(c => c.CountryId)
+                .OnDelete(DeleteBehavior.NoAction);
+
 
             //builder.Entity<ApplicationUser>().HasOne<Employee>(au => au.Employee).WithOne(e => e.User)
             //    .OnDelete(DeleteBehavior.Cascade);
