@@ -6,7 +6,7 @@ import { CompanyForRegistrationDto } from "../interfaces/company-register/compan
 import { CompanyService } from "../shared/services/company.service"
 import { CompanyIndustryService } from "../shared/services/company-industry.service";
 import { Industry } from "../interfaces/shared/industry.model";
-import { ComapnySize } from "../interfaces/shared/comapny-size.model";
+import { CompanySize } from "../models/company-size";
 import { CompanySizeService } from "../shared/services/company-size.service";
 
 @Component({
@@ -22,7 +22,7 @@ export class EmployerRegisterComponent implements OnInit {
   public showSuccess: boolean;
   public successMessage: string;
   public industries: Industry[];
-  public companySizes: ComapnySize[];
+  public companySizes: CompanySize[];
 
   constructor(private _passConfValidator: PasswordConfirmationValidatorService,
     private _companyService: CompanyService, private _companyIndustryService: CompanyIndustryService, private _companySizeService: CompanySizeService) { }
@@ -52,7 +52,7 @@ export class EmployerRegisterComponent implements OnInit {
         console.log(error);
       })
 
-    this._companySizeService.getComapnySizes().subscribe(companySizes => {
+    this._companySizeService.getCompanySizes().subscribe(companySizes => {
       this.companySizes = companySizes;
     },
       error => {

@@ -132,7 +132,7 @@ namespace GlassDoor.Controllers
                 return BadRequest();
 
             var job = _mapper.Map<Job>(postedjob);
-
+            job.IsOpen = true;
             var user = await _userManager.GetUserAsync(HttpContext.User);
             var companyId = _unitOfWork.CompaniesManagers.Find(c => c.UserId == user.Id).First().Id;
             job.CompanyId = companyId;

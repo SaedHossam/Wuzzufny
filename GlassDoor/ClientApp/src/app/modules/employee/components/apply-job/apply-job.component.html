@@ -39,7 +39,7 @@
       Education Level : {{jobD.educationLevelName}}
     </p>
     <p>
-      Salary : {{jobD.salaryMin}} : {{jobD.salaryMax}} {{jobD.salaryCurrencyName}} - {{jobD.salaryCurrencyCode}}
+      Salary : {{jobD.salaryMin}} : {{jobD.salaryMax}} {{jobD.salaryCurrencyName}} - {{jobD.salaryCurrencyCode}} {{jobD.salaryRate}}
     </p>
     <p>
       Job Categories : {{jobD.category}}
@@ -57,9 +57,9 @@
 <p-card [style]="{ 'margin-bottom': '2em'}">
   <div class="JobTitleAndImg">
     <h3>Job Description</h3>
-    <p>
+    <!--<p>
       Duties :
-    </p>
+    </p>-->
     <div [innerHTML]="jobD.description">
     </div>
   </div>

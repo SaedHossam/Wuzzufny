@@ -1,4 +1,4 @@
-export interface ComapnySize {
+export interface CompanySize {
   name: string,
   id: number
 }

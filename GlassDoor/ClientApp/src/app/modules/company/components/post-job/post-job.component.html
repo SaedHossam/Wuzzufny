@@ -1,6 +1,6 @@
 <h1>Post a job</h1>
 <div class="row">
-  <div class="col-6">
+  <div class="col-6 pb-4">
     <form [formGroup]="postjobform" autocomplete="off" novalidate (ngSubmit)="postjob(postjobform)">
 
       <div class="form-group">
@@ -12,7 +12,7 @@
       <div class="form-group">
         <label for="jobTypeId">Job type</label>
         <select name="jobTypeId" class="form-control" formControlName="jobTypeId">
-          <option *ngFor="let i of DB.jobTypes" [value]="i.id">
+          <option *ngFor="let i of jobTypes" [value]="i.id">
             {{i.name}}
           </option>
         </select>
@@ -22,7 +22,7 @@
       <div class="form-group">
         <label for="countryId">Country Name</label>
         <select name="countryId" class="form-control" formControlName="countryId">
-          <option *ngFor="let i of DB.countries" [value]="i.id">
+          <option *ngFor="let i of countries" [value]="i.id">
             {{i.name}}
           </option>
         </select>
@@ -32,7 +32,7 @@
       <div class="form-group">
         <label for="cityId">City</label>
         <select name="cityId" class="form-control" formControlName="cityId">
-          <option *ngFor="let i of DB.cities" [value]="i.id">
+          <option *ngFor="let i of cities" [value]="i.id">
             {{i.name}}
           </option>
         </select>
@@ -63,7 +63,7 @@
       <div class="form-group">
         <label for="careerLevelId">Career level</label>
         <select name="careerLevelId" class="form-control" formControlName="careerLevelId">
-          <option *ngFor="let i of DB.careerLevels" [value]="i.id">
+          <option *ngFor="let i of careerLevels" [value]="i.id">
             {{i.name}}
           </option>
         </select>
@@ -73,7 +73,7 @@
       <div class="form-group">
         <label for="educationLevelId">Education Level</label>
         <select name="educationLevelId" class="form-control" formControlName="educationLevelId">
-          <option *ngFor="let i of DB.educationLevels" [value]="i.id">
+          <option *ngFor="let i of educationLevels" [value]="i.id">
             {{i.name}}
           </option>
         </select>
@@ -95,7 +95,7 @@
       <div class="form-group">
         <label for="salaryCurrencyId">Currency</label>
         <select name="salaryCurrencyId" class="form-control" formControlName="salaryCurrencyId">
-          <option *ngFor="let i of DB.currencies" [value]="i.id">
+          <option *ngFor="let i of currencies" [value]="i.id">
             {{i.name}}
           </option>
         </select>
@@ -105,7 +105,7 @@
       <div class="form-group">
         <label for="salaryRateId">Salary Rate</label>
         <select name="salaryRateId" class="form-control" formControlName="salaryRateId">
-          <option *ngFor="let i of DB.salaryRates" [value]="i.id">
+          <option *ngFor="let i of salaryRates" [value]="i.id">
             {{i.name}}
           </option>
         </select>
@@ -115,7 +115,7 @@
       <div class="form-group">
         <label for="jobCategoryId">Job Categoty</label>
         <select name="jobCategoryId" class="form-control" formControlName="jobCategoryId">
-          <option *ngFor="let i of DB.jobCategories" [value]="i.id">
+          <option *ngFor="let i of jobCategories" [value]="i.id">
             {{i.name}}
           </option>
         </select>
@@ -259,7 +259,7 @@
 
 
 
-      <button type="submit" class="btn btn-primary">Submit</button>
+      <button type="submit" class="btn btn-primary" [disabled]="!postjobform.valid">Submit</button>
     </form>
   </div>
 </div>

@@ -6,7 +6,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using System.Text;
-using System.Threading.Tasks;
 using DAL;
 using DAL.Models;
 using GlassDoor.Contexts;

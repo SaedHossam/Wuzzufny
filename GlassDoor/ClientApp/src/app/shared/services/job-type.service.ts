@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { EnvironmentUrlService } from "./environment-url.service";
-import { CompanySize } from "../../models/company-size";
+import { JobTypes } from "../../models/job-types";
 
 @Injectable({
   providedIn: 'root'
 })
-export class CompanySizeService {
+export class JobTypeService {
 
   constructor(private _http: HttpClient, private _envUrl: EnvironmentUrlService) { }
 
-  public getCompanySizes= () => {
-    return this._http.get<CompanySize[]>(this._envUrl.urlAddress + '/api/CompanySizes');
+  public getCompanyTypes = () => {
+    return this._http.get<JobTypes[]>(this._envUrl.urlAddress + '/api/JobTypes');
   }
 }

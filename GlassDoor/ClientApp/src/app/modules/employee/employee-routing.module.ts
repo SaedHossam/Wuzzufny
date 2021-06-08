@@ -1,7 +1,7 @@
-import { NgModule } from '@angular/core';
+import { NgModule } from '@angular/core'; 
 import { RouterModule, Routes } from '@angular/router';
-import { ApplyJobComponent } from './components/apply-job/apply-job.component';
-import { ViewJobComponent } from './components/view-job/view-job.component';
+import { ApplyJobComponent } from "./components/apply-job/apply-job.component";
+import { ViewJobComponent } from "./components/view-job/view-job.component";
 import { HomeComponent } from './home/home.component';
 
 
