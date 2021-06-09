@@ -34,6 +34,7 @@ namespace GlassDoor.Controllers
             _context = DB;
             _DB = DB;
         }
+       
 
         // GET: api/Jobs
         [HttpGet]
@@ -43,6 +44,14 @@ namespace GlassDoor.Controllers
             return Ok( _mapper.Map<IEnumerable<JobViewModel>>(allJobData));
         }
 
+        [HttpGet("companyJobs")]
+        public async Task<ActionResult<IEnumerable<JobViewModel>>> GetCompanyJobs()
+        {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            var companyId = _unitOfWork.CompaniesManagers.Find(c => c.UserId == user.Id).First().Id;
+            var companyJobs = _unitOfWork.Jobs.GetAllJobData().Where(c=>c.CompanyId==companyId);
+            return Ok(_mapper.Map<IEnumerable<JobViewModel>>(companyJobs));
+        }
         [HttpGet("SeedAngular")]
         public ActionResult<SeedAngular> GetAllConstants()
         {
@@ -101,6 +110,7 @@ namespace GlassDoor.Controllers
             var job = _mapper.Map<Job>(postedjob);
             var oldJob = _context.Jobs.Include(j => j.JobDetails).FirstOrDefault(j => j.Id == id);
             job.JobDetails.Id = oldJob.JobDetails.Id;
+            job.CompanyId = oldJob.CompanyId;
             //update job
             _mapper.Map<Job, Job>(job, oldJob);
 
@@ -122,6 +132,37 @@ namespace GlassDoor.Controllers
             return NoContent();
         }
 
+        //change job status to close
+        [HttpPut("closeJob/{id}")]
+        public async Task<IActionResult> closeJob(int id)
+        {
+            try
+            {
+              var job = _context.Jobs.Include(j => j.JobDetails).FirstOrDefault(j => j.Id == id);
+                job.IsOpen=false;
+            }
+            catch (Exception)
+            {
+
+                return BadRequest();
+            }
+            try
+            {
+                _unitOfWork.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!JobExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return NoContent();
+        }
         // POST: api/Jobs
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]

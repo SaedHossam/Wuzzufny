@@ -18,7 +18,7 @@ namespace GlassDoor.ViewModels
             CreateMap<CompanySizeCreateDto, CompanySize>();
             CreateMap<CompanyIndustry, CompanyIndustryDto>().ReverseMap();
             CreateMap<CompanyIndustryCreateDto, CompanyIndustry>();
-            CreateMap<CompanyForRegistrationDto, Company>();
+            CreateMap<CompanyForRegistrationDto, Company>().ReverseMap();
             CreateMap<CompanyForRegistrationDto, ApplicationUser>()
                 .ForMember(u => u.UserName, opt => opt.MapFrom(x => x.Email));
 

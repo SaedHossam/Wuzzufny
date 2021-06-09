@@ -15,6 +15,8 @@ namespace DAL.Models
         public string WithdrawReason { get; set; }
 
         public virtual Employee Employee { get; set; }
+        //added job id
+        public int jobId { get; set; }
         public virtual Job Job { get; set; }
     }
 }

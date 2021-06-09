@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DAL;
 using DAL.Models;
+using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 
 namespace GlassDoor.Controllers
 {
@@ -15,10 +17,16 @@ namespace GlassDoor.Controllers
     public class CompaniesController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
+        private readonly IMapper _mapper;
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public CompaniesController(ApplicationDbContext context)
+        public CompaniesController(ApplicationDbContext context, IMapper mapper, IUnitOfWork unitOfWork, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            this._mapper = mapper;
+            this._unitOfWork = unitOfWork;
+            this._userManager = userManager;
         }
 
         // GET: api/Companies
@@ -27,11 +35,12 @@ namespace GlassDoor.Controllers
         {
             return await _context.Companies.ToListAsync();
         }
-
+        
         // GET: api/Companies/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Company>> GetCompany(int id)
         {
+
             var company = await _context.Companies.FindAsync(id);
 
             if (company == null)
@@ -41,7 +50,23 @@ namespace GlassDoor.Controllers
 
             return company;
         }
+        //get company profile
 
+        [HttpGet("CompanyProfile")]
+        public async Task<ActionResult<Company>> GetCompanyProfile()
+        {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            var companyId = _unitOfWork.CompaniesManagers.Find(c => c.UserId == user.Id).First().Id;
+
+            var company = _unitOfWork.Companies.Find(a => a.Id == companyId).First();
+
+            if (company == null)
+            {
+                return NotFound();
+            }
+
+            return company;
+        }
         // PUT: api/Companies/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]

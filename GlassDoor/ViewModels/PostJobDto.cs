@@ -16,6 +16,8 @@ namespace GlassDoor.ViewModels
         public int? NumberOfVacancies { get; set; }
         public int CityId { get; set; }
         public int CountryId { get; set; }
+        public bool? IsOpen { get; set; }
+
         public JobDetails JobDetails { get; set; }
         public ICollection<JobSkill> Skills { get; set; }
     }
