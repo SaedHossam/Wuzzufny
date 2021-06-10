@@ -177,7 +177,7 @@ namespace GlassDoor.Controllers
 
             var user = await _userManager.FindByEmailAsync(forgotPasswordDto.Email);
             if (user == null)
-                return BadRequest("Invalid Request");
+                return BadRequest("Email Not Found");
 
             var token = await _userManager.GeneratePasswordResetTokenAsync(user);
             var param = new Dictionary<string, string>
@@ -189,7 +189,7 @@ namespace GlassDoor.Controllers
             var callback = QueryHelpers.AddQueryString(forgotPasswordDto.ClientURI, param);
 
             var message = new Message(new string[] { user.Email }, "Reset password token", callback, null, false);
-            await _emailSender.SendEmailAsync(message);
+            // await _emailSender.SendEmailAsync(message);
 
             return Ok();
         }
