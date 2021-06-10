@@ -36,6 +36,13 @@ namespace GlassDoor.ViewModels
             CreateMap<SalaryRateDto, SalaryRate>().ReverseMap();
             CreateMap<JobTypeDto, JobType>().ReverseMap();
 
+            //application mapping
+            CreateMap<UserLanguageDto, UserLanguage>().ReverseMap();
+            CreateMap<EmployeeLinksDto, EmployeeLinks>().ReverseMap();
+            CreateMap<EmployeeDto, Employee>().ReverseMap();
+            CreateMap<List<ApplicationDto>, List<Application>>().ReverseMap();
+            CreateMap<ApplicationDto, Application>().ReverseMap();
+
 
             // All Jobs View mapping
             CreateMap<Job, JobViewModel>()
