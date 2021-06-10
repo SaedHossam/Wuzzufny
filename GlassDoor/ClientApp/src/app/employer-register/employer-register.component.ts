@@ -29,12 +29,12 @@ export class EmployerRegisterComponent implements OnInit {
 
   ngOnInit(): void {
     this.registerForm = new FormGroup({
-      companyName: new FormControl(''),
+      companyName: new FormControl('', [Validators.required]),
       companyIndustry: new FormControl('', [Validators.required]),
       companySize: new FormControl('', [Validators.required]),
-      firstName: new FormControl(''),
-      lastName: new FormControl(''),
-      title: new FormControl(''),
+      firstName: new FormControl('', [Validators.required]),
+      lastName: new FormControl('', [Validators.required]),
+      title: new FormControl('', [Validators.required]),
       mobile: new FormControl(null, [Validators.pattern("[01][0-9]{10}")]),
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [Validators.required]),

@@ -1,3 +1,7 @@
 nav {
   height: 70px;
 }
+
+form a.active {
+  box-shadow: 0 0 0 0.25rem rgb(95 118 200 / 50%);
+}

@@ -85,7 +85,7 @@ namespace GlassDoor.Controllers
             {
                 if (await _userManager.IsInRoleAsync(user, Authorization.Roles.Company.ToString()))
                 {
-                    return Unauthorized(new AuthResponseDto {ErrorMessage = "This account still under review"});
+                    return Unauthorized(new AuthResponseDto { ErrorMessage = "This account still under review" });
                 }
                 else
                 {
@@ -189,7 +189,7 @@ namespace GlassDoor.Controllers
             var callback = QueryHelpers.AddQueryString(forgotPasswordDto.ClientURI, param);
 
             var message = new Message(new string[] { user.Email }, "Reset password token", callback, null, false);
-            // await _emailSender.SendEmailAsync(message);
+            await _emailSender.SendEmailAsync(message);
 
             return Ok();
         }

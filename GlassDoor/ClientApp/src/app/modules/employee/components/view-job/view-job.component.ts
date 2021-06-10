@@ -45,7 +45,8 @@ export class ViewJobComponent implements OnInit {
       sup = 'th';
     }
 
-    const dateString = dayNames[dayOfWeek] + ', ' + dayOfMonth + sup + ' ' + monthNames[month] + ' ' + year;
+    //const dateString = dayNames[dayOfWeek] + ', ' + dayOfMonth + sup + ' ' + monthNames[month] + ' ' + year;
+    const dateString = dayOfMonth + sup + ' ' + monthNames[month] + ' ' + year;
 
     return dateString;
   }
