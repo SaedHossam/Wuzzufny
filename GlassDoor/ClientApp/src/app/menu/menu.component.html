@@ -1,11 +1,11 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" [routerLink]="['/home']" routerLinkActive="active" 
+<!--<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" [routerLink]="['/home']" routerLinkActive="active"
     [routerLinkActiveOptions]="{exact: true}">Account-Owner Home</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" 
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-  
+
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
@@ -15,15 +15,58 @@
         <li class="nav-item">
           <a class="nav-link" [routerLink]="['/privacy']" routerLinkActive="active"
              [routerLinkActiveOptions]="{exact: true}"> Privacy </a>
-        </li>
-        <!--<li class="nav-item">
-          <a class="nav-link" href="#"> Privacy </a>
         </li>-->
+<!--<li class="nav-item">
+  <a class="nav-link" href="#"> Privacy </a>
+</li>-->
+<!--</ul>
+<form class="form-inline my-2 my-lg-0">
+  <ul *ngIf='!isUserAuthenticated' class="navbar-nav mr-auto mt-2 mt-lg-0">
+    <li class="nav-item">
+      <a class="nav-link" [routerLink]="['/authentication/login']" routerLinkActive="active"
+         [routerLinkActiveOptions]="{exact: true}">Login</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" [routerLink]="['/authentication/register']" routerLinkActive="active"
+         [routerLinkActiveOptions]="{exact: true}">Register</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" [routerLink]="['/recruitment']" routerLinkActive="active"
+         [routerLinkActiveOptions]="{exact: true}">Employer?</a>
+    </li>
+  </ul>
+  <ul *ngIf='isUserAuthenticated' class="navbar-nav mr-auto mt-2 mt-lg-0">
+    <li class="nav-item">
+      <button class="btn btn-link" style="color: #ffffff80;" (click)="logout()">Logout</button>
+    </li>
+  </ul>
+</form>
+</div>
+</nav>-->
+<!-- ------------------------------------------------------------------------------------------------------------- -->
+<!--<nav class="navbar navbar-expand-lg navbar-light fixed-top py-3 backdrop">
+  <div class="container">
+    <a class="navbar-brand d-flex align-items-center font-weight-bolder" [routerLink]="['/home']">
+      <div class="text-info">JO</div>
+      <div class="text-warning">BEST</div>
+    </a>
+    <button class="navbar-toggler" type="button" (click)="isMenuCollapsed = !isMenuCollapsed"><span class="navbar-toggler-icon"></span></button>
+    <div [ngbCollapse]="isMenuCollapsed" class="collapse navbar-collapse border-top border-0 mt-4 mt-lg-0">
+      <ul class="navbar-nav ml-auto pt-2 pt-lg-0">
+        <li class="nav-item px-2">
+          <a class="nav-link" [routerLink]="['/home']" routerLinkActive="active"
+             [routerLinkActiveOptions]="{exact: true}" (click)="isMenuCollapsed = true">Home</a>
+        </li>
+        <li class="nav-item px-2">
+          <a class="nav-link" [routerLink]="['/privacy']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+             (click)="isMenuCollapsed = true">Privacy</a>
+        </li>
       </ul>
-      <form class="form-inline my-2 my-lg-0">
+
+      <form class="form-inline my-2 my-lg-0 pl-lg-5">
         <ul *ngIf='!isUserAuthenticated' class="navbar-nav mr-auto mt-2 mt-lg-0">
           <li class="nav-item">
-            <a class="nav-link" [routerLink]="['/authentication/login']" routerLinkActive="active"
+            <a class="btn text-white rounded-pill order-0 login-btn font-weight-bold mx-1" [routerLink]="['/authentication/login']" routerLinkActive="active"
                [routerLinkActiveOptions]="{exact: true}">Login</a>
           </li>
           <li class="nav-item">
@@ -31,15 +74,62 @@
                [routerLinkActiveOptions]="{exact: true}">Register</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" [routerLink]="['/recruitment']" routerLinkActive="active"
+            <a class="btn text-white rounded-pill order-0 employer-btn mx-1" [routerLink]="['/recruitment']" routerLinkActive="active"
                [routerLinkActiveOptions]="{exact: true}">Employer?</a>
           </li>
         </ul>
         <ul *ngIf='isUserAuthenticated' class="navbar-nav mr-auto mt-2 mt-lg-0">
           <li class="nav-item">
-            <button class="btn btn-link" style="color: #ffffff80;" (click)="logout()">Logout</button>
+            <button class="btn text-white rounded-pill order-0 login-btn font-weight-bold mx-1" (click)="logout()">Logout</button>
+          </li>
+        </ul>
+      </form>
+
+    </div>
+  </div>
+</nav>-->
+
+<div style="height: 70px"></div>
+
+<nav class="navbar navbar-expand-lg navbar-light fixed-top py-1 backdrop border-bottom shadow bg-white" data-navbar-on-scroll="data-navbar-on-scroll">
+  <div class="container">
+    <a class="navbar-brand d-flex align-items-center fw-bolder fs-2 fst-italic" href="#">
+      <div class="text-info">JO</div>
+      <div class="text-warning">BEST</div>
+    </a>
+    <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+    <div class="collapse navbar-collapse border-lg-0 mt-4 mt-lg-0" id="navbarSupportedContent">
+      <ul class="navbar-nav mx-auto pt-2 pt-lg-0">
+        <li class="nav-item px-2"><a class="nav-link fw-medium active" aria-current="page" href="#">Home</a></li>
+        <li class="nav-item px-2"><a class="nav-link fw-medium" href="#features">Jobs</a></li>
+        <li class="nav-item px-2"><a class="nav-link fw-medium" href="#pricing">Career tips</a></li>
+      </ul>
+      <!--<form class="ps-lg-5">
+        <button class="btn btn-lg btn-primary rounded-pill bg-gradient order-0" type="submit">Sign In</button>
+      </form>-->
+
+      <form class="form-inline my-lg-0 pl-lg-5">
+        <ul *ngIf='!isUserAuthenticated' class="navbar-nav mr-auto pt-2 pt-lg-0">
+          <li class="nav-item">
+            <a class="btn btn-lg btn-primary rounded-pill bg-gradient mx-1 order-0" [routerLink]="['/authentication/login']" routerLinkActive="active"
+               [routerLinkActiveOptions]="{exact: true}">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="btn btn-lg btn-secondary rounded-pill bg-gradient mx-1" [routerLink]="['/authentication/register']" routerLinkActive="active"
+               [routerLinkActiveOptions]="{exact: true}">Register</a>
+          </li>
+          <li class="nav-item">
+            <a class="btn btn-lg btn-warning rounded-pill bg-gradient mx-1" [routerLink]="['/recruitment']" routerLinkActive="active"
+               [routerLinkActiveOptions]="{exact: true}">Employer?</a>
+          </li>
+        </ul>
+        <ul *ngIf='isUserAuthenticated' class="navbar-nav mr-auto mt-2 mt-lg-0">
+          <li class="nav-item">
+            <button class="btn btn-lg btn-primary rounded-pill bg-gradient order-0" (click)="logout()">Logout</button>
           </li>
         </ul>
       </form>
     </div>
+  </div>
 </nav>
+

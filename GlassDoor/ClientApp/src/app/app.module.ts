@@ -29,6 +29,7 @@ import { PasswordConfirmationValidatorService } from
   "./shared/custom-validators/password-confirmation-validator.service";
 import { DropdownModule } from 'primeng/dropdown';
 import { CompanyIndustryService } from "./shared/services/company-industry.service";
+import { MenubarModule } from 'primeng/menubar';
 
 export function tokenGetter() {
   return localStorage.getItem("token");
@@ -57,6 +58,7 @@ export function tokenGetter() {
     PasswordModule,
     InputNumberModule,
     DropdownModule,
+    MenubarModule,
 
     JwtModule.forRoot({
       config: {
