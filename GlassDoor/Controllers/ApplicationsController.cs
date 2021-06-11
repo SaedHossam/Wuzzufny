@@ -39,15 +39,15 @@ namespace GlassDoor.Controllers
 
 
         // GET: api/Applications/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<List<ApplicationDto>>> GetApplication(int id)
+        [HttpGet("{jobId}")]
+        public async Task<ActionResult<List<ApplicationDto>>> GetApplication(int jobId)
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
             var companyId = _unitOfWork.CompaniesManagers.Find(c => c.UserId == user.Id).First().Id;
             Job companyJob = new Job();
             try
             {
-               companyJob = _unitOfWork.Jobs.GetAllJobData().Where(c => c.CompanyId == companyId & c.Id == id).FirstOrDefault();
+               companyJob = _unitOfWork.Jobs.GetAllJobData().Where(c => c.CompanyId == companyId & c.Id == jobId).FirstOrDefault();
 
             }
             catch (Exception)
