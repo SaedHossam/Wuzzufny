@@ -11,6 +11,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import {ChipsModule} from 'primeng/chips';
 import {AutoCompleteModule} from 'primeng/autocomplete';
 import {EditorModule} from 'primeng/editor';
+import { InputNumberModule } from 'primeng/inputnumber';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import {EditorModule} from 'primeng/editor';
     ChipsModule,
     AutoCompleteModule,
     EditorModule,
+    InputNumberModule
   ]
 })
 export class CompanyModule { }

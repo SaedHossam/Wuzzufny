@@ -31,7 +31,6 @@ import { SkeletonModule } from 'primeng/skeleton';
     RippleModule,
     SkeletonModule,
 
-
   ]
 })
 export class EmployeeModule { }

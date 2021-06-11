@@ -28,6 +28,10 @@ export class MenuComponent implements OnInit {
     this._authService.authChanged
       .subscribe(res => {
         this.isUserAuthenticated = res;
+
+        this.isUserAdmin = this._authService.isUserAdmin();
+        this.isUserEmployee = this._authService.isUserEmployee();
+        this.isUserCompany = this._authService.isUserCompany();
       });
 
     this._socialAuthService.authState.subscribe(user => {
@@ -37,7 +41,6 @@ export class MenuComponent implements OnInit {
     this.isUserAdmin = this._authService.isUserAdmin();
     this.isUserEmployee = this._authService.isUserEmployee();
     this.isUserCompany = this._authService.isUserCompany();
-
   }
 
   public logout = () => {

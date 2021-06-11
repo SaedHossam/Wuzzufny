@@ -12,15 +12,19 @@ export class ViewJobComponent implements OnInit {
   jobs: Job[] = [];
   jobTitle: string;
   loc: string;
+  isLoading: boolean;
+
   constructor(public service: JobService) { }
 
   ngOnInit(): void {
+    this.isLoading = true;
     this.service.getJobs().subscribe(a => {
-      this.jobs = a;   
-    })
+      this.jobs = a;
+      this.isLoading = false;
+    });
   }
 
-  
+
 
   public printDateOnly(date: Date) {
 
@@ -66,7 +70,7 @@ export class ViewJobComponent implements OnInit {
       this.jobs = a;
       console.log(this.jobs);
     }
-    ) 
+    )
   }
 
 }

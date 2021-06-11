@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import {PrimeNGConfig } from 'primeng/api';
+import { PrimeNGConfig } from 'primeng/api';
 import { JobDetailsDto } from '../../../../models/job-details-dto';
 import { JobService } from '../../../../shared/services/job.service';
 
@@ -11,28 +11,22 @@ import { JobService } from '../../../../shared/services/job.service';
   styleUrls: ['./apply-job.component.css']
 })
 export class ApplyJobComponent implements OnInit {
+  job: JobDetailsDto = new JobDetailsDto();
+  public isLoading: boolean = false;
 
   constructor(private service: JobService, private ac: ActivatedRoute,
     private primengConfig: PrimeNGConfig) { }
-  jobD: JobDetailsDto = new JobDetailsDto();
- 
- 
-  
-
 
   ngOnInit(): void {
     this.primengConfig.ripple = true;
+    this.isLoading = true;
     this.ac.params.subscribe(p => {
       this.service.getjobdbyid(p.id).subscribe(a => {
-        this.jobD = a;
-        console.log(this.jobD);
-        
-        /*this.countryName = this.jobD.job.country.name;*/
+        this.job = a;
+        this.isLoading = false;
       });
     });
   }
-  
-  
 
   public printDateOnly(date: Date) {
 
@@ -57,7 +51,7 @@ export class ApplyJobComponent implements OnInit {
       sup = 'th';
     }
 
-    const dateString = dayNames[dayOfWeek] + ', ' + dayOfMonth + sup + ' ' + monthNames[month] + ' ' + year;
+    const dateString = dayOfMonth + sup + ' ' + monthNames[month] + ' ' + year;
 
     return dateString;
   }
@@ -66,24 +60,5 @@ export class ApplyJobComponent implements OnInit {
       return this.printDateOnly(value);
     }
   }
-
-  /*getNameFromJson(value: string) {
-    return JSON.parse(value);
-  }*/
-
-
-  /*getStringFromEnum(value: number) {
-    switch (value) {
-      case 0:
-        return "FullTime";
-      case 1:
-        return "PartTime";
-      case 2:
-        return "FreeLance";
-      case 3:
-        return "Internship";
-    }
-  }*/
-
 }
-       
+

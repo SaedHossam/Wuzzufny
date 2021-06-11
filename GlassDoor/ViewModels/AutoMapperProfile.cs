@@ -58,6 +58,7 @@ namespace GlassDoor.ViewModels
                 .ForMember(d => d.CareerLevelName, map => map.MapFrom(s => s.CareerLevel.Name))
                 .ForMember(d => d.EducationLevelName, map => map.MapFrom(s => s.EducationLevel.Name))
                 .ForMember(d => d.SalaryCurrencyName, map => map.MapFrom(s => s.SalaryCurrency.Name))
+                .ForMember(d => d.SalaryCurrencySymbol, map => map.MapFrom(s => s.SalaryCurrency.Symbol))
                 .ForMember(d => d.SalaryRate, map => map.MapFrom(s => s.SalaryRate.Name))
                 .ForMember(d => d.Category, map => map.MapFrom(s => s.JobCategory.Name))
                 .ForMember(d => d.JobCountry, map => map.MapFrom(s => s.Job.Country.Name))

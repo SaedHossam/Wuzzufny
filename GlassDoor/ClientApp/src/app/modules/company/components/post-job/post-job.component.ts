@@ -141,7 +141,7 @@ export class PostJobComponent implements OnInit {
     this.postJobDto.jobDetails.requirements = postjobform.value.requirements;
     this.postJobDto.jobDetails.responsibilities = postjobform.value.responsibilities;
     this.postJobDto.skills = postjobform.value.skills.map((val, index) => ({ SkillsId: val.id }));
-    console.log(this.postJobDto.skills);
+    //console.log(this.postJobDto);
 
     this.http.post(this._envUrl.urlAddress + "/api/jobs", this.postJobDto).subscribe(a => {
       this._router.navigate(['/company/']);

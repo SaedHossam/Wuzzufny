@@ -39,6 +39,7 @@ namespace GlassDoor.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<JobViewModel>>> GetJobs()
         {
+            // todo add company industry to job ( IT )
             var allJobData =  _unitOfWork.Jobs.GetAllJobData();
             return Ok( _mapper.Map<IEnumerable<JobViewModel>>(allJobData));
         }
