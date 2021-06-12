@@ -74,6 +74,21 @@ namespace GlassDoor.ViewModels
 
             CreateMap<Job, Job>();
 
+
+            CreateMap<Company, CompanyRequestsDto > ()
+                .ForMember(d => d.Industry, map => map.MapFrom(s => s.CompanyIndustry.Name))
+                .ForMember(d => d.Size, map => map.MapFrom(s => s.CompanySize.Name))
+                .ReverseMap();
+
+            CreateMap<Company, CompanyRequestDto>()
+                .ForMember(d => d.Industry, map => map.MapFrom(s => s.CompanyIndustry.Name))
+                .ForMember(d => d.Size, map => map.MapFrom(s => s.CompanySize.Name))
+                //.ForMember(d => d.FirstName, map => map.MapFrom(s => s.CompanyManagers.FirstOrDefault().User.FirstName))
+                //.ForMember(d => d.LastName, map => map.MapFrom(s => s.CompanyManagers.FirstOrDefault().User.LastName))
+                //.ForMember(d => d.Email, map => map.MapFrom(s => s.CompanyManagers.FirstOrDefault().User.Email))
+                //.ForMember(d => d.PhoneNumber, map => map.MapFrom(s => s.CompanyManagers.FirstOrDefault().User.PhoneNumber))
+                //.ForMember(d => d.Title, map => map.MapFrom(s => s.CompanyManagers.FirstOrDefault().Title))
+                .ReverseMap();
         }
     }
 }
