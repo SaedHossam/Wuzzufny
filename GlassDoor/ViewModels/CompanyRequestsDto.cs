@@ -22,6 +22,12 @@ namespace GlassDoor.ViewModels
         public string Title { get; set; }
         public string PhoneNumber { get; set; }
         public string Email { get; set; }
-
     }
+
+    public class CompanyRequestStatusDto
+    {
+        public int Id { get; set; }
+        public bool Response { get; set; }
+    }
+
 }

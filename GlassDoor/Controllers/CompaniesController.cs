@@ -11,6 +11,7 @@ using GlassDoor.ViewModels;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using GlassDoor.Constants;
+using GlassDoor.services.email;
 
 namespace GlassDoor.Controllers
 {
@@ -21,11 +22,14 @@ namespace GlassDoor.Controllers
         private readonly ApplicationDbContext _context;
         private IMapper _mapper;
         private IUnitOfWork _unitOfWork;
-        public CompaniesController(ApplicationDbContext context, IMapper mapper, IUnitOfWork unitOfWork)
+        private IEmailSender _emailSender;
+
+        public CompaniesController(ApplicationDbContext context, IMapper mapper, IUnitOfWork unitOfWork, IEmailSender emailSender)
         {
             _context = context;
             _mapper = mapper;
             _unitOfWork = unitOfWork;
+            _emailSender = emailSender;
         }
 
         // GET: api/Companies
@@ -170,26 +174,46 @@ namespace GlassDoor.Controllers
         // post method that takes bool value that indicate weather request is confiremed or not
         [Authorize(Roles = "Administrator")]
         [HttpPost("requestStatus")]
-        public ActionResult PostRequestStatus(int id, bool res)
+        public async Task<ActionResult> PostRequestStatus([FromBody] CompanyRequestStatusDto requestStatus)
         {
             Company company =
                 _context.Companies
-                .Where(c => c.Id == id)
+                .Where(c => c.Id == requestStatus.Id)
                 .Include(a => a.RequestStatus)
+                .Include(c => c.CompanyManagers)
+                .ThenInclude(cm => cm.User)
                 .FirstOrDefault();
-            int statusId;
-            if(company.RequestStatus.Name == Enums.CompanyRequestStatus.UnderReview.ToString())
+
+            if (company == null)
             {
-                if (res)
+                return BadRequest("Company doesn't exists");
+            }
+
+            if (company.RequestStatus.Name == Enums.CompanyRequestStatus.UnderReview.ToString())
+            {
+                int statusId;
+                string messageText;
+                if (requestStatus.Response)
                 {
-                    statusId = _context.CompanyRequestStatus.FirstOrDefault(a => a.Name == Enums.CompanyRequestStatus.Accepted.ToString()).Id;
+                    statusId = _context.CompanyRequestStatus
+                        .First(a => a.Name == Enums.CompanyRequestStatus.Accepted.ToString()).Id;
+                    messageText = "your company account is approved and you can start hiring";
                 }
                 else
                 {
-                    statusId = _context.CompanyRequestStatus.FirstOrDefault(a => a.Name == Enums.CompanyRequestStatus.Rejected.ToString()).Id;
+                    statusId = _context.CompanyRequestStatus
+                        .First(a => a.Name == Enums.CompanyRequestStatus.Rejected.ToString()).Id;
+                    messageText = "your company couldn't be approved, contact us for more details";
                 }
                 company.RequestStatusId = statusId;
                 _context.SaveChanges();
+
+                var email = company.CompanyManagers.First().User.Email;
+
+                var message = new Message(new string[] { email }, "Company Account on JobFinder status update",
+                    messageText, null, false);
+                await _emailSender.SendEmailAsync(message);
+
                 return Ok("Request Updated");
             }
             else

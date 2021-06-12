@@ -5,6 +5,7 @@ import { AdminRoutingModule } from './admin-routing.module';
 import { HomeComponent } from './components/home/home.component';
 import { CompanyRequestsComponent } from './components/company-requests/company-requests.component';
 import { SideMenuComponent } from './components/side-menu/side-menu.component';
+import { NgbModule } from "@ng-bootstrap/ng-bootstrap"
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { SideMenuComponent } from './components/side-menu/side-menu.component';
   ],
   imports: [
     CommonModule,
-    AdminRoutingModule
+    AdminRoutingModule,
+    NgbModule
   ]
 })
 export class AdminModule { }

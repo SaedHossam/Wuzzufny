@@ -29,7 +29,8 @@ namespace GlassDoor.Controllers
         private readonly IUnitOfWork _unitOfWork;
 
 
-        public AccountsController(UserManager<ApplicationUser> userManager, IMapper mapper, JwtHandler jwtHandler, IEmailSender emailSender, IUnitOfWork unitOfWork)
+        public AccountsController(UserManager<ApplicationUser> userManager, IMapper mapper, JwtHandler jwtHandler,
+            IEmailSender emailSender, IUnitOfWork unitOfWork)
         {
             _userManager = userManager;
             _mapper = mapper;

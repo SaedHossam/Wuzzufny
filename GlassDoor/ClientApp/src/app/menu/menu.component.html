@@ -6,8 +6,8 @@
       <div class="text-info">JOB</div>
       <div class="text-warning">FINDER</div>
     </a>
-    <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-    <div class="collapse navbar-collapse border-lg-0 mt-4 mt-lg-0" id="navbarSupportedContent">
+    <button (click)="isMenuCollapsed = !isMenuCollapsed" class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+    <div class="collapse navbar-collapse border-lg-0 mt-4 mt-lg-0" [ngbCollapse]="isMenuCollapsed" id="navbarSupportedContent">
 
       <!-- anonymous user -->
       <ul *ngIf='!isUserAuthenticated' class="navbar-nav mx-auto pt-2 pt-lg-0">
