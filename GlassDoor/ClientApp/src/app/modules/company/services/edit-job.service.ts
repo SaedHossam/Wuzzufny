@@ -9,7 +9,7 @@ import { PostJobDto } from '../models/post-job-dto';
 export class EditJobService {
 
   constructor(private http:HttpClient ,private _envUrl :EnvironmentUrlService) { }
-  public getalljobs =(postJobDto:PostJobDto)=>{
-    return  this.http.put(`${this._envUrl.urlAddress}/api/jobs/${postJobDto.id}`,postJobDto);
+  public geteditjob =(editJobDto:PostJobDto)=>{
+    return  this.http.put<PostJobDto>(`${this._envUrl.urlAddress}/api/jobs/${editJobDto.id}`,editJobDto);
 }
 }

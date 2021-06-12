@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CareerLevel } from 'src/app/models/career-level';
 import { City } from 'src/app/models/city';
 import { Country } from 'src/app/models/country';
@@ -32,6 +32,7 @@ import { PostJobService } from '../../services/post-job.service';
 })
 export class ModifyJobDataComponent implements OnInit {
 //intialization
+editjob:PostJobDto;
   jobTypes: JobTypes[];
   countries: Country[];
   cities: City[];
@@ -66,6 +67,8 @@ export class ModifyJobDataComponent implements OnInit {
     skills: null
   }
 
+
+
   employeeform: FormGroup;
   public postjobform: FormGroup;
   constructor(private http: HttpClient,
@@ -80,31 +83,44 @@ export class ModifyJobDataComponent implements OnInit {
     private _salaryRateService: SalaryRateService,
     private _jobCategoryService: JobCategoryService,
     private _skillService: SkillService,
-    private _postJobService: PostJobService
-    ) { }
+    private _editJobService: EditJobService,
+    private _route :ActivatedRoute
+    
+    ) {
+      
+      console.log(this._router.getCurrentNavigation().extras.state.job);
+
+    }
     public results: Skills[];
   
   ngOnInit(): void {
+    this._editJobService.geteditjob(this.postJobDto).subscribe(a => {
+
+      this.editjob=a;
+      this._router.navigate(['/company/']);
+  
+    })
+
     //display data
     this.postjobform = new FormGroup({
-      'title': new FormControl(null, [Validators.required]),
-      'jobTypeId': new FormControl(null, [Validators.required]),
-      'countryId': new FormControl(null, [Validators.required]),
-      'cityId': new FormControl(null, [Validators.required]),
-      'numberOfVacancies': new FormControl(null, [Validators.required]),
-      'experienceNeededMin': new FormControl(null, [Validators.required]),
-      'experienceNeededMax': new FormControl(null, [Validators.required]),
-      'careerLevelId': new FormControl(null, [Validators.required]),
-      'educationLevelId': new FormControl(null, [Validators.required]),
-      'salaryMin': new FormControl(null),
-      'salaryMax': new FormControl(null),
-      'salaryCurrencyId': new FormControl(null, [Validators.required]),
-      'salaryRateId': new FormControl(null, [Validators.required]),
-      'jobCategoryId': new FormControl(null, [Validators.required]),
-      'description': new FormControl(null, [Validators.required]),
-      'requirements': new FormControl(null, [Validators.required]),
-      'responsibilities': new FormControl(null, [Validators.required]),
-      'skills': new FormControl(null, [Validators.required])
+      'title': new FormControl(this.editjob.title, [Validators.required]),
+      'jobTypeId': new FormControl(this.editjob.jobTypeId, [Validators.required]),
+      'countryId': new FormControl(this.editjob.countryId, [Validators.required]),
+      'cityId': new FormControl(this.editjob.cityId, [Validators.required]),
+      'numberOfVacancies': new FormControl(this.editjob.numberOfVacancies, [Validators.required]),
+      'experienceNeededMin': new FormControl(this.editjob.jobDetails.experienceNeededMin, [Validators.required]),
+      'experienceNeededMax': new FormControl(this.editjob.jobDetails.experienceNeededMax, [Validators.required]),
+      'careerLevelId': new FormControl(this.editjob.jobDetails.careerLevelId, [Validators.required]),
+      'educationLevelId': new FormControl(this.editjob.jobDetails.educationLevelId, [Validators.required]),
+      'salaryMin': new FormControl(this.editjob.jobDetails.salaryMin),
+      'salaryMax': new FormControl(this.editjob.jobDetails.salaryMax),
+      'salaryCurrencyId': new FormControl(this.editjob.jobDetails.salaryCurrencyId, [Validators.required]),
+      'salaryRateId': new FormControl(this.editjob.jobDetails.salaryRateId, [Validators.required]),
+      'jobCategoryId': new FormControl(this.editjob.jobDetails.jobCategoryId, [Validators.required]),
+      'description': new FormControl(this.editjob.jobDetails.description, [Validators.required]),
+      'requirements': new FormControl(this.editjob.jobDetails.requirements, [Validators.required]),
+      'responsibilities': new FormControl(this.editjob.jobDetails.responsibilities, [Validators.required]),
+      'skills': new FormControl(this.editjob.skills, [Validators.required])
   });
   
   this._JobTypeService.getCompanyTypes().subscribe(jt => { this.jobTypes = jt });
@@ -116,6 +132,7 @@ export class ModifyJobDataComponent implements OnInit {
   this._salaryRateService.getSalaryRates().subscribe(s => { this.salaryRates = s });
   this._jobCategoryService.getjobCategories().subscribe(jc => { this.jobCategories = jc });
   this._skillService.getSkills().subscribe(s => { this.skills = s });
+  
 }
 search(event) {
   this.results = this.skills.filter(c => c.name.startsWith(event.query));
@@ -140,8 +157,7 @@ public postjob(postjobform) {
   this.postJobDto.jobDetails.responsibilities = postjobform.value.responsibilities;
   this.postJobDto.skills = postjobform.value.skills.map((val, index) => ({ SkillsId: val.id }));
 //other service
-  this._postJobService.getalljobs(this.postJobDto).subscribe(a => {
-    this._router.navigate(['/company/']);
-  })
+
+
 }
   }

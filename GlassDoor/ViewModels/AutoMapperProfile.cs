@@ -76,11 +76,12 @@ namespace GlassDoor.ViewModels
                 .ForMember(d => d.SalaryCurrencyCode, map => map.MapFrom(s => s.SalaryCurrency.Code))
                 .ForMember(d => d.SkillsNames, map => map.MapFrom(s => s.Job.Skills))
                 .ReverseMap();
-            CreateMap<PostJobDto, Job>();
+            CreateMap<PostJobDto, Job>().ReverseMap();
 
             CreateMap<Job, Job>();
 
             CreateMap<CompanyProfileDto, Company>().ReverseMap();
+            CreateMap<CompanyLinksDto, CompanyLinks>().ReverseMap();
 
 
         }

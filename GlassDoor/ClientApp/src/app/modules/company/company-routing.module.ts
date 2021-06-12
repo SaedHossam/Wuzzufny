@@ -11,6 +11,8 @@ const routes: Routes = [
   {path:'postjob',component:PostJobComponent},
   {path:'displaycompanyprofile',component:DisplayCompanyProfileComponent},
   {path:'displaycompanyjobs',component:DisplayCompanyJobsComponent},
+  {path:'editJob',component:ModifyJobDataComponent},
+
   {path:'modifycompanyjob',component:ModifyJobDataComponent},
 
   { path: '', redirectTo: 'home', pathMatch: 'full' },

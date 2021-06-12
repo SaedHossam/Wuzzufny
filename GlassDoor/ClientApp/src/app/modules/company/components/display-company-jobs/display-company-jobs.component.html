@@ -1,3 +1,20 @@
-{{companyJobs[0].title}} 
 
-<button (click)="editJobData(companyJobs[0].id)">Edit data</button>
+<table class="table table-hover ">
+    <thead class="thead-light">
+        <tr>
+           <td>Id</td>
+           <td>Name</td>
+           <td>Operations</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of companyJobs">
+            <td >{{item.id}}</td>
+            <td >{{item.title}}</td>
+            <td>
+                <button (click)="editJobData(item)">Show</button>
+            </td>
+        </tr>
+    </tbody>
+ 
+</table>

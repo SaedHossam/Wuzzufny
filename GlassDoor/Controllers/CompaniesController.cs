@@ -58,7 +58,9 @@ namespace GlassDoor.Controllers
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
             var companyId = _unitOfWork.CompaniesManagers.Find(c => c.UserId == user.Id).First().Id;
-            var company = _unitOfWork.Companies.Find(a => a.Id == companyId).First();
+            var company = _context.Companies.Include(a=>a.Locations)
+                .Include(a=>a.CompanyLinks)
+                .FirstOrDefault(a => a.Id == companyId);
 
             if (company == null)
             {
