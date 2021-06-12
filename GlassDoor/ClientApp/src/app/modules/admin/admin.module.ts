@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
+import { FormsModule } from "@angular/forms";
 import { AdminRoutingModule } from './admin-routing.module';
 import { HomeComponent } from './components/home/home.component';
 import { CompanyRequestsComponent } from './components/company-requests/company-requests.component';
@@ -17,7 +17,8 @@ import { NgbModule } from "@ng-bootstrap/ng-bootstrap"
   imports: [
     CommonModule,
     AdminRoutingModule,
-    NgbModule
+    NgbModule,
+    FormsModule
   ]
 })
 export class AdminModule { }

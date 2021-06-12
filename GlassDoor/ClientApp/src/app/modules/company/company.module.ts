@@ -12,11 +12,13 @@ import {ChipsModule} from 'primeng/chips';
 import {AutoCompleteModule} from 'primeng/autocomplete';
 import {EditorModule} from 'primeng/editor';
 import { InputNumberModule } from 'primeng/inputnumber';
+import { ProfileComponent } from './components/profile/profile.component';
 
 @NgModule({
   declarations: [
     HomeComponent,
-    PostJobComponent
+    PostJobComponent,
+    ProfileComponent
   ],
   imports: [
     CommonModule,

@@ -12,14 +12,16 @@ import { ViewJobComponent } from "./components/view-job/view-job.component";
 import { RippleModule } from 'primeng/ripple';
 import { HomeComponent } from './home/home.component';
 import { SkeletonModule } from 'primeng/skeleton';
-
+import { ProfileComponent } from './components/profile/profile.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
   declarations: [
     ViewJobComponent,
     ApplyJobComponent,
-    HomeComponent
+    HomeComponent,
+    ProfileComponent
   ],
 
   imports: [
@@ -30,7 +32,7 @@ import { SkeletonModule } from 'primeng/skeleton';
     CardModule,
     RippleModule,
     SkeletonModule,
-
+    NgbModule
   ]
 })
 export class EmployeeModule { }

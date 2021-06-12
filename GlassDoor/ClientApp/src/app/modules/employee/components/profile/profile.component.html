@@ -1,0 +1,174 @@
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-3">
+      <div class="card">
+        <div class="card-body">
+          <div class="d-flex">
+            <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-pills" orientation="vertical">
+              <li ngbNavItem="General Info">
+                <a ngbNavLink>General Info</a>
+                <ng-template ngbNavContent>
+                  <div class="row mb-4">
+                    <div class="col-2">
+                      <div class="avatar avatar-xl me-3 shadow">
+                        <img src="../../../../../assets/Images/illustrations/jobs.png" alt="" srcset="">
+                      </div>
+                    </div>
+                    <div class="col-9">
+                      <h3>Profile Photo</h3>
+                      <p>You can upload a .jpg, .png, or .gif photo with max size of 5MB.</p>
+                      <button class="btn btn-primary">upload</button>
+                    </div>
+                  </div>
+                  <hr />
+                  <div class="row mb-3">
+                    <div class="col">
+                      <h3>Your Personal Info</h3>
+
+                      <form>
+                        <div class="row">
+                          <div class="col">
+                            <div class="form-group position-relative has-icon-left mb-4">
+                              <input type="text" id="firstName" class="form-control form-control-xl" placeholder="First Name" />
+                              <div class="form-control-icon">
+                                <i class="bi bi-person"></i>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col">
+                            <div class="form-group position-relative has-icon-left mb-4">
+                              <input type="text" id="lastName" class="form-control form-control-xl" placeholder="Last Name" />
+                              <div class="form-control-icon">
+                                <i class="bi bi-person"></i>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="col-6">
+                            <div class="form-group">
+                              <span>Birth Date</span>
+                              <div class="input-group">
+                                <input class="form-control" placeholder="yyyy-mm-dd"
+                                       name="dp" [(ngModel)]="dateOfBirth" ngbDatepicker #d="ngbDatepicker">
+                                <div class="input-group-append">
+                                  <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button"><i class="bi bi-calendar3"></i></button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="form-group">
+                          <span class="d-block">Gender</span>
+                          <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic">
+                            <label ngbButtonLabel class="btn-light">
+                              <input ngbButton type="radio" [value]="1"> Male
+                            </label>
+                            <label ngbButtonLabel class="btn-light">
+                              <input ngbButton type="radio" value="2"> Female
+                            </label>
+                          </div>
+                        </div>
+
+                        <div class="form-group">
+                          <label>Nationality</label>
+                          <select class="form-select">
+                            <option *ngFor="let i of countries" [value]="i.id">{{i.name}}</option>
+                          </select>
+                        </div>
+
+                        <div class="form-group">
+                          <label>Military Status</label>
+                          <select class="form-select">
+                            <option *ngFor="let name of ['NotApplicable','Exempted','Completed','Postponed']; let i = index" [value]="i">{{name}}</option>
+                          </select>
+                        </div>
+
+                        <h3 class="mt-4">Your Location</h3>
+                        <div class="form-group">
+                          <label>Country</label>
+                          <select class="form-select">
+                            <option *ngFor="let i of countries" [value]="i.id">{{i.name}}</option>
+                          </select>
+                        </div>
+
+                        <div class="form-group">
+                          <label>City</label>
+                          <select class="form-select">
+                            <option *ngFor="let i of cities" [value]="i.id">{{i.name}}</option>
+                          </select>
+                        </div>
+
+                        <label>Would you be willing to relocate to another city or country if you find the right opportunity?</label>
+                        <div class="form-check form-switch">
+                          <input class="form-check-input mt-1" type="checkbox" name="isWillingToRelocate" [(ngModel)]="isWillingToRelocate">
+                          <span class="fs-5">{{isWillingToRelocate ? 'Yes' : 'No'}}</span>
+                        </div>
+
+                        <h3 class="mt-4">Your Contact Info</h3>
+                        <div class="row">
+                          <div class="col">
+                            <div class="form-group position-relative has-icon-left mb-4">
+                              <input type="tel" class="form-control form-control-xl" placeholder="Mobile Number" />
+                              <div class="form-control-icon">
+                                <i class="bi bi-phone"></i>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col">
+                            <div class="form-group position-relative has-icon-left mb-4">
+                              <input type="tel" class="form-control form-control-xl" placeholder="Alternative Mobile Number" />
+                              <div class="form-control-icon">
+                                <i class="bi bi-phone"></i>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="col"></div>
+                          <div class="col"></div>
+                        </div>
+
+                        <button class="btn btn-primary">Save Changes</button>
+                      </form>
+                    </div>
+                  </div>
+                </ng-template>
+              </li>
+              <li ngbNavItem="Career Interests">
+                <a ngbNavLink>Career Interests</a>
+                <ng-template ngbNavContent>
+                  
+                </ng-template>
+              </li>
+              <li ngbNavItem="Upload cv">
+                <a ngbNavLink>Upload cv</a>
+                <ng-template ngbNavContent>
+                  <p>
+                    Sed commodo, leo at suscipit dictum, quam est porttitor sapien, eget sodales nibh elit id diam. Nulla facilisi.
+                    Donec egestas ligula vitae odio interdum aliquet. Duis lectus turpis, luctus eget tincidunt eu, congue et odio.
+                    Duis pharetra et nisl at faucibus. Quisque luctus pulvinar arcu, et molestie lectus ultrices et. Sed diam urna,
+                    egestas ut ipsum vel, volutpat volutpat neque. Praesent fringilla tortor arcu. Vivamus faucibus nisl enim, nec
+                    tristique ipsum euismod facilisis. Morbi ut bibendum est, eu tincidunt odio. Orci varius natoque penatibus et
+                    magnis dis parturient montes, nascetur ridiculus mus. Mauris aliquet odio ac lorem aliquet ultricies in eget
+                    neque. Phasellus nec tortor vel tellus pulvinar feugiat.
+                  </p>
+                </ng-template>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-9">
+      <div class="card">
+        <div class="card-body">
+          <div [ngbNavOutlet]="nav"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
