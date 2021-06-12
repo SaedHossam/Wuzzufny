@@ -80,6 +80,9 @@ namespace GlassDoor.ViewModels
 
             CreateMap<Job, Job>();
 
+            CreateMap<CompanyProfileDto, Company>().ReverseMap();
+
+
         }
     }
 }

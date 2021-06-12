@@ -11,11 +11,17 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import {ChipsModule} from 'primeng/chips';
 import {AutoCompleteModule} from 'primeng/autocomplete';
 import {EditorModule} from 'primeng/editor';
+import { DisplayCompanyProfileComponent } from './components/display-company-profile/display-company-profile.component';
+import { DisplayCompanyJobsComponent } from './components/display-company-jobs/display-company-jobs.component';
+import { ModifyJobDataComponent } from './components/modify-job-data/modify-job-data.component';
 
 @NgModule({
   declarations: [
     HomeComponent,
-    PostJobComponent
+    PostJobComponent,
+    DisplayCompanyProfileComponent,
+    DisplayCompanyJobsComponent,
+    ModifyJobDataComponent
   ],
   imports: [
     CommonModule,
