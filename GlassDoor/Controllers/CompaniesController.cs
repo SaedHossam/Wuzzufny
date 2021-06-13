@@ -9,6 +9,7 @@ using DAL;
 using DAL.Models;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
+using GlassDoor.ViewModels;
 
 namespace GlassDoor.Controllers
 {
@@ -53,19 +54,20 @@ namespace GlassDoor.Controllers
         //get company profile
 
         [HttpGet("CompanyProfile")]
-        public async Task<ActionResult<Company>> GetCompanyProfile()
+        public async Task<ActionResult<CompanyProfileDto>> GetCompanyProfile()
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
             var companyId = _unitOfWork.CompaniesManagers.Find(c => c.UserId == user.Id).First().Id;
-
-            var company = _unitOfWork.Companies.Find(a => a.Id == companyId).First();
+            var company = _context.Companies.Include(a=>a.Locations)
+                .Include(a=>a.CompanyLinks)
+                .FirstOrDefault(a => a.Id == companyId);
 
             if (company == null)
             {
                 return NotFound();
             }
 
-            return company;
+            return _mapper.Map<CompanyProfileDto>(company);
         }
         // PUT: api/Companies/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754

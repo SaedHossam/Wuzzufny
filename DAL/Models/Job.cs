@@ -34,7 +34,6 @@ namespace DAL.Models
         public DateTime CreatedDate { get; set; }
         public DateTime UpdatedDate { get; set; }
         public int CompanyId { get; set; }
-
         public Company Company { get; set; }
         public JobDetails JobDetails { get; set; }
         public ICollection<JobSkill> Skills { get; set; }

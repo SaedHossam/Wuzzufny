@@ -14,13 +14,19 @@ import {EditorModule} from 'primeng/editor';
 import { JobApplicationsComponent } from './components/job-applications/job-applications.component';
 import { ApplicationStatusComponent } from './components/application-status/application-status.component';
 import {SelectButtonModule} from 'primeng/selectbutton';
+import { DisplayCompanyProfileComponent } from './components/display-company-profile/display-company-profile.component';
+import { DisplayCompanyJobsComponent } from './components/display-company-jobs/display-company-jobs.component';
+import { ModifyJobDataComponent } from './components/modify-job-data/modify-job-data.component';
 
 @NgModule({
   declarations: [
     HomeComponent,
     PostJobComponent,
     JobApplicationsComponent,
-    ApplicationStatusComponent
+    ApplicationStatusComponent,
+    DisplayCompanyProfileComponent,
+    DisplayCompanyJobsComponent,
+    ModifyJobDataComponent
   ],
   imports: [
     CommonModule,

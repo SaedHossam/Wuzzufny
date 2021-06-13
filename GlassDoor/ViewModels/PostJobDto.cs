@@ -18,8 +18,8 @@ namespace GlassDoor.ViewModels
         public int CountryId { get; set; }
         public bool? IsOpen { get; set; }
 
-        public JobDetails JobDetails { get; set; }
-        public ICollection<JobSkill> Skills { get; set; }
+        public JobDetailsDto JobDetails { get; set; }
+        public ICollection<SkillsDto> Skills { get; set; }
     }
 }
 
