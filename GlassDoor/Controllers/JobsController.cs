@@ -57,7 +57,10 @@ namespace GlassDoor.Controllers
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
             var companyId = _unitOfWork.CompaniesManagers.Find(c => c.UserId == user.Id).First().Id;
-            var companyJobs = _context.Jobs.Include(a=>a.JobDetails).Include(a=>a.Skills).Where(c => c.CompanyId == companyId);
+            var companyJobs = _context.Jobs
+                .Include(a=>a.Skills)
+                .Include(a=>a.JobDetails)
+                .Where(c => c.CompanyId == companyId);
             return Ok(_mapper.Map<IEnumerable<PostJobDto>>(companyJobs));
         }
 

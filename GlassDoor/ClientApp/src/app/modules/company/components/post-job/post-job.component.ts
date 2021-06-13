@@ -142,10 +142,10 @@ export class PostJobComponent implements OnInit {
     this.postJobDto.jobDetails.description = postjobform.value.description;
     this.postJobDto.jobDetails.requirements = postjobform.value.requirements;
     this.postJobDto.jobDetails.responsibilities = postjobform.value.responsibilities;
-    this.postJobDto.skills = postjobform.value.skills.map((val, index) => ({ SkillsId: val.id }));
-
-    this._postJobService.getalljobs(this.postJobDto).subscribe(a => {
-      this._router.navigate(['/company/']);
+    this.postJobDto.skills = postjobform.value.skills.map((val, index) => ({ skillsId: val.id }));
+    console.log(this.postJobDto)
+    this._postJobService.postJob(this.postJobDto).subscribe(a => {
+      // this._router.navigate(['/company/']);
     })
 
   }

@@ -11,8 +11,8 @@ export class PostJobService {
     private http: HttpClient,
     private _envUrl: EnvironmentUrlService
   ) {}
-  public getalljobs = (postJobDto: PostJobDto) => {
-    return this.http.post(this._envUrl.urlAddress + '/api/jobs', postJobDto);
+  public postJob = (postJobDto: PostJobDto) => {
+    return this.http.post<PostJobDto>(this._envUrl.urlAddress + '/api/jobs', postJobDto);
   };
   public closeJob = (id: number) => {
     return this.http.put(this._envUrl.urlAddress + '/api/jobs/closeJob', id);

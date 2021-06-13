@@ -1,20 +1,19 @@
-
-<table class="table table-hover ">
-    <thead class="thead-light">
-        <tr>
-           <td>Id</td>
-           <td>Name</td>
-           <td>Operations</td>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let item of companyJobs">
-            <td >{{item.id}}</td>
-            <td >{{item.title}}</td>
-            <td>
-                <button (click)="editJobData(item)">Show</button>
-            </td>
-        </tr>
-    </tbody>
- 
+<table class="table table-hover">
+  <thead class="thead-light">
+    <tr>
+      <td>Id</td>
+      <td>Name</td>
+      <td>Operations</td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of companyJobs">
+      <td>{{ item.id }}</td>
+      <td>{{ item.title }}</td>
+      <td>
+        <button (click)="editJobData(item)">Show</button>
+        <a class="btn btn-info" [routerLink]="['/company/job',item.id]">Details</a>
+      </td>
+    </tr>
+  </tbody>
 </table>

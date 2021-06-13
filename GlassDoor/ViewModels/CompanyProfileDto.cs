@@ -14,12 +14,9 @@ namespace GlassDoor.ViewModels
         public string AboutUs { get; set; }
         public DateTime? YearFounded { get; set; }
         public string Phone { get; set; }
-        public CompanyType CompanyType { get; set; }
-        public int? CompanyTypeId { get; set; }
-        public CompanyIndustry CompanyIndustry { get; set; }
-        public int? CompanyIndustryId { get; set; }
-        public CompanySize CompanySize { get; set; }
-        public int? CompanySizeId { get; set; }
+        public CompanyTypeDto CompanyType { get; set; }
+        public CompanyIndustryDto CompanyIndustry { get; set; }
+        public CompanySizeDto CompanySize { get; set; }
         public ICollection<CityDto> Locations { get; set; }
         public ICollection<CompanyLinksDto> CompanyLinks { get; set; }
     }
