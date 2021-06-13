@@ -46,6 +46,8 @@ namespace GlassDoor.ViewModels
             CreateMap<List<ApplicationDto>, List<Application>>().ReverseMap();
             CreateMap<ApplicationDto, Application>().ReverseMap();
 
+            CreateMap<CompanyJobDetailsDto, JobDetails>().ReverseMap();
+            CreateMap<CompanyJobSkillDto, JobSkill>().ReverseMap();
 
             // All Jobs View mapping
             CreateMap<Job, JobViewModel>()
