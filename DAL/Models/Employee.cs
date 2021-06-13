@@ -19,7 +19,7 @@ namespace DAL.Models
         public int? CountryId { get; set; }
         public Country Country { get; set; }
         public bool IsWillingToRelocate { get; set; }
-        public  string MobileNumber { get; set; }
+        public string MobileNumber { get; set; }
         public string AlternativeMobileNumber { get; set; }
         public int? CareerLevelId { get; set; }
         public CareerLevel CareerLevel { get; set; }

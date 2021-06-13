@@ -1,6 +1,5 @@
 import { HttpClient, HttpClientModule, HttpClientXsrfModule } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { SeedAngular } from '../../models/seed-angular';
 import { CustomFormsModule } from 'ng2-validation'
 import { FormControl, Validators, FormGroup, FormBuilder, RequiredValidator, FormArray } from '@angular/forms';
 import { EnvironmentUrlService } from 'src/app/shared/services/environment-url.service';

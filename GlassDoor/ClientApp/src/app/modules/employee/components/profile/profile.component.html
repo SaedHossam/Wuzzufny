@@ -1,6 +1,6 @@
 <div class="container mt-5">
   <div class="row">
-    <div class="col-3">
+    <div class="col-12 col-md-4 col-lg-3">
       <div class="card">
         <div class="card-body">
           <div class="d-flex">
@@ -9,12 +9,12 @@
                 <a ngbNavLink>General Info</a>
                 <ng-template ngbNavContent>
                   <div class="row mb-4">
-                    <div class="col-2">
+                    <div class="col-6 col-sm-3 col-lg-2">
                       <div class="avatar avatar-xl me-3 shadow">
                         <img src="../../../../../assets/Images/illustrations/jobs.png" alt="" srcset="">
                       </div>
                     </div>
-                    <div class="col-9">
+                    <div class="col-12 col-sm-9 col-lg-10 mt-3 mt-sm-2">
                       <h3>Profile Photo</h3>
                       <p>You can upload a .jpg, .png, or .gif photo with max size of 5MB.</p>
                       <button class="btn btn-primary">upload</button>
@@ -27,7 +27,7 @@
 
                       <form>
                         <div class="row">
-                          <div class="col">
+                          <div class="col-12 col-md-6">
                             <div class="form-group position-relative has-icon-left mb-4">
                               <input type="text" id="firstName" class="form-control form-control-xl" placeholder="First Name" />
                               <div class="form-control-icon">
@@ -35,7 +35,7 @@
                               </div>
                             </div>
                           </div>
-                          <div class="col">
+                          <div class="col-12 col-md-6">
                             <div class="form-group position-relative has-icon-left mb-4">
                               <input type="text" id="lastName" class="form-control form-control-xl" placeholder="Last Name" />
                               <div class="form-control-icon">
@@ -46,11 +46,11 @@
                         </div>
 
                         <div class="row">
-                          <div class="col-6">
+                          <div class="col-md-7 col-lg-6">
                             <div class="form-group">
                               <span>Birth Date</span>
                               <div class="input-group">
-                                <input class="form-control" placeholder="yyyy-mm-dd"
+                                <input class="form-control" placeholder="yyyy-mm-dd" [startDate]="{year: 1990}" [endDate]="{year: 2029}"
                                        name="dp" [(ngModel)]="dateOfBirth" ngbDatepicker #d="ngbDatepicker">
                                 <div class="input-group-append">
                                   <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button"><i class="bi bi-calendar3"></i></button>
@@ -109,7 +109,7 @@
 
                         <h3 class="mt-4">Your Contact Info</h3>
                         <div class="row">
-                          <div class="col">
+                          <div class="col-12 col-md-6">
                             <div class="form-group position-relative has-icon-left mb-4">
                               <input type="tel" class="form-control form-control-xl" placeholder="Mobile Number" />
                               <div class="form-control-icon">
@@ -117,7 +117,7 @@
                               </div>
                             </div>
                           </div>
-                          <div class="col">
+                          <div class="col-12 col-md-6">
                             <div class="form-group position-relative has-icon-left mb-4">
                               <input type="tel" class="form-control form-control-xl" placeholder="Alternative Mobile Number" />
                               <div class="form-control-icon">
@@ -141,21 +141,137 @@
               <li ngbNavItem="Career Interests">
                 <a ngbNavLink>Career Interests</a>
                 <ng-template ngbNavContent>
-                  
+
+                  <form>
+                    <h4>What is your current career level?</h4>
+                    <div class="form-group position-relative">
+                      <select class="form-select">
+                        <option *ngFor="let i of careerLevels" [value]="i.id">
+                          {{i.name}}
+                        </option>
+                      </select>
+                    </div>
+
+                    <h4>What type(s) of job are you open to?</h4>
+                    <div class="form-group position-relative">
+                      <p-multiSelect defaultLabel="Select your preferd job types" [options]="jobTypes" optionLabel="name" optionValue="id" [filter]="false" [showHeader]="false" selectedItemsLabel="{0} items selected"></p-multiSelect>
+                    </div>
+
+                    <h4>What are the job titles that describe what you are looking for?</h4>
+                    <div class="form-group">
+                      <p-multiSelect defaultLabel="Select your preferd job titles" [options]="jobCategories" optionLabel="name" optionValue="id" selectedItemsLabel="{0} items selected"></p-multiSelect>
+                    </div>
+
+                    <div class="row">
+                      <h4>What is the minimum salary you would accept?</h4>
+                      <small>Add a net salary (i.e., final amount you want after taxes and insurance)</small>
+                      <div class="col-4">
+                        <div class="form-group position-relative has-icon-left">
+                          <input type="number" class="form-control" placeholder="10,000">
+                          <div class="form-control-icon">
+                            <i class="bi bi-currency-dollar"></i>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col mt-2">dollar / month</div>
+                    </div>
+
+                    <button class="btn btn-primary">Save changes</button>
+                  </form>
+
                 </ng-template>
               </li>
-              <li ngbNavItem="Upload cv">
-                <a ngbNavLink>Upload cv</a>
+              <li ngbNavItem="Education and Experience">
+                <a ngbNavLink>Education and Experience</a>
                 <ng-template ngbNavContent>
-                  <p>
-                    Sed commodo, leo at suscipit dictum, quam est porttitor sapien, eget sodales nibh elit id diam. Nulla facilisi.
-                    Donec egestas ligula vitae odio interdum aliquet. Duis lectus turpis, luctus eget tincidunt eu, congue et odio.
-                    Duis pharetra et nisl at faucibus. Quisque luctus pulvinar arcu, et molestie lectus ultrices et. Sed diam urna,
-                    egestas ut ipsum vel, volutpat volutpat neque. Praesent fringilla tortor arcu. Vivamus faucibus nisl enim, nec
-                    tristique ipsum euismod facilisis. Morbi ut bibendum est, eu tincidunt odio. Orci varius natoque penatibus et
-                    magnis dis parturient montes, nascetur ridiculus mus. Mauris aliquet odio ac lorem aliquet ultricies in eget
-                    neque. Phasellus nec tortor vel tellus pulvinar feugiat.
-                  </p>
+                  <form>
+                    <h4>What's your current educational level?</h4>
+                    <small>-If you are currently studying, select your expected degree.</small>
+                    <div class="form-group">
+                      <select class="form-select">
+                        <option *ngFor="let i of educationLevels" [value]="i.id">
+                          {{i.name}}
+                        </option>
+                      </select>
+                    </div>
+
+                    <div class="row">
+                      <h4> How many years of experience do you have?</h4>
+                      <div class="col-4">
+                        <div class="form-group">
+                          <input type="number" class="form-control" min="0">
+                        </div>
+                      </div>
+                    </div>
+
+                    <button class="btn btn-primary">Save changes</button>
+                  </form>
+                </ng-template>
+              </li>
+              <li ngbNavItem="Skills">
+                <a ngbNavLink>Skills</a>
+                <ng-template ngbNavContent>
+                  <form>
+                    <h4>What skills, tools, technologies and fields of expertise do you have?</h4>
+                    <div class="form-group mb-4">
+                      <span class="p-fluid">
+                        <p-autoComplete [suggestions]="skillsList" field="name" (completeMethod)="searchSkills($event)"
+                                        [multiple]="true"></p-autoComplete>
+                      </span>
+                    </div>
+
+                    <h4>What languages do you know?</h4>
+                    <div class="form-group mb-4">
+                      <p-multiSelect defaultLabel="Select at least one" [options]="languages" optionLabel="name" optionValue="id" selectedItemsLabel="{0} items selected"></p-multiSelect>
+                    </div>
+
+                    <button class="btn btn-primary">Save changes</button>
+                  </form>
+                </ng-template>
+              </li>
+
+              <li ngbNavItem="Online Presence">
+                <a ngbNavLink>Online Presence</a>
+                <ng-template ngbNavContent>
+                  <form>
+                    <h4>Your Online Presence</h4>
+                    <div class="form-group position-relative has-icon-left mb-4">
+                      <input type="text" class="form-control form-control-xl" placeholder="LinkedIn" />
+                      <div class="form-control-icon">
+                        <i class="bi bi-linkedin"></i>
+                      </div>
+                    </div>
+
+                    <div class="form-group position-relative has-icon-left mb-4">
+                      <input type="text" class="form-control form-control-xl" placeholder="Facebook" />
+                      <div class="form-control-icon">
+                        <i class="bi bi-facebook"></i>
+                      </div>
+                    </div>
+
+                    <div class="form-group position-relative has-icon-left mb-4">
+                      <input type="text" class="form-control form-control-xl" placeholder="Twitter" />
+                      <div class="form-control-icon">
+                        <i class="bi bi-twitter"></i>
+                      </div>
+                    </div>
+
+                    <div class="form-group position-relative has-icon-left mb-4">
+                      <input type="text" class="form-control form-control-xl" placeholder="GitHub" />
+                      <div class="form-control-icon">
+                        <i class="bi bi-github"></i>
+                      </div>
+                    </div>
+
+                    <button class="btn btn-primary">Save changes</button>
+                  </form>
+                </ng-template>
+              </li>
+
+              <li ngbNavItem="Upload CV">
+                <a ngbNavLink>Upload CV</a>
+                <ng-template ngbNavContent>
+
                 </ng-template>
               </li>
             </ul>
@@ -163,7 +279,7 @@
         </div>
       </div>
     </div>
-    <div class="col-9">
+    <div class="col-12 col-md-8 col-lg-9">
       <div class="card">
         <div class="card-body">
           <div [ngbNavOutlet]="nav"></div>
