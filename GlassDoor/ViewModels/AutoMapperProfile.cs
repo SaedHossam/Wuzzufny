@@ -29,7 +29,10 @@ namespace GlassDoor.ViewModels
                 .ForMember(c => c.Cities, opt => opt.MapFrom(s => s.Cities))
                 .ReverseMap();
             CreateMap<CurrencyDto, Currency>().ReverseMap();
-            CreateMap<EducationLevelDto, EducationLevel>().ReverseMap();
+            CreateMap<EducationLevelDto, EducationLevel>()
+                .ForMember(c => c.Employees, opt => opt.Ignore())
+                .ForMember(c => c.JobDetails, opt => opt.Ignore())
+                .ReverseMap();
             CreateMap<JobCategoryDto, JobCategory>().ReverseMap();
             CreateMap<LanguageDto, Language>().ReverseMap();
             CreateMap<SkillsDto, Skill>().ReverseMap();

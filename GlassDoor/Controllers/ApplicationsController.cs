@@ -39,8 +39,8 @@ namespace GlassDoor.Controllers
 
 
         // GET: api/Applications/5
-        [HttpGet("{jobId}")]
-        public async Task<ActionResult<List<ApplicationDto>>> GetApplication(int jobId)
+        [HttpGet("jobId/{jobId}")]
+        public async Task<ActionResult<List<ApplicationDto>>> GetApplications(int jobId)
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
             var companyId = _unitOfWork.CompaniesManagers.Find(c => c.UserId == user.Id).First().Id;
@@ -55,13 +55,14 @@ namespace GlassDoor.Controllers
 
                 return BadRequest();
             }
+
             var application = _context.Applications.Where(c => c.jobId == companyJob.Id)
                 .Include(a => a.Employee)
                 .Include(a => a.Employee.Skills)
                 .Include(a => a.Employee.UserLanguages)
-                .Include(a => a.Employee.EmployeeLinks);
-
-            var applicationDto = _mapper.Map<IEnumerable< ApplicationDto>>(application);
+                .Include(a => a.Employee.EmployeeLinks)
+                .Include(a => a.Employee.CareerLevel)
+                .Include(a => a.Employee.EducationLevel);
 
 
             if (application == null)
@@ -69,7 +70,38 @@ namespace GlassDoor.Controllers
                 return NotFound();
             }
 
+            var applicationDto = _mapper.Map<IEnumerable<ApplicationDto>>(application);
+
             return applicationDto.ToList();
+        }
+
+        // GET: api/Applications/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<ApplicationDto>> GetApplication(int id)
+        {
+            var application = _context.Applications
+                .Include(a => a.Employee)
+                .Include(a => a.Employee.Skills)
+                .Include(a => a.Employee.UserLanguages)
+                .Include(a => a.Employee.EmployeeLinks)
+                .Include(a => a.Employee.CareerLevel)
+                .Include(a => a.Employee.EducationLevel)
+                .Include(a => a.Employee.City)
+                .Include(a => a.Employee.Country)
+                .FirstOrDefault(a => a.Id == id);
+            //Application application = _context.Applications.Where(a => a.Id == id)
+            //    .Include(a => a.Employee)
+            //    .Include(a => a.Employee.Skills)
+            //    .Include(a => a.Employee.UserLanguages)
+            //    .Include(a => a.Employee.EmployeeLinks)
+            //    .Include(a => a.Employee.CareerLevel); 
+
+            if (application == null)
+            {
+                return BadRequest();
+            }
+
+            return _mapper.Map<ApplicationDto>(application);
         }
 
         // PUT: api/Applications/5
@@ -105,32 +137,40 @@ namespace GlassDoor.Controllers
 
         //change Application status
 
-        [HttpPut("status/{jobId}")]
-        public async Task<IActionResult> changeApplicationStatus(int jobId, ApplicationStatusDto applicationDto)
+        [HttpPut("status")]
+        public async Task<IActionResult> changeApplicationStatus(ApplicationStatusDto applicationDto)
         {
-        
 
-            var user = await _userManager.GetUserAsync(HttpContext.User);
-            var companyId = _unitOfWork.CompaniesManagers.Find(c => c.UserId == user.Id).First().Id;
-            Job companyJob = new Job();
-            try
+            var application = _context.Applications.FirstOrDefault(a => a.Id == applicationDto.Id);
+            
+            if (application == null)
             {
-                companyJob = _context.Jobs.Where(c => c.CompanyId == companyId & c.Id == jobId).Include(a => a.Applications).FirstOrDefault();
-                var application = companyJob.Applications.Where(a => a.Id == applicationDto.Id).First();
-                application.Status = applicationDto.Status;
-            }
-            catch (Exception)
-            {
-
                 return BadRequest();
             }
+
+            application.Status = applicationDto.Status;
+            //var user = await _userManager.GetUserAsync(HttpContext.User);
+            //var companyId = _unitOfWork.CompaniesManagers.Find(c => c.UserId == user.Id).First().Id;
+            //Job companyJob = new Job();
+            //try
+            //{
+            //    companyJob = _context.Jobs.Where(c => c.CompanyId == companyId & c.Id == jobId).Include(a => a.Applications).FirstOrDefault();
+            //    var application = companyJob.Applications.Where(a => a.Id == applicationDto.Id).First();
+            //    application.Status = applicationDto.Status;
+            //}
+            //catch (Exception)
+            //{
+
+            //    return BadRequest();
+            //}
+
             try
             {
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ApplicationExists(jobId))
+                if (!ApplicationExists(applicationDto.Id))
                 {
                     return NotFound();
                 }

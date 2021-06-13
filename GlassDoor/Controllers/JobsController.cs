@@ -34,14 +34,14 @@ namespace GlassDoor.Controllers
             _context = DB;
             _DB = DB;
         }
-       
+
 
         // GET: api/Jobs
         [HttpGet]
         public async Task<ActionResult<IEnumerable<JobViewModel>>> GetJobs()
         {
-            var allJobData =  _unitOfWork.Jobs.GetAllJobData();
-            return Ok( _mapper.Map<IEnumerable<JobViewModel>>(allJobData));
+            var allJobData = _unitOfWork.Jobs.GetAllJobData();
+            return Ok(_mapper.Map<IEnumerable<JobViewModel>>(allJobData));
         }
 
         [HttpGet("companyJobs")]
@@ -49,7 +49,7 @@ namespace GlassDoor.Controllers
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
             var companyId = _unitOfWork.CompaniesManagers.Find(c => c.UserId == user.Id).First().Id;
-            var companyJobs = _unitOfWork.Jobs.GetAllJobData().Where(c=>c.CompanyId==companyId);
+            var companyJobs = _unitOfWork.Jobs.GetAllJobData().Where(c => c.CompanyId == companyId);
             return Ok(_mapper.Map<IEnumerable<JobViewModel>>(companyJobs));
         }
         [HttpGet("SeedAngular")]
@@ -74,8 +74,8 @@ namespace GlassDoor.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Job>> GetJob(int id)
         {
-            var job =  _unitOfWork.Jobs.Find(a=>a.Id == id).FirstOrDefault();
-           
+            var job = _unitOfWork.Jobs.Find(a => a.Id == id).FirstOrDefault();
+
 
             if (job == null)
             {
@@ -84,17 +84,17 @@ namespace GlassDoor.Controllers
 
             return job;
         }
-        
+
 
         [HttpGet("Search/{term}/{loc}")]
-        public async Task <ActionResult<IEnumerable< JobViewModel>>> Search(string term, string loc)
+        public async Task<ActionResult<IEnumerable<JobViewModel>>> Search(string term, string loc)
         {
             var res = _unitOfWork.Jobs.GetAllJobData().Where(i => i.Title.Contains(term, StringComparison.InvariantCultureIgnoreCase)
-                || i.Company.Name.Contains(term,StringComparison.InvariantCultureIgnoreCase )
+                || i.Company.Name.Contains(term, StringComparison.InvariantCultureIgnoreCase)
                 || i.Country.Name.Contains(loc, StringComparison.InvariantCultureIgnoreCase)
                 || i.City.Name.Contains(loc, StringComparison.InvariantCultureIgnoreCase)).ToList();
-                return Ok(_mapper.Map<IEnumerable<JobViewModel>>(res));
-            
+            return Ok(_mapper.Map<IEnumerable<JobViewModel>>(res));
+
         }
 
         // PUT: api/Jobs/5
@@ -133,19 +133,21 @@ namespace GlassDoor.Controllers
         }
 
         //change job status to close
-        [HttpPut("closeJob/{id}")]
-        public async Task<IActionResult> closeJob(int id)
+        [HttpPut("closeJob")]
+        public async Task<IActionResult> closeJob([FromBody] int id)
         {
-            try
-            {
-              var job = _context.Jobs.Include(j => j.JobDetails).FirstOrDefault(j => j.Id == id);
-                job.IsOpen=false;
-            }
-            catch (Exception)
+            Job? job = _unitOfWork.Jobs.Get(id);
+
+            //var job = _context.Jobs.FirstOrDefault(j => j.Id == id);
+
+            if (job == null)
             {
 
                 return BadRequest();
             }
+
+            job.IsOpen = false;
+
             try
             {
                 _unitOfWork.SaveChanges();

@@ -11,11 +11,16 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import {ChipsModule} from 'primeng/chips';
 import {AutoCompleteModule} from 'primeng/autocomplete';
 import {EditorModule} from 'primeng/editor';
+import { JobApplicationsComponent } from './components/job-applications/job-applications.component';
+import { ApplicationStatusComponent } from './components/application-status/application-status.component';
+import {SelectButtonModule} from 'primeng/selectbutton';
 
 @NgModule({
   declarations: [
     HomeComponent,
-    PostJobComponent
+    PostJobComponent,
+    JobApplicationsComponent,
+    ApplicationStatusComponent
   ],
   imports: [
     CommonModule,
@@ -27,6 +32,7 @@ import {EditorModule} from 'primeng/editor';
     ChipsModule,
     AutoCompleteModule,
     EditorModule,
+    SelectButtonModule,
   ]
 })
 export class CompanyModule { }
