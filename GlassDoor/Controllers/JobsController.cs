@@ -53,15 +53,21 @@ namespace GlassDoor.Controllers
             return Ok(_mapper.Map<IEnumerable<JobViewModel>>(companyJobs));
         }
         [HttpGet("companyJobsData")]
-        public async Task<ActionResult<IEnumerable<PostJobDto>>> GetCompanyJobsData()
+        public async Task<ActionResult<IEnumerable<CompanyJobDto>>> GetCompanyJobsData()
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
             var companyId = _unitOfWork.CompaniesManagers.Find(c => c.UserId == user.Id).First().Id;
             var companyJobs = _context.Jobs
                 .Include(a=>a.Skills)
                 .Include(a=>a.JobDetails)
+                .Include(a => a.JobDetails.CareerLevel)
+                .Include(a => a.JobDetails.JobCategory)
+                .Include(a => a.JobDetails.EducationLevel)
+                .Include(a => a.JobDetails.SalaryCurrency)
+                .Include(a => a.JobDetails.SalaryRate)
                 .Where(c => c.CompanyId == companyId);
-            return Ok(_mapper.Map<IEnumerable<PostJobDto>>(companyJobs));
+            var company = _mapper.Map<IEnumerable<CompanyJobDto>>(companyJobs);
+            return Ok(company);
         }
 
         [HttpGet("SeedAngular")]

@@ -11,8 +11,8 @@
       <td>{{ item.id }}</td>
       <td>{{ item.title }}</td>
       <td>
-        <button (click)="editJobData(item)">Show</button>
-        <a class="btn btn-info" [routerLink]="['/company/job',item.id]">Details</a>
+        <button (click)="editJobData(item)">Edit</button> |
+        <a class="btn btn-info" [routerLink]="['/company/applications',item.id]">Applications</a>
       </td>
     </tr>
   </tbody>

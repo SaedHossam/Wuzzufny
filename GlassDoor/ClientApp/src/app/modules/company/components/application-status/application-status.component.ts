@@ -38,8 +38,6 @@ export class ApplicationStatusComponent implements OnInit {
         this.application = app;
       })
     })
-    this.application = this._applicationService.getApplication();
-    console.log(this.application);
   }
 
   editStatus(){

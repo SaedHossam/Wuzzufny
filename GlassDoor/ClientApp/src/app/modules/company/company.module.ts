@@ -26,7 +26,7 @@ import { ModifyJobDataComponent } from './components/modify-job-data/modify-job-
     ApplicationStatusComponent,
     DisplayCompanyProfileComponent,
     DisplayCompanyJobsComponent,
-    ModifyJobDataComponent
+    ModifyJobDataComponent,
   ],
   imports: [
     CommonModule,

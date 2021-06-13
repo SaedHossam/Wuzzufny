@@ -11,7 +11,7 @@ import { ModifyJobDataComponent } from './components/modify-job-data/modify-job-
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   {path:'postjob',component:PostJobComponent},
-  {path:'applications',component:JobApplicationsComponent},
+  {path:'applications/:id',component:JobApplicationsComponent},
   {path:'status/:id',component:ApplicationStatusComponent},
   // {path:'status',component:ApplicationStatusComponent},
   {path:'profile',component:DisplayCompanyProfileComponent},
