@@ -94,7 +94,7 @@ editjob:PostJobDto;
     public results: Skills[];
   
   ngOnInit(): void {
-    this._editJobService.geteditjob(this.postJobDto).subscribe(a => {
+    this._editJobService.editJob(this.postJobDto).subscribe(a => {
 
       this.editjob=a;
       this._router.navigate(['/company/']);

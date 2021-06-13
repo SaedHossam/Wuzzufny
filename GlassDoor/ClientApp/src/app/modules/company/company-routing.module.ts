@@ -16,7 +16,7 @@ const routes: Routes = [
   // {path:'status',component:ApplicationStatusComponent},
   {path:'profile',component:DisplayCompanyProfileComponent},
   {path:'jobs',component:DisplayCompanyJobsComponent},
-  {path:'editJob',component:ModifyJobDataComponent},
+  {path:'editJob/:id',component:ModifyJobDataComponent},
 
   {path:'modifycompanyjob',component:ModifyJobDataComponent},
 

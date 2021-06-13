@@ -14,7 +14,4 @@ export class PostJobService {
   public postJob = (postJobDto: PostJobDto) => {
     return this.http.post<PostJobDto>(this._envUrl.urlAddress + '/api/jobs', postJobDto);
   };
-  public closeJob = (id: number) => {
-    return this.http.put(this._envUrl.urlAddress + '/api/jobs/closeJob', id);
-  };
 }

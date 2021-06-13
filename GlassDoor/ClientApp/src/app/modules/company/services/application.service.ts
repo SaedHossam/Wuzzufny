@@ -8,7 +8,6 @@ import { EnvironmentUrlService } from 'src/app/shared/services/environment-url.s
   providedIn: 'root',
 })
 export class ApplicationService {
-  private _application: ApplicationDto;
   constructor(
     private http: HttpClient,
     private _envUrl: EnvironmentUrlService
@@ -28,11 +27,5 @@ export class ApplicationService {
       `${this._envUrl.urlAddress}/api/Applications/status`,
       statusDto
     );
-  };
-  public setApplication = (application: ApplicationDto) => {
-    this._application = application;
-  };
-  public getApplication = () => {
-    return this._application;
   };
 }

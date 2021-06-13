@@ -6,26 +6,22 @@ import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-job-applications',
   templateUrl: './job-applications.component.html',
-  styleUrls: ['./job-applications.component.css']
+  styleUrls: ['./job-applications.component.css'],
 })
 export class JobApplicationsComponent implements OnInit {
-  // jobId:number = 1;
-  applications:ApplicationDto[];
+  applications: ApplicationDto[];
 
-  constructor(private _applicationService:ApplicationService, private _route:ActivatedRoute) { }
-
-  setApplication(application:ApplicationDto){
-    this._applicationService.setApplication(application);
-  }
+  constructor(
+    private _applicationService: ApplicationService,
+    private _route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
-    this._route.params.subscribe(p =>{
-      this._applicationService.getAllJobApplications(p.id).subscribe(a=>{
+    this._route.params.subscribe((p) => {
+      this._applicationService.getAllJobApplications(p.id).subscribe((a) => {
         console.log(a);
         this.applications = a;
-      })
-    })
-    
+      });
+    });
   }
-  
 }
