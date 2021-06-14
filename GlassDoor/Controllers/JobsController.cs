@@ -40,8 +40,9 @@ namespace GlassDoor.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<JobViewModel>>> GetJobs()
         {
-            var allJobData = _unitOfWork.Jobs.GetAllJobData();
-            return Ok(_mapper.Map<IEnumerable<JobViewModel>>(allJobData));
+            // todo add company industry to job ( IT )
+            var allJobData =  _unitOfWork.Jobs.GetAllJobData();
+            return Ok( _mapper.Map<IEnumerable<JobViewModel>>(allJobData));
         }
 
         [HttpGet("companyJobs")]
@@ -204,8 +205,6 @@ namespace GlassDoor.Controllers
 
             var job = _mapper.Map<Job>(postedjob);
             job.IsOpen = true;
-            
-            
             var user = await _userManager.GetUserAsync(HttpContext.User);
             var companyId = _unitOfWork.CompaniesManagers.Find(c => c.UserId == user.Id).First().Id;
             job.CompanyId = companyId;

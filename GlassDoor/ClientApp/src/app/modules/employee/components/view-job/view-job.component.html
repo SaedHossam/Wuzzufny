@@ -1,97 +1,66 @@
-<!--<div class="input-group rounded">
-  <input type="search" class="form-control rounded" placeholder="Search with job title" aria-label="Search"
-         aria-describedby="search-addon" name="title" [(ngModel)]="title" />
-  <input type="search" class="form-control rounded" placeholder="Search with location" aria-label="Search"
-         aria-describedby="search-addon" name="loc" [(ngModel)]="loc" />
-  <button class="input-group-text border-0" id="search-addon">
-    <i class="pi pi-search" (click)="searchAJob()"></i>
-  </button>
-  ///
-</div>-->
-<!--Search menu-->
 <div class="container">
-  <div class="row">
-    <div class="col-lg-12 card-margin">
-      <div class="card search-form">
-        <div class="card-body p-0">
-          <form id="search-form">
-            <div class="row">
-              <div class="col-12">
-                <div class="row no-gutters">
-                  <div class="col-lg-3 col-md-3 col-sm-12 p-0">
-                    <input type="text" placeholder="Location..." class="form-control" id="search" name="loc"
-                           [(ngModel)]="loc">
-                  </div>
-                  <div class="col-lg-8 col-md-6 col-sm-12 p-0">
-                    <input type="text" placeholder="Search job title or company..." class="form-control" id="search2" name="jobTitle"
-                           [(ngModel)]="jobTitle">
-                  </div>
-                  <div class="col-lg-1 col-md-3 col-sm-12 p-0">
-                    <button type="submit" class="btn btn-base" (click)="searchAJob()" [disabled]="!jobTitle && !loc">
-                      <i class="pi pi-search"></i>
-                    </button>
-                  </div>
+  <div class="row my-5">
+    <div class="col-8">
+      <div *ngFor="let job of jobs" class="col-12 mt-2">
+        <div class="card shadow mb-3">
+          <div class="card-body" [routerLink]="['/employee/apply/',job.id]">
+            <div class="row g-0 px-1 ps-md-4 pe-md-3 py-3 align-items-center">
+              <div class="col-2">
+                <img src="../../../../../assets/Images/gallery/MANIAC.jpg" class="img-fluid shadow">
+              </div>
+              <div class="col-6">
+                <h4 class="card-title text-primary">{{job.companyName}}</h4>
+                <h3 class="card-text text-dark fw-bold">{{job.title}}</h3>
+                <p class="card-text badge bg-light-secondary mx-1">IT</p>
+                <p class="card-text badge bg-warning mx-1"><i class="bi bi-clock"></i> {{job.jobTypeName}}</p>
+              </div>
+              <div class="col-4">
+                <p class="card-text w-50 w-md-25 text-end ms-auto">{{job.jobCityName}} , {{job.jobCountryName}}</p>
+                <p class="card-text w-50 w-md-25 text-end ms-auto">{{getPrintedDate(job.createdDate)}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="isLoading">
+        <div *ngFor="let item of [1,2,3]">
+          <div class="card shadow mb-3">
+            <div class="card-body">
+              <div class="row g-0 px-1 ps-md-4 pe-md-3 py-3 align-items-center">
+                <div class="col-2">
+                  <p-skeleton shape="circle" size="4rem" styleClass="p-mr-2"></p-skeleton>
+                </div>
+                <div class="col-6">
+                  <p-skeleton width="10rem" styleClass="p-mb-2"></p-skeleton>
+                  <p-skeleton width="10rem" styleClass="p-mb-2"></p-skeleton>
+                  <p-skeleton width="10rem" styleClass="p-mb-2"></p-skeleton>
+                </div>
+                <div class="col-4">
+                  <p-skeleton width="10rem" styleClass="p-mb-2"></p-skeleton>
+                  <p-skeleton width="10rem" styleClass="p-mb-2"></p-skeleton>
                 </div>
               </div>
             </div>
-          </form>
+          </div>
         </div>
       </div>
+    </div>
+
+    <div class="col-4">
+      <form id="search-form">
+        <div class="row">
+          <span>Search jobs</span>
+
+          <div class="input-group mb-3">
+            <input type="text" [(ngModel)]="jobTitle" id="search2" name="jobTitle" class="form-control" placeholder="Search job title or company...">
+            <button type="submit" class="btn btn-outline-secondary" (click)="searchAJob()" [disabled]="!jobTitle && !loc">
+              <i class="pi pi-search"></i>
+            </button>
+          </div>
+        </div>
+      </form>
     </div>
   </div>
 </div>
 
-
-<!--Card view-->
-
-<div class="container">
-  <div class="row">
-    <div class="p-col-4 my-3" *ngFor="let item of jobs">
-      <p-card header="{{item.title}} " subheader=" {{item.companyName}} {{item.logo}}" [style]="{width: '330px'}" styleClass="p-card-shadow">
-        <h5>Company Industry: {{item.name}} </h5>
-        <ng-template pTemplate="header">
-          <img alt="Card" src="../../../../../assets/Images/usercard.png" />
-        </ng-template>
-        <p>
-          <i class="pi pi-map-marker" style="color:skyblue"></i> {{item.jobCountryName}} , {{ item.jobCityName}}&nbsp;
-          <i class="pi pi-check" style="color:darkseagreen"></i> {{returnOpenJobsOnly(item.isOpen)}} &nbsp;
-          <br />
-          <i class="pi pi-flag" style="color: #0D89EC;font-size: 0.9rem"></i> {{item.jobTypeName}}&nbsp;
-        </p>
-        <p><i class="pi pi-calendar"></i> {{getPrintedDate(item.createdDate)}}&nbsp;</p>
-        <p>
-          <svg xmlns="http://www.w3.org/2000/svg" style="color: #0D89EC" width="19" height="19" fill="currentColor" class="bi bi-hash" viewBox="0 0 16 16">
-            <path d="M8.39 12.648a1.32 1.32 0 0 0-.015.18c0 .305.21.508.5.508.266 0 .492-.172.555-.477l.554-2.703h1.204c.421 0 .617-.234.617-.547 0-.312-.188-.53-.617-.53h-.985l.516-2.524h1.265c.43 0 .618-.227.618-.547 0-.313-.188-.524-.618-.524h-1.046l.476-2.304a1.06 1.06 0 0 0 .016-.164.51.51 0 0 0-.516-.516.54.54 0 0 0-.539.43l-.523 2.554H7.617l.477-2.304c.008-.04.015-.118.015-.164a.512.512 0 0 0-.523-.516.539.539 0 0 0-.531.43L6.53 5.484H5.414c-.43 0-.617.22-.617.532 0 .312.187.539.617.539h.906l-.515 2.523H4.609c-.421 0-.609.219-.609.531 0 .313.188.547.61.547h.976l-.516 2.492c-.008.04-.015.125-.015.18 0 .305.21.508.5.508.265 0 .492-.172.554-.477l.555-2.703h2.242l-.515 2.492zm-1-6.109h2.266l-.515 2.563H6.859l.532-2.563z" />
-            -2
-
-
-          </svg>Vacancies : {{item.numberOfVacancies }}&nbsp;
-        </p>
-
-        <ng-template pTemplate="footer">
-          <p-button label="Apply" icon="pi pi-check" [routerLink]="['/employee/apply/',item.id]"></p-button>
-          <p-button label="Save" icon="pi pi-bookmark" styleClass="p-button-secondary" [style]="{'margin-left': '.5em'}"></p-button>
-        </ng-template>
-      </p-card>
-
-    </div>
-  </div>
-  <!--<div class="row" *ngIf="jobs.length == 0">
-    <div class="p-col-4 my-3" *ngFor="let item of [0,1,2]">
-      <p-skeleton width="100%" height="150px"></p-skeleton>
-
-      <div class="p-d-flex p-mb-3 p-mt-3">
-        <div>
-          <p-skeleton width="10rem" styleClass="p-mb-2"></p-skeleton>
-          <p-skeleton width="5rem" styleClass="p-mb-2"></p-skeleton>
-          <p-skeleton height=".5rem"></p-skeleton>
-        </div>
-      </div>
-      <p-skeleton width="100%" height="150px"></p-skeleton>
-      <div class="p-d-flex p-jc-between p-mt-3">
-        <p-skeleton width="4rem" height="2rem"></p-skeleton>
-        <p-skeleton width="4rem" height="2rem"></p-skeleton>
-      </div>
-    </div>
-  </div>-->
-</div>

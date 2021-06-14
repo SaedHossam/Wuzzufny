@@ -1,45 +1,85 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" [routerLink]="['/home']" routerLinkActive="active" 
-    [routerLinkActiveOptions]="{exact: true}">Account-Owner Home</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" 
-    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-  
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item">
-          <a class="nav-link" [routerLink]="['/company/companies']" routerLinkActive="active"
-             [routerLinkActiveOptions]="{exact: true}"> Companies </a>
+<div style="height: 70px"></div>
+
+<nav class="navbar navbar-expand-lg navbar-light fixed-top py-1 backdrop border-bottom shadow bg-white" data-navbar-on-scroll="data-navbar-on-scroll">
+  <div class="container">
+    <a class="navbar-brand d-flex align-items-center fw-bolder fs-2 fst-italic" [routerLink]="['/home']">
+      <div class="text-info">JOB</div>
+      <div class="text-warning">FINDER</div>
+    </a>
+    <button (click)="isMenuCollapsed = !isMenuCollapsed" class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+    <div class="collapse navbar-collapse border-lg-0 mt-4 mt-lg-0" [ngbCollapse]="isMenuCollapsed" id="navbarSupportedContent">
+
+      <!-- anonymous user -->
+      <ul *ngIf='!isUserAuthenticated' class="navbar-nav mx-auto pt-2 pt-lg-0">
+        <li class="nav-item px-2">
+          <a class="nav-link fw-medium" [routerLink]="['/home']" routerLinkActive="active"
+             [routerLinkActiveOptions]="{exact: true}" (click)="isMenuCollapsed = true">Home</a>
         </li>
-        <li class="nav-item">
+      </ul>
+
+
+      <!-- Admin user -->
+      <ul *ngIf='isUserAuthenticated && isUserAdmin' class="navbar-nav mx-auto pt-2 pt-lg-0">
+        <li class="nav-item px-2">
           <a class="nav-link" [routerLink]="['/privacy']" routerLinkActive="active"
              [routerLinkActiveOptions]="{exact: true}"> Privacy </a>
         </li>
-        <!--<li class="nav-item">
-          <a class="nav-link" href="#"> Privacy </a>
-        </li>-->
       </ul>
-      <form class="form-inline my-2 my-lg-0">
-        <ul *ngIf='!isUserAuthenticated' class="navbar-nav mr-auto mt-2 mt-lg-0">
+
+      <!-- Employee user -->
+      <ul *ngIf='isUserAuthenticated && isUserEmployee' class="navbar-nav mx-auto pt-2 pt-lg-0">
+        <li class="nav-item px-2">
+          <a class="nav-link" [routerLink]="['/employee/jobs']" routerLinkActive="active"
+             [routerLinkActiveOptions]="{exact: true}"> Explore </a>
+        </li>
+        <li class="nav-item px-2">
+          <a class="nav-link" [routerLink]="['/employee/profile']" routerLinkActive="active"
+             [routerLinkActiveOptions]="{exact: true}"> Profile Edit </a>
+        </li>
+        <li class="nav-item px-2">
+          <a class="nav-link" [routerLink]="['/employee/profile/1']" routerLinkActive="active"
+             [routerLinkActiveOptions]="{exact: true}"> Profile view </a>
+        </li>
+        <li class="nav-item px-2">
+          <a class="nav-link" [routerLink]="['/employee/applications']" routerLinkActive="active"
+             [routerLinkActiveOptions]="{exact: true}"> Applications </a>
+        </li>
+      </ul>
+
+      <!-- Company user -->
+      <ul *ngIf='isUserAuthenticated && isUserCompany' class="navbar-nav mx-auto pt-2 pt-lg-0">
+        <li class="nav-item px-2">
+          <a class="nav-link" [routerLink]="['/company/postjob']" routerLinkActive="active"
+             [routerLinkActiveOptions]="{exact: true}"> Post a job </a>
+        </li>
+        <li class="nav-item px-2">
+          <a class="nav-link" [routerLink]="['/company/profile']" routerLinkActive="active"
+             [routerLinkActiveOptions]="{exact: true}"> Profile </a>
+        </li>
+      </ul>
+
+      <form class="form-inline my-lg-0 pl-lg-5">
+        <ul *ngIf='!isUserAuthenticated' class="navbar-nav mr-auto pt-2 pt-lg-0">
           <li class="nav-item">
-            <a class="nav-link" [routerLink]="['/authentication/login']" routerLinkActive="active"
+            <a class="btn btn-lg btn-primary rounded-pill bg-gradient mx-1 order-0" [routerLink]="['/authentication/login']" routerLinkActive="active"
                [routerLinkActiveOptions]="{exact: true}">Login</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" [routerLink]="['/authentication/register']" routerLinkActive="active"
+            <a class="btn btn-lg btn-secondary rounded-pill bg-gradient mx-1" [routerLink]="['/authentication/register']" routerLinkActive="active"
                [routerLinkActiveOptions]="{exact: true}">Register</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" [routerLink]="['/recruitment']" routerLinkActive="active"
+            <a class="btn btn-lg btn-warning rounded-pill bg-gradient mx-1" [routerLink]="['/recruitment']" routerLinkActive="active"
                [routerLinkActiveOptions]="{exact: true}">Employer?</a>
           </li>
         </ul>
         <ul *ngIf='isUserAuthenticated' class="navbar-nav mr-auto mt-2 mt-lg-0">
           <li class="nav-item">
-            <button class="btn btn-link" style="color: #ffffff80;" (click)="logout()">Logout</button>
+            <button class="btn btn-lg btn-primary rounded-pill bg-gradient order-0" (click)="logout()">Logout</button>
           </li>
         </ul>
       </form>
     </div>
+  </div>
 </nav>
+

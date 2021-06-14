@@ -13,6 +13,8 @@ import { JobService } from '../../../../shared/services/job.service';
   styleUrls: ['./apply-job.component.css']
 })
 export class ApplyJobComponent implements OnInit {
+  job: JobDetailsDto = new JobDetailsDto();
+  public isLoading: boolean = false;
   appJob: Application = new Application();
 
   constructor(private service: JobService, private toastr: ToastrService ,private ac: ActivatedRoute,
@@ -25,18 +27,14 @@ export class ApplyJobComponent implements OnInit {
 
   ngOnInit(): void {
     this.primengConfig.ripple = true;
+    this.isLoading = true;
     this.ac.params.subscribe(p => {
       this.service.getjobdbyid(p.id).subscribe(a => {
-        this.jobD = a;
-        console.log(this.jobD);
-        
-        /*this.countryName = this.jobD.job.country.name;*/
+        this.job = a;
+        this.isLoading = false;
       });
     });
-    
   }
-  
-  
 
   public printDateOnly(date: Date) {
 
@@ -61,28 +59,27 @@ export class ApplyJobComponent implements OnInit {
       sup = 'th';
     }
 
-    const dateString = dayNames[dayOfWeek] + ', ' + dayOfMonth + sup + ' ' + monthNames[month] + ' ' + year;
+    const dateString = dayOfMonth + sup + ' ' + monthNames[month] + ' ' + year;
 
     return dateString;
   }
+
   getPrintedDate(value: Date) {
-    if (value) {
-      return this.printDateOnly(value);
-    }
+      if (value) {
+          return this.printDateOnly(value);
+      }
   }
 
   add() {
-    this.appJob.jobId = this.jobD.jobId;
-   
+        this.appJob.jobId = this.jobD.jobId;
 
 
-    this.service.applyJob(this.appJob.jobId).subscribe(a => {
-      console.log(a);
-      this.toastr.success(`You applied to "${this.jobD.jobTitle}" job successfully`, 'Success');
-    })
-    
-    console.log(this.appJob);
+
+        this.service.applyJob(this.appJob.jobId).subscribe(a => {
+            console.log(a);
+            this.toastr.success(`You applied to "${this.jobD.jobTitle}" job successfully`, 'Success');
+        })
+
+        console.log(this.appJob);
+    }
   }
-
-}
-       

@@ -6,6 +6,8 @@ import { EmployeeProfileComponent } from './components/employee-profile/employee
 import { UploadComponent } from './components/upload/upload.component';
 import { ViewJobComponent } from './components/view-job/view-job.component';
 import { HomeComponent } from './home/home.component';
+import { ProfileComponent } from "./components/profile/profile.component";
+import { ApplicationsComponent } from "./components/applications/applications.component";
 
 
 const routes: Routes = [
@@ -15,6 +17,8 @@ const routes: Routes = [
   { path: 'profile/:id', component: EmployeeProfileComponent },
   { path: 'profile/edit/:id', component: EditProfileComponent },
   { path: 'upload', component: UploadComponent },
+  { path: 'profile', component: ProfileComponent },
+  { path: 'applications', component: ApplicationsComponent },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
 
 

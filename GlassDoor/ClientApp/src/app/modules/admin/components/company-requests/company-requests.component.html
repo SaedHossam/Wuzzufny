@@ -1,0 +1,44 @@
+<app-side-menu></app-side-menu>
+
+<div id="main">
+  <section class="section">
+    <div class="card">
+      <div class="card-body">
+        <h3>Companies requests waiting for action</h3>
+
+        <table class="table table-bordered table-striped shadow mt-5">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Name</th>
+              <th scope="col">Company Industry</th>
+              <th scope="col">Company Size</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let request of requests">
+              <td>{{ request.number }}</td>
+              <td>{{ request.name }}</td>
+              <td>{{ request.industry}}</td>
+              <td>{{ request.size }}</td>
+              <td><button class="btn btn-secondary">Details</button></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="d-flex justify-content-between p-2">
+          <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize" (pageChange)="refreshCompanies()">
+          </ngb-pagination>
+
+          <select class="custom-select" style="width: auto" [(ngModel)]="pageSize" (ngModelChange)="refreshCompanies()">
+            <option [ngValue]="2">2 items per page</option>
+            <option [ngValue]="4">4 items per page</option>
+            <option [ngValue]="6">6 items per page</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+

@@ -29,7 +29,8 @@ namespace GlassDoor.Controllers
         private readonly IUnitOfWork _unitOfWork;
 
 
-        public AccountsController(UserManager<ApplicationUser> userManager, IMapper mapper, JwtHandler jwtHandler, IEmailSender emailSender, IUnitOfWork unitOfWork)
+        public AccountsController(UserManager<ApplicationUser> userManager, IMapper mapper, JwtHandler jwtHandler,
+            IEmailSender emailSender, IUnitOfWork unitOfWork)
         {
             _userManager = userManager;
             _mapper = mapper;
@@ -85,7 +86,7 @@ namespace GlassDoor.Controllers
             {
                 if (await _userManager.IsInRoleAsync(user, Authorization.Roles.Company.ToString()))
                 {
-                    return Unauthorized(new AuthResponseDto {ErrorMessage = "This account still under review"});
+                    return Unauthorized(new AuthResponseDto { ErrorMessage = "This account still under review" });
                 }
                 else
                 {
@@ -177,7 +178,7 @@ namespace GlassDoor.Controllers
 
             var user = await _userManager.FindByEmailAsync(forgotPasswordDto.Email);
             if (user == null)
-                return BadRequest("Invalid Request");
+                return BadRequest("Email Not Found");
 
             var token = await _userManager.GeneratePasswordResetTokenAsync(user);
             var param = new Dictionary<string, string>

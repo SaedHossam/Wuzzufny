@@ -18,6 +18,8 @@ import { DisplayCompanyProfileComponent } from './components/display-company-pro
 import { DisplayCompanyJobsComponent } from './components/display-company-jobs/display-company-jobs.component';
 import { ModifyJobDataComponent } from './components/modify-job-data/modify-job-data.component';
 import {RippleModule} from 'primeng/ripple';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { ProfileComponent } from './components/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +30,7 @@ import {RippleModule} from 'primeng/ripple';
     DisplayCompanyProfileComponent,
     DisplayCompanyJobsComponent,
     ModifyJobDataComponent,
+    ProfileComponent
   ],
   imports: [
     CommonModule,
@@ -41,6 +44,7 @@ import {RippleModule} from 'primeng/ripple';
     EditorModule,
     SelectButtonModule,
     RippleModule,
+    InputNumberModule
   ]
 })
 export class CompanyModule { }

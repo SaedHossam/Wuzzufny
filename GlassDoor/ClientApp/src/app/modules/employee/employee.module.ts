@@ -7,7 +7,7 @@ import { EmployeeRoutingModule } from './employee-routing.module';
 import { ApplyJobComponent } from "./components/apply-job/apply-job.component";
 //import { CalendarModule } from "primeng/calendar";
 //import { PasswordModule } from "primeng/password";
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { CardModule, } from 'primeng/card';
 import { ViewJobComponent } from "./components/view-job/view-job.component";
@@ -18,8 +18,11 @@ import { ToastrModule } from 'ngx-toastr';
 import { EmployeeProfileComponent } from './components/employee-profile/employee-profile.component';
 import { EditProfileComponent } from './components/edit-profile/edit-profile.component';
 import { UploadComponent } from './components/upload/upload.component';
-
-
+import { ProfileComponent } from './components/profile/profile.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { AutoCompleteModule } from 'primeng/autocomplete';
+import { ApplicationsComponent } from './components/applications/applications.component';
 
 
 @NgModule({
@@ -27,6 +30,8 @@ import { UploadComponent } from './components/upload/upload.component';
     ViewJobComponent,
     ApplyJobComponent,
     HomeComponent,
+    ProfileComponent,
+    ApplicationsComponent,
     EmployeeProfileComponent,
     EditProfileComponent,
     UploadComponent
@@ -36,10 +41,14 @@ import { UploadComponent } from './components/upload/upload.component';
     CommonModule,
     EmployeeRoutingModule,
     FormsModule,
+    ReactiveFormsModule,
     ButtonModule,
     CardModule,
     RippleModule,
     SkeletonModule,
+    NgbModule,
+    MultiSelectModule,
+    AutoCompleteModule,
     ToastrModule.forRoot(),
 
   ]

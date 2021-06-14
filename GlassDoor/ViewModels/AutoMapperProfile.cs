@@ -80,6 +80,7 @@ namespace GlassDoor.ViewModels
                 .ForMember(d => d.CareerLevelName, map => map.MapFrom(s => s.CareerLevel.Name))
                 .ForMember(d => d.EducationLevelName, map => map.MapFrom(s => s.EducationLevel.Name))
                 .ForMember(d => d.SalaryCurrencyName, map => map.MapFrom(s => s.SalaryCurrency.Name))
+                .ForMember(d => d.SalaryCurrencySymbol, map => map.MapFrom(s => s.SalaryCurrency.Symbol))
                 .ForMember(d => d.SalaryRate, map => map.MapFrom(s => s.SalaryRate.Name))
                 .ForMember(d => d.Category, map => map.MapFrom(s => s.JobCategory.Name))
                 .ForMember(d => d.JobCountry, map => map.MapFrom(s => s.Job.Country.Name))
@@ -190,6 +191,21 @@ namespace GlassDoor.ViewModels
             CreateMap<CompanyLinksDto, CompanyLinks>().ReverseMap();
 
 
+
+            CreateMap<Company, CompanyRequestsDto > ()
+                .ForMember(d => d.Industry, map => map.MapFrom(s => s.CompanyIndustry.Name))
+                .ForMember(d => d.Size, map => map.MapFrom(s => s.CompanySize.Name))
+                .ReverseMap();
+
+            CreateMap<Company, CompanyRequestDto>()
+                .ForMember(d => d.Industry, map => map.MapFrom(s => s.CompanyIndustry.Name))
+                .ForMember(d => d.Size, map => map.MapFrom(s => s.CompanySize.Name))
+                //.ForMember(d => d.FirstName, map => map.MapFrom(s => s.CompanyManagers.FirstOrDefault().User.FirstName))
+                //.ForMember(d => d.LastName, map => map.MapFrom(s => s.CompanyManagers.FirstOrDefault().User.LastName))
+                //.ForMember(d => d.Email, map => map.MapFrom(s => s.CompanyManagers.FirstOrDefault().User.Email))
+                //.ForMember(d => d.PhoneNumber, map => map.MapFrom(s => s.CompanyManagers.FirstOrDefault().User.PhoneNumber))
+                //.ForMember(d => d.Title, map => map.MapFrom(s => s.CompanyManagers.FirstOrDefault().Title))
+                .ReverseMap();
         }
     }
 }

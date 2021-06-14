@@ -24,6 +24,7 @@ namespace GlassDoor.ViewModels
        // public int SalaryCurrencyId { get; set; }
         public string SalaryCurrencyName { get; set; }
         public string SalaryCurrencyCode { get; set; }
+        public string SalaryCurrencySymbol { get; set; }
         //public int SalaryRateId { get; set; }
         public string SalaryRate { get; set; }
 

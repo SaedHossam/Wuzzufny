@@ -11,7 +11,10 @@ import { SocialAuthService } from "angularx-social-login";
 export class MenuComponent implements OnInit {
   public isUserAuthenticated: boolean;
   public isExternalAuth: boolean;
-
+  public isMenuCollapsed: boolean = true;
+  public isUserAdmin: boolean = false;
+  public isUserEmployee: boolean = false;
+  public isUserCompany: boolean = false;
 
   constructor(private _authService: AuthenticationService, private _router: Router, private _socialAuthService: SocialAuthService) {
     this._authService.authChanged
@@ -19,17 +22,25 @@ export class MenuComponent implements OnInit {
         this.isUserAuthenticated = res;
       })
   }
-  
+
 
   ngOnInit(): void {
     this._authService.authChanged
       .subscribe(res => {
         this.isUserAuthenticated = res;
+
+        this.isUserAdmin = this._authService.isUserAdmin();
+        this.isUserEmployee = this._authService.isUserEmployee();
+        this.isUserCompany = this._authService.isUserCompany();
       });
 
     this._socialAuthService.authState.subscribe(user => {
       this.isExternalAuth = user != null;
     });
+
+    this.isUserAdmin = this._authService.isUserAdmin();
+    this.isUserEmployee = this._authService.isUserEmployee();
+    this.isUserCompany = this._authService.isUserCompany();
   }
 
   public logout = () => {

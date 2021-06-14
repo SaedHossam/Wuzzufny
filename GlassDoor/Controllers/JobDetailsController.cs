@@ -40,6 +40,7 @@ namespace GlassDoor.Controllers
         [HttpGet("GetJobDetails/{id}")]
         public async Task<ActionResult<JobDetailsDto>> GetJobDetails(int id)
         {
+            // todo: add number of vacancies, company ID, hasApplication: bool, companyLogo, each skill => add is available in candidate: bool
             //var job = _unitOfWork.Jobs.GetJobById(id);
             var details = _mapper.Map<JobDetailsDto>(_unitOfWork.JobsDetails.GetJobDetails(id));
 

@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Http;
 namespace GlassDoor.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
@@ -54,6 +55,7 @@ namespace GlassDoor.Controllers
             .ToArray();
         }
 
+        [AllowAnonymous]
         [HttpPost]
         public async Task<IEnumerable<WeatherForecast>> Post()
         {

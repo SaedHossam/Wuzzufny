@@ -33,6 +33,7 @@ import { CompanyIndustryService } from "./shared/services/company-industry.servi
 import { NotificationService } from './shared/services/notification.service';
 import { ToasterStub } from './models/toaster-stub';
 import { ToastrModule } from 'ngx-toastr';
+import { MenubarModule } from 'primeng/menubar';
 
 export function tokenGetter() {
   return localStorage.getItem("token");
@@ -61,6 +62,7 @@ export function tokenGetter() {
     PasswordModule,
     InputNumberModule,
     DropdownModule,
+    MenubarModule,
     ToastrModule.forRoot(),
 
     JwtModule.forRoot({

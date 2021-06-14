@@ -68,26 +68,35 @@ export class AuthenticationService {
 
   public isUserAdmin = (): boolean => {
     const token = localStorage.getItem("token");
-    const decodedToken = this._jwtHelper.decodeToken(token);
-    const role = decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role']
+    if (token != null) {
+      const decodedToken = this._jwtHelper.decodeToken(token);
+      const role = decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role']
 
-    return role === 'Administrator';
+      return role === 'Administrator';
+    }
+    return false;
   }
 
   public isUserEmployee = (): boolean => {
     const token = localStorage.getItem("token");
-    const decodedToken = this._jwtHelper.decodeToken(token);
-    const role = decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role']
+    if (token != null) {
+      const decodedToken = this._jwtHelper.decodeToken(token);
+      const role = decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role']
 
-    return role === 'Employee';
+      return role === 'Employee';
+    }
+    return false;
   }
 
   public isUserCompany = (): boolean => {
     const token = localStorage.getItem("token");
-    const decodedToken = this._jwtHelper.decodeToken(token);
-    const role = decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role']
+    if (token != null) {
+      const decodedToken = this._jwtHelper.decodeToken(token);
+      const role = decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role']
 
-    return role === 'Company';
+      return role === 'Company';
+    }
+    return false;
   }
 
   public forgotPassword = (route: string, body: ForgotPasswordDto) => {
