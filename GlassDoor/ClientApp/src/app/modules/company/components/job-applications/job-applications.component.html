@@ -1,0 +1,12 @@
+<div class="row">
+    <div *ngFor="let application of applications">
+        applyDate: {{application.applyDate}}
+        status: {{application.status}}
+        birthDate: {{application.employee.birthDate}}
+        cv: {{application.employee.cv}}
+        experienceYears: {{application.employee.experienceYears}}
+        gender: {{application.employee.gender}}
+        isWillingToRelocate: {{application.employee.isWillingToRelocate}}
+        <a class="btn btn-info" [routerLink]="['/company/status',application.id]">Details</a>
+    </div>
+</div>

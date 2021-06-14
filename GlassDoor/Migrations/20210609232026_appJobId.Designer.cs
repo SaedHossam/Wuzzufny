@@ -11,8 +11,8 @@ using NetTopologySuite.Geometries;
 namespace GlassDoor.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210610101223_updateAppV5")]
-    partial class updateAppV5
+    [Migration("20210609232026_appJobId")]
+    partial class appJobId
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -62,9 +62,6 @@ namespace GlassDoor.Migrations
                     b.Property<bool>("IsWithdrawn")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("JobId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Status")
                         .HasColumnType("nvarchar(max)");
 
@@ -74,11 +71,14 @@ namespace GlassDoor.Migrations
                     b.Property<string>("WithdrawReason")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("jobId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("EmployeeId");
 
-                    b.HasIndex("JobId");
+                    b.HasIndex("jobId");
 
                     b.ToTable("Applications");
                 });
@@ -942,7 +942,9 @@ namespace GlassDoor.Migrations
 
                     b.HasOne("DAL.Models.Job", "Job")
                         .WithMany("Applications")
-                        .HasForeignKey("JobId");
+                        .HasForeignKey("jobId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Employee");
 

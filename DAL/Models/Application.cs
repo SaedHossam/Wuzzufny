@@ -22,6 +22,7 @@ namespace DAL.Models
         public int JobId { get; set; }
 
         public virtual Employee Employee { get; set; }
+        //added job id
         public virtual Job Job { get; set; }
     }
 }

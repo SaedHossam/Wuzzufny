@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { PrimeNGConfig } from 'primeng/api';
 
 @Component({
   selector: 'app-home',
@@ -9,9 +10,10 @@ export class HomeComponent implements OnInit {
   public value1: Date;
   public value2: String;
 
-  constructor() { }
+  constructor(private primengConfig: PrimeNGConfig) { }
 
   ngOnInit(): void {
+    this.primengConfig.ripple = true;
   }
 
 }

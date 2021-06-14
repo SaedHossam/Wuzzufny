@@ -18,7 +18,7 @@ namespace GlassDoor.ViewModels
             CreateMap<CompanySizeCreateDto, CompanySize>();
             CreateMap<CompanyIndustry, CompanyIndustryDto>().ReverseMap();
             CreateMap<CompanyIndustryCreateDto, CompanyIndustry>();
-            CreateMap<CompanyForRegistrationDto, Company>();
+            CreateMap<CompanyForRegistrationDto, Company>().ReverseMap();
             CreateMap<CompanyForRegistrationDto, ApplicationUser>()
                 .ForMember(u => u.UserName, opt => opt.MapFrom(x => x.Email));
 
@@ -29,12 +29,26 @@ namespace GlassDoor.ViewModels
                 .ForMember(c => c.Cities, opt => opt.MapFrom(s => s.Cities))
                 .ReverseMap();
             CreateMap<CurrencyDto, Currency>().ReverseMap();
-            CreateMap<EducationLevelDto, EducationLevel>().ReverseMap();
+            CreateMap<EducationLevelDto, EducationLevel>()
+                .ForMember(c => c.Employees, opt => opt.Ignore())
+                .ForMember(c => c.JobDetails, opt => opt.Ignore())
+                .ReverseMap();
             CreateMap<JobCategoryDto, JobCategory>().ReverseMap();
             CreateMap<LanguageDto, Language>().ReverseMap();
-            CreateMap<SkillsDto, Skill>().ReverseMap();
+            //CreateMap<SkillsDto, Skill>().ReverseMap(); repeated 
             CreateMap<SalaryRateDto, SalaryRate>().ReverseMap();
             CreateMap<JobTypeDto, JobType>().ReverseMap();
+
+            //application mapping
+            CreateMap<UserLanguageDto, UserLanguage>().ReverseMap();
+            CreateMap<EmployeeLinksDto, EmployeeLinks>().ReverseMap();
+            CreateMap<CompanyEmployeeDto, Employee>().ReverseMap();
+            CreateMap<List<CompanyApplicationDto>, List<Application>>().ReverseMap();
+            CreateMap<CompanyApplicationDto, Application>().ReverseMap();
+
+            CreateMap<CompanyJobDetailsDto, JobDetails>().ReverseMap();
+            CreateMap<CompanyJobSkillDto, JobSkill>().ReverseMap();
+            CreateMap<CompanyJobDto, Job>().ReverseMap();
 
             // All Jobs View mapping
             CreateMap<Job, JobViewModel>()
@@ -80,7 +94,7 @@ namespace GlassDoor.ViewModels
                 .ForMember(d => d.SalaryCurrencyCode, map => map.MapFrom(s => s.SalaryCurrency.Code))
                 .ForMember(d => d.SkillsNames, map => map.MapFrom(s => s.Job.Skills))
                 .ReverseMap();
-            CreateMap<PostJobDto, Job>();
+            CreateMap<PostJobDto, Job>().ReverseMap();
 
             CreateMap<Job, Job>();
             CreateMap<Application, ApplicationDto>()
@@ -170,6 +184,10 @@ namespace GlassDoor.ViewModels
             //CreateMap<EmployeeLinks, EmployeeLinksManager>()
             //   .ForMember(d => d.Name, map => map.MapFrom(s => s.Name))
             //   .ReverseMap();
+
+
+            CreateMap<CompanyProfileDto, Company>().ReverseMap();
+            CreateMap<CompanyLinksDto, CompanyLinks>().ReverseMap();
 
 
         }

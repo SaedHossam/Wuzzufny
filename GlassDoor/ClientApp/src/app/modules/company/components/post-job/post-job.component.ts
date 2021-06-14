@@ -24,6 +24,7 @@ import { SalaryRateService } from "../../../../shared/services/salary-rate.servi
 import { JobCategory } from "../../../../models/job-category";
 import { JobCategoryService } from "../../../../shared/services/job-category.service";
 import { SkillService } from "../../../../shared/services/skill.service";
+import { PostJobService } from '../../services/post-job.service';
 
 @Component({
   selector: 'app-post-job',
@@ -79,7 +80,8 @@ export class PostJobComponent implements OnInit {
     private _currencyService: CurrencyService,
     private _salaryRateService: SalaryRateService,
     private _jobCategoryService: JobCategoryService,
-    private _skillService: SkillService
+    private _skillService: SkillService,
+    private _postJobService: PostJobService
   ) { }
 
   public results: Skills[];
@@ -140,10 +142,9 @@ export class PostJobComponent implements OnInit {
     this.postJobDto.jobDetails.description = postjobform.value.description;
     this.postJobDto.jobDetails.requirements = postjobform.value.requirements;
     this.postJobDto.jobDetails.responsibilities = postjobform.value.responsibilities;
-    this.postJobDto.skills = postjobform.value.skills.map((val, index) => ({ SkillsId: val.id }));
-    console.log(this.postJobDto.skills);
-
-    this.http.post(this._envUrl.urlAddress + "/api/jobs", this.postJobDto).subscribe(a => {
+    this.postJobDto.skills = postjobform.value.skills.map((val, index) => ({ skillsId: val.id }));
+    
+    this._postJobService.postJob(this.postJobDto).subscribe(a => {
       this._router.navigate(['/company/']);
     })
 

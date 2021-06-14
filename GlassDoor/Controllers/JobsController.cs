@@ -35,12 +35,40 @@ namespace GlassDoor.Controllers
             _DB = DB;
         }
 
+
         // GET: api/Jobs
         [HttpGet]
         public async Task<ActionResult<IEnumerable<JobViewModel>>> GetJobs()
         {
-            var allJobData =  _unitOfWork.Jobs.GetAllJobData();
-            return Ok( _mapper.Map<IEnumerable<JobViewModel>>(allJobData));
+            var allJobData = _unitOfWork.Jobs.GetAllJobData();
+            return Ok(_mapper.Map<IEnumerable<JobViewModel>>(allJobData));
+        }
+
+        [HttpGet("companyJobs")]
+        public async Task<ActionResult<IEnumerable<JobViewModel>>> GetCompanyJobs()
+        {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            var companyId = _unitOfWork.CompaniesManagers.Find(c => c.UserId == user.Id).First().Id;
+            var companyJobs = _unitOfWork.Jobs.GetAllJobData().Where(c => c.CompanyId == companyId);
+            return Ok(_mapper.Map<IEnumerable<JobViewModel>>(companyJobs));
+        }
+        [HttpGet("companyJobsData")]
+        public async Task<ActionResult<IEnumerable<CompanyJobDto>>> GetCompanyJobsData()
+         {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            var companyId = _unitOfWork.CompaniesManagers.Find(c => c.UserId == user.Id).First().Id;
+            var companyJobs = _context.Jobs
+                .Include(a=>a.Skills)
+                    .ThenInclude(a=>a.Skills)
+                .Include(a=>a.JobDetails)
+                .Include(a => a.JobDetails.CareerLevel)
+                .Include(a => a.JobDetails.JobCategory)
+                .Include(a => a.JobDetails.EducationLevel)
+                .Include(a => a.JobDetails.SalaryCurrency)
+                .Include(a => a.JobDetails.SalaryRate)
+                .Where(c => c.CompanyId == companyId);
+            var company = _mapper.Map<IEnumerable<CompanyJobDto>>(companyJobs);
+            return Ok(company);
         }
 
         [HttpGet("SeedAngular")]
@@ -63,29 +91,38 @@ namespace GlassDoor.Controllers
 
         // GET: api/Jobs/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Job>> GetJob(int id)
+        public async Task<ActionResult<CompanyJobDto>> GetJob(int id)
         {
-            var job =  _unitOfWork.Jobs.Find(a=>a.Id == id).FirstOrDefault();
-           
+            var job = _context.Jobs
+                .Include(a => a.Skills)
+                    .ThenInclude(a => a.Skills)
+                .Include(a => a.JobDetails)
+                .Include(a => a.JobDetails.CareerLevel)
+                .Include(a => a.JobDetails.JobCategory)
+                .Include(a => a.JobDetails.EducationLevel)
+                .Include(a => a.JobDetails.SalaryCurrency)
+                .Include(a => a.JobDetails.SalaryRate)
+                .Where(j => j.Id == id)
+                .FirstOrDefault();
 
             if (job == null)
             {
                 return NotFound();
             }
 
-            return job;
+            return _mapper.Map<CompanyJobDto>(job);
         }
-        
+
 
         [HttpGet("Search/{term}/{loc}")]
-        public async Task <ActionResult<IEnumerable< JobViewModel>>> Search(string term, string loc)
+        public async Task<ActionResult<IEnumerable<JobViewModel>>> Search(string term, string loc)
         {
             var res = _unitOfWork.Jobs.GetAllJobData().Where(i => i.Title.Contains(term, StringComparison.InvariantCultureIgnoreCase)
-                || i.Company.Name.Contains(term,StringComparison.InvariantCultureIgnoreCase )
+                || i.Company.Name.Contains(term, StringComparison.InvariantCultureIgnoreCase)
                 || i.Country.Name.Contains(loc, StringComparison.InvariantCultureIgnoreCase)
                 || i.City.Name.Contains(loc, StringComparison.InvariantCultureIgnoreCase)).ToList();
-                return Ok(_mapper.Map<IEnumerable<JobViewModel>>(res));
-            
+            return Ok(_mapper.Map<IEnumerable<JobViewModel>>(res));
+
         }
 
         // PUT: api/Jobs/5
@@ -99,8 +136,9 @@ namespace GlassDoor.Controllers
             }
 
             var job = _mapper.Map<Job>(postedjob);
-            var oldJob = _context.Jobs.Include(j => j.JobDetails).FirstOrDefault(j => j.Id == id);
+            var oldJob = _context.Jobs.Include(j => j.JobDetails).Include(j=>j.Skills).FirstOrDefault(j => j.Id == id);
             job.JobDetails.Id = oldJob.JobDetails.Id;
+            job.CompanyId = oldJob.CompanyId;
             //update job
             _mapper.Map<Job, Job>(job, oldJob);
 
@@ -122,6 +160,39 @@ namespace GlassDoor.Controllers
             return NoContent();
         }
 
+        //change job status to close
+        [HttpPut("closeJob")]
+        public async Task<IActionResult> closeJob([FromBody] int id)
+        {
+            Job? job = _unitOfWork.Jobs.Get(id);
+
+            //var job = _context.Jobs.FirstOrDefault(j => j.Id == id);
+
+            if (job == null)
+            {
+
+                return BadRequest();
+            }
+
+            job.IsOpen = false;
+
+            try
+            {
+                _unitOfWork.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!JobExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return NoContent();
+        }
         // POST: api/Jobs
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
@@ -133,6 +204,8 @@ namespace GlassDoor.Controllers
 
             var job = _mapper.Map<Job>(postedjob);
             job.IsOpen = true;
+            
+            
             var user = await _userManager.GetUserAsync(HttpContext.User);
             var companyId = _unitOfWork.CompaniesManagers.Find(c => c.UserId == user.Id).First().Id;
             job.CompanyId = companyId;
