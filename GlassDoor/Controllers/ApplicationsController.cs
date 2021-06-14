@@ -40,7 +40,7 @@ namespace GlassDoor.Controllers
 
         // GET: api/Applications/5
         [HttpGet("jobId/{jobId}")]
-        public async Task<ActionResult<List<ApplicationDto>>> GetApplications(int jobId)
+        public async Task<ActionResult<List<CompanyApplicationDto>>> GetApplications(int jobId)
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
             var companyId = _unitOfWork.CompaniesManagers.Find(c => c.UserId == user.Id).First().Id;
@@ -70,14 +70,14 @@ namespace GlassDoor.Controllers
                 return NotFound();
             }
 
-            var applicationDto = _mapper.Map<IEnumerable<ApplicationDto>>(application);
+            var applicationDto = _mapper.Map<IEnumerable<CompanyApplicationDto>>(application);
 
             return applicationDto.ToList();
         }
 
         // GET: api/Applications/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<ApplicationDto>> GetApplication(int id)
+        public async Task<ActionResult<CompanyApplicationDto>> GetApplication(int id)
         {
             var application = _context.Applications
                 .Include(a => a.Employee)
@@ -101,7 +101,7 @@ namespace GlassDoor.Controllers
                 return BadRequest();
             }
 
-            return _mapper.Map<ApplicationDto>(application);
+            return _mapper.Map<CompanyApplicationDto>(application);
         }
 
         // PUT: api/Applications/5

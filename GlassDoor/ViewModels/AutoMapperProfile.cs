@@ -42,9 +42,9 @@ namespace GlassDoor.ViewModels
             //application mapping
             CreateMap<UserLanguageDto, UserLanguage>().ReverseMap();
             CreateMap<EmployeeLinksDto, EmployeeLinks>().ReverseMap();
-            CreateMap<EmployeeDto, Employee>().ReverseMap();
-            CreateMap<List<ApplicationDto>, List<Application>>().ReverseMap();
-            CreateMap<ApplicationDto, Application>().ReverseMap();
+            CreateMap<CompanyEmployeeDto, Employee>().ReverseMap();
+            CreateMap<List<CompanyApplicationDto>, List<Application>>().ReverseMap();
+            CreateMap<CompanyApplicationDto, Application>().ReverseMap();
 
             CreateMap<CompanyJobDetailsDto, JobDetails>().ReverseMap();
             CreateMap<CompanyJobSkillDto, JobSkill>().ReverseMap();

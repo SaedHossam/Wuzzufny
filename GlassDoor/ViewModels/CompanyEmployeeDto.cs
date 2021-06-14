@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GlassDoor.ViewModels
 {
-    public class EmployeeDto
+    public class CompanyEmployeeDto
     {
         public DateTime BirthDate { get; set; }
         public string Gender { get; set; }
