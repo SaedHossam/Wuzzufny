@@ -54,11 +54,12 @@ namespace GlassDoor.Controllers
         }
         [HttpGet("companyJobsData")]
         public async Task<ActionResult<IEnumerable<CompanyJobDto>>> GetCompanyJobsData()
-        {
+         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
             var companyId = _unitOfWork.CompaniesManagers.Find(c => c.UserId == user.Id).First().Id;
             var companyJobs = _context.Jobs
                 .Include(a=>a.Skills)
+                    .ThenInclude(a=>a.Skills)
                 .Include(a=>a.JobDetails)
                 .Include(a => a.JobDetails.CareerLevel)
                 .Include(a => a.JobDetails.JobCategory)
@@ -94,6 +95,7 @@ namespace GlassDoor.Controllers
         {
             var job = _context.Jobs
                 .Include(a => a.Skills)
+                    .ThenInclude(a => a.Skills)
                 .Include(a => a.JobDetails)
                 .Include(a => a.JobDetails.CareerLevel)
                 .Include(a => a.JobDetails.JobCategory)
@@ -102,7 +104,6 @@ namespace GlassDoor.Controllers
                 .Include(a => a.JobDetails.SalaryRate)
                 .Where(j => j.Id == id)
                 .FirstOrDefault();
-
 
             if (job == null)
             {
@@ -203,6 +204,8 @@ namespace GlassDoor.Controllers
 
             var job = _mapper.Map<Job>(postedjob);
             job.IsOpen = true;
+            
+            
             var user = await _userManager.GetUserAsync(HttpContext.User);
             var companyId = _unitOfWork.CompaniesManagers.Find(c => c.UserId == user.Id).First().Id;
             job.CompanyId = companyId;

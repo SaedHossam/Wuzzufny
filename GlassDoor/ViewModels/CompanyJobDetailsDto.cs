@@ -23,7 +23,7 @@ namespace GlassDoor.ViewModels
         public SalaryRateDto SalaryRate { get; set; }
 
         public int JobCategoryId { get; set; }
-        public JobCategoryDto Category { get; set; }
+        public JobCategoryDto JobCategory { get; set; }
 
         public string Description { get; set; }
         public string Requirements { get; set; }

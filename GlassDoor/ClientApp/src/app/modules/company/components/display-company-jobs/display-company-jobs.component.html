@@ -11,10 +11,9 @@
       <td>{{ item.id }}</td>
       <td>{{ item.title }}</td>
       <td>
-        <button (click)="editJobData(item)">Edit</button>
-        <a class="btn btn-warning" [routerLink]="['/company/editJob',item.id]">Edit</a> |
-        <a class="btn btn-info" [routerLink]="['/company/applications',item.id]">Applications</a> |
-        <a *ngIf="item.isOpen" class="btn btn-danger" (click) = "closeJob(item.id)">close</a>
+        <button pButton pRipple type="button" class="p-button-warning" [routerLink]="['/company/editJob',item.id]">Edit</button> |
+        <button pButton pRipple type="button" class="p-button-info" [routerLink]="['/company/applications',item.id]">Applications</button> |
+        <button pButton pRipple type="button" *ngIf="item.isOpen" class="p-button-danger" (click) = "closeJob(item.id)">close</button>
         
       </td>
     </tr>

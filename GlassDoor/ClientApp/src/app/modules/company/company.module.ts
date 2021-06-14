@@ -17,6 +17,7 @@ import {SelectButtonModule} from 'primeng/selectbutton';
 import { DisplayCompanyProfileComponent } from './components/display-company-profile/display-company-profile.component';
 import { DisplayCompanyJobsComponent } from './components/display-company-jobs/display-company-jobs.component';
 import { ModifyJobDataComponent } from './components/modify-job-data/modify-job-data.component';
+import {RippleModule} from 'primeng/ripple';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { ModifyJobDataComponent } from './components/modify-job-data/modify-job-
     AutoCompleteModule,
     EditorModule,
     SelectButtonModule,
+    RippleModule,
   ]
 })
 export class CompanyModule { }
