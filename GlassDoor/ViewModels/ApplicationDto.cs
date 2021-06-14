@@ -11,7 +11,14 @@ namespace GlassDoor.ViewModels
         
         
         public int JobId { get; set; }
-        public int EmployeeId { get; set; }
+        public string CompanyLogo { get; set; }
+        public string JobTitle { get; set; }
+        public string CompanyName { get; set; }
+        public int CompanyId { get; set; }
+        public string City { get; set; }
+        public string Country { get; set; }
+        public DateTime ApplyDate { get; set; }
+
 
     }
 }

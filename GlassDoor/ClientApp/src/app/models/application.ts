@@ -1,9 +1,7 @@
 export class Application {
-  constructor(employeeId?: number, jobId?: number) {
-    this.employeeId = employeeId;
-    this.jobId = jobId;
+  constructor(public jobId?: number, public companyLogo?: string, public jobTitle?: string, public companyName?: string,
+    public companyId?: number, public city?: string, public country?: string) {
   }
-  public employeeId: number;
-  public jobId: number;
+
 
 }

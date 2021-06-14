@@ -29,8 +29,8 @@ export class JobService {
     return this.http.get<Job[]>(this._envUrl.urlAddress + '/api/jobs/Search/' + term + '/' + loc);
   }
 
-  applyJob(app: Application) {
-    return this.http.post<Application>(this._envUrl.urlAddress + '/api/Application/', app);
+  applyJob(id: number) {
+    return this.http.post<Application>(this._envUrl.urlAddress + '/api/Application/', id);
   }
 }
 

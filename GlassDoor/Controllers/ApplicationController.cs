@@ -2,6 +2,7 @@
 using DAL;
 using DAL.Models;
 using GlassDoor.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -29,31 +30,54 @@ namespace GlassDoor.Controllers
 
         // GET: api/Application
         [HttpGet]
+        // [Authorize("Employee")]
         public async Task<ActionResult<IEnumerable<ApplicationDto>>> GetApplications()
         {
-            var allApps = _unitOfWork.Application.GetAll().Where(a => a.IsArchived == false && a.IsWithdrawn == false);
-            return Ok(_mapper.Map<IEnumerable<ApplicationDto>>(allApps));
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            if (user != null)
+            {
+                var userId = user.Id;
+                var empId = _unitOfWork.Employees.Find(a => a.UserId == userId).FirstOrDefault().Id;
+                var allApps = _unitOfWork.Application.GetEmployeeApplications(empId);
+                return Ok(_mapper.Map<IEnumerable<ApplicationDto>>(allApps));
+            }
+            else
+            {
+                return BadRequest("User Not Found!");
+            }
         }
 
 
         [HttpPost]
-        public async Task<ActionResult<ApplicationDto>> PostApplication([FromBody] ApplicationDto applied)
+        public async Task<ActionResult<ApplicationDto>> PostApplication([FromBody] int id)
         {
-            if (applied == null || !ModelState.IsValid)
+            if ( !ModelState.IsValid)
                 return BadRequest();
 
-            var app = _mapper.Map<Application>(applied);
             var user = await _userManager.GetUserAsync(HttpContext.User);
+            if (user == null)
+                return BadRequest("User not Found!");
             var userId = user.Id;
             var empId = _unitOfWork.Employees.Find(a => a.UserId == userId).FirstOrDefault().Id;
-            app.ApplyDate = DateTime.Now;
-            app.IsArchived = false;
-            app.IsViewed = false;
-            app.IsWithdrawn = false;
-            app.EmployeeId = empId;
-            _unitOfWork.Application.Add(app);
-            _unitOfWork.SaveChanges();
-            return Ok(app);
+            var application = _unitOfWork.Application.Find(a => a.JobId == id && a.EmployeeId == empId).FirstOrDefault();
+            if (application == null || application.IsWithdrawn == true)
+            {
+                //var app = _mapper.Map<Application>(applied);
+                Application app = new Application();
+                app.JobId = id;
+                app.ApplyDate = DateTime.Now;
+                app.IsArchived = false;
+                app.IsViewed = false;
+                app.IsWithdrawn = false;
+                app.EmployeeId = empId;
+                _unitOfWork.Application.Add(app);
+                _unitOfWork.SaveChanges();
+                return Ok(app);
+            }
+            else
+            {
+                return BadRequest("You already applied!");
+            }
         }
 
         [HttpPut("{id}")]
@@ -70,7 +94,7 @@ namespace GlassDoor.Controllers
                 _unitOfWork.SaveChanges();
                 return Ok(app);
             }
-            if( arc == false)
+            if (arc == false)
             {
                 app.IsArchived = false;
                 app.ArchiveDate = null;

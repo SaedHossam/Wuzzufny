@@ -73,8 +73,10 @@ export class ApplyJobComponent implements OnInit {
 
   add() {
     this.appJob.jobId = this.jobD.jobId;
-    this.appJob.employeeId = 5;
-    this.service.applyJob(this.appJob).subscribe(a => {
+   
+
+
+    this.service.applyJob(this.appJob.jobId).subscribe(a => {
       console.log(a);
       this.toastr.success(`You applied to "${this.jobD.jobTitle}" job successfully`, 'Success');
     })

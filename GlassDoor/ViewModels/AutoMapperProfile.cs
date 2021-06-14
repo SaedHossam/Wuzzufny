@@ -85,8 +85,16 @@ namespace GlassDoor.ViewModels
             CreateMap<Job, Job>();
             CreateMap<Application, ApplicationDto>()
                 .ForMember(a => a.JobId, map => map.MapFrom(s => s.JobId))
-                .ForMember(a => a.EmployeeId, map => map.MapFrom(s => s.EmployeeId))
-                .ReverseMap();
+                .ForMember(a => a.CompanyLogo, map => map.MapFrom(s => s.Job.Company.Logo))
+                .ForMember(a => a.JobTitle, map => map.MapFrom(s => s.Job.Title))
+                .ForMember(a => a.CompanyName, map => map.MapFrom(s => s.Job.Company.Name))
+                .ForMember(a => a.CompanyId, map => map.MapFrom(s => s.Job.Company.Id))
+                .ForMember(a => a.City, map => map.MapFrom(s => s.Job.City.Name))
+                .ForMember(a => a.Country, map => map.MapFrom(s => s.Job.Country.Name))
+                .ForMember(a => a.ApplyDate, map => map.MapFrom(s => s.ApplyDate));
+            CreateMap<ApplicationDto, Application>()
+                .ForMember(a => a.JobId, map => map.MapFrom(s => s.JobId));
+
         }
     }
 }

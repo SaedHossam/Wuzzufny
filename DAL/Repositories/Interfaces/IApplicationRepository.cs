@@ -9,5 +9,7 @@ namespace DAL.Repositories.Interfaces
 {
     public interface IApplicationRepository : IRepository<Application>
     {
+        public IEnumerable<Application> GetEmployeeApplications(int id);
+
     }
 }
