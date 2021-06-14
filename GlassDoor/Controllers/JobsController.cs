@@ -90,9 +90,18 @@ namespace GlassDoor.Controllers
 
         // GET: api/Jobs/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Job>> GetJob(int id)
+        public async Task<ActionResult<CompanyJobDto>> GetJob(int id)
         {
-            var job = _unitOfWork.Jobs.Find(a => a.Id == id).FirstOrDefault();
+            var job = _context.Jobs
+                .Include(a => a.Skills)
+                .Include(a => a.JobDetails)
+                .Include(a => a.JobDetails.CareerLevel)
+                .Include(a => a.JobDetails.JobCategory)
+                .Include(a => a.JobDetails.EducationLevel)
+                .Include(a => a.JobDetails.SalaryCurrency)
+                .Include(a => a.JobDetails.SalaryRate)
+                .Where(j => j.Id == id)
+                .FirstOrDefault();
 
 
             if (job == null)
@@ -100,7 +109,7 @@ namespace GlassDoor.Controllers
                 return NotFound();
             }
 
-            return job;
+            return _mapper.Map<CompanyJobDto>(job);
         }
 
 
@@ -126,7 +135,7 @@ namespace GlassDoor.Controllers
             }
 
             var job = _mapper.Map<Job>(postedjob);
-            var oldJob = _context.Jobs.Include(j => j.JobDetails).FirstOrDefault(j => j.Id == id);
+            var oldJob = _context.Jobs.Include(j => j.JobDetails).Include(j=>j.Skills).FirstOrDefault(j => j.Id == id);
             job.JobDetails.Id = oldJob.JobDetails.Id;
             job.CompanyId = oldJob.CompanyId;
             //update job
