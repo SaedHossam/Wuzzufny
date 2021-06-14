@@ -1,7 +1,10 @@
 import { NgModule } from '@angular/core'; 
 import { RouterModule, Routes } from '@angular/router';
-import { ApplyJobComponent } from "./components/apply-job/apply-job.component";
-import { ViewJobComponent } from "./components/view-job/view-job.component";
+import { ApplyJobComponent } from './components/apply-job/apply-job.component';
+import { EditProfileComponent } from './components/edit-profile/edit-profile.component';
+import { EmployeeProfileComponent } from './components/employee-profile/employee-profile.component';
+import { UploadComponent } from './components/upload/upload.component';
+import { ViewJobComponent } from './components/view-job/view-job.component';
 import { HomeComponent } from './home/home.component';
 
 
@@ -9,6 +12,9 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'jobs', component: ViewJobComponent },
   { path: 'apply/:id', component: ApplyJobComponent },
+  { path: 'profile/:id', component: EmployeeProfileComponent },
+  { path: 'profile/edit/:id', component: EditProfileComponent },
+  { path: 'upload', component: UploadComponent },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
 
 

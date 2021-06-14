@@ -26,8 +26,23 @@
               "src/favicon.ico",
               "src/assets"
             ],
+
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              //"src/app/modules/employee/components/employee-profile/css/fontawesome/fontawesome-all.css",
+              //"src/app/modules/employee/components/employee-profile/css/font-awesome.min.css",
+              //"src/app/modules/employee/components/employee-profile/css/responsive.css",
+              //"src/app/modules/employee/components/employee-profile/css/transitions.css",
+              //"src/app/modules/employee/components/employee-profile/css/color.css",
+              //"src/app/modules/employee/components/employee-profile/css/main.css",
+              //"src/app/modules/employee/components/employee-profile/css/chosen.css",
+              //"src/app/modules/employee/components/employee-profile/css/scrollbar.css",
+              //"src/app/modules/employee/components/employee-profile/css/chartist.css",
+              //"src/app/modules/employee/components/employee-profile/css/magnific-popup.css",
+              //"src/app/modules/employee/components/employee-profile/css/prettyPhoto.css",
+              //"src/app/modules/employee/components/employee-profile/css/linearicons.css",
+              //"src/app/modules/employee/components/employee-profile/css/owl.carousel.css",
+              //"src/app/modules/employee/components/employee-profile/css/normalize.css",
               "src/styles.css",
               "node_modules/primeicons/primeicons.css",
               "node_modules/primeng/resources/themes/saga-blue/theme.css",
@@ -38,7 +53,28 @@
               "node_modules/ngx-toastr/toastr.css"
             ],
             "scripts": [
-              "node_modules/quill/dist/quill.js"
+              "node_modules/quill/dist/quill.js",
+              //"src/assets/js/scrollbar.min.js",
+              //"src/assets/js/prettyPhoto.js",
+              //"src/assets/js/owl.carousel.min.js",
+              //"src/assets/js/main.js",
+              //"src/assets/js/magnific-popup.js",
+              //"src/assets/js/jquery.sortable.js",
+              //"src/assets/js/jquery.collapse.js",
+              //"src/assets/js/jquery.basictable.min.js",
+              //"src/assets/js/gmap3.js",
+              //"src/assets/js/countdown.min.js",
+              //"src/assets/js/circle-progress.js",
+              //"src/assets/js/chosen.jquery.js",
+              //"src/assets/js/chartist.js",
+              //"src/assets/js/appear.js",
+
+              //"src/assets/js/vendor/bootstrap.min.js",
+              //"src/assets/js/vendor/jquery-3.3.1.js",
+              //"src/assets/js/vendor/jquery-library.js",
+              //"src/assets/js/vendor/modernizr-2.8.3-respond-1.4.2.min.js",
+              //"src/assets/js/appear.js"
+
             ]
           },
           "configurations": {

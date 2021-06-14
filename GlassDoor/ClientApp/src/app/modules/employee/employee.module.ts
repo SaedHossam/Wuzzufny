@@ -15,6 +15,10 @@ import { RippleModule } from 'primeng/ripple';
 import { HomeComponent } from './home/home.component';
 import { SkeletonModule } from 'primeng/skeleton';
 import { ToastrModule } from 'ngx-toastr';
+import { EmployeeProfileComponent } from './components/employee-profile/employee-profile.component';
+import { EditProfileComponent } from './components/edit-profile/edit-profile.component';
+import { UploadComponent } from './components/upload/upload.component';
+
 
 
 
@@ -22,7 +26,10 @@ import { ToastrModule } from 'ngx-toastr';
   declarations: [
     ViewJobComponent,
     ApplyJobComponent,
-    HomeComponent
+    HomeComponent,
+    EmployeeProfileComponent,
+    EditProfileComponent,
+    UploadComponent
   ],
 
   imports: [

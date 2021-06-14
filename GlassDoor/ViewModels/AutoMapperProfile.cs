@@ -95,6 +95,83 @@ namespace GlassDoor.ViewModels
             CreateMap<ApplicationDto, Application>()
                 .ForMember(a => a.JobId, map => map.MapFrom(s => s.JobId));
 
+
+            //Employee mapping
+            CreateMap<JobType, JobTypeDto>()
+             .ReverseMap();
+
+            CreateMap<UserLanguage, UserLanguageDto>()
+                  .ForMember(d => d.Level, map => map.MapFrom(s => s.Level))
+                .ReverseMap();
+
+            CreateMap<EmployeeLinks, EmployeeLinksDto>()
+                .ForMember(d => d.Name, map => map.MapFrom(s => s.Name))
+                .ForMember(d => d.Id, map => map.MapFrom(s => s.Id))
+                .ForMember(d => d.Link, map => map.MapFrom(s => s.Link))
+                .ReverseMap();
+
+            CreateMap<JobCategory, JobCategoryDto>()
+                .ForMember(d => d.Name, map => map.MapFrom(s => s.Name))
+                .ForMember(d => d.Id, map => map.MapFrom(s => s.Id))
+                .ReverseMap();
+
+            CreateMap<Employee, EmployeeDto>()
+                .ForMember(d => d.CityName, map => map.MapFrom(s => s.City.Name))
+                .ForMember(d => d.CountryName, map => map.MapFrom(s => s.Country.Name))
+                .ForMember(d => d.CareerLevelName, map => map.MapFrom(s => s.CareerLevel.Name))
+                .ForMember(d => d.CareerLevelName, map => map.MapFrom(s => s.CareerLevel.Name))
+                .ForMember(d => d.EducationLevelName, map => map.MapFrom(s => s.EducationLevel.Name))
+                .ForMember(d => d.NationalityName, map => map.MapFrom(s => s.Nationality.Name))
+                .ForMember(d => d.UserFirstName, map => map.MapFrom(s => s.User.FirstName))
+                .ForMember(d => d.UserLastName, map => map.MapFrom(s => s.User.LastName))
+                .ForMember(d => d.JobTypesName, map => map.MapFrom(s => s.JobTypes))
+                .ForMember(d => d.SkillsNames, map => map.MapFrom(s => s.Skills))
+                .ForMember(d => d.UserLanguagesNames, map => map.MapFrom(s => s.UserLanguages))
+                .ForMember(d => d.EmployeeLinksNames, map => map.MapFrom(s => s.EmployeeLinks))
+                .ForMember(d => d.PreferredJobCategoriesName, map => map.MapFrom(s => s.PreferredJobCategories))
+                .ForMember(d => d.Email, map => map.MapFrom(s => s.User.Email));
+
+            CreateMap<UserLanguage, UserLanguageDto>()
+                .ForMember(d => d.Name, map => map.MapFrom(s => s.Language.Name))
+                .ReverseMap();
+
+            // application user
+            CreateMap<ApplicationUser, ApplicationUserDto>()
+                .ForMember(d => d.FirstName, map => map.MapFrom(s => s.FirstName))
+                .ForMember(d => d.LastName, map => map.MapFrom(s => s.LastName))
+                //.ForMember(d =>d.Email, map => map.MapFrom(s => s.Email))
+                .ReverseMap();
+
+            //Update Employee Profile
+            CreateMap<Employee, UpdateEmployeeDto>()
+                .ForMember(d => d.AlternativeMobileNumber, map => map.MapFrom(s => s.AlternativeMobileNumber))
+                .ForMember(d => d.CareerLevelId, map => map.MapFrom(s => s.CareerLevel.Id))
+                .ForMember(d => d.CityId, map => map.MapFrom(s => s.City.Id))
+                .ForMember(d => d.CountryId, map => map.MapFrom(s => s.Country.Id))
+                .ForMember(d => d.CV, map => map.MapFrom(s => s.CV))
+                .ForMember(d => d.EducationLevelId, map => map.MapFrom(s => s.EducationLevel.Id))
+                .ForMember(d => d.ExperienceYears, map => map.MapFrom(s => s.ExperienceYears))
+                //.ForMember(d => d.Id, map => map.MapFrom(s => s.Id))
+                .ForMember(d => d.IsWillingToRelocate, map => map.MapFrom(s => s.IsWillingToRelocate))
+                .ForMember(d => d.MilitaryStatus, map => map.MapFrom(s => s.MilitaryStatus))
+                .ForMember(d => d.MobileNumber, map => map.MapFrom(s => s.MobileNumber))
+                .ForMember(d => d.Photo, map => map.MapFrom(s => s.Photo))
+                //.ForMember(d => d.PreferredJobCategories, map => map.MapFrom(s => s.))
+                .ForMember(d => d.Summary, map => map.MapFrom(s => s.Summary))
+                .ReverseMap();
+
+            // update job category
+
+            CreateMap<JobCategory, PreferedJobCatDto>()
+               .ForMember(d => d.PreferredJobCategories, map => map.MapFrom(s => s.Id))
+               .ReverseMap();
+
+            //// mapping the name of employee link name 
+            //CreateMap<EmployeeLinks, EmployeeLinksManager>()
+            //   .ForMember(d => d.Name, map => map.MapFrom(s => s.Name))
+            //   .ReverseMap();
+
+
         }
     }
 }

@@ -34,7 +34,7 @@ namespace DAL
         public DbSet<JobType> JobTypes { get; set; }
         public DbSet<Language> Languages { get; set; }
         public DbSet<SalaryRate> SalaryRates { get; set; }
-        public DbSet<SocialLinks> SocialLinks { get; set; }
+        //public DbSet<SocialLinks> SocialLinks { get; set; }
         public DbSet<UserLanguage> UserLanguages { get; set; }
         public DbSet<JobCategory> JobCategories { get; set; }
         public DbSet<CompanyRequestStatus> CompanyRequestStatus { get; set; }
