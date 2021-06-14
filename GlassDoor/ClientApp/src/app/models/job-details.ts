@@ -10,7 +10,7 @@ export class JobDetails {
     public careerLevelId?: number, public salaryMin?: number, public salaryMax?: number,
     public description?: string, public requirements?: string, public responsibilities?: string, public status?: string, public category?: JobCategory,
     public salaryCurrency?: Currency, public salaryRate?: SalaryRate, public job?: Job,
-    public educationLevel?: EducationLevel) {
+    public educationLevel?: EducationLevel, public yearFounded?: Date) {
  
   }
 

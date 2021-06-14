@@ -36,22 +36,30 @@ namespace GlassDoor.ViewModels
             CreateMap<SalaryRateDto, SalaryRate>().ReverseMap();
             CreateMap<JobTypeDto, JobType>().ReverseMap();
 
-
             // All Jobs View mapping
             CreateMap<Job, JobViewModel>()
                 .ForMember(a => a.JobCityName, map => map.MapFrom(s => s.City.Name))
                 .ForMember(a => a.JobCountryName, map => map.MapFrom(s => s.Country.Name))
                 .ForMember(a => a.CompanyName, map => map.MapFrom(s => s.Company.Name))
+                .ForMember(d => d.Name, map => map.MapFrom(s => s.Company.CompanyIndustry.Name))
+                .ForMember(a => a.Logo, map => map.MapFrom(s => s.Company.Logo))
                 .ForMember(a => a.JobTypeName, map => map.MapFrom(s => s.JobType.Name))
                 .ReverseMap();
 
             CreateMap<Skill, SkillsDto>()
                 .ReverseMap();
+            CreateMap<Skill, SkillsMatching>()
+                .ReverseMap();
+
 
             CreateMap<JobSkill, SkillsDto>()
                 .ForMember(d => d.Id, map => map.MapFrom(s => s.SkillsId))
                 .ForMember(d => d.Name, map => map.MapFrom(s => s.Skills.Name))
                 .ReverseMap();
+            CreateMap<JobSkill, SkillsMatching>()
+              .ForMember(d => d.Id, map => map.MapFrom(s => s.SkillsId))
+              .ForMember(d => d.Name, map => map.MapFrom(s => s.Skills.Name))
+              .ReverseMap();
 
             // job details mapping
             CreateMap<JobDetails, JobDetailsDto>()
@@ -64,6 +72,9 @@ namespace GlassDoor.ViewModels
                 .ForMember(d => d.JobCity, map => map.MapFrom(s => s.Job.City.Name))
                 .ForMember(d => d.JobTitle, map => map.MapFrom(s => s.Job.Title))
                 .ForMember(d => d.CompanyName, map => map.MapFrom(s => s.Job.Company.Name))
+                .ForMember(d => d.YearFounded, map => map.MapFrom(s => s.Job.Company.YearFounded))
+                .ForMember(d => d.Name, map => map.MapFrom(s => s.Job.Company.CompanyIndustry.Name))
+                .ForMember(d => d.Logo, map => map.MapFrom(s => s.Job.Company.Logo))
                 .ForMember(d => d.JobType, map => map.MapFrom(s => s.Job.JobType.Name))
                 .ForMember(d => d.CreatedDate, map => map.MapFrom(s => s.Job.CreatedDate))
                 .ForMember(d => d.SalaryCurrencyCode, map => map.MapFrom(s => s.SalaryCurrency.Code))
@@ -72,7 +83,10 @@ namespace GlassDoor.ViewModels
             CreateMap<PostJobDto, Job>();
 
             CreateMap<Job, Job>();
-
+            CreateMap<Application, ApplicationDto>()
+                .ForMember(a => a.JobId, map => map.MapFrom(s => s.JobId))
+                .ForMember(a => a.EmployeeId, map => map.MapFrom(s => s.EmployeeId))
+                .ReverseMap();
         }
     }
 }

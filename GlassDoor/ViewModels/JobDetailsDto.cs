@@ -35,14 +35,19 @@ namespace GlassDoor.ViewModels
         public string Responsibilities { get; set; }
 
         public string CompanyName { get; set; }
+        public DateTime? YearFounded { get; set; }
+        public string Name { get; set; }
+        public string Logo { get; set; }
+
         public int JobId { get; set; }
 
-        public IEnumerable<SkillsDto> SkillsNames { get; set; }
+        public IEnumerable<SkillsMatching> SkillsNames { get; set; }
         public DateTime CreatedDate { get; set; }
         public string JobType { get; set; }
         public string JobTitle { get; set; }
         public string JobCountry { get; set; }
         public string JobCity { get; set; }
+        public bool Applied { get; set; }
     }
 }
 

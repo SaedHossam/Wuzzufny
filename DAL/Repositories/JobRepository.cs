@@ -21,6 +21,7 @@ namespace DAL.Repositories
         {
             return _appContext.Jobs
                 .Include(a => a.Company)
+                .ThenInclude(b => b.CompanyIndustry)
                 .Include(j => j.Country)
                 .Include(c => c.City)
                 .Include(c=>c.JobType)             

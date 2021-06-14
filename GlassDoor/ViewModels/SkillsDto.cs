@@ -15,4 +15,8 @@ namespace GlassDoor.ViewModels
     {
         public string Name { get; set; }
     }
+    public class SkillsMatching : GenericDto
+    {
+        public bool Match { get; set; }
+    }
 }

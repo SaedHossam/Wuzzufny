@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Job } from '../../models/job';
 import { EnvironmentUrlService } from './environment-url.service';
 import { JobDetailsDto } from '../../models/job-details-dto';
+import { Application } from '../../models/application';
 
 
 @Injectable({
@@ -26,6 +27,10 @@ export class JobService {
 
   searchForAJob(term: string, loc: string): Observable<Job[]>{
     return this.http.get<Job[]>(this._envUrl.urlAddress + '/api/jobs/Search/' + term + '/' + loc);
+  }
+
+  applyJob(app: Application) {
+    return this.http.post<Application>(this._envUrl.urlAddress + '/api/Application/', app);
   }
 }
 

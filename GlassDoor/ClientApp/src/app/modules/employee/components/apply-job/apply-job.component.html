@@ -1,9 +1,8 @@
-
-
 <p-card [style]="{ 'margin-bottom': '2em'}">
 
   <div class="JobTitleAndImg">
-    <h1>{{jobD.jobTitle}} - {{ jobD.jobCountry}} - {{ jobD.jobCity}}</h1>
+    <h1>Image Path: {{jobD.logo}}</h1>
+    <h1>{{jobD.jobTitle}} - {{ jobD.jobCountry}} - {{ jobD.jobCity}} - {{jobD.name}} - {{jobD.yearFounded}} </h1>
     <span>
       <img />
     </span>
@@ -19,7 +18,7 @@
     <hr />
   </div>
   <div>
-    <button style="margin:0 10px 0 10px" pButton pRipple type="button" label="Apply"></button>
+    <button style="margin:0 10px 0 10px" pButton pRipple type="button" label="Apply" (click)="add()"></button>
     <button pButton pRipple type="button" label="Save" class="p-button-warning"></button>
   </div>
 </p-card>

@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EmployeeRoutingModule } from './employee-routing.module';
 import { ApplyJobComponent } from "./components/apply-job/apply-job.component";
 //import { CalendarModule } from "primeng/calendar";
@@ -12,6 +14,7 @@ import { ViewJobComponent } from "./components/view-job/view-job.component";
 import { RippleModule } from 'primeng/ripple';
 import { HomeComponent } from './home/home.component';
 import { SkeletonModule } from 'primeng/skeleton';
+import { ToastrModule } from 'ngx-toastr';
 
 
 
@@ -30,7 +33,7 @@ import { SkeletonModule } from 'primeng/skeleton';
     CardModule,
     RippleModule,
     SkeletonModule,
-
+    ToastrModule.forRoot(),
 
   ]
 })

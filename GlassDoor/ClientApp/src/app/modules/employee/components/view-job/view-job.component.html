@@ -47,7 +47,8 @@
 <div class="container">
   <div class="row">
     <div class="p-col-4 my-3" *ngFor="let item of jobs">
-      <p-card header="{{item.title}} " subheader=" {{item.companyName}}" [style]="{width: '330px'}" styleClass="p-card-shadow">
+      <p-card header="{{item.title}} " subheader=" {{item.companyName}} {{item.logo}}" [style]="{width: '330px'}" styleClass="p-card-shadow">
+        <h5>Company Industry: {{item.name}} </h5>
         <ng-template pTemplate="header">
           <img alt="Card" src="../../../../../assets/Images/usercard.png" />
         </ng-template>

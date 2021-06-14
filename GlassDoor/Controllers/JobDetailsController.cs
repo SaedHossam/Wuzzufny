@@ -9,6 +9,7 @@ using DAL;
 using DAL.Models;
 using AutoMapper;
 using GlassDoor.ViewModels;
+using Microsoft.AspNetCore.Identity;
 
 namespace GlassDoor.Controllers
 {
@@ -19,12 +20,14 @@ namespace GlassDoor.Controllers
         private readonly ApplicationDbContext _context;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public JobDetailsController(ApplicationDbContext context, IUnitOfWork unitOfWork, IMapper mapper)
+        public JobDetailsController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, IUnitOfWork unitOfWork, IMapper mapper)
         {
             _context = context;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _userManager = userManager;
         }
 
         // GET: api/JobDetails
@@ -35,16 +38,24 @@ namespace GlassDoor.Controllers
         }
 
         [HttpGet("GetJobDetails/{id}")]
-        public async Task<ActionResult<JobDetails>> GetJobDetails(int id)
+        public async Task<ActionResult<JobDetailsDto>> GetJobDetails(int id)
         {
             //var job = _unitOfWork.Jobs.GetJobById(id);
-            var details = _unitOfWork.JobsDetails.GetJobDetails(id);
+            var details = _mapper.Map<JobDetailsDto>(_unitOfWork.JobsDetails.GetJobDetails(id));
 
             //var jobDetails = _unitOfWork.JobsDetails.GetJobDetails(job.Id);
-
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            var userId = user.Id;
+            var empId = _unitOfWork.Employees.Find(a => a.UserId == userId).FirstOrDefault().Id;
+            var emp = _unitOfWork.Employees.GetEmployeeSkills(empId);
+            var userSkills = emp.Skills;
+            foreach (var skill in details.SkillsNames)
+            {
+                skill.Match = userSkills.FirstOrDefault(s => s.Id == skill.Id) != null ? true : false;
+            }
             if (details == null)
                 return NotFound();
-
+            details.Applied = _unitOfWork.Application.Find(a => a.JobId == details.JobId && a.EmployeeId == empId).FirstOrDefault() != null;
             return  Ok(_mapper.Map<JobDetailsDto>(details));
 
         }

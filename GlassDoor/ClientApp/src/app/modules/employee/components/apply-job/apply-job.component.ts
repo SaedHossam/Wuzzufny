@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import {PrimeNGConfig } from 'primeng/api';
+import { Application } from '../../../../models/application';
 import { JobDetailsDto } from '../../../../models/job-details-dto';
 import { JobService } from '../../../../shared/services/job.service';
 
@@ -11,8 +13,9 @@ import { JobService } from '../../../../shared/services/job.service';
   styleUrls: ['./apply-job.component.css']
 })
 export class ApplyJobComponent implements OnInit {
+  appJob: Application = new Application();
 
-  constructor(private service: JobService, private ac: ActivatedRoute,
+  constructor(private service: JobService, private toastr: ToastrService ,private ac: ActivatedRoute,
     private primengConfig: PrimeNGConfig) { }
   jobD: JobDetailsDto = new JobDetailsDto();
  
@@ -30,6 +33,7 @@ export class ApplyJobComponent implements OnInit {
         /*this.countryName = this.jobD.job.country.name;*/
       });
     });
+    
   }
   
   
@@ -67,23 +71,16 @@ export class ApplyJobComponent implements OnInit {
     }
   }
 
-  /*getNameFromJson(value: string) {
-    return JSON.parse(value);
-  }*/
-
-
-  /*getStringFromEnum(value: number) {
-    switch (value) {
-      case 0:
-        return "FullTime";
-      case 1:
-        return "PartTime";
-      case 2:
-        return "FreeLance";
-      case 3:
-        return "Internship";
-    }
-  }*/
+  add() {
+    this.appJob.jobId = this.jobD.jobId;
+    this.appJob.employeeId = 5;
+    this.service.applyJob(this.appJob).subscribe(a => {
+      console.log(a);
+      this.toastr.success(`You applied to "${this.jobD.jobTitle}" job successfully`, 'Success');
+    })
+    
+    console.log(this.appJob);
+  }
 
 }
        

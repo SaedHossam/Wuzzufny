@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { CommonModule } from '@angular/common';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -17,7 +19,6 @@ import { ForbiddenComponent } from './forbidden/forbidden.component';
 import { HomeComponent } from './home/home.component';
 import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
 import { GoogleLoginProvider } from 'angularx-social-login';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CalendarModule} from "primeng/calendar";
 import { FormsModule, ReactiveFormsModule  } from "@angular/forms"
 import { PasswordModule} from "primeng/password";
@@ -29,6 +30,9 @@ import { PasswordConfirmationValidatorService } from
   "./shared/custom-validators/password-confirmation-validator.service";
 import { DropdownModule } from 'primeng/dropdown';
 import { CompanyIndustryService } from "./shared/services/company-industry.service";
+import { NotificationService } from './shared/services/notification.service';
+import { ToasterStub } from './models/toaster-stub';
+import { ToastrModule } from 'ngx-toastr';
 
 export function tokenGetter() {
   return localStorage.getItem("token");
@@ -57,6 +61,7 @@ export function tokenGetter() {
     PasswordModule,
     InputNumberModule,
     DropdownModule,
+    ToastrModule.forRoot(),
 
     JwtModule.forRoot({
       config: {
@@ -74,6 +79,10 @@ export function tokenGetter() {
       provide: HTTP_INTERCEPTORS,
       useClass: ErrorHandlerService,
       multi: true
+    },
+    {
+      provide: NotificationService,
+      useClass: ToasterStub
     },
     {
       provide: 'SocialAuthServiceConfig',

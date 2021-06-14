@@ -30,6 +30,7 @@ namespace DAL.Repositories
                 .Include(c => c.Job.Skills).ThenInclude(js => js.Skills)
                 .Include(s => s.SalaryRate)
                 .Include(c => c.Job.Company)
+                .ThenInclude(d => d.CompanyIndustry)
                 .Include(c => c.Job.JobType)
                 .FirstOrDefault(a => a.JobId == id);
 
