@@ -6,13 +6,8 @@ using System.Threading.Tasks;
 
 namespace GlassDoor.ViewModels
 {
-    public class JobCategoryDto : GenericDto
+    public class UserLanguageDto:GenericDto
     {
-       
-    }
-
-    public class JobCategoryCreateDto
-    {
-        public string Name { get; set; }
+        public string Level { get; set; }
     }
 }

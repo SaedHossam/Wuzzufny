@@ -8,7 +8,7 @@ namespace GlassDoor.ViewModels
 {
     public class LanguageDto : GenericDto
     {
-
+        
     }
 
     public class LanguageCreateDto

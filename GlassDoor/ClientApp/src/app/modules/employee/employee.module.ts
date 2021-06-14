@@ -11,6 +11,9 @@ import { CardModule, } from 'primeng/card';
 import { ViewJobComponent } from './components/view-job/view-job.component';
 import { RippleModule } from 'primeng/ripple';
 import { HomeComponent } from './home/home.component';
+import { EmployeeProfileComponent } from './components/employee-profile/employee-profile.component';
+import { EditProfileComponent } from './components/edit-profile/edit-profile.component';
+import { UploadComponent } from './components/upload/upload.component';
 
 
 
@@ -19,7 +22,10 @@ import { HomeComponent } from './home/home.component';
   declarations: [
     ViewJobComponent,
     ApplyJobComponent,
-    HomeComponent
+    HomeComponent,
+    EmployeeProfileComponent,
+    EditProfileComponent,
+    UploadComponent
   ],
 
   imports: [
