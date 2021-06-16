@@ -72,23 +72,23 @@ namespace GlassDoor.Controllers
             return Ok(company);
         }
 
-        [HttpGet("SeedAngular")]
-        public ActionResult<SeedAngular> GetAllConstants()
-        {
-            SeedAngular s = new SeedAngular()
-            {
-                jobTypes = _DB.JobTypes.ToList(),
-                jobCategories = _DB.JobCategories.ToList(),
-                countries = _DB.Countries.ToList(),
-                cities = _DB.Cities.ToList(),
-                Currencies = _DB.Currencies.ToList(),
-                salaryRates = _DB.SalaryRates.ToList(),
-                Skills = _DB.Skills.ToList(),
-                careerLevels = _DB.CareerLevels.ToList(),
-                EducationLevels = _DB.EducationLevels.ToList()
-            };
-            return s;
-        }
+        //[HttpGet("SeedAngular")]
+        //public ActionResult<SeedAngular> GetAllConstants()
+        //{
+        //    SeedAngular s = new SeedAngular()
+        //    {
+        //        jobTypes = _DB.JobTypes.ToList(),
+        //        jobCategories = _DB.JobCategories.ToList(),
+        //        countries = _DB.Countries.ToList(),
+        //        cities = _DB.Cities.ToList(),
+        //        Currencies = _DB.Currencies.ToList(),
+        //        salaryRates = _DB.SalaryRates.ToList(),
+        //        Skills = _DB.Skills.ToList(),
+        //        careerLevels = _DB.CareerLevels.ToList(),
+        //        EducationLevels = _DB.EducationLevels.ToList()
+        //    };
+        //    return s;
+        //}
 
         // GET: api/Jobs/5
         [HttpGet("{id}")]

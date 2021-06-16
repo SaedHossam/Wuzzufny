@@ -1,4 +1,5 @@
-import { StatusDto } from './../models/status-dto';
+import { EditApplicationStatusDto } from './../models/edit-application-status-dto';
+import { CompanyApplicationStatusDto } from './../models/company-application-status-dto';
 import { ApplicationDto } from './../models/application-dto';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -22,10 +23,15 @@ export class ApplicationService {
       `${this._envUrl.urlAddress}/api/Applications/${applicationId}`
     );
   };
-  public editStatus = (statusDto: StatusDto) => {
-    return this.http.put<StatusDto>(
+  public editStatus = (statusDto: EditApplicationStatusDto) => {
+    return this.http.put<EditApplicationStatusDto>(
       `${this._envUrl.urlAddress}/api/Applications/status`,
       statusDto
+    );
+  };
+  public getAllCompanyApplicationStatus = () => {
+    return this.http.get<CompanyApplicationStatusDto[]>(
+      `${this._envUrl.urlAddress}/api/CompanyApplicationStatus`
     );
   };
 }

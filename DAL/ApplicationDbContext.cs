@@ -42,7 +42,7 @@ namespace DAL
 
         public DbSet<JobSkill> JobSkill { get; set; }
 
-
+        public DbSet<CompanyApplicationStatus> CompanyApplicationStatuses { get; set; }
 
         public ApplicationDbContext(DbContextOptions options) : base(options)
         { }

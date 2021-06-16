@@ -33,7 +33,7 @@ namespace DAL
         private ISocialLinksRepository _socialLinks;
         private IUserLanguageRepository _userLanguage;
         private ICompanyRequestStatusRepository _companyRequestStatus;
-
+        private ICompanyApplicationStatusRepository _companyApplicationStatus;
         public UnitOfWork(ApplicationDbContext context)
         {
             _context = context;
@@ -65,7 +65,7 @@ namespace DAL
         public ISocialLinksRepository SocialLinks => _socialLinks ??= new SocialLinksRepository(_context);
         public IUserLanguageRepository UserLanguage => _userLanguage ??= new UserLanguageRepository(_context);
         public ICompanyRequestStatusRepository CompanyRequestStatus => _companyRequestStatus ??= new CompanyRequestStatusRepository(_context);
-
+        public ICompanyApplicationStatusRepository CompanyApplicationStatus => _companyApplicationStatus ??= new CompanyApplicationStatusRepository(_context);
 
 
 

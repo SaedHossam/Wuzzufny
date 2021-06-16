@@ -263,6 +263,19 @@ namespace GlassDoor.Contexts
                 context.CompanyManagers.Add(companyManager);
                 context.SaveChanges();
             }
+
+            if (!context.CompanyApplicationStatuses.Any())
+            {
+                var companyApplicationStatuses = new List<CompanyApplicationStatus>()
+                {
+                    new CompanyApplicationStatus() {Name = Enums.CompanyRequestStatus.UnderReview.ToString()},
+                    new CompanyApplicationStatus() {Name = Enums.CompanyRequestStatus.Accepted.ToString()},
+                    new CompanyApplicationStatus() {Name = Enums.CompanyRequestStatus.Rejected.ToString()}
+                };
+
+                await context.CompanyApplicationStatuses.AddRangeAsync(companyApplicationStatuses);
+                await context.SaveChangesAsync();
+            }
         }
     }
 }

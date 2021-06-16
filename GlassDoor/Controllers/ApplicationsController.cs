@@ -149,20 +149,6 @@ namespace GlassDoor.Controllers
             }
 
             application.Status = applicationDto.Status;
-            //var user = await _userManager.GetUserAsync(HttpContext.User);
-            //var companyId = _unitOfWork.CompaniesManagers.Find(c => c.UserId == user.Id).First().Id;
-            //Job companyJob = new Job();
-            //try
-            //{
-            //    companyJob = _context.Jobs.Where(c => c.CompanyId == companyId & c.Id == jobId).Include(a => a.Applications).FirstOrDefault();
-            //    var application = companyJob.Applications.Where(a => a.Id == applicationDto.Id).First();
-            //    application.Status = applicationDto.Status;
-            //}
-            //catch (Exception)
-            //{
-
-            //    return BadRequest();
-            //}
 
             try
             {
