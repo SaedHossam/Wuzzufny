@@ -46,64 +46,64 @@ namespace GlassDoor.Controllers
             return educationLevel;
         }
 
-        //PUT: api/EducationLevels/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public IActionResult PutEducationLevel(int id, EducationLevel educationLevel)
-        {
-            if (id != educationLevel.Id)
-            {
-                return BadRequest();
-            }
+        ////PUT: api/EducationLevels/5
+        //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        //[HttpPut("{id}")]
+        //public IActionResult PutEducationLevel(int id, EducationLevel educationLevel)
+        //{
+        //    if (id != educationLevel.Id)
+        //    {
+        //        return BadRequest();
+        //    }
 
-            _unitOfWork.EducationLevel.Update(educationLevel);
+        //    _unitOfWork.EducationLevel.Update(educationLevel);
 
-            try
-            {
-                _unitOfWork.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!EducationLevelExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+        //    try
+        //    {
+        //        _unitOfWork.SaveChanges();
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!EducationLevelExists(id))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
 
-        //POST: api/EducationLevels
-        //To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public ActionResult<EducationLevelDto> PostEducationLevel(EducationLevelDto educationLevel)
-        {
-            // Todo: Check this api, it returns EducationLevel as EducationLevelDto
-            _unitOfWork.EducationLevel.Add(_mapper.Map<EducationLevel>(educationLevel));
-            _unitOfWork.SaveChanges();
+        ////POST: api/EducationLevels
+        ////To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        //[HttpPost]
+        //public ActionResult<EducationLevelDto> PostEducationLevel(EducationLevelDto educationLevel)
+        //{
+        //    // Todo: Check this api, it returns EducationLevel as EducationLevelDto
+        //    _unitOfWork.EducationLevel.Add(_mapper.Map<EducationLevel>(educationLevel));
+        //    _unitOfWork.SaveChanges();
 
-            return CreatedAtAction("GetEducationLevel", new { id = educationLevel.Id }, educationLevel);
-        }
+        //    return CreatedAtAction("GetEducationLevel", new { id = educationLevel.Id }, educationLevel);
+        //}
 
-        //DELETE: api/EducationLevels/5
-        [HttpDelete("{id}")]
-        public IActionResult DeleteEducationLevel(int id)
-        {
-            var educationLevel = _unitOfWork.EducationLevel.Get(id);
-            if (educationLevel == null)
-            {
-                return NotFound();
-            }
+        ////DELETE: api/EducationLevels/5
+        //[HttpDelete("{id}")]
+        //public IActionResult DeleteEducationLevel(int id)
+        //{
+        //    var educationLevel = _unitOfWork.EducationLevel.Get(id);
+        //    if (educationLevel == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            _unitOfWork.EducationLevel.Remove(educationLevel);
-            _unitOfWork.SaveChanges();
+        //    _unitOfWork.EducationLevel.Remove(educationLevel);
+        //    _unitOfWork.SaveChanges();
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
 
         private bool EducationLevelExists(int id)
         {

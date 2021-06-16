@@ -46,63 +46,63 @@ namespace GlassDoor.Controllers
             return salaryRate;
         }
 
-        // PUT: api/SalaryRates/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public IActionResult PutSalaryRate(int id, SalaryRateDto salaryRate)
-        {
-            if (id != salaryRate.Id)
-            {
-                return BadRequest();
-            }
+        //// PUT: api/SalaryRates/5
+        //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        //[HttpPut("{id}")]
+        //public IActionResult PutSalaryRate(int id, SalaryRateDto salaryRate)
+        //{
+        //    if (id != salaryRate.Id)
+        //    {
+        //        return BadRequest();
+        //    }
 
-            _unitOfWork.SalaryRate.Update(_mapper.Map<SalaryRate>(salaryRate));
+        //    _unitOfWork.SalaryRate.Update(_mapper.Map<SalaryRate>(salaryRate));
 
-            try
-            {
-                _unitOfWork.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!SalaryRateExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+        //    try
+        //    {
+        //        _unitOfWork.SaveChanges();
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!SalaryRateExists(id))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
 
-        // POST: api/SalaryRates
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public ActionResult<SalaryRate> PostSalaryRate(SalaryRateDto salaryRate)
-        {
-            _unitOfWork.SalaryRate.Add(_mapper.Map<SalaryRate>(salaryRate));
-            _unitOfWork.SaveChanges();
+        //// POST: api/SalaryRates
+        //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        //[HttpPost]
+        //public ActionResult<SalaryRate> PostSalaryRate(SalaryRateDto salaryRate)
+        //{
+        //    _unitOfWork.SalaryRate.Add(_mapper.Map<SalaryRate>(salaryRate));
+        //    _unitOfWork.SaveChanges();
 
-            return CreatedAtAction("GetSalaryRate", new { id = salaryRate.Id }, salaryRate);
-        }
+        //    return CreatedAtAction("GetSalaryRate", new { id = salaryRate.Id }, salaryRate);
+        //}
 
-        // DELETE: api/SalaryRates/5
-        [HttpDelete("{id}")]
-        public IActionResult DeleteSalaryRate(int id)
-        {
-            var salaryRate = _unitOfWork.SalaryRate.Get(id);
-            if (salaryRate == null)
-            {
-                return NotFound();
-            }
+        //// DELETE: api/SalaryRates/5
+        //[HttpDelete("{id}")]
+        //public IActionResult DeleteSalaryRate(int id)
+        //{
+        //    var salaryRate = _unitOfWork.SalaryRate.Get(id);
+        //    if (salaryRate == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            _unitOfWork.SalaryRate.Remove(salaryRate);
-            _unitOfWork.SaveChanges();
+        //    _unitOfWork.SalaryRate.Remove(salaryRate);
+        //    _unitOfWork.SaveChanges();
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
 
         private bool SalaryRateExists(int id)
         {

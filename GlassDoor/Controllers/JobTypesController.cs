@@ -26,14 +26,14 @@ namespace GlassDoor.Controllers
 
         // GET: api/JobTypes
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<JobTypeDto>>> GetJobTypes()
+        public ActionResult<IEnumerable<JobTypeDto>> GetJobTypes()
         {
             return Ok(_mapper.Map<IEnumerable<JobTypeDto>>(_unitOfWork.JobType.GetAll()));
         }
 
         // GET: api/JobTypes/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<JobTypeDto>> GetJobType(int id)
+        public ActionResult<JobTypeDto> GetJobType(int id)
         {
             var jobType = _mapper.Map<JobTypeDto>(_unitOfWork.JobType.Get(id));
 
@@ -45,63 +45,63 @@ namespace GlassDoor.Controllers
             return jobType;
         }
 
-        // PUT: api/JobTypes/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutJobType(int id, JobType jobType)
-        {
-            if (id != jobType.Id)
-            {
-                return BadRequest();
-            }
+        //// PUT: api/JobTypes/5
+        //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        //[HttpPut("{id}")]
+        //public async Task<IActionResult> PutJobType(int id, JobType jobType)
+        //{
+        //    if (id != jobType.Id)
+        //    {
+        //        return BadRequest();
+        //    }
 
-            _unitOfWork.JobType.Update(jobType);
+        //    _unitOfWork.JobType.Update(jobType);
 
-            try
-            {
-                _unitOfWork.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!JobTypeExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+        //    try
+        //    {
+        //        _unitOfWork.SaveChanges();
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!JobTypeExists(id))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
 
-        // POST: api/JobTypes
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<JobType>> PostJobType(JobType jobType)
-        {
-            _unitOfWork.JobType.Add(jobType);
-            _unitOfWork.SaveChanges();
+        //// POST: api/JobTypes
+        //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        //[HttpPost]
+        //public async Task<ActionResult<JobType>> PostJobType(JobType jobType)
+        //{
+        //    _unitOfWork.JobType.Add(jobType);
+        //    _unitOfWork.SaveChanges();
 
-            return CreatedAtAction("GetJobType", new { id = jobType.Id }, jobType);
-        }
+        //    return CreatedAtAction("GetJobType", new { id = jobType.Id }, jobType);
+        //}
 
-        // DELETE: api/JobTypes/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteJobType(int id)
-        {
-            var jobType = _unitOfWork.JobType.Get(id);
-            if (jobType == null)
-            {
-                return NotFound();
-            }
+        //// DELETE: api/JobTypes/5
+        //[HttpDelete("{id}")]
+        //public async Task<IActionResult> DeleteJobType(int id)
+        //{
+        //    var jobType = _unitOfWork.JobType.Get(id);
+        //    if (jobType == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            _unitOfWork.JobType.Remove(jobType);
-            _unitOfWork.SaveChanges();
+        //    _unitOfWork.JobType.Remove(jobType);
+        //    _unitOfWork.SaveChanges();
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
 
         private bool JobTypeExists(int id)
         {

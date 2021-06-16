@@ -27,14 +27,14 @@ namespace GlassDoor.Controllers
 
         // GET: api/CompanyTypes
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<CompanyTypeDto>>> GetCompanyTypes()
+        public ActionResult<IEnumerable<CompanyTypeDto>> GetCompanyTypes()
         {
             return Ok(_mapper.Map<IEnumerable<CompanyTypeDto>>(_unitOfWork.CompanyType.GetAll()));
         }
 
         // GET: api/CompanyTypes/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<CompanyTypeDto>> GetCompanyType(int id)
+        public ActionResult<CompanyTypeDto> GetCompanyType(int id)
         {
             var companyType = _mapper.Map<CompanyTypeDto>(_unitOfWork.CompanyType.Get(id));
 
@@ -48,61 +48,61 @@ namespace GlassDoor.Controllers
 
         //// PUT: api/CompanyTypes/5
         //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutCompanyType(int id, CompanyType companyType)
-        {
-            if (id != companyType.Id)
-            {
-                return BadRequest();
-            }
+        //[HttpPut("{id}")]
+        //public async Task<IActionResult> PutCompanyType(int id, CompanyType companyType)
+        //{
+        //    if (id != companyType.Id)
+        //    {
+        //        return BadRequest();
+        //    }
 
-            _unitOfWork.CompanyType.Update(companyType);
+        //    _unitOfWork.CompanyType.Update(companyType);
 
-            try
-            {
-                _unitOfWork.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CompanyTypeExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+        //    try
+        //    {
+        //        _unitOfWork.SaveChanges();
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!CompanyTypeExists(id))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
 
-        //// POST: api/CompanyTypes
-        //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<CompanyType>> PostCompanyType(CompanyType companyType)
-        {
-            _unitOfWork.CompanyType.Add(companyType);
-            _unitOfWork.SaveChanges();
+        ////// POST: api/CompanyTypes
+        ////// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        //[HttpPost]
+        //public async Task<ActionResult<CompanyType>> PostCompanyType(CompanyType companyType)
+        //{
+        //    _unitOfWork.CompanyType.Add(companyType);
+        //    _unitOfWork.SaveChanges();
 
-            return CreatedAtAction("GetCompanyType", new { id = companyType.Id }, companyType);
-        }
+        //    return CreatedAtAction("GetCompanyType", new { id = companyType.Id }, companyType);
+        //}
 
-        // DELETE: api/CompanyTypes/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCompanyType(int id)
-        {
-            var companyType = _unitOfWork.CompanyType.Get(id);
-            if (companyType == null)
-            {
-                return NotFound();
-            }
+        //// DELETE: api/CompanyTypes/5
+        //[HttpDelete("{id}")]
+        //public async Task<IActionResult> DeleteCompanyType(int id)
+        //{
+        //    var companyType = _unitOfWork.CompanyType.Get(id);
+        //    if (companyType == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            _unitOfWork.CompanyType.Remove(companyType);
-            _unitOfWork.SaveChanges();
+        //    _unitOfWork.CompanyType.Remove(companyType);
+        //    _unitOfWork.SaveChanges();
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
 
         private bool CompanyTypeExists(int id)
         {
