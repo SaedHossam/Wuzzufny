@@ -22,10 +22,10 @@ export class ApplicationStatusComponent implements OnInit {
   
   constructor(private _applicationService:ApplicationService,private _route:ActivatedRoute) { 
     this.statuses = [
-      {status:"inconsideration"},
-      {status:"accepted"},
-      {status:"rejected"},
-      {status:"viewed"}
+      {status:"In Considration"},
+      {status:"Accepted"},
+      {status:"Rejected"},
+      {status:"Viewed"}
     ]
   }
 

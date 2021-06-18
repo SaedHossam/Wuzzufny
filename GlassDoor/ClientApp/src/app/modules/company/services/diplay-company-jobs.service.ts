@@ -12,5 +12,9 @@ export class DiplayCompanyJobsService {
   constructor(private http:HttpClient, private _envUrl:EnvironmentUrlService) { }
   public getCompanyjobs=()=>{
     return this.http.get<Job[]>(this._envUrl.urlAddress+"/api/jobs/companyJobsData")
-     }
+  }
+
+  public getCompanyJobs = () => {
+    return this.http.get<Job[]>(this._envUrl.urlAddress + "/api/jobs/companyJobs")
+  }
 }
