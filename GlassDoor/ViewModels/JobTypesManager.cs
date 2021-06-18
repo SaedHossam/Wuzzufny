@@ -7,7 +7,7 @@ namespace GlassDoor.ViewModels
 {
     public class JobTypesManager
     {
-        public ICollection<int> JobTypeId { get; set; }
+        //public ICollection<int> JobTypeId { get; set; }
 
     }
 }

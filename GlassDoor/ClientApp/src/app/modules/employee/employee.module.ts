@@ -23,7 +23,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { ApplicationsComponent } from './components/applications/applications.component';
-
+import { CalendarModule } from 'primeng/calendar';
 
 @NgModule({
   declarations: [
@@ -49,6 +49,7 @@ import { ApplicationsComponent } from './components/applications/applications.co
     NgbModule,
     MultiSelectModule,
     AutoCompleteModule,
+    CalendarModule,
     ToastrModule.forRoot(),
 
   ]

@@ -29,7 +29,7 @@
                         <div class="row">
                           <div class="col-12 col-md-6">
                             <div class="form-group position-relative has-icon-left mb-4">
-                              <input type="text" id="firstName" class="form-control form-control-xl" placeholder="First Name" />
+                              <input type="text" id="firstName" class="form-control form-control-xl" placeholder="First Name" [(ngModel)]="profile.userFirstName" name="userFirstName" />
                               <div class="form-control-icon">
                                 <i class="bi bi-person"></i>
                               </div>
@@ -37,23 +37,24 @@
                           </div>
                           <div class="col-12 col-md-6">
                             <div class="form-group position-relative has-icon-left mb-4">
-                              <input type="text" id="lastName" class="form-control form-control-xl" placeholder="Last Name" />
+                              <input type="text" id="lastName" class="form-control form-control-xl" placeholder="Last Name" [(ngModel)]="profile.userLastName" name="userLastName" />
                               <div class="form-control-icon">
                                 <i class="bi bi-person"></i>
                               </div>
                             </div>
                           </div>
                         </div>
-
                         <div class="row">
                           <div class="col-md-7 col-lg-6">
                             <div class="form-group">
                               <span>Birth Date</span>
                               <div class="input-group">
-                                <input class="form-control" placeholder="yyyy-mm-dd" [startDate]="{year: 1990}" [endDate]="{year: 2029}"
-                                       name="dp" [(ngModel)]="dateOfBirth" ngbDatepicker #d="ngbDatepicker">
+                                <!--<input class="form-control" placeholder="yyyy-mm-dd" [startDate]="{year: 1990}" [endDate]="{year: 2029}"
+                                name="dp" [(ngModel)]="profile.birthDate" ngbDatepicker #d="ngbDatepicker" >-->
+                                <p-calendar dataType="string" [(ngModel)]="profile.birthDate" name="birthDate"></p-calendar>
+
                                 <div class="input-group-append">
-                                  <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button"><i class="bi bi-calendar3"></i></button>
+                                  <!--<button class="btn btn-outline-secondary" (click)="d.toggle()" type="button"><i class="bi bi-calendar3"></i></button>-->
                                 </div>
                               </div>
                             </div>
@@ -62,7 +63,7 @@
 
                         <div class="form-group">
                           <span class="d-block">Gender</span>
-                          <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic">
+                          <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic" [(ngModel)]="profile.gender">
                             <label ngbButtonLabel class="btn-light">
                               <input ngbButton type="radio" [value]="1"> Male
                             </label>
@@ -74,14 +75,14 @@
 
                         <div class="form-group">
                           <label>Nationality</label>
-                          <select class="form-select">
+                          <select class="form-select" [(ngModel)]="profile.nationalityId" name="Nationality">
                             <option *ngFor="let i of countries" [value]="i.id">{{i.name}}</option>
                           </select>
                         </div>
 
                         <div class="form-group">
                           <label>Military Status</label>
-                          <select class="form-select">
+                          <select class="form-select" [(ngModel)]="profile.militaryStatus" name="Military Status">
                             <option *ngFor="let name of ['NotApplicable','Exempted','Completed','Postponed']; let i = index" [value]="i">{{name}}</option>
                           </select>
                         </div>
@@ -89,21 +90,21 @@
                         <h3 class="mt-4">Your Location</h3>
                         <div class="form-group">
                           <label>Country</label>
-                          <select class="form-select">
+                          <select class="form-select" [(ngModel)]="profile.countryId" name="countryId">
                             <option *ngFor="let i of countries" [value]="i.id">{{i.name}}</option>
                           </select>
                         </div>
 
                         <div class="form-group">
                           <label>City</label>
-                          <select class="form-select">
+                          <select class="form-select" [(ngModel)]="profile.cityId" name="cityId">
                             <option *ngFor="let i of cities" [value]="i.id">{{i.name}}</option>
                           </select>
                         </div>
 
                         <label>Would you be willing to relocate to another city or country if you find the right opportunity?</label>
                         <div class="form-check form-switch">
-                          <input class="form-check-input mt-1" type="checkbox" name="isWillingToRelocate" [(ngModel)]="isWillingToRelocate">
+                          <input class="form-check-input mt-1" type="checkbox" name="isWillingToRelocate" [(ngModel)]="profile.isWillingToRelocate">
                           <span class="fs-5">{{isWillingToRelocate ? 'Yes' : 'No'}}</span>
                         </div>
 
@@ -111,7 +112,7 @@
                         <div class="row">
                           <div class="col-12 col-md-6">
                             <div class="form-group position-relative has-icon-left mb-4">
-                              <input type="tel" class="form-control form-control-xl" placeholder="Mobile Number" />
+                              <input type="tel" class="form-control form-control-xl" placeholder="Mobile Number" [(ngModel)]="profile.mobileNumber" name="mobileNumber" />
                               <div class="form-control-icon">
                                 <i class="bi bi-phone"></i>
                               </div>
@@ -119,7 +120,7 @@
                           </div>
                           <div class="col-12 col-md-6">
                             <div class="form-group position-relative has-icon-left mb-4">
-                              <input type="tel" class="form-control form-control-xl" placeholder="Alternative Mobile Number" />
+                              <input type="tel" class="form-control form-control-xl" placeholder="Alternative Mobile Number" [(ngModel)]="profile.alternativeMobileNumber" name="aternativeMobile" />
                               <div class="form-control-icon">
                                 <i class="bi bi-phone"></i>
                               </div>
@@ -132,7 +133,7 @@
                           <div class="col"></div>
                         </div>
 
-                        <button class="btn btn-primary">Save Changes</button>
+                        <button class="btn btn-primary" (click)="update()">Save Changes</button>
                       </form>
                     </div>
                   </div>
@@ -145,7 +146,7 @@
                   <form>
                     <h4>What is your current career level?</h4>
                     <div class="form-group position-relative">
-                      <select class="form-select">
+                      <select class="form-select" [(ngModel)]="career.careerLevelId" name="careerLevelId">
                         <option *ngFor="let i of careerLevels" [value]="i.id">
                           {{i.name}}
                         </option>
@@ -154,12 +155,12 @@
 
                     <h4>What type(s) of job are you open to?</h4>
                     <div class="form-group position-relative">
-                      <p-multiSelect defaultLabel="Select your preferd job types" [options]="jobTypes" optionLabel="name" optionValue="id" [filter]="false" [showHeader]="false" selectedItemsLabel="{0} items selected"></p-multiSelect>
+                      <p-multiSelect [(ngModel)]="career.jobTypeId" name="jobTypeId" defaultLabel="Select your preferd job types" [options]="jobTypes" optionLabel="name" optionValue="id" [filter]="false" [showHeader]="false" selectedItemsLabel="{0} items selected"></p-multiSelect>
                     </div>
 
                     <h4>What are the job titles that describe what you are looking for?</h4>
                     <div class="form-group">
-                      <p-multiSelect defaultLabel="Select your preferd job titles" [options]="jobCategories" optionLabel="name" optionValue="id" selectedItemsLabel="{0} items selected"></p-multiSelect>
+                      <p-multiSelect [(ngModel)]="career.preferredJobCategories" name="preferredJobCategories" defaultLabel="Select your preferd job titles" [options]="jobCategories" optionLabel="name" optionValue="id" selectedItemsLabel="{0} items selected"></p-multiSelect>
                     </div>
 
                     <div class="row">
@@ -167,7 +168,7 @@
                       <small>Add a net salary (i.e., final amount you want after taxes and insurance)</small>
                       <div class="col-4">
                         <div class="form-group position-relative has-icon-left">
-                          <input type="number" class="form-control" placeholder="10,000">
+                          <input type="number" class="form-control" placeholder="10,000" [(ngModel)]="career.minimumSalary" name="minimumSalary">
                           <div class="form-control-icon">
                             <i class="bi bi-currency-dollar"></i>
                           </div>
@@ -176,7 +177,7 @@
                       <div class="col mt-2">dollar / month</div>
                     </div>
 
-                    <button class="btn btn-primary">Save changes</button>
+                    <button class="btn btn-primary" (click)="updateCarrerInterest()">Save changes</button>
                   </form>
 
                 </ng-template>
@@ -188,7 +189,7 @@
                     <h4>What's your current educational level?</h4>
                     <small>-If you are currently studying, select your expected degree.</small>
                     <div class="form-group">
-                      <select class="form-select">
+                      <select class="form-select" [(ngModel)]="edu_exp.educationLevelId" name="educationLevelId">
                         <option *ngFor="let i of educationLevels" [value]="i.id">
                           {{i.name}}
                         </option>
@@ -199,12 +200,12 @@
                       <h4> How many years of experience do you have?</h4>
                       <div class="col-4">
                         <div class="form-group">
-                          <input type="number" class="form-control" min="0">
+                          <input type="number" class="form-control" min="0" [(ngModel)]="edu_exp.experienceYears" name="experienceYears">
                         </div>
                       </div>
                     </div>
 
-                    <button class="btn btn-primary">Save changes</button>
+                    <button class="btn btn-primary" (click)="updateEduExp_InUI()">Save changes</button>
                   </form>
                 </ng-template>
               </li>
@@ -216,16 +217,16 @@
                     <div class="form-group mb-4">
                       <span class="p-fluid">
                         <p-autoComplete [suggestions]="skillsList" field="name" (completeMethod)="searchSkills($event)"
-                                        [multiple]="true"></p-autoComplete>
+                                        [multiple]="true" [(ngModel)]="skill" name="skillId"></p-autoComplete>
                       </span>
                     </div>
 
                     <h4>What languages do you know?</h4>
                     <div class="form-group mb-4">
-                      <p-multiSelect defaultLabel="Select at least one" [options]="languages" optionLabel="name" optionValue="id" selectedItemsLabel="{0} items selected"></p-multiSelect>
+                      <p-multiSelect [(ngModel)]="skill_lang.languageId" name="languageId" defaultLabel="Select at least one" [options]="languages" optionLabel="name" optionValue="id" selectedItemsLabel="{0} items selected"></p-multiSelect>
                     </div>
 
-                    <button class="btn btn-primary">Save changes</button>
+                    <button class="btn btn-primary" (click)="updateSkills_Lang_InUI()">Save changes</button>
                   </form>
                 </ng-template>
               </li>
@@ -236,38 +237,37 @@
                   <form>
                     <h4>Your Online Presence</h4>
                     <div class="form-group position-relative has-icon-left mb-4">
-                      <input type="text" class="form-control form-control-xl" placeholder="LinkedIn" />
+                      <input type="text" class="form-control form-control-xl" placeholder="LinkedIn" [(ngModel)]="empLink.linkedInLink" name="empLink.linkedInName"/>
                       <div class="form-control-icon">
                         <i class="bi bi-linkedin"></i>
                       </div>
                     </div>
 
                     <div class="form-group position-relative has-icon-left mb-4">
-                      <input type="text" class="form-control form-control-xl" placeholder="Facebook" />
+                      <input type="text" class="form-control form-control-xl" placeholder="Facebook" [(ngModel)]="empLink.facebookLink" name="Facebook" />
                       <div class="form-control-icon">
                         <i class="bi bi-facebook"></i>
                       </div>
                     </div>
 
                     <div class="form-group position-relative has-icon-left mb-4">
-                      <input type="text" class="form-control form-control-xl" placeholder="Twitter" />
+                      <input type="text" class="form-control form-control-xl" placeholder="Twitter"  [(ngModel)]="empLink.twitterLink" name="empLink.twitterName"/>
                       <div class="form-control-icon">
                         <i class="bi bi-twitter"></i>
                       </div>
                     </div>
 
                     <div class="form-group position-relative has-icon-left mb-4">
-                      <input type="text" class="form-control form-control-xl" placeholder="GitHub" />
+                      <input type="text" class="form-control form-control-xl" placeholder="GitHub" [(ngModel)]="empLink.githubLink" name="empLink.githubName" />
                       <div class="form-control-icon">
                         <i class="bi bi-github"></i>
                       </div>
                     </div>
 
-                    <button class="btn btn-primary">Save changes</button>
+                    <button class="btn btn-primary" (click)="updateEmpLinks()">Save changes</button>
                   </form>
                 </ng-template>
               </li>
-
               <li ngbNavItem="Upload CV">
                 <a ngbNavLink>Upload CV</a>
                 <ng-template ngbNavContent>

@@ -19,6 +19,7 @@ namespace GlassDoor.ViewModels
         public Enums.MilitaryStatus MilitaryStatus { get; set; } //************
 
         public string CityName { get; set; }
+        public int CityId { get; set; }
         public int? CountryId { get; set; }
         public string CountryName { get; set; }
         public bool IsWillingToRelocate { get; set; }
@@ -36,7 +37,8 @@ namespace GlassDoor.ViewModels
         public string CV { get; set; }
         public string Photo { get; set; }
         public string Summary { get; set; }
-       // public int? EducationLevelId { get; set; }
+        // uncomment EducationLevelId >> I need it to make Editing easy
+        public int? EducationLevelId { get; set; }
         public string EducationLevelName { get; set; }
         //public int? NationalityId { get; set; }
         public string NationalityName { get; set; }
@@ -47,5 +49,10 @@ namespace GlassDoor.ViewModels
 
         public string Email { get; set; }
         //public ICollection<Application> Applications { get; set; }
+
+        // adding nationality Id
+        public int? NationalityId { get; set; }
     }
+
+
 }

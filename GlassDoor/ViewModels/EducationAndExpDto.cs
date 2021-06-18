@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 
 namespace GlassDoor.ViewModels
 {
-    public class LanguageManager
+    public class EducationAndExpDto
     {
-        public ICollection<int> LanguageId { get; set; }
-        public int Level { get; set; }
+        public int ExperienceYears { get; set; }
+        public int EducationLevelId { get; set; }
 
     }
 }

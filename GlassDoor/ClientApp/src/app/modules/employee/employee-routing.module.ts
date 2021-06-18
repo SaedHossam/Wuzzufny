@@ -17,7 +17,7 @@ const routes: Routes = [
   { path: 'profile/:id', component: EmployeeProfileComponent },
   { path: 'profile/edit/:id', component: EditProfileComponent },
   { path: 'upload', component: UploadComponent },
-  { path: 'profile', component: ProfileComponent },
+  { path: 'profile/ok/:id', component: ProfileComponent },
   { path: 'applications', component: ApplicationsComponent },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
 
