@@ -20,6 +20,8 @@ import { ModifyJobDataComponent } from './components/modify-job-data/modify-job-
 import {RippleModule} from 'primeng/ripple';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { ProfileComponent } from './components/profile/profile.component';
+import { CompanyProfileEditComponent } from './components/company-profile-edit/company-profile-edit.component';
+import {MultiSelectModule} from 'primeng/multiselect';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,8 @@ import { ProfileComponent } from './components/profile/profile.component';
     DisplayCompanyProfileComponent,
     DisplayCompanyJobsComponent,
     ModifyJobDataComponent,
-    ProfileComponent
+    ProfileComponent,
+    CompanyProfileEditComponent,
   ],
   imports: [
     CommonModule,
@@ -44,7 +47,8 @@ import { ProfileComponent } from './components/profile/profile.component';
     EditorModule,
     SelectButtonModule,
     RippleModule,
-    InputNumberModule
+    InputNumberModule,
+    MultiSelectModule,
   ]
 })
 export class CompanyModule { }

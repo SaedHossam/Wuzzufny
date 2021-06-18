@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from "@angular/common/http/http";
+import { HttpClient } from "@angular/common/http";
 import { EnvironmentUrlService } from "./environment-url.service";
 import { CompanyType } from "../../models/company-type";
 

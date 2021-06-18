@@ -8,6 +8,7 @@ import { DisplayCompanyProfileComponent } from './components/display-company-pro
 import { DisplayCompanyJobsComponent } from './components/display-company-jobs/display-company-jobs.component';
 import { ModifyJobDataComponent } from './components/modify-job-data/modify-job-data.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { CompanyProfileEditComponent } from './components/company-profile-edit/company-profile-edit.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: 'jobs', component: DisplayCompanyJobsComponent },
   { path: 'editJob/:id', component: ModifyJobDataComponent },
   { path: 'profile', component: ProfileComponent },
+  { path: 'editprofile', component: CompanyProfileEditComponent},
   { path: '', redirectTo: 'home', pathMatch: 'full' },
 ];
 

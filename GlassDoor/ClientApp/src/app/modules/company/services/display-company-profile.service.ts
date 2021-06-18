@@ -1,3 +1,4 @@
+import { CompanyProfile } from './../models/company-profile';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Company } from 'src/app/models/company';
@@ -13,4 +14,7 @@ export class DisplayCompanyProfileService {
   public getCompanyProfile=()=>{
  return this.http.get<CompanyProfileDto>(this._envUrl.urlAddress+"/api/companies/CompanyProfile")
   }
+  public getCompanyProfileEdit=()=>{
+    return this.http.get<CompanyProfile>(this._envUrl.urlAddress+"/api/companies/CompanyProfile")
+     }
 }

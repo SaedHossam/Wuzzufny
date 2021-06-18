@@ -144,7 +144,10 @@ export class ModifyJobDataComponent implements OnInit {
   });
 
 
-  this._JobTypeService.getCompanyTypes().subscribe(jt => { this.jobTypes = jt });
+  this._JobTypeService.getCompanyTypes().subscribe(jt => { 
+    this.jobTypes = jt
+    console.log(this.jobTypes);
+  });
   this._countryService.getCountries().subscribe(c => { this.countries = c });
   this._cityService.getCities().subscribe(c => { this.cities = c });
   this._careerLevelService.getCareerLevels().subscribe(c => { this.careerLevels = c });
