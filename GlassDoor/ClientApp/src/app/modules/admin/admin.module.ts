@@ -6,7 +6,7 @@ import { HomeComponent } from './components/home/home.component';
 import { CompanyRequestsComponent } from './components/company-requests/company-requests.component';
 import { SideMenuComponent } from './components/side-menu/side-menu.component';
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap"
-
+import { ChartModule } from 'primeng/chart';
 
 @NgModule({
   declarations: [
@@ -18,7 +18,8 @@ import { NgbModule } from "@ng-bootstrap/ng-bootstrap"
     CommonModule,
     AdminRoutingModule,
     NgbModule,
-    FormsModule
+    FormsModule,
+    ChartModule
   ]
 })
 export class AdminModule { }

@@ -63,9 +63,9 @@ namespace GlassDoor.Controllers
             var user = await _userManager.GetUserAsync(HttpContext.User);
             var companyId = _unitOfWork.CompaniesManagers.Find(c => c.UserId == user.Id).First().Id;
             var company = _context.Companies
-                .Include(a=>a.Locations)
-                .Include(a=>a.CompanyLinks)
-                .Include(a=> a.CompanyIndustry)
+                .Include(a => a.Locations)
+                .Include(a => a.CompanyLinks)
+                .Include(a => a.CompanyIndustry)
                 .Include(a => a.CompanySize)
                 .Include(a => a.CompanyType)
                 .FirstOrDefault(a => a.Id == companyId);
@@ -222,6 +222,11 @@ namespace GlassDoor.Controllers
                     statusId = _context.CompanyRequestStatus
                         .First(a => a.Name == Enums.CompanyRequestStatus.Accepted.ToString()).Id;
                     messageText = "your company account is approved and you can start hiring";
+
+                    var managerUserId = company.CompanyManagers.First().UserId;
+                    var user = await _userManager.FindByIdAsync(managerUserId);
+                    user.EmailConfirmed = true;
+                    await _userManager.UpdateAsync(user);
                 }
                 else
                 {
@@ -238,7 +243,7 @@ namespace GlassDoor.Controllers
                     messageText, null, false);
                 await _emailSender.SendEmailAsync(message);
 
-                return Ok("Request Updated");
+                return Ok();
             }
             else
             {

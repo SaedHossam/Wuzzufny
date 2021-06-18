@@ -20,7 +20,7 @@ const routes: Routes = [
   { path: 'authentication', loadChildren: () => import("../app/authentication/authentication.module").then(m => m.AuthenticationModule) },
   { path: 'admin', loadChildren: () => import("./modules/admin/admin.module").then(m => m.AdminModule), canActivate: [AuthGuard, AdminGuard] },
   { path: 'company', loadChildren: () => import("./modules/company/company.module").then(m => m.CompanyModule), canActivate: [AuthGuard, CompanyGuard] },
-  { path: 'employee', loadChildren: () => import("./modules/employee/employee.module").then(m => m.EmployeeModule), /*canActivate: [AuthGuard, EmployeeGuard]*/ },
+  { path: 'employee', loadChildren: () => import("./modules/employee/employee.module").then(m => m.EmployeeModule), canActivate: [AuthGuard, EmployeeGuard] },
   { path: 'privacy', component: PrivacyComponent, canActivate: [AuthGuard] },
   { path: 'forbidden', component: ForbiddenComponent },
   { path: 'recruitment', component: RecruitmentComponent },
