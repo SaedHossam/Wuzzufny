@@ -6,17 +6,17 @@
           <div class="card-body" [routerLink]="['/employee/apply/',job.id]">
             <div class="row g-0 px-1 ps-md-4 pe-md-3 py-3 align-items-center">
               <div class="col-2">
-                <img src="../../../../../assets/Images/gallery/MANIAC.jpg" class="img-fluid shadow">
+                <img [src]="job.logo" class="img-fluid shadow" alt="company logo">
               </div>
               <div class="col-6">
                 <h4 class="card-title text-primary">{{job.companyName}}</h4>
                 <h3 class="card-text text-dark fw-bold">{{job.title}}</h3>
-                <p class="card-text badge bg-light-secondary mx-1">IT</p>
+                <p class="card-text badge bg-light-secondary mx-1">{{job.name}}</p>
                 <p class="card-text badge bg-warning mx-1"><i class="bi bi-clock"></i> {{job.jobTypeName}}</p>
               </div>
               <div class="col-4">
                 <p class="card-text w-50 w-md-25 text-end ms-auto">{{job.jobCityName}} , {{job.jobCountryName}}</p>
-                <p class="card-text w-50 w-md-25 text-end ms-auto">{{getPrintedDate(job.createdDate)}}</p>
+                <p class="card-text w-50 w-md-25 text-end ms-auto">{{job.createdDate | date}}</p>
               </div>
             </div>
           </div>
@@ -54,7 +54,7 @@
 
           <div class="input-group mb-3">
             <input type="text" [(ngModel)]="jobTitle" id="search2" name="jobTitle" class="form-control" placeholder="Search job title or company...">
-            <button type="submit" class="btn btn-outline-secondary" (click)="searchAJob()" [disabled]="!jobTitle && !loc">
+            <button type="submit" class="btn btn-outline-secondary" (click)="searchAJob()" [disabled]="!jobTitle">
               <i class="pi pi-search"></i>
             </button>
           </div>

@@ -248,7 +248,8 @@ namespace GlassDoor.Contexts
                     CompanySizeId = context.CompanySizes.First().Id,
                     CompanyTypeId = context.CompanyTypes.First().Id,
                     RequestStatusId = context.CompanyRequestStatus
-                        .First(r => r.Name == Enums.CompanyRequestStatus.Accepted.ToString()).Id
+                        .First(r => r.Name == Enums.CompanyRequestStatus.Accepted.ToString()).Id,
+                    Logo = "/Resources/company-logos/company-placeholder.png"
                 };
 
                 context.Companies.Add(company);

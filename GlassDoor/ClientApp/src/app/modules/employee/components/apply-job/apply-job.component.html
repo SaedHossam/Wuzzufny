@@ -1,92 +1,3 @@
-<!--<p-card [style]="{ 'margin-bottom': '2em'}">
-
-  <div class="JobTitleAndImg">
-    <h1>Image Path: {{jobD.logo}}</h1>
-    <h1>{{jobD.jobTitle}} - {{ jobD.jobCountry}} - {{ jobD.jobCity}} - {{jobD.name}} - {{jobD.yearFounded}} </h1>
-    <span>
-      <img />
-    </span>
-  </div>
-  <p>
-    <a style="font-size:21px;" href="#"><span class="p-button-label" style="color: #0065FF">{{jobD.companyName}} </span></a>
-    <button style="height:1.7rem;width:1.7rem;margin-left:6px" pButton pRipple type="button" icon="pi pi-check" class="p-button-rounded"></button>-->
-    <!--- <strong>{{job.company.locations}}</strong>-->
-  <!--</p>
-  <p>{{jobD.jobType}}</p>
-  <small>Posted : {{getPrintedDate(jobD.createdDate)}}</small>
-  <div>
-    <hr />
-  </div>
-  <div>
-    <button style="margin:0 10px 0 10px" pButton pRipple type="button" label="Apply" (click)="add()"></button>
-    <button pButton pRipple type="button" label="Save" class="p-button-warning"></button>
-  </div>
-</p-card>
-
-
-
-<p-card [style]="{ 'margin-bottom': '2em'}">
-  <div class="JobTitleAndImg">
-    <h3>Job Details</h3>
-    <p>
-      Experience Needed : {{jobD.experienceNeededMin}} : {{jobD.experienceNeededMax}}
-    </p>
-    <p>
-      Career Level : {{jobD.careerLevelName}}
-    </p>
-    <p>
-      Education Level : {{jobD.educationLevelName}}
-    </p>
-    <p>
-      Salary : {{jobD.salaryMin}} : {{jobD.salaryMax}} {{jobD.salaryCurrencyName}} - {{jobD.salaryCurrencyCode}} {{jobD.salaryRate}}
-    </p>
-    <p>
-      Job Categories : {{jobD.category}}
-    </p>
-    <p>Skills And Tools: </p>
-    <ul style="display:inline-block" *ngFor=" let item of jobD.skillsNames">
-      <li> {{item.name}} </li>
-    </ul>
-  </div>
-</p-card>
-
-
-
-
-<p-card [style]="{ 'margin-bottom': '2em'}">
-  <div class="JobTitleAndImg">
-    <h3>Job Description</h3>-->
-    <!--<p>
-      Duties :
-    </p>-->
-    <!--<div [innerHTML]="jobD.description">
-    </div>
-  </div>
-</p-card>
-
-
-
-<p-card [style]="{ 'margin-bottom': '2em'}">
-  <div class="JobTitleAndImg">
-    <h3>
-      Job Requirements
-    </h3>
-    <div [innerHTML]="jobD.requirements">
-    </div>
-  </div>
-</p-card>
-
-<p-card [style]="{ 'margin-bottom': '2em'}">
-  <div class="JobTitleAndImg">
-    <h3>
-      Job Responsibilities
-    </h3>
-    <div [innerHTML]="jobD.responsibilities">
-    </div>
-  </div>
-</p-card>
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
 <div class="container mt-5">
   <div class="row">
     <div class="col-8">
@@ -94,7 +5,7 @@
         <div class="card-body" [routerLink]="['/employee/apply/',job.id]">
           <div class="row px-1 ps-md-4 pe-md-3 py-3 align-items-center">
             <div class="col-2">
-              <img src="../../../../../assets/Images/gallery/MANIAC.jpg" class="img-fluid shadow">
+              <img [src]="job.logo" class="img-fluid shadow" alt="company logo">
             </div>
             <div class="col-10">
               <div class="row">
@@ -167,7 +78,7 @@
             <h4 class="card-title mb-2">Job Overview</h4>
             <hr />
             <p class="card-text">
-              <span class="fw-bold text-black-50">Posted date :</span> {{getPrintedDate(job.createdDate)}}
+              <span class="fw-bold text-black-50">Posted date :</span> {{job.createdDate | date}}
             </p>
             <p class="card-text">
               <span class="fw-bold text-black-50" *ngIf="true">Vacancy :</span> 5 (note: to be changed)
@@ -188,8 +99,8 @@
               <span class="fw-bold text-black-50">Education Level :</span> {{job.educationLevelName}}
             </p>
 
-            <button type="button" class="btn btn-primary mx-auto d-block" *ngIf="job.id %2 == 0">Apply Now</button>
-            <span class="badge bg-secondary" *ngIf="job.id %2 != 0">Applied</span>
+            <button type="button" class="btn btn-primary mx-auto d-block" *ngIf="!job.applied" (click)="apply()">Apply Now</button>
+            <span class="badge bg-secondary mx-auto d-block py-2" *ngIf="job.applied">Applied</span>
           </div>
         </div>
       </div>
@@ -199,13 +110,15 @@
           <div class="card-body">
             <h4 class="card-title mb-2">Skills And Tools</h4>
             <hr />
-            <span class="badge bg-light-secondary mx-2 py-2 mb-2" *ngFor="let skill of job.skillsNames"><i [ngClass]="{'bi-check-circle-fill text-success': job.id %2 != 0 , 'bi-exclamation-circle-fill text-secondary' : job.id %2 == 0}" class="bi me-2"></i>{{skill.name}}</span>
+            <span class="badge bg-light-secondary mx-2 py-2 mb-2" *ngFor="let skill of job.skillsNames">
+              <i [ngClass]="{'bi-check-circle-fill text-success': skill.match , 'bi-exclamation-circle-fill text-secondary' : !skill.match}" class="bi me-2"></i>{{skill.name}}
+            </span>
 
           </div>
         </div>
       </div>
 
-      <div class="card">
+      <!--<div class="card">
         <div class="card-content">
           <div class="card-body">
             <h4 class="card-title mb-2">Company Information</h4>
@@ -216,7 +129,7 @@
             <p class="card-text">d</p>
           </div>
         </div>
-      </div>
+      </div>-->
     </div>
   </div>
 </div>

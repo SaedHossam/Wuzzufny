@@ -264,6 +264,8 @@ namespace GlassDoor.Controllers
             company.RequestStatusId = _unitOfWork.CompanyRequestStatus.GetSingleOrDefault(cr =>
                 cr.Name == Enums.CompanyRequestStatus.UnderReview.ToString()).Id;
 
+            company.Logo = "/Resources/company-logos/company-placeholder.png";
+
             var companyManager = new CompanyManager() { UserId = user.Id, Title = companyForRegistration.Title, Company = company };
             _unitOfWork.CompaniesManagers.Add(companyManager);
 
