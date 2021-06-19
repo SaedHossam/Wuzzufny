@@ -14,6 +14,7 @@ import { City } from '../../models/city';
 import { Country } from 'src/app/models/country';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CompanyLinks } from 'src/app/models/company-links';
+import { EditCompanyProfileDto } from '../../models/edit-company-profile-dto';
 
 @Component({
   selector: 'app-company-profile-edit',
@@ -115,23 +116,23 @@ export class CompanyProfileEditComponent implements OnInit {
   editProfile(editForm) {
 
     var links:CompanyLinksDto[] = [{link: editForm.value.facebookLink, id:this.facebookLink.id , name:"facebook"} ,{link: editForm.value.linkedinLink,id:this.linkedinLink.id , name:"linkedin" }]
-    var companyProfileEdit: CompanyProfile ={
+    var companyProfileEdit: EditCompanyProfileDto ={
      id: this.companyProfile.id ,
      name :editForm.value.name ,
      logo:editForm.value.logo ,
      aboutUs:editForm.value.aboutUs ,
      yearFounded:editForm.value.yearFounded ,
      phone:editForm.value.phone ,
-     companyIndustry:editForm.value.companyIndustry ,
-     companyType:editForm.value.companyType ,
-     companySize:editForm.value.companySize ,
-     locations:editForm.value.locations ,
+     companyIndustryId:editForm.value.companyIndustry ,
+     companyTypeId:editForm.value.companyType ,
+     companySizeId:editForm.value.companySize ,
+     locations:editForm.value.locations.map((val, index) => ({ locationsId: val.id})) ,
      companyLinks:links ,
     requestStatusId:this.companyProfile.requestStatusId
     }
     console.log(companyProfileEdit);
-    this._editProfileService.putCompanyProfile(companyProfileEdit).subscribe(response=>{
-       console.log(response);
-    })
+    // this._editProfileService.putCompanyProfile(companyProfileEdit).subscribe(response=>{
+    //    console.log(response);
+    // })
   }
 }

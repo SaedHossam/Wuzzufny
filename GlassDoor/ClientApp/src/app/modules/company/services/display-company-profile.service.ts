@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { Company } from 'src/app/models/company';
 import { EnvironmentUrlService } from 'src/app/shared/services/environment-url.service';
 import { CompanyProfileDto } from '../models/company-profile-dto';
+import { EditCompanyProfileDto } from '../models/edit-company-profile-dto';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,7 @@ export class DisplayCompanyProfileService {
   public getCompanyProfileEdit=()=>{
     return this.http.get<CompanyProfile>(this._envUrl.urlAddress+"/api/companies/CompanyProfile")
      }
-     public putCompanyProfile=(companyProfile:CompanyProfile)=>{
-      return this.http.put<CompanyProfile>(this._envUrl.urlAddress+"/api/companies/"+companyProfile.id,companyProfile)
+     public putCompanyProfile=(companyProfile:EditCompanyProfileDto)=>{
+      return this.http.put<EditCompanyProfileDto>(this._envUrl.urlAddress+"/api/companies/"+companyProfile.id,companyProfile)
        }
 }

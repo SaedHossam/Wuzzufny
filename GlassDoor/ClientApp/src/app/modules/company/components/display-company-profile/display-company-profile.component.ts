@@ -21,8 +21,20 @@ export class DisplayCompanyProfileComponent implements OnInit {
     "phone":1001982,
     "CompanyTypeId":1,
     "companyIndustryId":1,
-    "companyIndustry":"field",
-    "companyType":"high level",
+    companyIndustry:{
+      "id":1,
+      "name":"frf",
+      "companies":null
+    },
+    companySize:{
+      "id":1,
+      "name":"frf",
+    },
+    companyType:{
+      "id":1,
+      "name":"frf",
+      "companies":null
+    },
     "cities":[],
     "companyLinks":{
        id:1,

@@ -94,7 +94,7 @@ namespace GlassDoor.Controllers
               .Include(a => a.CompanySize)
               .Include(a => a.CompanyType)
               .FirstOrDefault(a => a.Id == company.Id);
-
+       
             var newCompany = _mapper.Map<Company>(company);
             _mapper.Map<Company, Company>(newCompany, oldCompany);
 
