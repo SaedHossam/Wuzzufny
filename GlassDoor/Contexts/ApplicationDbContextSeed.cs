@@ -57,7 +57,9 @@ namespace GlassDoor.Contexts
                 UserName = Authorization.EmployeeUserName,
                 Email = Authorization.EmployeeEmail,
                 EmailConfirmed = true,
-                PhoneNumberConfirmed = true
+                PhoneNumberConfirmed = true,
+                FirstName = "first",
+                LastName = "last"
             };
 
             if (userManager.Users.All(u => u.Id != employeeUser.Id))

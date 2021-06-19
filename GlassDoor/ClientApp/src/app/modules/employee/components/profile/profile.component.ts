@@ -18,12 +18,12 @@ import { LanguagesService } from "../../../../shared/services/languages.service"
 import { Language } from "../../../../models/language";
 import { Employee } from '../../../../models/employee';
 import { UserProfileService } from '../../../../shared/services/user-profile.service';
-import { ActivatedRoute } from '@angular/router';
-import { UpdateEmplyeeDto } from '../../../../models/update-emplyee-dto';
+import { UpdateEmployeeDto } from '../../../../models/update-emplyee-dto';
 import { CarrerInterestDto } from '../../../../models/carrer-interest-dto';
 import { EducationAndExpDto } from '../../../../models/education-and-exp-dto';
 import { SkillAndLanguageDto } from '../../../../models/skill-and-language-dto';
 import { EmployeeLinks } from '../../../../models/employee-links';
+import { NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-profile',
@@ -33,8 +33,7 @@ import { EmployeeLinks } from '../../../../models/employee-links';
 export class ProfileComponent implements OnInit {
   active = 'General Info';
   //dateOfBirth: NgbDateStruct;
-  dateOfBirth: NgbDateStruct;
-  isWillingToRelocate: boolean = true;
+  //isWillingToRelocate: boolean;
 
   countries: Country[];
   cities: City[];
@@ -46,43 +45,69 @@ export class ProfileComponent implements OnInit {
   skillsList: Skills[];
   languages: Language[];
 
-  constructor(private _countryService: CountryService, private _cityService: CityService, private _careerLevelService: CareerLevelService,
-    private _JobTypeService: JobTypeService, private _jobCategoryService: JobCategoryService, private _educationLevelService: EducationLevelService,
-    private _skillService: SkillService, private _languageService: LanguagesService,
-    private service: UserProfileService, private ac: ActivatedRoute
-  ) { }
+  constructor(
+    private countryService: CountryService,
+    private cityService: CityService,
+    private careerLevelService: CareerLevelService,
+    private jobTypeService: JobTypeService,
+    private jobCategoryService: JobCategoryService,
+    private educationLevelService: EducationLevelService,
+    private skillService: SkillService,
+    private languageService: LanguagesService,
+    private userProfileService: UserProfileService,
+    private parserFormatter: NgbDateParserFormatter
+  ) {
+  }
 
-  Emp: Employee = new Employee();
-  profile: UpdateEmplyeeDto = new UpdateEmplyeeDto();
+  employee: Employee;
+  profile: UpdateEmployeeDto = new UpdateEmployeeDto();
   career: CarrerInterestDto = new CarrerInterestDto();
   edu_exp: EducationAndExpDto = new EducationAndExpDto();
   skill_lang: SkillAndLanguageDto = new SkillAndLanguageDto();
   skill: Skills[];
   empLink: EmployeeLinks = new EmployeeLinks();
 
+  birthDateStruct: any;
 
   ngOnInit(): void {
-    this._countryService.getCountries().subscribe(c => { this.countries = c });
-    this._cityService.getCities().subscribe(c => { this.cities = c });
-    this._careerLevelService.getCareerLevels().subscribe(c => { this.careerLevels = c });
-    this._JobTypeService.getCompanyTypes().subscribe(j => { this.jobTypes = j });
-    this._jobCategoryService.getjobCategories().subscribe(j => { this.jobCategories = j });
-    this._educationLevelService.getEducationLevels().subscribe(e => { this.educationLevels = e });
-    this._skillService.getSkills().subscribe(s => { this.skills = s });
-    this._languageService.getLanguages().subscribe(l => { this.languages = l });
+    this.countryService.getCountries().subscribe(c => { this.countries = c });
+    this.cityService.getCities().subscribe(c => { this.cities = c });
+    this.careerLevelService.getCareerLevels().subscribe(c => { this.careerLevels = c });
+    this.jobTypeService.getCompanyTypes().subscribe(j => { this.jobTypes = j });
+    this.jobCategoryService.getjobCategories().subscribe(j => { this.jobCategories = j });
+    this.educationLevelService.getEducationLevels().subscribe(e => { this.educationLevels = e });
+    this.skillService.getSkills().subscribe(s => { this.skills = s });
+    this.languageService.getLanguages().subscribe(l => { this.languages = l });
 
 
-    this.ac.params.subscribe(p => {
 
-      this.service.getEmpById(p.id).subscribe(a => {
-        console.log(a);
-        this.profile = a;
-        this.career = a;
-        this.edu_exp = a;
+    this.userProfileService.getMyProfileData().subscribe(a => {
+      this.profile = a;
+      this.career = a;
+      this.edu_exp = a;
+
+      this.profile.birthDate = new Date(this.profile.birthDate);
+      //this.birthDateStruct = {
+      //  day: this.profile.birthDate.getDay(),
+      //  month: this.profile.birthDate.getMonth(),
+      //  year: this.profile.birthDate.getFullYear()
+      //};
+
+      console.log(this.profile.birthDate);
+      console.log(this.profile.birthDate.getDate());
+      console.log(this.profile.birthDate.getMonth());
+      console.log(this.profile.birthDate.getFullYear());
 
 
+      this.birthDateStruct = {
+        year: this.profile.birthDate.getFullYear(),
+        month: this.profile.birthDate.getMonth() + 1,
+        day: this.profile.birthDate.getDate()
+      }
+    },
+      (error) => {
+        console.log(error);
       });
-    });
   }
 
 
@@ -91,28 +116,49 @@ export class ProfileComponent implements OnInit {
   }
 
   update() {
-
-    //this.profile.birthDate = new Date(this.profile.birthDate.year, this.profile.birthDate.month-1, this.profile.birthDate.day-1, 0, 0, 0, 0);
+    this.profile.birthDate = new Date(this.birthDateStruct.year, this.birthDateStruct.month - 1, this.birthDateStruct.day + 1);
     console.log("prof", this.profile);
-    this.service.editEmpProfile(this.profile).subscribe(a => {
-      this.Emp = a;
-      console.log("a", a);
-      console.log("prof", this.profile);
-
+    this.userProfileService.editEmpProfile(this.profile).subscribe(a => {
+      this.employee = a;
     })
   }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   updateCarrerInterest() {
-    this.service.editCareerInterest_InUI(this.career).subscribe(a => {
-      this.Emp = a;
+    this.userProfileService.editCareerInterest_InUI(this.career).subscribe(a => {
+      this.employee = a;
     })
   }
 
   updateEduExp_InUI() {
     console.log(this.edu_exp)
-    this.service.editEduExp_InUI(this.edu_exp).subscribe(a => {
+    this.userProfileService.editEduExp_InUI(this.edu_exp).subscribe(a => {
       console.log(a)
-      this.Emp = a;
+      this.employee = a;
       console.log(this.edu_exp)
 
     })
@@ -120,18 +166,16 @@ export class ProfileComponent implements OnInit {
 
   updateSkills_Lang_InUI() {
     this.skill_lang.skillId = this.skill.map((val, index) => (val.id));
-    this.service.editSkill_Lang_InUI(this.skill_lang).subscribe(a => {
-      this.Emp = a;
+    this.userProfileService.editSkill_Lang_InUI(this.skill_lang).subscribe(a => {
+      this.employee = a;
     })
   }
 
   updateEmpLinks() {
     console.log(this.empLink);
-    this.service.getEmpLink(this.empLink).subscribe(o => {
-      this.Emp = o;
+    this.userProfileService.getEmpLink(this.empLink).subscribe(o => {
+      this.employee = o;
       console.log(this.empLink);
-
-
     })
   }
 }

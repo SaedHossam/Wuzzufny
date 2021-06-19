@@ -6,7 +6,7 @@ import { EducationAndExpDto } from '../../models/education-and-exp-dto';
 import { Employee } from '../../models/employee';
 import { EmployeeLinks } from '../../models/employee-links';
 import { SkillAndLanguageDto } from '../../models/skill-and-language-dto';
-import { UpdateEmplyeeDto } from '../../models/update-emplyee-dto';
+import { UpdateEmployeeDto } from '../../models/update-emplyee-dto';
 import { EmployeeDto } from '../../modules/company/models/employee-dto';
 import { EnvironmentUrlService } from './environment-url.service';
 
@@ -21,7 +21,11 @@ export class UserProfileService {
     return this.http.get<Employee>(this._envUrl.urlAddress + '/api/Employees/' + id);
   }
 
-  public editEmpProfile(empData: UpdateEmplyeeDto) {
+  public getMyProfileData() {
+    return this.http.get<Employee>(this._envUrl.urlAddress + '/api/Employees/me');
+  }
+
+  public editEmpProfile(empData: UpdateEmployeeDto) {
     return this.http.put(this._envUrl.urlAddress + '/api/Employees/UpdateEmployee/', empData);
   }
 
@@ -41,11 +45,4 @@ export class UserProfileService {
   public getEmpLink(empData: EmployeeLinks) {
     return this.http.put(this._envUrl.urlAddress + '/api/Employees/EmployeeLinks/', empData);
   }
-
-  
-
-
-
-  
-
 }

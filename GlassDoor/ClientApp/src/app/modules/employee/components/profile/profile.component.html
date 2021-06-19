@@ -49,12 +49,13 @@
                             <div class="form-group">
                               <span>Birth Date</span>
                               <div class="input-group">
-                                <!--<input class="form-control" placeholder="yyyy-mm-dd" [startDate]="{year: 1990}" [endDate]="{year: 2029}"
-                                name="dp" [(ngModel)]="profile.birthDate" ngbDatepicker #d="ngbDatepicker" >-->
-                                <p-calendar dataType="string" [(ngModel)]="profile.birthDate" name="birthDate"></p-calendar>
+                                <input class="form-control" placeholder="yyyy-mm-dd" [startDate]="{year: 1990}" [endDate]="{year: 2029}"
+                                name="dp" [(ngModel)]="birthDateStruct" ngbDatepicker #d="ngbDatepicker" >
+
+                                <!--<p-calendar dataType="string" [(ngModel)]="profile.birthDate" name="birthDate" dateFormat="mm/dd/yy"></p-calendar>-->
 
                                 <div class="input-group-append">
-                                  <!--<button class="btn btn-outline-secondary" (click)="d.toggle()" type="button"><i class="bi bi-calendar3"></i></button>-->
+                                  <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button"><i class="bi bi-calendar3"></i></button>
                                 </div>
                               </div>
                             </div>
@@ -65,10 +66,10 @@
                           <span class="d-block">Gender</span>
                           <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic" [(ngModel)]="profile.gender">
                             <label ngbButtonLabel class="btn-light">
-                              <input ngbButton type="radio" [value]="1"> Male
+                              <input ngbButton type="radio" [value]="0"> Male
                             </label>
                             <label ngbButtonLabel class="btn-light">
-                              <input ngbButton type="radio" value="2"> Female
+                              <input ngbButton type="radio" [value]="1"> Female
                             </label>
                           </div>
                         </div>
@@ -105,7 +106,7 @@
                         <label>Would you be willing to relocate to another city or country if you find the right opportunity?</label>
                         <div class="form-check form-switch">
                           <input class="form-check-input mt-1" type="checkbox" name="isWillingToRelocate" [(ngModel)]="profile.isWillingToRelocate">
-                          <span class="fs-5">{{isWillingToRelocate ? 'Yes' : 'No'}}</span>
+                          <span class="fs-5">{{profile.isWillingToRelocate ? 'Yes' : 'No'}}</span>
                         </div>
 
                         <h3 class="mt-4">Your Contact Info</h3>
@@ -237,7 +238,7 @@
                   <form>
                     <h4>Your Online Presence</h4>
                     <div class="form-group position-relative has-icon-left mb-4">
-                      <input type="text" class="form-control form-control-xl" placeholder="LinkedIn" [(ngModel)]="empLink.linkedInLink" name="empLink.linkedInName"/>
+                      <input type="text" class="form-control form-control-xl" placeholder="LinkedIn" [(ngModel)]="empLink.linkedInLink" name="empLink.linkedInName" />
                       <div class="form-control-icon">
                         <i class="bi bi-linkedin"></i>
                       </div>
@@ -251,7 +252,7 @@
                     </div>
 
                     <div class="form-group position-relative has-icon-left mb-4">
-                      <input type="text" class="form-control form-control-xl" placeholder="Twitter"  [(ngModel)]="empLink.twitterLink" name="empLink.twitterName"/>
+                      <input type="text" class="form-control form-control-xl" placeholder="Twitter" [(ngModel)]="empLink.twitterLink" name="empLink.twitterName" />
                       <div class="form-control-icon">
                         <i class="bi bi-twitter"></i>
                       </div>

@@ -9,7 +9,7 @@ namespace DAL.Models
         public int Id { get; set; }
 
         public string UserId { get; set; }
-
+        
         public DateTime BirthDate { get; set; }
 
         public Enums.Gender Gender { get; set; }

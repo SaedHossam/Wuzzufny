@@ -57,6 +57,25 @@ namespace GlassDoor.Controllers
 
         }
 
+        [Authorize(Roles = "Employee")]
+        [HttpGet("me")]
+        public async Task<ActionResult<Employee>> GetMyProfileData()
+        {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            var employee = _unitOfWork.Employees.Find(e => e.UserId == user.Id).FirstOrDefault();
+
+            if (employee == null)
+            {
+                return BadRequest("user is not employee");
+            }
+
+            employee = _unitOfWork.Employees.GetEmployeeDataById(employee.Id);
+
+            //var employee = _unitOfWork.Employees.GetEmployeeDataById(id);
+
+            return Ok(_mapper.Map<EmployeeDto>(employee));
+        }
+
         // PUT: api/Employees/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [Authorize(Roles = "Employee")]
@@ -67,7 +86,7 @@ namespace GlassDoor.Controllers
             var emp = _unitOfWork.Employees.Find(e => e.UserId == user.Id).FirstOrDefault();
             var employee = _unitOfWork.Employees.GetEmpData(emp.Id);
             employee.AlternativeMobileNumber = updatedEmp.AlternativeMobileNumber;
-            employee.BirthDate = updatedEmp.BirthDate;
+            employee.BirthDate = updatedEmp.BirthDate.Date;
             employee.CountryId = updatedEmp.CountryId;
             employee.User.FirstName = updatedEmp.UserFirstName;
             employee.User.LastName = updatedEmp.UserLastName;
@@ -78,6 +97,7 @@ namespace GlassDoor.Controllers
             employee.CityId = updatedEmp.CityId;
             employee.MobileNumber = updatedEmp.MobileNumber;
             employee.NationalityId = updatedEmp.NationalityId;
+            employee.MilitaryStatus = updatedEmp.MilitaryStatus;
             _unitOfWork.SaveChanges();
             return NoContent();
 
@@ -352,7 +372,7 @@ namespace GlassDoor.Controllers
                 {
                     empLink.Link = item.FacebookLink;
                 }
-                
+
                 var empLink2 = employee.EmployeeLinks.FirstOrDefault(e => e.Name == item.LinkedInName);
                 if (empLink2 == null)
                 {
@@ -362,7 +382,7 @@ namespace GlassDoor.Controllers
                 {
                     empLink2.Link = item.LinkedInLink;
                 }
-                
+
                 var empLink3 = employee.EmployeeLinks.FirstOrDefault(e => e.Name == item.TwitterName);
                 if (empLink3 == null)
                 {
@@ -371,8 +391,8 @@ namespace GlassDoor.Controllers
                 else
                 {
                     empLink3.Link = item.TwitterLink;
-                } 
-                
+                }
+
                 var empLink4 = employee.EmployeeLinks.FirstOrDefault(e => e.Name == item.GithubName);
                 if (empLink4 == null)
                 {
