@@ -45,63 +45,63 @@ namespace GlassDoor.Controllers
             return skill;
         }
 
-        // PUT: api/Skills/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public IActionResult PutSkill(int id, SkillsDto skill)
-        {
-            if (id != skill.Id)
-            {
-                return BadRequest();
-            }
+        //// PUT: api/Skills/5
+        //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        //[HttpPut("{id}")]
+        //public IActionResult PutSkill(int id, SkillsDto skill)
+        //{
+        //    if (id != skill.Id)
+        //    {
+        //        return BadRequest();
+        //    }
 
-            _unitOfWork.Skills.Update(_mapper.Map<Skill>(skill));
+        //    _unitOfWork.Skills.Update(_mapper.Map<Skill>(skill));
 
-            try
-            {
-                _unitOfWork.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!SkillExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+        //    try
+        //    {
+        //        _unitOfWork.SaveChanges();
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!SkillExists(id))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
 
-        // POST: api/Skills
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public ActionResult<Skill> PostSkill(SkillsDto skill)
-        {
-            _unitOfWork.Skills.Add(_mapper.Map<Skill>(skill));
-            _unitOfWork.SaveChanges();
+        //// POST: api/Skills
+        //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        //[HttpPost]
+        //public ActionResult<Skill> PostSkill(SkillsDto skill)
+        //{
+        //    _unitOfWork.Skills.Add(_mapper.Map<Skill>(skill));
+        //    _unitOfWork.SaveChanges();
 
-            return CreatedAtAction("GetSkill", new { id = skill.Id }, skill);
-        }
+        //    return CreatedAtAction("GetSkill", new { id = skill.Id }, skill);
+        //}
 
-        // DELETE: api/Skills/5
-        [HttpDelete("{id}")]
-        public IActionResult DeleteSkill(int id)
-        {
-            var skill = _unitOfWork.Skills.Get(id);
-            if (skill == null)
-            {
-                return NotFound();
-            }
+        //// DELETE: api/Skills/5
+        //[HttpDelete("{id}")]
+        //public IActionResult DeleteSkill(int id)
+        //{
+        //    var skill = _unitOfWork.Skills.Get(id);
+        //    if (skill == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            _unitOfWork.Skills.Remove(skill);
-            _unitOfWork.SaveChanges();
+        //    _unitOfWork.Skills.Remove(skill);
+        //    _unitOfWork.SaveChanges();
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
 
         private bool SkillExists(int id)
         {

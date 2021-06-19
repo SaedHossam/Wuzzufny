@@ -27,16 +27,16 @@ namespace GlassDoor.Controllers
 
         // GET: api/Countries
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<CountryDto>>> GetCountries()
+        public ActionResult<IEnumerable<CountryDto>> GetCountries()
         {
             return Ok(_mapper.Map<IEnumerable<CountryDto>>(_unitOfWork.Country.GetAll()));
         }
 
         // GET: api/Countries/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<CountryDto>> GetCountry(int id)
+        public ActionResult<CountryDto> GetCountry(int id)
         {
-            var country = _mapper.Map <CountryDto>(_unitOfWork.Country.Get(id));
+            var country = _mapper.Map<CountryDto>(_unitOfWork.Country.Get(id));
             var cities = _mapper.Map<IEnumerable<CityDto>>(_unitOfWork.City.GetAll().Where(c => c.CountryId == id).ToList());
             if (country == null)
             {
@@ -48,61 +48,61 @@ namespace GlassDoor.Controllers
 
         //// PUT: api/Countries/5
         //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutCountry(int id, Country country)
-        {
-            if (id != country.Id)
-            {
-                return BadRequest();
-            }
+        //[HttpPut("{id}")]
+        //public async Task<IActionResult> PutCountry(int id, Country country)
+        //{
+        //    if (id != country.Id)
+        //    {
+        //        return BadRequest();
+        //    }
 
-            _unitOfWork.Country.Update(country);
+        //    _unitOfWork.Country.Update(country);
 
-            try
-            {
-                _unitOfWork.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CountryExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+        //    try
+        //    {
+        //        _unitOfWork.SaveChanges();
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!CountryExists(id))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
 
-        //// POST: api/Countries
-        //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<Country>> PostCountry(Country country)
-        {
-            _unitOfWork.Country.Add(country);
-            _unitOfWork.SaveChanges();
+        ////// POST: api/Countries
+        ////// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        //[HttpPost]
+        //public async Task<ActionResult<Country>> PostCountry(Country country)
+        //{
+        //    _unitOfWork.Country.Add(country);
+        //    _unitOfWork.SaveChanges();
 
-            return CreatedAtAction("GetCountry", new { id = country.Id }, country);
-        }
+        //    return CreatedAtAction("GetCountry", new { id = country.Id }, country);
+        //}
 
-        // DELETE: api/Countries/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCountry(int id)
-        {
-            var country = _unitOfWork.Country.Get(id);
-            if (country == null)
-            {
-                return NotFound();
-            }
+        //// DELETE: api/Countries/5
+        //[HttpDelete("{id}")]
+        //public async Task<IActionResult> DeleteCountry(int id)
+        //{
+        //    var country = _unitOfWork.Country.Get(id);
+        //    if (country == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            _unitOfWork.Country.Remove(country);
-            _unitOfWork.SaveChanges();
+        //    _unitOfWork.Country.Remove(country);
+        //    _unitOfWork.SaveChanges();
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
 
         private bool CountryExists(int id)
         {

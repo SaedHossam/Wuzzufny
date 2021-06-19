@@ -27,7 +27,7 @@ namespace GlassDoor.Controllers
 
         // GET: api/CompanyIndustries
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<CompanyIndustryDto>>> GetCompanyIndustries()
+        public ActionResult<IEnumerable<CompanyIndustryDto>> GetCompanyIndustries()
         {
             return Ok(_mapper.Map<IEnumerable<CompanyIndustryDto>>(_unitOfWork.CompanyIndustry.GetAll()));
         }
@@ -35,7 +35,7 @@ namespace GlassDoor.Controllers
         // ToDo change return type(use viewModels)
         // GET: api/CompanyIndustries/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<CompanyIndustry>> GetCompanyIndustry(int id)
+        public ActionResult<CompanyIndustry> GetCompanyIndustry(int id)
         {
             var companyIndustry = _unitOfWork.CompanyIndustry.Get(id);
 
@@ -47,63 +47,63 @@ namespace GlassDoor.Controllers
             return companyIndustry;
         }
 
-        // PUT: api/CompanyIndustries/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutCompanyIndustry(int id, CompanyIndustry companyIndustry)
-        {
-            if (id != companyIndustry.Id)
-            {
-                return BadRequest();
-            }
+        //// PUT: api/CompanyIndustries/5
+        //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        //[HttpPut("{id}")]
+        //public async Task<IActionResult> PutCompanyIndustry(int id, CompanyIndustry companyIndustry)
+        //{
+        //    if (id != companyIndustry.Id)
+        //    {
+        //        return BadRequest();
+        //    }
 
-            _unitOfWork.CompanyIndustry.Update(companyIndustry);
+        //    _unitOfWork.CompanyIndustry.Update(companyIndustry);
 
-            try
-            {
-                _unitOfWork.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CompanyIndustryExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+        //    try
+        //    {
+        //        _unitOfWork.SaveChanges();
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!CompanyIndustryExists(id))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
 
-        // POST: api/CompanyIndustries
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<CompanyIndustry>> PostCompanyIndustry(CompanyIndustry companyIndustry)
-        {
-            _unitOfWork.CompanyIndustry.Add(companyIndustry);
-            _unitOfWork.SaveChanges();
+        //// POST: api/CompanyIndustries
+        //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        //[HttpPost]
+        //public async Task<ActionResult<CompanyIndustry>> PostCompanyIndustry(CompanyIndustry companyIndustry)
+        //{
+        //    _unitOfWork.CompanyIndustry.Add(companyIndustry);
+        //    _unitOfWork.SaveChanges();
 
-            return CreatedAtAction("GetCompanyIndustry", new { id = companyIndustry.Id }, companyIndustry);
-        }
+        //    return CreatedAtAction("GetCompanyIndustry", new { id = companyIndustry.Id }, companyIndustry);
+        //}
 
-        // DELETE: api/CompanyIndustries/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCompanyIndustry(int id)
-        {
-            var companyIndustry = _unitOfWork.CompanyIndustry.Get(id);
-            if (companyIndustry == null)
-            {
-                return NotFound();
-            }
+        //// DELETE: api/CompanyIndustries/5
+        //[HttpDelete("{id}")]
+        //public async Task<IActionResult> DeleteCompanyIndustry(int id)
+        //{
+        //    var companyIndustry = _unitOfWork.CompanyIndustry.Get(id);
+        //    if (companyIndustry == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            _unitOfWork.CompanyIndustry.Remove(companyIndustry);
-            _unitOfWork.SaveChanges();
+        //    _unitOfWork.CompanyIndustry.Remove(companyIndustry);
+        //    _unitOfWork.SaveChanges();
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
 
         private bool CompanyIndustryExists(int id)
         {

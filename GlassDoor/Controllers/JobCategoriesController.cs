@@ -46,63 +46,63 @@ namespace GlassDoor.Controllers
             return jobCategory;
         }
 
-        // PUT: api/JobCategories/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public IActionResult PutJobCategory(int id, JobCategory jobCategory)
-        {
-            if (id != jobCategory.Id)
-            {
-                return BadRequest();
-            }
+        //// PUT: api/JobCategories/5
+        //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        //[HttpPut("{id}")]
+        //public IActionResult PutJobCategory(int id, JobCategory jobCategory)
+        //{
+        //    if (id != jobCategory.Id)
+        //    {
+        //        return BadRequest();
+        //    }
 
-            _unitOfWork.JobCategory.Update(jobCategory);
+        //    _unitOfWork.JobCategory.Update(jobCategory);
 
-            try
-            {
-                _unitOfWork.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!JobCategoryExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+        //    try
+        //    {
+        //        _unitOfWork.SaveChanges();
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!JobCategoryExists(id))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
 
-        // POST: api/JobCategories
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public ActionResult<JobCategory> PostJobCategory(JobCategory jobCategory)
-        {
-            _unitOfWork.JobCategory.Add(jobCategory);
-            _unitOfWork.SaveChanges();
+        //// POST: api/JobCategories
+        //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        //[HttpPost]
+        //public ActionResult<JobCategory> PostJobCategory(JobCategory jobCategory)
+        //{
+        //    _unitOfWork.JobCategory.Add(jobCategory);
+        //    _unitOfWork.SaveChanges();
 
-            return CreatedAtAction("GetJobCategory", new { id = jobCategory.Id }, jobCategory);
-        }
+        //    return CreatedAtAction("GetJobCategory", new { id = jobCategory.Id }, jobCategory);
+        //}
 
-        // DELETE: api/JobCategories/5
-        [HttpDelete("{id}")]
-        public IActionResult DeleteJobCategory(int id)
-        {
-            var jobCategory = _unitOfWork.JobCategory.Get(id);
-            if (jobCategory == null)
-            {
-                return NotFound();
-            }
+        //// DELETE: api/JobCategories/5
+        //[HttpDelete("{id}")]
+        //public IActionResult DeleteJobCategory(int id)
+        //{
+        //    var jobCategory = _unitOfWork.JobCategory.Get(id);
+        //    if (jobCategory == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            _unitOfWork.JobCategory.Remove(jobCategory);
-            _unitOfWork.SaveChanges();
+        //    _unitOfWork.JobCategory.Remove(jobCategory);
+        //    _unitOfWork.SaveChanges();
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
 
         private bool JobCategoryExists(int id)
         {

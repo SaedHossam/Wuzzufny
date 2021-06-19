@@ -24,4 +24,9 @@ namespace GlassDoor.ViewModels
         public JobStatisticsViewModel JobStatistics { get; set; }
 
     }
+    public class ArchiveApplicationDto
+    {
+        public int Id { get; set; }
+        public bool Archived { get; set; }
+    }
 }
