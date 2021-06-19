@@ -22,6 +22,8 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { ProfileComponent } from './components/profile/profile.component';
 import { CompanyProfileEditComponent } from './components/company-profile-edit/company-profile-edit.component';
 import {MultiSelectModule} from 'primeng/multiselect';
+import {FileUploadModule} from 'primeng/fileupload';
+
 
 @NgModule({
   declarations: [
@@ -49,6 +51,7 @@ import {MultiSelectModule} from 'primeng/multiselect';
     RippleModule,
     InputNumberModule,
     MultiSelectModule,
+    FileUploadModule
   ]
 })
 export class CompanyModule { }

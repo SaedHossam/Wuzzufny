@@ -44,6 +44,7 @@ export class ModifyJobDataComponent implements OnInit {
   jobCategories: JobCategory[];
   skills: Skills[];
 
+
   postJobDto: PostJobDto = {
     title: null,
     jobTypeId: null,
@@ -162,25 +163,51 @@ search(event) {
   this.results = this.skills.filter(c => c.name.startsWith(event.query));
 }
 public postjob(postjobform) {
-  this.postJobDto.title = postjobform.value.title;
-  this.postJobDto.cityId = postjobform.value.cityId;
-  this.postJobDto.jobTypeId = postjobform.value.jobTypeId;
-  this.postJobDto.countryId = postjobform.value.countryId;
-  this.postJobDto.numberOfVacancies = postjobform.value.numberOfVacancies;
-  this.postJobDto.jobDetails.experienceNeededMin = postjobform.value.experienceNeededMin;
-  this.postJobDto.jobDetails.experienceNeededMax = postjobform.value.experienceNeededMax;
-  this.postJobDto.jobDetails.careerLevelId = postjobform.value.careerLevelId;
-  this.postJobDto.jobDetails.educationLevelId = postjobform.value.educationLevelId;
-  this.postJobDto.jobDetails.salaryMin = postjobform.value.salaryMin;
-  this.postJobDto.jobDetails.salaryMax = postjobform.value.salaryMax;
-  this.postJobDto.jobDetails.salaryCurrencyId = postjobform.value.salaryCurrencyId;
-  this.postJobDto.jobDetails.salaryRateId = postjobform.value.salaryRateId;
-  this.postJobDto.jobDetails.jobCategoryId = postjobform.value.jobCategoryId;
-  this.postJobDto.jobDetails.description = postjobform.value.description;
-  this.postJobDto.jobDetails.requirements = postjobform.value.requirements;
-  this.postJobDto.jobDetails.responsibilities = postjobform.value.responsibilities;
-  this.postJobDto.skills = postjobform.value.skills.map((val, index) => ({ SkillsId: val.id }));
-  this._editJobService.editJob(this.postJobDto).subscribe(a => {
+   var postJob:PostJobDto ={
+    title: null,
+    jobTypeId: null,
+    cityId: null,
+    countryId: null,
+    numberOfVacancies: null,
+
+    jobDetails: {
+      experienceNeededMin: null,
+      experienceNeededMax: null,
+      careerLevelId: null,
+      educationLevelId: null,
+      salaryMin: null,
+      salaryMax: null,
+      salaryCurrencyId: null,
+      salaryRateId: null,
+      jobCategoryId: null,
+      description: null,
+      requirements: null,
+      responsibilities: null,
+    },
+    skills: null
+   };
+   postJob.id=this.postJobDto.id;
+   postJob.cityId = postjobform.value.cityId;
+   postJob.title = postjobform.value.title;
+    postJob.jobTypeId = postjobform.value.jobTypeId;
+    postJob.countryId = postjobform.value.countryId;
+    postJob.numberOfVacancies = postjobform.value.numberOfVacancies;
+    postJob.jobDetails.experienceNeededMin = postjobform.value.experienceNeededMin;
+    postJob.jobDetails.experienceNeededMax = postjobform.value.experienceNeededMax;
+    postJob.jobDetails.careerLevelId = postjobform.value.careerLevelId;
+    postJob.jobDetails.educationLevelId = postjobform.value.educationLevelId;
+    postJob.jobDetails.salaryMin = postjobform.value.salaryMin;
+    postJob.jobDetails.salaryMax = postjobform.value.salaryMax;
+    postJob.jobDetails.salaryCurrencyId = postjobform.value.salaryCurrencyId;
+    postJob.jobDetails.salaryRateId = postjobform.value.salaryRateId;
+    postJob.jobDetails.jobCategoryId = postjobform.value.jobCategoryId;
+    postJob.jobDetails.description = postjobform.value.description;
+    postJob.jobDetails.requirements = postjobform.value.requirements;
+    postJob.jobDetails.responsibilities = postjobform.value.responsibilities;
+    postJob.skills = postjobform.value.skills.map((val, index) => ({ SkillsId: val.id }));
+  console.log(postJob);
+
+  this._editJobService.editJob(postJob).subscribe(a => {
     console.log(a);
   })
 

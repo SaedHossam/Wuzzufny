@@ -15,6 +15,8 @@ export interface CompanyProfile {
     companySize:CompanySize,
     locations :Cities[],
     companyLinks:CompanyLinksDto[],
-    id?:number
+    id?:number,
+    requestStatusId?:number
+
 }
 

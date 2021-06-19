@@ -18,6 +18,7 @@ namespace GlassDoor.ViewModels
         public CompanyIndustryDto CompanyIndustry { get; set; }
         public CompanySizeDto CompanySize { get; set; }
         public ICollection<CityDto> Locations { get; set; }
+        public int? requestStatusId { get; set; }
         public ICollection<CompanyLinksDto> CompanyLinks { get; set; }
     }
 }

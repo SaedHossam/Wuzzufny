@@ -80,14 +80,23 @@ namespace GlassDoor.Controllers
         // PUT: api/Companies/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCompany(int id, Company company)
+        public async Task<IActionResult> PutCompanyProfile(int id, CompanyProfileDto company)
         {
             if (id != company.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(company).State = EntityState.Modified;
+            var oldCompany = _context.Companies
+              .Include(a => a.Locations)
+              .Include(a => a.CompanyLinks)
+              .Include(a => a.CompanyIndustry)
+              .Include(a => a.CompanySize)
+              .Include(a => a.CompanyType)
+              .FirstOrDefault(a => a.Id == company.Id);
+
+            var newCompany = _mapper.Map<Company>(company);
+            _mapper.Map<Company, Company>(newCompany, oldCompany);
 
             try
             {

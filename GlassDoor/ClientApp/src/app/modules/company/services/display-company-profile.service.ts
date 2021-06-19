@@ -17,4 +17,7 @@ export class DisplayCompanyProfileService {
   public getCompanyProfileEdit=()=>{
     return this.http.get<CompanyProfile>(this._envUrl.urlAddress+"/api/companies/CompanyProfile")
      }
+     public putCompanyProfile=(companyProfile:CompanyProfile)=>{
+      return this.http.put<CompanyProfile>(this._envUrl.urlAddress+"/api/companies/"+companyProfile.id,companyProfile)
+       }
 }
