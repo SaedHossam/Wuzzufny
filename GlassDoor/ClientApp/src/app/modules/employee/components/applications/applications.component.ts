@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Application } from '../../../../models/application';
+import { ApplicationService } from '../../../../shared/services/application.service';
 
 @Component({
   selector: 'app-applications',
@@ -7,9 +9,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ApplicationsComponent implements OnInit {
 
-  constructor() { }
-
+  constructor(public applicationService: ApplicationService) { }
+  applications: Application[];
   ngOnInit(): void {
+    this.applicationService.getApplications().subscribe(a => {
+      this.applications = a;
+    })
   }
 
+  withdrawApplication(applicationId: number) {
+    this.applicationService.withdrawApplication(applicationId).subscribe(a => {
+      this.ngOnInit();
+    });
+  }
+
+  archiveApplication(applicationId: number) {
+    this.applicationService.archiveApplication(applicationId).subscribe(a => {
+      this.ngOnInit();
+    });
+  }
 }

@@ -98,6 +98,16 @@ namespace GlassDoor.ViewModels
             CreateMap<PostJobDto, Job>().ReverseMap();
 
             CreateMap<Job, Job>();
+
+            CreateMap<JobStatisticsViewModel, Job>()
+                .ForMember(a => a.TotalApplications, map => map.MapFrom(s => s.TotalApplications))
+                .ForMember(a => a.TotalClicks, map => map.MapFrom(s => s.TotalClicks))
+                .ForMember(a => a.RejectedApplications, map => map.MapFrom(s => s.RejectedApplications))
+                .ForMember(a => a.AcceptedApplications, map => map.MapFrom(s => s.HiredApplications))
+                .ForMember(a => a.ViewedApplications, map => map.MapFrom(s => s.ViewedApplications))
+                //.ForMember(a => a.InConsidrationApplications, map => map.MapFrom(s => s.InConsidrationApplications))
+                ;
+
             CreateMap<Application, ApplicationDto>()
                 .ForMember(a => a.JobId, map => map.MapFrom(s => s.JobId))
                 .ForMember(a => a.CompanyLogo, map => map.MapFrom(s => s.Job.Company.Logo))
@@ -106,9 +116,21 @@ namespace GlassDoor.ViewModels
                 .ForMember(a => a.CompanyId, map => map.MapFrom(s => s.Job.Company.Id))
                 .ForMember(a => a.City, map => map.MapFrom(s => s.Job.City.Name))
                 .ForMember(a => a.Country, map => map.MapFrom(s => s.Job.Country.Name))
-                .ForMember(a => a.ApplyDate, map => map.MapFrom(s => s.ApplyDate));
+                .ForMember(a => a.ApplyDate, map => map.MapFrom(s => s.ApplyDate))
+                .ForMember(a => a.PostDate, map => map.MapFrom(s => s.Job.CreatedDate))
+                .ForMember(a => a.JobType, map => map.MapFrom(s => s.Job.JobType.Name))
+                .ForMember(a => a.Industry, map => map.MapFrom(s => s.Job.Company.CompanyIndustry.Name))
+                .ForMember(a => a.Vacancies, map => map.MapFrom(s => s.Job.NumberOfVacancies))
+                .ForPath(a => a.JobStatistics.ViewedApplications, map => map.MapFrom(s => s.Job.ViewedApplications))
+                .ForPath(a => a.JobStatistics.TotalClicks, map => map.MapFrom(s => s.Job.TotalClicks))
+                .ForPath(a => a.JobStatistics.RejectedApplications, map => map.MapFrom(s => s.Job.RejectedApplications))
+                .ForPath(a => a.JobStatistics.HiredApplications, map => map.MapFrom(s => s.Job.AcceptedApplications))
+                .ForPath(a => a.JobStatistics.TotalApplications, map => map.MapFrom(s => s.Job.TotalApplications))
+                //.ForMember(a => a.JobStatistics.InConsidrationApplications, map => map.MapFrom(s => s.Job.InConsidrationApplications))
+                ;
             CreateMap<ApplicationDto, Application>()
                 .ForMember(a => a.JobId, map => map.MapFrom(s => s.JobId));
+
 
 
             //Employee mapping
@@ -160,27 +182,7 @@ namespace GlassDoor.ViewModels
                 //.ForMember(d =>d.Email, map => map.MapFrom(s => s.Email))
                 .ReverseMap();
 
-            //Update Employee Profile
-            //CreateMap<Employee, UpdateEmployeeDto>()
-            //    .ForMember(d => d.AlternativeMobileNumber, map => map.MapFrom(s => s.AlternativeMobileNumber))
-            //    .ForMember(d => d.CareerLevelId, map => map.MapFrom(s => s.CareerLevel.Id))
-            //    .ForMember(d => d.CityId, map => map.MapFrom(s => s.City.Id))
-            //    .ForMember(d => d.CountryId, map => map.MapFrom(s => s.Country.Id))
-            //    //.ForMember(d => d.CV, map => map.MapFrom(s => s.CV))
-            //    .ForMember(d => d.EducationLevelId, map => map.MapFrom(s => s.EducationLevel.Id))
-            //    .ForMember(d => d.ExperienceYears, map => map.MapFrom(s => s.ExperienceYears))
-            //    //.ForMember(d => d.Id, map => map.MapFrom(s => s.Id))
-            //    .ForMember(d => d.IsWillingToRelocate, map => map.MapFrom(s => s.IsWillingToRelocate))
-            //    .ForMember(d => d.MilitaryStatus, map => map.MapFrom(s => s.MilitaryStatus))
-            //    .ForMember(d => d.MobileNumber, map => map.MapFrom(s => s.MobileNumber))
-            //    //.ForMember(d => d.Photo, map => map.MapFrom(s => s.Photo))
-            //    //.ForMember(d => d.PreferredJobCategories, map => map.MapFrom(s => s.))
-            //    .ForMember(d => d.Summary, map => map.MapFrom(s => s.Summary))
-            //    .ForMember(d => d.UserFirstName, map => map.MapFrom(s => s.User.FirstName))
-            //    .ForMember(d => d.UserLastName, map => map.MapFrom(s => s.User.LastName))
-            //    .ForMember(d => d.NationalityId, map => map.MapFrom(s => s.NationalityId))
-            //    .ForMember(d => d.Gender, map => map.MapFrom(s => s.Gender))
-            //    .ForMember(d => d.BirthDate, map => map.MapFrom(s => s.BirthDate));
+            
 
 
             // update job category
