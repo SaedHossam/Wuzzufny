@@ -192,6 +192,7 @@ namespace GlassDoor.ViewModels
             CreateMap<CompanyLinksDto, CompanyLinks>().ReverseMap();
 
             CreateMap<Company, Company>();
+            CreateMap<CompanyLocationDto, CompanyLocation>().ReverseMap();
 
             CreateMap<Company, CompanyRequestsDto > ()
                 .ForMember(d => d.Industry, map => map.MapFrom(s => s.CompanyIndustry.Name))

@@ -64,6 +64,7 @@ namespace GlassDoor.Controllers
             var companyId = _unitOfWork.CompaniesManagers.Find(c => c.UserId == user.Id).First().Id;
             var company = _context.Companies
                 .Include(a=>a.Locations)
+                .ThenInclude(a=>a.cities)
                 .Include(a=>a.CompanyLinks)
                 .Include(a=> a.CompanyIndustry)
                 .Include(a => a.CompanySize)
@@ -93,6 +94,7 @@ namespace GlassDoor.Controllers
               .Include(a => a.CompanyIndustry)
               .Include(a => a.CompanySize)
               .Include(a => a.CompanyType)
+              
               .FirstOrDefault(a => a.Id == company.Id);
        
             var newCompany = _mapper.Map<Company>(company);

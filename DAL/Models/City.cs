@@ -20,8 +20,9 @@ namespace DAL.Models
 
         public int CountryId { get; set; }
         public Country Country { get; set; }
-        public ICollection<Company> Companies { get; set; }
+       // public ICollection<Company> Companies { get; set; }
         public ICollection<Job> Jobs { get; set; }
         public ICollection<Employee> Employees { get; set; }
+        public ICollection<CompanyLocation> companyLocations { get; set; }
     }
 }

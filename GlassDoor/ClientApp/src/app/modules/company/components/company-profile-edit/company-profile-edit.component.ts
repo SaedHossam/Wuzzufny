@@ -117,22 +117,22 @@ export class CompanyProfileEditComponent implements OnInit {
 
     var links:CompanyLinksDto[] = [{link: editForm.value.facebookLink, id:this.facebookLink.id , name:"facebook"} ,{link: editForm.value.linkedinLink,id:this.linkedinLink.id , name:"linkedin" }]
     var companyProfileEdit: EditCompanyProfileDto ={
-     id: this.companyProfile.id ,
-     name :editForm.value.name ,
-     logo:editForm.value.logo ,
-     aboutUs:editForm.value.aboutUs ,
-     yearFounded:editForm.value.yearFounded ,
-     phone:editForm.value.phone ,
-     companyIndustryId:editForm.value.companyIndustry ,
-     companyTypeId:editForm.value.companyType ,
-     companySizeId:editForm.value.companySize ,
+     id: this.companyProfile.id,
+     name :editForm.value.name,
+     logo:editForm.value.logo,
+     aboutUs:editForm.value.aboutUs,
+     yearFounded:editForm.value.yearFounded,
+     phone:editForm.value.phone,
+     companyIndustryId:editForm.value.companyIndustry,
+     companyTypeId:editForm.value.companyType,
+     companySizeId:editForm.value.companySize,
      locations:editForm.value.locations.map((val, index) => ({ locationsId: val.id})) ,
      companyLinks:links ,
     requestStatusId:this.companyProfile.requestStatusId
     }
     console.log(companyProfileEdit);
-    // this._editProfileService.putCompanyProfile(companyProfileEdit).subscribe(response=>{
-    //    console.log(response);
-    // })
+    this._editProfileService.putCompanyProfile(companyProfileEdit).subscribe(response=>{
+       console.log(response);
+    })
   }
 }

@@ -1,3 +1,9 @@
+import { City } from "src/app/models/city";
+import { Cities } from "./cities";
+
 export interface LocationDto {
-    locationsId:number;
+ CompanyId:number;
+ cityId:number;
+ city:City;
+    
 }

@@ -39,11 +39,11 @@ namespace DAL
         public DbSet<JobCategory> JobCategories { get; set; }
         public DbSet<CompanyRequestStatus> CompanyRequestStatus { get; set; }
 
-
+        
         public DbSet<JobSkill> JobSkill { get; set; }
 
         public DbSet<CompanyApplicationStatus> CompanyApplicationStatuses { get; set; }
-
+        public DbSet<CompanyLocation> companyLocations { get; set; }
         public ApplicationDbContext(DbContextOptions options) : base(options)
         { }
 
@@ -65,6 +65,8 @@ namespace DAL
                 .OnDelete(DeleteBehavior.NoAction);
 
             builder.Entity<JobSkill>().HasKey(js => new { js.JobsId, js.SkillsId });
+
+            builder.Entity<CompanyLocation>().HasKey(cl => new { cl.cityId, cl.companyId });
 
             builder.Entity<City>()
                 .HasOne(c => c.Country)

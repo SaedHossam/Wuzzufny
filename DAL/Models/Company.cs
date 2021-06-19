@@ -19,9 +19,11 @@ namespace DAL.Models
         public CompanySize CompanySize { get; set; }
         public int RequestStatusId { get; set; }
         public CompanyRequestStatus RequestStatus { get; set; }
-        public ICollection<City> Locations { get; set; }
+//        public ICollection<City> Locations { get; set; }
         public ICollection<Job> Jobs { get; set; }
         public ICollection<CompanyManager> CompanyManagers { get; set; }
         public ICollection<CompanyLinks> CompanyLinks { get; set; }
+        public ICollection<CompanyLocation> Locations { get; set; }
+
     }
 }
