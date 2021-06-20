@@ -32,8 +32,8 @@ import { PostJobService } from '../../services/post-job.service';
   styleUrls: ['./modify-job-data.component.css']
 })
 export class ModifyJobDataComponent implements OnInit {
-//intialization
-  editjob:PostJobDto;
+  //intialization
+  editjob: PostJobDto;
   jobTypes: JobTypes[];
   countries: Country[];
   cities: City[];
@@ -85,17 +85,17 @@ export class ModifyJobDataComponent implements OnInit {
     private _jobCategoryService: JobCategoryService,
     private _skillService: SkillService,
     private _editJobService: EditJobService,
-    private _route :ActivatedRoute
-    
-    ) {
-      
-      // console.log(this._router.getCurrentNavigation().extras.state.job);
+    private _route: ActivatedRoute
 
-    }
-    public results: Skills[];
-  
+  ) {
+
+    // console.log(this._router.getCurrentNavigation().extras.state.job);
+
+  }
+  public results: Skills[];
+
   ngOnInit(): void {
-     this._route.params.subscribe((p) => {
+    this._route.params.subscribe((p) => {
       this._editJobService.getJob(p.id).then((a) => {
         console.log(a);
         this.postJobDto = a;
@@ -140,47 +140,48 @@ export class ModifyJobDataComponent implements OnInit {
       'requirements': new FormControl(null, [Validators.required]),
       'responsibilities': new FormControl(null, [Validators.required]),
       'skills': new FormControl(null, [Validators.required])
-      
-  });
+
+    });
 
 
-  this._JobTypeService.getCompanyTypes().subscribe(jt => { this.jobTypes = jt });
-  this._countryService.getCountries().subscribe(c => { this.countries = c });
-  this._cityService.getCities().subscribe(c => { this.cities = c });
-  this._careerLevelService.getCareerLevels().subscribe(c => { this.careerLevels = c });
-  this._educationLevelService.getEducationLevels().subscribe(e => { this.educationLevels = e });
-  this._currencyService.getCurrencies().subscribe(c => { this.currencies = c });
-  this._salaryRateService.getSalaryRates().subscribe(s => { this.salaryRates = s });
-  this._jobCategoryService.getjobCategories().subscribe(jc => { this.jobCategories = jc });
-  this._skillService.getSkills().subscribe(s => { this.skills = s });
-  
-}
-search(event) {
-  this.results = this.skills.filter(c => c.name.startsWith(event.query));
-}
-public postjob(postjobform) {
-  this.postJobDto.title = postjobform.value.title;
-  this.postJobDto.cityId = postjobform.value.cityId;
-  this.postJobDto.jobTypeId = postjobform.value.jobTypeId;
-  this.postJobDto.countryId = postjobform.value.countryId;
-  this.postJobDto.numberOfVacancies = postjobform.value.numberOfVacancies;
-  this.postJobDto.jobDetails.experienceNeededMin = postjobform.value.experienceNeededMin;
-  this.postJobDto.jobDetails.experienceNeededMax = postjobform.value.experienceNeededMax;
-  this.postJobDto.jobDetails.careerLevelId = postjobform.value.careerLevelId;
-  this.postJobDto.jobDetails.educationLevelId = postjobform.value.educationLevelId;
-  this.postJobDto.jobDetails.salaryMin = postjobform.value.salaryMin;
-  this.postJobDto.jobDetails.salaryMax = postjobform.value.salaryMax;
-  this.postJobDto.jobDetails.salaryCurrencyId = postjobform.value.salaryCurrencyId;
-  this.postJobDto.jobDetails.salaryRateId = postjobform.value.salaryRateId;
-  this.postJobDto.jobDetails.jobCategoryId = postjobform.value.jobCategoryId;
-  this.postJobDto.jobDetails.description = postjobform.value.description;
-  this.postJobDto.jobDetails.requirements = postjobform.value.requirements;
-  this.postJobDto.jobDetails.responsibilities = postjobform.value.responsibilities;
-  this.postJobDto.skills = postjobform.value.skills.map((val, index) => ({ SkillsId: val.id }));
-  this._editJobService.editJob(this.postJobDto).subscribe(a => {
-    console.log(a);
-  })
+    this._JobTypeService.getCompanyTypes().subscribe(jt => { this.jobTypes = jt });
+    this._countryService.getCountries().subscribe(c => { this.countries = c });
+    this._cityService.getCities().subscribe(c => { this.cities = c });
+    this._careerLevelService.getCareerLevels().subscribe(c => { this.careerLevels = c });
+    this._educationLevelService.getEducationLevels().subscribe(e => { this.educationLevels = e });
+    this._currencyService.getCurrencies().subscribe(c => { this.currencies = c });
+    this._salaryRateService.getSalaryRates().subscribe(s => { this.salaryRates = s });
+    this._jobCategoryService.getjobCategories().subscribe(jc => { this.jobCategories = jc });
+    this._skillService.getSkills().subscribe(s => { this.skills = s });
 
-
-}
   }
+  search(event) {
+    this.results = this.skills.filter(c => c.name.startsWith(event.query));
+  }
+  public postjob(postjobform) {
+    this.postJobDto.title = postjobform.value.title;
+    this.postJobDto.cityId = postjobform.value.cityId;
+    this.postJobDto.jobTypeId = postjobform.value.jobTypeId;
+    this.postJobDto.countryId = postjobform.value.countryId;
+    this.postJobDto.numberOfVacancies = postjobform.value.numberOfVacancies;
+    this.postJobDto.jobDetails.experienceNeededMin = postjobform.value.experienceNeededMin;
+    this.postJobDto.jobDetails.experienceNeededMax = postjobform.value.experienceNeededMax;
+    this.postJobDto.jobDetails.careerLevelId = postjobform.value.careerLevelId;
+    this.postJobDto.jobDetails.educationLevelId = postjobform.value.educationLevelId;
+    this.postJobDto.jobDetails.salaryMin = postjobform.value.salaryMin;
+    this.postJobDto.jobDetails.salaryMax = postjobform.value.salaryMax;
+    this.postJobDto.jobDetails.salaryCurrencyId = postjobform.value.salaryCurrencyId;
+    this.postJobDto.jobDetails.salaryRateId = postjobform.value.salaryRateId;
+    this.postJobDto.jobDetails.jobCategoryId = postjobform.value.jobCategoryId;
+    this.postJobDto.jobDetails.description = postjobform.value.description;
+    this.postJobDto.jobDetails.requirements = postjobform.value.requirements;
+    this.postJobDto.jobDetails.responsibilities = postjobform.value.responsibilities;
+    this.postJobDto.skills = postjobform.value.skills.map((val, index) => ({ SkillsId: val.id }));
+    this._editJobService.editJob(this.postJobDto).subscribe(a => {
+      console.log(a);
+      this._router.navigate(['/company/']);
+    })
+
+
+  }
+}

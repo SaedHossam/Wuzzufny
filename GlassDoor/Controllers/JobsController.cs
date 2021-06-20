@@ -25,14 +25,13 @@ namespace GlassDoor.Controllers
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly ApplicationDbContext _DB;
-        public JobsController(IMapper mapper, IUnitOfWork unitOfWork, UserManager<ApplicationUser> userManager, ApplicationDbContext DB)
+        
+        public JobsController(IMapper mapper, IUnitOfWork unitOfWork, UserManager<ApplicationUser> userManager, ApplicationDbContext context)
         {
             _mapper = mapper;
             _unitOfWork = unitOfWork;
             _userManager = userManager;
-            _context = DB;
-            _DB = DB;
+            _context = context;
         }
 
 
@@ -46,14 +45,24 @@ namespace GlassDoor.Controllers
         }
 
         [HttpGet("companyJobs")]
+        [Authorize(Roles = "Company")]
         public async Task<ActionResult<IEnumerable<JobViewModel>>> GetCompanyJobs()
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
-            var companyId = _unitOfWork.CompaniesManagers.Find(c => c.UserId == user.Id).First().Id;
-            var companyJobs = _unitOfWork.Jobs.GetAllJobData().Where(c => c.CompanyId == companyId);
+            
+            if (user == null)
+                return BadRequest("Can't find User!\nlogin and try again.");
+            
+            var companyId = _unitOfWork.CompaniesManagers?.Find(c => c.UserId == user.Id).First().Id;
+            
+            if (companyId == null)
+                return Unauthorized("Can't Access Company jobs with Employee Account!");
+
+            var companyJobs = _unitOfWork.Jobs.GetAllJobData().Where(c => c.CompanyId == companyId && c.IsOpen == true);
             return Ok(_mapper.Map<IEnumerable<JobViewModel>>(companyJobs));
         }
         [HttpGet("companyJobsData")]
+        [Authorize(Roles = "Company")]
         public async Task<ActionResult<IEnumerable<CompanyJobDto>>> GetCompanyJobsData()
          {
             var user = await _userManager.GetUserAsync(HttpContext.User);
@@ -72,20 +81,21 @@ namespace GlassDoor.Controllers
             return Ok(company);
         }
 
+        // TODO: Delete this API.
         [HttpGet("SeedAngular")]
         public ActionResult<SeedAngular> GetAllConstants()
         {
             SeedAngular s = new SeedAngular()
             {
-                jobTypes = _DB.JobTypes.ToList(),
-                jobCategories = _DB.JobCategories.ToList(),
-                countries = _DB.Countries.ToList(),
-                cities = _DB.Cities.ToList(),
-                Currencies = _DB.Currencies.ToList(),
-                salaryRates = _DB.SalaryRates.ToList(),
-                Skills = _DB.Skills.ToList(),
-                careerLevels = _DB.CareerLevels.ToList(),
-                EducationLevels = _DB.EducationLevels.ToList()
+                jobTypes = _context.JobTypes.ToList(),
+                jobCategories = _context.JobCategories.ToList(),
+                countries = _context.Countries.ToList(),
+                cities = _context.Cities.ToList(),
+                Currencies = _context.Currencies.ToList(),
+                salaryRates = _context.SalaryRates.ToList(),
+                Skills = _context.Skills.ToList(),
+                careerLevels = _context.CareerLevels.ToList(),
+                EducationLevels = _context.EducationLevels.ToList()
             };
             return s;
         }
@@ -103,8 +113,7 @@ namespace GlassDoor.Controllers
                 .Include(a => a.JobDetails.EducationLevel)
                 .Include(a => a.JobDetails.SalaryCurrency)
                 .Include(a => a.JobDetails.SalaryRate)
-                .Where(j => j.Id == id)
-                .FirstOrDefault();
+                .FirstOrDefault(j => j.Id == id);
 
             if (job == null)
             {
@@ -129,6 +138,7 @@ namespace GlassDoor.Controllers
         // PUT: api/Jobs/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
+        [Authorize(Roles = "Company")]
         public IActionResult PutJob(int id, [FromBody] PostJobDto postedjob)
         {
             if (id != postedjob.Id)
@@ -163,7 +173,8 @@ namespace GlassDoor.Controllers
 
         //change job status to close
         [HttpPut("closeJob")]
-        public IActionResult closeJob([FromBody] int id)
+        [Authorize(Roles = "Company")]
+        public IActionResult CloseJob([FromBody] int id)
         {
             var job = _unitOfWork.Jobs.Get(id);
 
@@ -205,28 +216,36 @@ namespace GlassDoor.Controllers
             var job = _mapper.Map<Job>(postedjob);
             job.IsOpen = true;
             var user = await _userManager.GetUserAsync(HttpContext.User);
-            var companyId = _unitOfWork.CompaniesManagers.Find(c => c.UserId == user.Id).First().Id;
-            job.CompanyId = companyId;
+
+            if (user == null)
+                return BadRequest("Can't find User!");
+
+            var companyId = _unitOfWork.CompaniesManagers?.Find(c => c.UserId == user.Id).FirstOrDefault().Id;
+            
+            if (companyId == null)
+                return BadRequest("Error Occured!\nTry Again.");
+            
+            job.CompanyId = companyId.Value;
             _unitOfWork.Jobs.Add(job);
             _unitOfWork.SaveChanges();
             return Ok(job);
         }
 
-        // DELETE: api/Jobs/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteJob(int id)
-        {
-            var job = await _context.Jobs.FindAsync(id);
-            if (job == null)
-            {
-                return NotFound();
-            }
+        //// DELETE: api/Jobs/5
+        //[HttpDelete("{id}")]
+        //public async Task<IActionResult> DeleteJob(int id)
+        //{
+        //    var job = await _context.Jobs.FindAsync(id);
+        //    if (job == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            _context.Jobs.Remove(job);
-            await _context.SaveChangesAsync();
+        //    _context.Jobs.Remove(job);
+        //    await _context.SaveChangesAsync();
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
 
         private bool JobExists(int id)
         {
