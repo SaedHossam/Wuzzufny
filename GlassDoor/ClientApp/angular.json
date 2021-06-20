@@ -22,6 +22,9 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "aot": true,
+            "allowedCommonJsDependencies": [
+              "chart.js"
+            ],
             "assets": [
               "src/favicon.ico",
               "src/assets"
@@ -38,13 +41,12 @@
               "node_modules/quill/dist/quill.core.css",
               "node_modules/quill/dist/quill.snow.css",
               "node_modules/ngx-toastr/toastr.css",
-              "node_modules/quill/dist/quill.snow.css",
               //"src/theme.css",
               "src/app.css"
             ],
             "scripts": [
-              "node_modules/quill/dist/quill.js"
-              //"node_modules/bootstrap/dist/js/bootstrap.bundle.js"
+              "node_modules/quill/dist/quill.js",
+              "node_modules/chart.js/dist/Chart.js"
             ]
           },
           "configurations": {
