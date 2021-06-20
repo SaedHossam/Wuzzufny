@@ -10,6 +10,8 @@ using DAL.Models;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using GlassDoor.ViewModels;
+using Microsoft.AspNetCore.Authorization;
+using GlassDoor.Constants;
 
 namespace GlassDoor.Controllers
 {
@@ -24,9 +26,9 @@ namespace GlassDoor.Controllers
      
         public ApplicationsController(IMapper mapper, IUnitOfWork unitOfWork, UserManager<ApplicationUser> userManager,ApplicationDbContext context)
         {
-            this._mapper = mapper;
-            this._unitOfWork = unitOfWork;
-            this._userManager = userManager;
+            _mapper = mapper;
+            _unitOfWork = unitOfWork;
+            _userManager = userManager;
             _context = context;
         }
 
@@ -40,6 +42,7 @@ namespace GlassDoor.Controllers
 
         // GET: api/Applications/5
         [HttpGet("jobId/{jobId}")]
+        [Authorize(Roles = Authorization.Company)]
         public async Task<ActionResult<List<CompanyApplicationDto>>> GetApplications(int jobId)
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
@@ -77,7 +80,8 @@ namespace GlassDoor.Controllers
 
         // GET: api/Applications/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<CompanyApplicationDto>> GetApplication(int id)
+        [Authorize(Roles = Authorization.Company)]
+        public ActionResult<CompanyApplicationDto> GetApplication(int id)
         {
             var application = _context.Applications
                 .Include(a => a.Employee)
@@ -89,17 +93,16 @@ namespace GlassDoor.Controllers
                 .Include(a => a.Employee.City)
                 .Include(a => a.Employee.Country)
                 .FirstOrDefault(a => a.Id == id);
-            //Application application = _context.Applications.Where(a => a.Id == id)
-            //    .Include(a => a.Employee)
-            //    .Include(a => a.Employee.Skills)
-            //    .Include(a => a.Employee.UserLanguages)
-            //    .Include(a => a.Employee.EmployeeLinks)
-            //    .Include(a => a.Employee.CareerLevel); 
 
             if (application == null)
             {
                 return BadRequest();
             }
+
+            // update application Status
+            application.ApplicationStatusId = _unitOfWork.ApplicationStatus.Find(s => s.Name == Enums.ApplicationStatus.Viewed.ToString()).First().Id;
+            _unitOfWork.Application.Update(application);
+            _unitOfWork.SaveChanges();
 
             return _mapper.Map<CompanyApplicationDto>(application);
         }
@@ -107,6 +110,7 @@ namespace GlassDoor.Controllers
         // PUT: api/Applications/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
+        [Authorize(Roles = Authorization.Company)]
         public async Task<IActionResult> PutApplication(int id, Application application)
         {
             if (id != application.Id)
@@ -138,35 +142,66 @@ namespace GlassDoor.Controllers
         //change Application status
 
         [HttpPut("status")]
-        public async Task<IActionResult> changeApplicationStatus(ApplicationStatusDto applicationDto)
+        [Authorize(Roles = Authorization.Company)]
+        public IActionResult ChangeApplicationStatus(ApplicationStatusDto applicationDto)
         {
 
-            var application = _context.Applications.FirstOrDefault(a => a.Id == applicationDto.Id);
-            
+            var application = _unitOfWork.Application.Find(a => a.Id == applicationDto.Id).FirstOrDefault();
+
             if (application == null)
             {
                 return BadRequest();
             }
 
-            application.Status = applicationDto.Status;
-            //var user = await _userManager.GetUserAsync(HttpContext.User);
-            //var companyId = _unitOfWork.CompaniesManagers.Find(c => c.UserId == user.Id).First().Id;
-            //Job companyJob = new Job();
-            //try
-            //{
-            //    companyJob = _context.Jobs.Where(c => c.CompanyId == companyId & c.Id == jobId).Include(a => a.Applications).FirstOrDefault();
-            //    var application = companyJob.Applications.Where(a => a.Id == applicationDto.Id).First();
-            //    application.Status = applicationDto.Status;
-            //}
-            //catch (Exception)
-            //{
+            var job = _unitOfWork.Jobs.Get(application.JobId);
+            
+            // Decrement old status count
+            int oldStatusId = application.ApplicationStatusId;
 
-            //    return BadRequest();
-            //}
+            var applicationStatuses = _unitOfWork.ApplicationStatus.GetAll().ToList();
+
+            if (oldStatusId == applicationStatuses.Where(s => s.Name == Enums.ApplicationStatus.Viewed.ToString() ).First().Id)
+            {
+                job.ViewedApplications--;
+            }
+            else if (oldStatusId == applicationStatuses.Where(s => s.Name == Enums.ApplicationStatus.InConsidration.ToString()).First().Id)
+            {
+                job.InConsidrationApplications--;
+            }
+            else if (oldStatusId == applicationStatuses.Where(s => s.Name == Enums.ApplicationStatus.Rejected.ToString()).First().Id)
+            {
+                job.RejectedApplications--;
+            }
+            else if (oldStatusId == applicationStatuses.Where(s => s.Name == Enums.ApplicationStatus.Hired.ToString()).First().Id)
+            {
+                job.AcceptedApplications--;
+            }
+
+            // Update Status
+            application.Status = applicationDto.Status;
+            application.ApplicationStatusId = _unitOfWork.ApplicationStatus.Find(s => s.Name == applicationDto.Status).First().Id;
+
+            // increment new status count
+            if (application.ApplicationStatusId == applicationStatuses.Where(s => s.Name == Enums.ApplicationStatus.Viewed.ToString()).First().Id)
+            {
+                job.ViewedApplications++;
+            }
+            else if (application.ApplicationStatusId == applicationStatuses.Where(s => s.Name == Enums.ApplicationStatus.InConsidration.ToString()).First().Id)
+            {
+                job.InConsidrationApplications++;
+            }
+            else if (application.ApplicationStatusId == applicationStatuses.Where(s => s.Name == Enums.ApplicationStatus.Rejected.ToString()).First().Id)
+            {
+                job.RejectedApplications++;
+            }
+            else if (application.ApplicationStatusId == applicationStatuses.Where(s => s.Name == Enums.ApplicationStatus.Hired.ToString()).First().Id)
+            {
+                job.AcceptedApplications++;
+            }
 
             try
             {
-                await _context.SaveChangesAsync();
+                _unitOfWork.SaveChanges();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -183,32 +218,32 @@ namespace GlassDoor.Controllers
             return NoContent();
         }
 
-        // POST: api/Applications
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<Application>> PostApplication(Application application)
-        {
-            _context.Applications.Add(application);
-            await _context.SaveChangesAsync();
+        //// POST: api/Applications
+        //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        //[HttpPost]
+        //public async Task<ActionResult<Application>> PostApplication(Application application)
+        //{
+        //    _context.Applications.Add(application);
+        //    await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetApplication", new { id = application.Id }, application);
-        }
+        //    return CreatedAtAction("GetApplication", new { id = application.Id }, application);
+        //}
 
-        // DELETE: api/Applications/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteApplication(int id)
-        {
-            var application = await _context.Applications.FindAsync(id);
-            if (application == null)
-            {
-                return NotFound();
-            }
+        //// DELETE: api/Applications/5
+        //[HttpDelete("{id}")]
+        //public async Task<IActionResult> DeleteApplication(int id)
+        //{
+        //    var application = await _context.Applications.FindAsync(id);
+        //    if (application == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            _context.Applications.Remove(application);
-            await _context.SaveChangesAsync();
+        //    _context.Applications.Remove(application);
+        //    await _context.SaveChangesAsync();
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
 
         private bool ApplicationExists(int id)
         {

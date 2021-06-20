@@ -41,6 +41,7 @@ namespace GlassDoor.ViewModels
         public string Logo { get; set; }
 
         public int JobId { get; set; }
+        public int Vacancies { get; set; }
 
         public IEnumerable<SkillsMatching> SkillsNames { get; set; }
         public DateTime CreatedDate { get; set; }

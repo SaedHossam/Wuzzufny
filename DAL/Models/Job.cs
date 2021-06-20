@@ -21,11 +21,13 @@ namespace DAL.Models
         public int CountryId { get; set; }
         public Country Country { get; set; }
 
-        public int TotalApplications => Applications?.Count ?? 0;
+        public int TotalApplications { get; set; }
         public int TotalClicks { get; set; }
-        public int? AcceptedApplications => Applications?.Count(a => a.Status.Equals("Accepted"));
-        public int? RejectedApplications => Applications?.Count(a => a.Status.Equals("Rejected"));
+        // Hired
+        public int AcceptedApplications { get; set; }
+        public int RejectedApplications { get; set; }
         public int ViewedApplications { get; set; }
+        public int InConsidrationApplications { get; set; }
         public int WithdrawnApplications { get; set; }
         public bool IsOpen { get; set; }
 

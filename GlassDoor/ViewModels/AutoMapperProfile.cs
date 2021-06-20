@@ -94,6 +94,7 @@ namespace GlassDoor.ViewModels
                 .ForMember(d => d.CreatedDate, map => map.MapFrom(s => s.Job.CreatedDate))
                 .ForMember(d => d.SalaryCurrencyCode, map => map.MapFrom(s => s.SalaryCurrency.Code))
                 .ForMember(d => d.SkillsNames, map => map.MapFrom(s => s.Job.Skills))
+                .ForMember(d => d.Vacancies, map => map.MapFrom(s => s.Job.NumberOfVacancies))
                 .ReverseMap();
             CreateMap<PostJobDto, Job>().ReverseMap();
 

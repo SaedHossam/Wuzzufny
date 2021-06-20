@@ -15,5 +15,7 @@ namespace DAL.Models
         public enum CurrentJobStatus { Unemployed, Looking, Interested, NotLooking }
 
         public enum CompanyRequestStatus { UnderReview, Accepted, Rejected }
+        public enum ApplicationStatus { Applied, Viewed, InConsidration, Rejected, Hired }
     }
 }
+

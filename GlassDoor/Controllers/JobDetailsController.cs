@@ -52,7 +52,7 @@ namespace GlassDoor.Controllers
             var userSkills = emp.Skills;
             foreach (var skill in details.SkillsNames)
             {
-                skill.Match = userSkills.FirstOrDefault(s => s.Id == skill.Id) != null ? true : false;
+                skill.Match = userSkills.FirstOrDefault(s => s.Id == skill.Id) != null;
             }
             if (details == null)
                 return NotFound();

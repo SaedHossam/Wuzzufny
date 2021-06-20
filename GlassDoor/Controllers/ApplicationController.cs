@@ -34,20 +34,51 @@ namespace GlassDoor.Controllers
         public async Task<ActionResult<IEnumerable<ApplicationDto>>> GetApplications()
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
-            if (user != null)
-            {
-                var userId = user.Id;
-                var empId = _unitOfWork.Employees.Find(a => a.UserId == userId).FirstOrDefault().Id;
-                var allApps = _unitOfWork.Application.GetEmployeeApplications(empId);
-                return Ok(_mapper.Map<IEnumerable<ApplicationDto>>(allApps));
-            }
-            else
-            {
+
+            if (user == null)
                 return BadRequest("User Not Found!");
-            }
+
+            var userId = user.Id;
+            var employee = _unitOfWork.Employees.Find(a => a.UserId == userId).FirstOrDefault();
+            if (employee == null)
+                return BadRequest("Employee Not Found!");
+
+            var employeeApplications = _unitOfWork.Application.GetEmployeeApplications(employee.Id);
+            return Ok(_mapper.Map<IEnumerable<ApplicationDto>>(employeeApplications));
+
         }
 
+        /// <summary>
+        /// this method return all Employee Archived Application
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("archived")]
+        [Authorize(Roles = Authorization.Employee)]
+        public async Task<ActionResult<IEnumerable<ApplicationDto>>> GetArchivedApplications()
+        {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
 
+            if (user == null)
+                return BadRequest("User Not Found!");
+
+            var userId = user.Id;
+            var employee = _unitOfWork.Employees.Find(a => a.UserId == userId).FirstOrDefault();
+            if (employee == null)
+                return BadRequest("Employee Not Found!");
+
+            var employeeApplications = _unitOfWork.Application.GetEmployeeArchivedApplications(employee.Id);
+            return Ok(_mapper.Map<IEnumerable<ApplicationDto>>(employeeApplications));
+
+        }
+
+        /// Apply to job
+        /// summary:
+        /// this method takes job id as paramater
+        /// Check if user didn't apply before or withdraw his previous application
+        /// create new application
+        /// set apply date to DateTime.Now()
+        /// set IsArchived, IsViewed, and IsWithdrawn to false
+        /// TODO: update job application (++)
         [HttpPost]
         public async Task<ActionResult<ApplicationDto>> PostApplication([FromBody] int id)
         {
@@ -58,19 +89,33 @@ namespace GlassDoor.Controllers
             if (user == null)
                 return BadRequest("User not Found!");
             var userId = user.Id;
-            var empId = _unitOfWork.Employees.Find(a => a.UserId == userId).FirstOrDefault().Id;
-            var application = _unitOfWork.Application.Find(a => a.JobId == id && a.EmployeeId == empId).FirstOrDefault();
+            var employee = _unitOfWork.Employees.Find(a => a.UserId == userId).FirstOrDefault();
+            if (employee == null)
+                return BadRequest("Employee not Found!");
+
+            var application = _unitOfWork.Application.Find(a => a.JobId == id && a.EmployeeId == employee.Id).FirstOrDefault();
+            var statusId = _unitOfWork.ApplicationStatus.Find(s => s.Name == Enums.ApplicationStatus.Applied.ToString()).First().Id;
             if (application == null || application.IsWithdrawn == true)
             {
-                //var app = _mapper.Map<Application>(applied);
-                Application app = new Application();
-                app.JobId = id;
-                app.ApplyDate = DateTime.Now;
-                app.IsArchived = false;
-                app.IsViewed = false;
-                app.IsWithdrawn = false;
-                app.EmployeeId = empId;
+                Application app = new()
+                {
+                    JobId = id,
+                    ApplyDate = DateTime.Now,
+                    IsArchived = false,
+                    IsViewed = false,
+                    IsWithdrawn = false,
+                    EmployeeId = employee.Id,
+                    ApplicationStatusId = statusId
+                };
                 _unitOfWork.Application.Add(app);
+
+                // Update Job Total Applications
+                var job = _unitOfWork.Jobs.Get(id);
+                if (job == null)
+                    return BadRequest("Error Occured!");
+                job.TotalApplications++;
+                _unitOfWork.Jobs.Update(job);
+
                 _unitOfWork.SaveChanges();
                 return Ok(app);
             }
@@ -80,32 +125,84 @@ namespace GlassDoor.Controllers
             }
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutApp(int id, bool arc)
+        // Summry:
+        // this method takes application id, and bool value archived as paramter 
+        // it checks if application is wirthdrawn then it return error
+        // if archived = true, then archive application, and update archive date
+        // else unarchive application, and set date to null
+        [HttpPut]
+        [Authorize(Roles = Authorization.Employee)]
+        public IActionResult ArchiveApplication([FromBody] ArchiveApplicationDto archiveApplication)
         {
-            var app = _unitOfWork.Application.Find(a => a.Id == id).FirstOrDefault();
-            var app1 = _mapper.Map<Application>(app);
+            var application = _unitOfWork.Application.Find(a => a.Id == archiveApplication.Id).FirstOrDefault();
+            if (application == null)
+                return BadRequest("Cann't Find Application!");
 
-            if (arc == true)
-            {
-                app1.IsArchived = true;
-                app1.ArchiveDate = DateTime.Now;
-                _unitOfWork.Application.Update(app1);
-                _unitOfWork.SaveChanges();
-                return Ok(app);
-            }
-            if (arc == false)
-            {
-                app.IsArchived = false;
-                app.ArchiveDate = null;
-                _unitOfWork.Application.Update(app1);
-                _unitOfWork.SaveChanges();
-                return Ok(app);
-            }
-            return Ok(app);
+            if (application.IsWithdrawn == true)
+                return BadRequest("This application is withdrawn.");
 
-
+            application.IsArchived = archiveApplication.Archived;
+            application.ArchiveDate = archiveApplication.Archived ? DateTime.Now : null;
+            _unitOfWork.Application.Update(application);
+            _unitOfWork.SaveChanges();
+            return Ok(application);
         }
 
+        // summary
+        // this method takes application id as paramter 
+        // it checks if application exists or if its already withdrawn then it return error
+        // else it withdraw application
+        // TODO: update job application count
+        [HttpPut("withdraw")]
+        [Authorize(Roles = Authorization.Employee)]
+        public IActionResult WithdrawApplication([FromBody] int id)
+        {
+            var application = _unitOfWork.Application.Find(a => a.Id == id).FirstOrDefault();
+            if (application == null)
+                return BadRequest("Cann't Find Application!");
+
+            if (application.IsWithdrawn == true)
+                return BadRequest("This application is withdrawn.");
+
+            var job = _unitOfWork.Jobs.Get(application.JobId);
+            if (job == null)
+                return BadRequest("Error Occured!");
+
+            application.IsWithdrawn = true;
+            application.WithDrawDate = DateTime.Now;
+
+            // get all statuses
+            var applicationStatuses = _unitOfWork.ApplicationStatus.GetAll().ToList();
+
+            // decrement old status
+            if (application.ApplicationStatusId == applicationStatuses.Where(s => s.Name == Enums.ApplicationStatus.Viewed.ToString()).First().Id)
+            {
+                job.ViewedApplications--;
+            }
+            else if (application.ApplicationStatusId == applicationStatuses.Where(s => s.Name == Enums.ApplicationStatus.InConsidration.ToString()).First().Id)
+            {
+                job.InConsidrationApplications--;
+            }
+            else if (application.ApplicationStatusId == applicationStatuses.Where(s => s.Name == Enums.ApplicationStatus.Rejected.ToString()).First().Id)
+            {
+                job.RejectedApplications--;
+            }
+            else if (application.ApplicationStatusId == applicationStatuses.Where(s => s.Name == Enums.ApplicationStatus.Hired.ToString()).First().Id)
+            {
+                job.AcceptedApplications--;
+            }
+            
+            // decrement total applications
+            job.TotalApplications--;
+            // increment withdrawn applications
+            job.WithdrawnApplications++;
+
+            _unitOfWork.Jobs.Update(job);
+            _unitOfWork.Application.Update(application);
+            
+            _unitOfWork.SaveChanges();
+            
+            return Ok(application);
+        }
     }
 }

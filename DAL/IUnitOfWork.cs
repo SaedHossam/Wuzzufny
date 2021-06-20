@@ -29,7 +29,7 @@ namespace DAL
         ISocialLinksRepository SocialLinks { get; }
         IUserLanguageRepository UserLanguage { get; }
         ICompanyRequestStatusRepository CompanyRequestStatus { get; }
-
+        IApplicationStatus ApplicationStatus { get; }
         int SaveChanges();
     }
 }

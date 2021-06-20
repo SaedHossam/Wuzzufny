@@ -11,5 +11,6 @@ namespace DAL.Repositories.Interfaces
     {
         public IEnumerable<Application> GetEmployeeApplications(int id);
 
+        public IEnumerable<Application> GetEmployeeArchivedApplications(int id);
     }
 }

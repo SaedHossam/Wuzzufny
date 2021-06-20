@@ -38,6 +38,7 @@ namespace DAL
         public DbSet<UserLanguage> UserLanguages { get; set; }
         public DbSet<JobCategory> JobCategories { get; set; }
         public DbSet<CompanyRequestStatus> CompanyRequestStatus { get; set; }
+        public DbSet<ApplicationStatus> ApplicationStatuses { get; set; }
 
 
         public DbSet<JobSkill> JobSkill { get; set; }
@@ -71,6 +72,19 @@ namespace DAL
                 .WithMany(co => co.Cities)
                 .HasForeignKey(c => c.CountryId)
                 .OnDelete(DeleteBehavior.NoAction);
+
+
+            builder.Entity<Job>().Property(j => j.TotalClicks).HasDefaultValue(0);
+            builder.Entity<Job>().Property(j => j.TotalApplications).HasDefaultValue(0);
+            builder.Entity<Job>().Property(j => j.AcceptedApplications).HasDefaultValue(0);
+            builder.Entity<Job>().Property(j => j.InConsidrationApplications).HasDefaultValue(0); 
+            builder.Entity<Job>().Property(j => j.RejectedApplications).HasDefaultValue(0);
+            builder.Entity<Job>().Property(j => j.ViewedApplications).HasDefaultValue(0); 
+            builder.Entity<Job>().Property(j => j.WithdrawnApplications).HasDefaultValue(0);
+
+            // TODO: Test this shit
+            //builder.Entity<Application>().Property(j => j.ApplicationStatusId).HasDefaultValue(ApplicationStatuses.First(a => a.Name == Enums.ApplicationStatus.Applied.ToString()).Id);
+            
 
 
             //builder.Entity<ApplicationUser>().HasOne<Employee>(au => au.Employee).WithOne(e => e.User)

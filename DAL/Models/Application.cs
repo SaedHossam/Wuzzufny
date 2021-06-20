@@ -9,7 +9,8 @@ namespace DAL.Models
         public int Id { get; set; }
         public DateTime ApplyDate { get; set; }
         public string Status { get; set; }
-        
+        public int ApplicationStatusId { get; set; }
+        public ApplicationStatus ApplicationStatus { get; set; }
         public bool IsViewed { get; set; } 
         
         public bool IsArchived { get; set; }

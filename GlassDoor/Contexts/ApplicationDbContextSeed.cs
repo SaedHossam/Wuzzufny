@@ -232,6 +232,22 @@ namespace GlassDoor.Contexts
                 await context.SaveChangesAsync();
             }
 
+            if (!context.ApplicationStatuses.Any())
+            {
+                var applicationStatus = new List<ApplicationStatus>()
+                {
+                    new ApplicationStatus() {Name = Enums.ApplicationStatus.Applied.ToString()},
+                    new ApplicationStatus() {Name = Enums.ApplicationStatus.Viewed.ToString()},
+                    new ApplicationStatus() {Name = Enums.ApplicationStatus.InConsidration.ToString()},
+                    new ApplicationStatus() {Name = Enums.ApplicationStatus.Rejected.ToString()},
+                    new ApplicationStatus() {Name = Enums.ApplicationStatus.Hired.ToString()},
+
+                };
+
+                await context.ApplicationStatuses.AddRangeAsync(applicationStatus);
+                await context.SaveChangesAsync();
+            }
+
             if (!context.Employees.Any())
             {
                 var employee = new Employee() { UserId = employeeUser.Id };

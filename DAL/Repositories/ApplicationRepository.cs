@@ -24,5 +24,18 @@ namespace DAL.Repositories
                 .Include(c => c.Job).ThenInclude(d => d.Country).Where(a => a.EmployeeId == id && a.IsArchived== false && a.IsWithdrawn == false)
                 .ToList();
         }
+
+        public IEnumerable<Application> GetEmployeeArchivedApplications(int id)
+        {
+            return _appContext.Applications
+                .Include(a => a.Job)
+                .ThenInclude(b => b.Company)
+                .ThenInclude(c => c.CompanyIndustry)
+                .Include(c => c.Job).ThenInclude(d => d.City)
+                .Include(c => c.Job).ThenInclude(d => d.JobType)
+                .Include(c => c.Job).ThenInclude(d => d.Country)
+                .Where(a => a.EmployeeId == id && a.IsArchived == true && a.IsWithdrawn == false)
+                .ToList();
+        }
     }
 }

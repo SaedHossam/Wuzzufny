@@ -38,11 +38,11 @@ namespace GlassDoor.Controllers
 
         // GET: api/Jobs
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<JobViewModel>>> GetJobs()
+        public ActionResult<IEnumerable<JobViewModel>> GetJobs()
         {
             // todo add company industry to job ( IT )
-            var allJobData =  _unitOfWork.Jobs.GetAllJobData();
-            return Ok( _mapper.Map<IEnumerable<JobViewModel>>(allJobData));
+            var allJobData = _unitOfWork.Jobs.GetAllJobData();
+            return Ok(_mapper.Map<IEnumerable<JobViewModel>>(allJobData));
         }
 
         [HttpGet("companyJobs")]
@@ -92,7 +92,7 @@ namespace GlassDoor.Controllers
 
         // GET: api/Jobs/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<CompanyJobDto>> GetJob(int id)
+        public ActionResult<CompanyJobDto> GetJob(int id)
         {
             var job = _context.Jobs
                 .Include(a => a.Skills)
@@ -116,7 +116,7 @@ namespace GlassDoor.Controllers
 
 
         [HttpGet("Search/{term}/{loc}")]
-        public async Task<ActionResult<IEnumerable<JobViewModel>>> Search(string term, string loc)
+        public ActionResult<IEnumerable<JobViewModel>> Search(string term, string loc)
         {
             var res = _unitOfWork.Jobs.GetAllJobData().Where(i => i.Title.Contains(term, StringComparison.InvariantCultureIgnoreCase)
                 || i.Company.Name.Contains(term, StringComparison.InvariantCultureIgnoreCase)
@@ -129,7 +129,7 @@ namespace GlassDoor.Controllers
         // PUT: api/Jobs/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutJob(int id, [FromBody] PostJobDto postedjob)
+        public IActionResult PutJob(int id, [FromBody] PostJobDto postedjob)
         {
             if (id != postedjob.Id)
             {
@@ -137,7 +137,7 @@ namespace GlassDoor.Controllers
             }
 
             var job = _mapper.Map<Job>(postedjob);
-            var oldJob = _context.Jobs.Include(j => j.JobDetails).Include(j=>j.Skills).FirstOrDefault(j => j.Id == id);
+            var oldJob = _context.Jobs.Include(j => j.JobDetails).Include(j => j.Skills).FirstOrDefault(j => j.Id == id);
             job.JobDetails.Id = oldJob.JobDetails.Id;
             job.CompanyId = oldJob.CompanyId;
             //update job
@@ -163,11 +163,10 @@ namespace GlassDoor.Controllers
 
         //change job status to close
         [HttpPut("closeJob")]
-        public async Task<IActionResult> closeJob([FromBody] int id)
+        public IActionResult closeJob([FromBody] int id)
         {
-            Job? job = _unitOfWork.Jobs.Get(id);
+            var job = _unitOfWork.Jobs.Get(id);
 
-            //var job = _context.Jobs.FirstOrDefault(j => j.Id == id);
 
             if (job == null)
             {

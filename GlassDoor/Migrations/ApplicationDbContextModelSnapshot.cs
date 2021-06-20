@@ -42,6 +42,9 @@ namespace GlassDoor.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("ApplicationStatusId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("ApplyDate")
                         .HasColumnType("datetime2");
 
@@ -77,11 +80,28 @@ namespace GlassDoor.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ApplicationStatusId");
+
                     b.HasIndex("EmployeeId");
 
                     b.HasIndex("jobId");
 
                     b.ToTable("Applications");
+                });
+
+            modelBuilder.Entity("DAL.Models.ApplicationStatus", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ApplicationStatuses");
                 });
 
             modelBuilder.Entity("DAL.Models.ApplicationUser", b =>
@@ -508,6 +528,11 @@ namespace GlassDoor.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("AcceptedApplications")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
+
                     b.Property<int>("CityId")
                         .HasColumnType("int");
 
@@ -523,6 +548,11 @@ namespace GlassDoor.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("InConsidrationApplications")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
+
                     b.Property<bool>("IsOpen")
                         .HasColumnType("bit");
 
@@ -532,11 +562,23 @@ namespace GlassDoor.Migrations
                     b.Property<int?>("NumberOfVacancies")
                         .HasColumnType("int");
 
+                    b.Property<int>("RejectedApplications")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
+
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("TotalApplications")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
+
                     b.Property<int>("TotalClicks")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
 
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
@@ -545,10 +587,14 @@ namespace GlassDoor.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<int>("ViewedApplications")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
 
                     b.Property<int>("WithdrawnApplications")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
 
                     b.HasKey("Id");
 
@@ -935,6 +981,12 @@ namespace GlassDoor.Migrations
 
             modelBuilder.Entity("DAL.Models.Application", b =>
                 {
+                    b.HasOne("DAL.Models.ApplicationStatus", "ApplicationStatus")
+                        .WithMany("Applications")
+                        .HasForeignKey("ApplicationStatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("DAL.Models.Employee", "Employee")
                         .WithMany("Applications")
                         .HasForeignKey("EmployeeId")
@@ -946,6 +998,8 @@ namespace GlassDoor.Migrations
                         .HasForeignKey("JobId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("ApplicationStatus");
 
                     b.Navigation("Employee");
 
@@ -1290,6 +1344,11 @@ namespace GlassDoor.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("DAL.Models.ApplicationStatus", b =>
+                {
+                    b.Navigation("Applications");
                 });
 
             modelBuilder.Entity("DAL.Models.ApplicationUser", b =>
