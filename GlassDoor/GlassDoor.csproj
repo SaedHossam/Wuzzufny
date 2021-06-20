@@ -51,6 +51,7 @@
 		<Folder Include="Resources\Images\" />
 		<Folder Include="Resources\Cv\" />
 		<Folder Include="ClientApp\src\app\modules\" />
+		<Folder Include="Resources\company-logo\" />
 	</ItemGroup>
 
 </Project>

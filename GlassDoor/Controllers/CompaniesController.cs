@@ -13,6 +13,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using GlassDoor.Constants;
 using GlassDoor.services.email;
+using System.IO;
 
 namespace GlassDoor.Controllers
 {
@@ -125,6 +126,48 @@ namespace GlassDoor.Controllers
 
             return NoContent();
         }
+        //upload Logo
+        [HttpPost("Upload"), DisableRequestSizeLimit]
+        [Authorize(Roles = "Company")]
+        public async Task<IActionResult> Upload(IFormFile file)
+        {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            var companyId = _unitOfWork.CompaniesManagers.Find(c => c.UserId == user.Id).FirstOrDefault().Id;
+            var company = _unitOfWork.Companies.Find(a => a.Id == companyId).FirstOrDefault();
+            var fileName = user.Id + ".png";
+
+            try
+            {
+                var formCollection = await Request.ReadFormAsync();
+                var folderName = Path.Combine("Resources", "company-logo");
+                var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
+
+                if (file.Length > 0)
+                {
+
+                    var fullPath = Path.Combine(pathToSave, fileName);
+                    var dbPath = Path.Combine(folderName, fileName);
+
+                    using (var stream = new FileStream(fullPath, FileMode.Create))
+                    {
+                        file.CopyTo(stream);
+
+                    }
+                    company.Logo = dbPath;
+                    _unitOfWork.SaveChanges();
+                    return Ok(new { dbPath });
+                }
+                else
+                {
+                    return BadRequest();
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex}");
+            }
+        }
+
 
         // POST: api/Companies
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
