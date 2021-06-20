@@ -26,6 +26,7 @@ import { EmployeeLink } from '../../../../models/employee-links';
 import { FormControl, FormGroup, NgForm } from '@angular/forms';
 import { UploadFilesService } from '../../../../shared/services/upload-files.service';
 import { HttpEventType } from '@angular/common/http';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-profile',
@@ -77,7 +78,8 @@ export class ProfileComponent implements OnInit {
     private skillService: SkillService,
     private languageService: LanguagesService,
     private userProfileService: UserProfileService,
-    private uploadFilesService: UploadFilesService) {
+    private uploadFilesService: UploadFilesService,
+    private toastrService: ToastrService) {
   }
 
   ngOnInit(): void {
@@ -100,7 +102,7 @@ export class ProfileComponent implements OnInit {
       this.career.careerLevelId = a.careerLevelId;
       this.career.jobTypeId = a.jobTypesName.map((jobTypes) => jobTypes.id);
       this.career.preferredJobCategories = a.preferredJobCategoriesName.map((jobCategory) => jobCategory.id);
-
+      
       this.edu_exp.educationLevelId = a.educationLevelId;
       this.edu_exp.experienceYears = a.experienceYears;
 
@@ -132,21 +134,27 @@ export class ProfileComponent implements OnInit {
 
   update() {
     this.profile.birthDate = new Date(this.birthDateStruct.year, this.birthDateStruct.month - 1, this.birthDateStruct.day + 1);
-    this.userProfileService.editEmpProfile(this.profile).subscribe(a => { },
+    this.userProfileService.editEmpProfile(this.profile).subscribe(a => { 
+      this.toastrService.success('saved your changes successfuly', 'success');
+    },
       error => { },
       () => this.loadEmployeeData()
     );
   }
 
   updateCarrerInterest() {
-    this.userProfileService.editCareerInterest_InUI(this.career).subscribe(a => { },
+    this.userProfileService.editCareerInterest_InUI(this.career).subscribe(a => {
+      this.toastrService.success('saved your changes successfuly', 'success');
+     },
       error => { },
       () => this.loadEmployeeData()
     );
   }
 
   updateEduExp_InUI() {
-    this.userProfileService.editEduExp_InUI(this.edu_exp).subscribe(a => { },
+    this.userProfileService.editEduExp_InUI(this.edu_exp).subscribe(a => {
+      this.toastrService.success('saved your changes successfuly', 'success');
+     },
       error => { },
       () => this.loadEmployeeData()
     );
@@ -154,7 +162,9 @@ export class ProfileComponent implements OnInit {
 
   updateSkills_Lang_InUI() {
     this.skill_lang.skillId = this.employeeSkills.map((val, index) => (val.id));
-    this.userProfileService.editSkill_Lang_InUI(this.skill_lang).subscribe(a => { },
+    this.userProfileService.editSkill_Lang_InUI(this.skill_lang).subscribe(a => {
+      this.toastrService.success('saved your changes successfuly', 'success');
+     },
       error => { },
       () => this.loadEmployeeData()
     );
@@ -188,6 +198,7 @@ export class ProfileComponent implements OnInit {
     this.uploadFilesService.uploadEmployeeImage(formData).subscribe(e => {
       if (e.type === HttpEventType.Response) {
         console.log('fileUploaded');
+        this.toastrService.success('saved your changes successfuly', 'success');
       }
     },
       (error) => {
@@ -211,6 +222,7 @@ export class ProfileComponent implements OnInit {
     this.uploadFilesService.uploadEmployeeCV(formData).subscribe(e => {
       if (e.type === HttpEventType.Response) {
         console.log('fileUploaded');
+        this.toastrService.success('saved your changes successfuly', 'success');
       }
     },
       (error) => {

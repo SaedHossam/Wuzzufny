@@ -98,6 +98,7 @@ namespace GlassDoor.Controllers
             employee.MobileNumber = updatedEmp.MobileNumber;
             employee.NationalityId = updatedEmp.NationalityId;
             employee.MilitaryStatus = updatedEmp.MilitaryStatus;
+            employee.Summary = updatedEmp.Summary;
             _unitOfWork.SaveChanges();
             return NoContent();
 
@@ -369,11 +370,20 @@ namespace GlassDoor.Controllers
                         e.Name.Equals(item.Name, StringComparison.OrdinalIgnoreCase));
                     if (empLink == null)
                     {
-                        employee.EmployeeLinks.Add(new EmployeeLinks() {Name = item.Name.ToLower(), Link = item.Link});
+                        employee.EmployeeLinks.Add(new EmployeeLinks() { Name = item.Name.ToLower(), Link = item.Link });
                     }
                     else
                     {
                         empLink.Link = item.Link;
+                    }
+                }
+                else
+                {
+                    var empLink = employee.EmployeeLinks.FirstOrDefault(e =>
+                        e.Name.Equals(item.Name, StringComparison.OrdinalIgnoreCase));
+                    if (empLink != null)
+                    {
+                        empLink.Link = null;
                     }
                 }
             }
@@ -438,7 +448,7 @@ namespace GlassDoor.Controllers
             var path = Path.GetFullPath(Cv.FileName);
             //Guid.NewGuid();
             var fileName = employee.UserId;
-          
+
             if (Path.GetExtension(path).Contains(".pdf"))
             {
                 fileName += ".pdf";

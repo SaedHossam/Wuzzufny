@@ -13,9 +13,10 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'jobs', component: ViewJobComponent },
   { path: 'apply/:id', component: ApplyJobComponent },
-  //{ path: 'profile/:id', component: EmployeeProfileComponent },
-  { path: 'upload', component: UploadComponent },
   { path: 'profile', component: ProfileComponent },
+  { path: 'profile/public', component: EmployeeProfileComponent },
+  { path: 'profile/:id', component: EmployeeProfileComponent },
+  { path: 'upload', component: UploadComponent },
   { path: 'applications', component: ApplicationsComponent },
   { path: '', redirectTo: 'home', pathMatch: 'full' }
 ];

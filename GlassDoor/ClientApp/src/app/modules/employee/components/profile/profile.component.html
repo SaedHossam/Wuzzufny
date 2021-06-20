@@ -12,6 +12,10 @@
                     <div class="col-6 col-sm-3 col-lg-2">
                       <div class="avatar avatar-xl me-3 shadow">
                         <img [src]="profile.photo" alt="" *ngIf="profile.photo">
+                        <img src="../../../../../assets/Images/gallery/user-m.png" alt=""
+                          *ngIf="!profile.photo && profile.gender == 0">
+                        <img src="../../../../../assets/Images/gallery/user-f.png" alt=""
+                          *ngIf="!profile.photo && profile.gender == 1">
                       </div>
                     </div>
                     <div class="col-12 col-sm-9 col-lg-10 mt-3 mt-sm-2" [formGroup]="imageUpload">
@@ -24,10 +28,16 @@
                   <hr />
                   <div class="row mb-3">
                     <div class="col">
-                      <h3>Your Personal Info</h3>
 
                       <form #personalInfo="ngForm">
                         <div class="row">
+                          <div class="col-12 mb-4">
+                            <h3>Summary</h3>
+                            <textarea [(ngModel)]="profile.summary" name="summary" class="form-control"
+                              rows="5"></textarea>
+                          </div>
+
+                          <h3>Your Personal Info</h3>
                           <div class="col-12 col-md-6">
                             <div class="form-group position-relative has-icon-left mb-4">
                               <input type="text" id="firstName" class="form-control form-control-xl"
@@ -239,9 +249,9 @@
 
                     <h4>What languages do you know?</h4>
                     <div class="form-group mb-4">
-                      <p-multiSelect [(ngModel)]="skill_lang.languageId" name="languageId" [filter]="false" [showHeader]="false"
-                        defaultLabel="Select at least one" [options]="languages" optionLabel="name" optionValue="id"
-                        selectedItemsLabel="{0} items selected"></p-multiSelect>
+                      <p-multiSelect [(ngModel)]="skill_lang.languageId" name="languageId" [filter]="false"
+                        [showHeader]="false" defaultLabel="Select at least one" [options]="languages" optionLabel="name"
+                        optionValue="id" selectedItemsLabel="{0} items selected"></p-multiSelect>
                     </div>
 
                     <button class="btn btn-primary" (click)="updateSkills_Lang_InUI()">Save changes</button>

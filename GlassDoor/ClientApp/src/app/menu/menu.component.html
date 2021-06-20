@@ -32,14 +32,6 @@
              [routerLinkActiveOptions]="{exact: true}"> Explore </a>
         </li>
         <li class="nav-item px-2">
-          <a class="nav-link" [routerLink]="['/employee/profile']" routerLinkActive="active"
-             [routerLinkActiveOptions]="{exact: true}"> Profile Edit </a>
-        </li>
-        <li class="nav-item px-2">
-          <a class="nav-link" [routerLink]="['/employee/profile/1']" routerLinkActive="active"
-             [routerLinkActiveOptions]="{exact: true}"> Profile view </a>
-        </li>
-        <li class="nav-item px-2">
           <a class="nav-link" [routerLink]="['/employee/applications']" routerLinkActive="active"
              [routerLinkActiveOptions]="{exact: true}"> Applications </a>
         </li>
@@ -93,8 +85,18 @@
               <div ngbDropdownToggle>
                 <i class="bi bi-list fs-2" style="cursor: pointer"></i>
               </div>
-              <div ngbDropdownMenu class="dropdown-menu">
-                <button ngbDropdownItem><i class="bi bi-person fs-5"></i> Profile</button>
+              <div ngbDropdownMenu class="dropdown-menu dropdown-menu-right">
+                <a ngbDropdownItem *ngIf='isUserAuthenticated && isUserEmployee' [routerLink]="['/employee/profile']">
+                  <i class="bi bi-person fs-5"></i> Edit Profile
+                </a>
+
+                <a ngbDropdownItem *ngIf='isUserAuthenticated && isUserEmployee' [routerLink]="['/employee/profile/public']">
+                  <i class="bi bi-person fs-5"></i> view public Profile
+                </a>
+
+                <a ngbDropdownItem *ngIf='isUserAuthenticated && isUserCompany' [routerLink]="['/company/profile']">
+                  <i class="bi bi-building fs-5"></i> Edit Company Profile
+                </a>
 
                 <div class="dropdown-divider"></div>
 
