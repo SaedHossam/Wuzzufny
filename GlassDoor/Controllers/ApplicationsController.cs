@@ -42,7 +42,7 @@ namespace GlassDoor.Controllers
 
         // GET: api/Applications/5
         [HttpGet("jobId/{jobId}")]
-        [Authorize(Roles = Authorization.Company)]
+        [Authorize(Roles = "Company")]
         public async Task<ActionResult<List<CompanyApplicationDto>>> GetApplications(int jobId)
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
@@ -80,7 +80,7 @@ namespace GlassDoor.Controllers
 
         // GET: api/Applications/5
         [HttpGet("{id}")]
-        [Authorize(Roles = Authorization.Company)]
+        [Authorize(Roles = "Company")]
         public ActionResult<CompanyApplicationDto> GetApplication(int id)
         {
             var application = _context.Applications
@@ -110,7 +110,7 @@ namespace GlassDoor.Controllers
         // PUT: api/Applications/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        [Authorize(Roles = Authorization.Company)]
+        [Authorize(Roles = "Company")]
         public async Task<IActionResult> PutApplication(int id, Application application)
         {
             if (id != application.Id)
@@ -142,7 +142,7 @@ namespace GlassDoor.Controllers
         //change Application status
 
         [HttpPut("status")]
-        [Authorize(Roles = Authorization.Company)]
+        [Authorize(Roles = "Company")]
         public IActionResult ChangeApplicationStatus(ApplicationStatusDto applicationDto)
         {
 
