@@ -15,6 +15,8 @@ import { Country } from 'src/app/models/country';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CompanyLinks } from 'src/app/models/company-links';
 import { EditCompanyProfileDto } from '../../models/edit-company-profile-dto';
+import { FileUpload } from 'primeng/fileupload';
+import { HttpClient, HttpEventType } from '@angular/common/http';
 
 @Component({
   selector: 'app-company-profile-edit',
@@ -34,6 +36,8 @@ export class CompanyProfileEditComponent implements OnInit {
   public editProfileForm: FormGroup;
   maxYearRange: number = new Date().getFullYear();
   dateNow: Date = new Date();
+  public progress: number;
+  public message: string;
   constructor(
     private displayProfileService: DisplayCompanyProfileService,
     private _countryService: CountryService,
@@ -42,6 +46,7 @@ export class CompanyProfileEditComponent implements OnInit {
     private _companyType: CompanyTypeService,
     private _companyIndustry: CompanyIndustryService,
     private _editProfileService:DisplayCompanyProfileService,
+    public _http :HttpClient
 
   ) { }
 
@@ -83,7 +88,7 @@ export class CompanyProfileEditComponent implements OnInit {
       // console.log(this.companyProfile);
       this.editProfileForm.get('aboutUs').setValue(this.companyProfile.aboutUs);
       this.editProfileForm.get('name').setValue(this.companyProfile.name);
-      this.editProfileForm.get('logo').setValue(this.companyProfile.logo);
+    // this.editProfileForm.get('logo').setValue(this.companyProfile.logo);
       this.editProfileForm.get('phone').setValue(this.companyProfile.phone);
       this.editProfileForm.get('yearFounded').setValue(new Date(this.companyProfile.yearFounded));
       this.editProfileForm.get('companyIndustry').setValue(this.companyProfile.companyIndustry.id);
@@ -113,6 +118,26 @@ export class CompanyProfileEditComponent implements OnInit {
       console.log(this.companyIndustries);
     });
 
+  }
+  public uploadFile =(event)=> {
+    if(event.target.files.Length==0){
+      return;
+    }
+    let fileToUpload =event.target.files[0];
+    const formData =new FormData();
+    formData.append('file',fileToUpload,fileToUpload.name)
+    this._http.post('https://localhost:44390/api/companies/upload',formData,{reportProgress:true ,observe:'events'})
+    .subscribe(e=>{
+      if(e.type===HttpEventType.UploadProgress)
+      this.progress=Math.round(100*e.loaded/e.total);
+      else if(e.type===HttpEventType.Response){
+        this.showSuccess('uploaded','your photo is uploaded successfully ');
+      }
+    })
+  }
+  showSuccess(summary:string,detail:string){
+    //this.messageServices.add({severity:'success',summary:summary,detail:detail});
+    console.log({severity:'success',summary:summary,detail:detail})
   }
   editProfile(editForm) {
 
