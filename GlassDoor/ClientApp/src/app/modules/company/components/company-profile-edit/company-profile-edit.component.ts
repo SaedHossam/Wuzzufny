@@ -94,7 +94,8 @@ export class CompanyProfileEditComponent implements OnInit {
       console.log(this.facebookLink)
       this.editProfileForm.get('companySize').setValue(this.companyProfile.companySize.id);
       this.editProfileForm.get('companyType').setValue(this.companyProfile.companyType.id);
-      this.editProfileForm.get('locations').setValue(this.companyProfile.locations);
+
+      this.editProfileForm.get('locations').setValue(this.companyProfile.locations.map((val, index) => ({countryId:val.cities.countryId , id: val.cities.id, name: val.cities.name})));
       console.log(this.companyProfile);
     });
 
@@ -126,7 +127,7 @@ export class CompanyProfileEditComponent implements OnInit {
      companyIndustryId:editForm.value.companyIndustry,
      companyTypeId:editForm.value.companyType,
      companySizeId:editForm.value.companySize,
-     locations:editForm.value.locations.map((val, index) => ({ locationsId: val.id})) ,
+     locations:editForm.value.locations.map((val, index) => ({cityId: val.id, companyId:this.companyProfile.id})) ,
      companyLinks:links ,
     requestStatusId:this.companyProfile.requestStatusId
     }
@@ -134,5 +135,5 @@ export class CompanyProfileEditComponent implements OnInit {
     this._editProfileService.putCompanyProfile(companyProfileEdit).subscribe(response=>{
        console.log(response);
     })
-  }
+   }
 }

@@ -15,6 +15,7 @@ export interface CompanyProfile {
     companyIndustry:CompanyIndustry,
     companySize:CompanySize,
     locations :LocationDto[],
+    
     companyLinks:CompanyLinksDto[],
     id?:number,
     requestStatusId?:number

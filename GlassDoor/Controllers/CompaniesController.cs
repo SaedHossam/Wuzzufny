@@ -99,6 +99,13 @@ namespace GlassDoor.Controllers
        
             var newCompany = _mapper.Map<Company>(company);
             _mapper.Map<Company, Company>(newCompany, oldCompany);
+            var industry = _context.CompanyIndustries.FirstOrDefault(a => a.Id == company.CompanyIndustryId);
+            oldCompany.CompanyIndustry = industry;
+            var size = _context.CompanySizes.FirstOrDefault(a => a.Id == company.CompanySizeId);
+            oldCompany.CompanySize = size;
+            var type = _context.CompanyTypes.FirstOrDefault(a => a.Id == company.CompanyTypeId);
+            oldCompany.CompanyType = type;
+            
 
             try
             {

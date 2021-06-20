@@ -10,7 +10,7 @@ namespace GlassDoor.ViewModels
     {
         public int companyId { get; set; }
         public int cityId { get; set; }
-        public City city { get; set; }
+        public CityDto cities { get; set; }
 
     }
 }
