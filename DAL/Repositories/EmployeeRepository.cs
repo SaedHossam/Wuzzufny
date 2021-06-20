@@ -70,8 +70,7 @@ namespace DAL.Repositories
         }
         public Employee GetEmpLinks(int id)
         {
-            return _appContext.Employees.Where(j => j.Id == id).Include(e => e.EmployeeLinks).FirstOrDefault();
-
+            return _appContext.Employees.Include(e => e.EmployeeLinks).FirstOrDefault(e => e.Id == id);
         }
 
         public Employee GetEmpData(int id)
@@ -79,12 +78,9 @@ namespace DAL.Repositories
             return _appContext.Employees.FirstOrDefault(e => e.Id == id);
         }
 
-
-
-
         public Employee GetEmployeeSkills(int id)
         {
-            return _appContext.Employees.Include(a => a.Skills).Where(a => a.Id == id).FirstOrDefault();
+            return _appContext.Employees.Include(a => a.Skills).FirstOrDefault(a => a.Id == id);
         }
     }
 }

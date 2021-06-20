@@ -20,7 +20,9 @@ export class UpdateEmployeeDto {
     public gender?: Gender,
     public militaryStatus?: MilitaryStatus,
     public userFirstName?: string,
-    public userLastName?: string
+    public userLastName?: string,
+    public photo?: string,
+    public cv?: string
   ) {
   }
 }

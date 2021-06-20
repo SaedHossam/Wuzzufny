@@ -157,13 +157,29 @@ namespace GlassDoor
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             // configuration for upload api
-            app.UseStaticFiles();
+            //app.UseStaticFiles();
+
+            string cachePeriod = env.IsDevelopment() ? "600" : "31536000";
             app.UseStaticFiles(new StaticFileOptions()
             {
                 FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Resources")),
-                RequestPath = new PathString("/Resources")
-            });
+                RequestPath = new PathString("/Resources"),
 
+                OnPrepareResponse = staticFileResponceContext =>
+                {
+
+                    var directoryName = new FileInfo(staticFileResponceContext.File.PhysicalPath).Directory?.Name;
+
+                    if (directoryName != null && directoryName.Equals("images", StringComparison.OrdinalIgnoreCase))
+                    {
+                        staticFileResponceContext.Context.Response.Headers.Append("Cache-Control", $"public, no-store");
+                    }
+                    else
+                    {
+                        staticFileResponceContext.Context.Response.Headers.Append("Cache-Control", $"public, max-age={cachePeriod}");
+                    }
+                }
+            });
 
             var jsonTextCities = System.IO.File.ReadAllText(@"cities.json");
             Seeding.Seed<Country>(jsonTextCities, app.ApplicationServices);

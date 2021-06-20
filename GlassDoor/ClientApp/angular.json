@@ -81,7 +81,7 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
             "browserTarget": "ClientApp:build",
-            "publicHost": "localhost:44390"
+            //"publicHost": "localhost:44390"
           },
           "configurations": {
             "production": {

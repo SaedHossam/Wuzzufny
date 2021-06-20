@@ -10,4 +10,10 @@ namespace GlassDoor.ViewModels
     {
         public string Link { get; set; }
     }
+
+    public class UpdateEmployeeLinksDto
+    {
+        public string Link { get; set; }
+        public string Name { get; set; }
+    }
 }

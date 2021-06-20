@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Observer } from 'rxjs';
 import { CarrerInterestDto } from '../../models/carrer-interest-dto';
 import { EducationAndExpDto } from '../../models/education-and-exp-dto';
 import { Employee } from '../../models/employee';
-import { EmployeeLinks } from '../../models/employee-links';
+import { EmployeeLink } from '../../models/employee-links';
 import { SkillAndLanguageDto } from '../../models/skill-and-language-dto';
 import { UpdateEmployeeDto } from '../../models/update-emplyee-dto';
 import { EmployeeDto } from '../../modules/company/models/employee-dto';
@@ -21,7 +21,7 @@ export class UserProfileService {
     return this.http.get<Employee>(this._envUrl.urlAddress + '/api/Employees/' + id);
   }
 
-  public getMyProfileData() {
+  public getMyProfileData():Observable<Employee> {
     return this.http.get<Employee>(this._envUrl.urlAddress + '/api/Employees/me');
   }
 
@@ -42,7 +42,7 @@ export class UserProfileService {
     return this.http.put(this._envUrl.urlAddress + '/api/Employees/SkillAndLanguage/', empData);
   }
 
-  public getEmpLink(empData: EmployeeLinks) {
-    return this.http.put(this._envUrl.urlAddress + '/api/Employees/EmployeeLinks/', empData);
+  public updateEmplpyeeLinks(links: EmployeeLink[]) {
+    return this.http.put(this._envUrl.urlAddress + '/api/Employees/EmployeeLinks/', links);
   }
 }

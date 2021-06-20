@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { Country } from "../../../../models/country";
 import { CountryService } from "../../../../shared/services/country.service";
@@ -22,8 +22,10 @@ import { UpdateEmployeeDto } from '../../../../models/update-emplyee-dto';
 import { CarrerInterestDto } from '../../../../models/carrer-interest-dto';
 import { EducationAndExpDto } from '../../../../models/education-and-exp-dto';
 import { SkillAndLanguageDto } from '../../../../models/skill-and-language-dto';
-import { EmployeeLinks } from '../../../../models/employee-links';
-import { NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
+import { EmployeeLink } from '../../../../models/employee-links';
+import { FormControl, FormGroup, NgForm } from '@angular/forms';
+import { UploadFilesService } from '../../../../shared/services/upload-files.service';
+import { HttpEventType } from '@angular/common/http';
 
 @Component({
   selector: 'app-profile',
@@ -32,8 +34,15 @@ import { NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 })
 export class ProfileComponent implements OnInit {
   active = 'General Info';
-  //dateOfBirth: NgbDateStruct;
-  //isWillingToRelocate: boolean;
+  imageUpload = new FormGroup({
+    imageFile: new FormControl('')
+  });
+
+  cvUpload = new FormGroup({
+    cvFile: new FormControl('')
+  });
+
+  @ViewChild(NgForm) personalInfo: NgForm;
 
   countries: Country[];
   cities: City[];
@@ -44,6 +53,19 @@ export class ProfileComponent implements OnInit {
   skills: Skills[];
   skillsList: Skills[];
   languages: Language[];
+  employee: Employee;
+  profile: UpdateEmployeeDto = new UpdateEmployeeDto();
+  career: CarrerInterestDto = new CarrerInterestDto();
+  edu_exp: EducationAndExpDto = new EducationAndExpDto();
+  skill_lang: SkillAndLanguageDto = new SkillAndLanguageDto();
+  employeeSkills: Skills[];
+  links: EmployeeLink[];
+  linkedInLink: string;
+  facebookLink: string
+  twitterLink: string;
+  githubLink: string;
+
+  birthDateStruct: any;
 
   constructor(
     private countryService: CountryService,
@@ -55,19 +77,8 @@ export class ProfileComponent implements OnInit {
     private skillService: SkillService,
     private languageService: LanguagesService,
     private userProfileService: UserProfileService,
-    private parserFormatter: NgbDateParserFormatter
-  ) {
+    private uploadFilesService: UploadFilesService) {
   }
-
-  employee: Employee;
-  profile: UpdateEmployeeDto = new UpdateEmployeeDto();
-  career: CarrerInterestDto = new CarrerInterestDto();
-  edu_exp: EducationAndExpDto = new EducationAndExpDto();
-  skill_lang: SkillAndLanguageDto = new SkillAndLanguageDto();
-  skill: Skills[];
-  empLink: EmployeeLinks = new EmployeeLinks();
-
-  birthDateStruct: any;
 
   ngOnInit(): void {
     this.countryService.getCountries().subscribe(c => { this.countries = c });
@@ -79,26 +90,31 @@ export class ProfileComponent implements OnInit {
     this.skillService.getSkills().subscribe(s => { this.skills = s });
     this.languageService.getLanguages().subscribe(l => { this.languages = l });
 
+    this.loadEmployeeData();
+  }
 
-
+  loadEmployeeData() {
     this.userProfileService.getMyProfileData().subscribe(a => {
       this.profile = a;
-      this.career = a;
-      this.edu_exp = a;
+
+      this.career.careerLevelId = a.careerLevelId;
+      this.career.jobTypeId = a.jobTypesName.map((jobTypes) => jobTypes.id);
+      this.career.preferredJobCategories = a.preferredJobCategoriesName.map((jobCategory) => jobCategory.id);
+
+      this.edu_exp.educationLevelId = a.educationLevelId;
+      this.edu_exp.experienceYears = a.experienceYears;
+
+      this.employeeSkills = a.skillsNames;
+      this.skill_lang.languageId = a.userLanguagesNames.map(language => language.languageId);
+
+      this.links = a.employeeLinksNames.map(link => new EmployeeLink(link.name, link.link));
+
+      this.facebookLink = this.links.find(link => link.name === "facebook")?.link;
+      this.githubLink = this.links.find(link => link.name === "github")?.link;
+      this.twitterLink = this.links.find(link => link.name === "twitter")?.link;
+      this.linkedInLink = this.links.find(link => link.name === "linkedin")?.link;
 
       this.profile.birthDate = new Date(this.profile.birthDate);
-      //this.birthDateStruct = {
-      //  day: this.profile.birthDate.getDay(),
-      //  month: this.profile.birthDate.getMonth(),
-      //  year: this.profile.birthDate.getFullYear()
-      //};
-
-      console.log(this.profile.birthDate);
-      console.log(this.profile.birthDate.getDate());
-      console.log(this.profile.birthDate.getMonth());
-      console.log(this.profile.birthDate.getFullYear());
-
-
       this.birthDateStruct = {
         year: this.profile.birthDate.getFullYear(),
         month: this.profile.birthDate.getMonth() + 1,
@@ -110,73 +126,97 @@ export class ProfileComponent implements OnInit {
       });
   }
 
-
   searchSkills(event) {
     this.skillsList = this.skills.filter(c => c.name.startsWith(event.query));
   }
 
   update() {
     this.profile.birthDate = new Date(this.birthDateStruct.year, this.birthDateStruct.month - 1, this.birthDateStruct.day + 1);
-    console.log("prof", this.profile);
-    this.userProfileService.editEmpProfile(this.profile).subscribe(a => {
-      this.employee = a;
-    })
+    this.userProfileService.editEmpProfile(this.profile).subscribe(a => { },
+      error => { },
+      () => this.loadEmployeeData()
+    );
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   updateCarrerInterest() {
-    this.userProfileService.editCareerInterest_InUI(this.career).subscribe(a => {
-      this.employee = a;
-    })
+    this.userProfileService.editCareerInterest_InUI(this.career).subscribe(a => { },
+      error => { },
+      () => this.loadEmployeeData()
+    );
   }
 
   updateEduExp_InUI() {
-    console.log(this.edu_exp)
-    this.userProfileService.editEduExp_InUI(this.edu_exp).subscribe(a => {
-      console.log(a)
-      this.employee = a;
-      console.log(this.edu_exp)
-
-    })
+    this.userProfileService.editEduExp_InUI(this.edu_exp).subscribe(a => { },
+      error => { },
+      () => this.loadEmployeeData()
+    );
   }
 
   updateSkills_Lang_InUI() {
-    this.skill_lang.skillId = this.skill.map((val, index) => (val.id));
-    this.userProfileService.editSkill_Lang_InUI(this.skill_lang).subscribe(a => {
-      this.employee = a;
-    })
+    this.skill_lang.skillId = this.employeeSkills.map((val, index) => (val.id));
+    this.userProfileService.editSkill_Lang_InUI(this.skill_lang).subscribe(a => { },
+      error => { },
+      () => this.loadEmployeeData()
+    );
   }
 
-  updateEmpLinks() {
-    console.log(this.empLink);
-    this.userProfileService.getEmpLink(this.empLink).subscribe(o => {
-      this.employee = o;
-      console.log(this.empLink);
-    })
+  updateLinks() {
+    this.links = [
+      new EmployeeLink("facebook", this.facebookLink?.trim().length ? this.facebookLink?.trim() : null),
+      new EmployeeLink("github", this.githubLink?.trim().length ? this.githubLink?.trim() : null),
+      new EmployeeLink("twitter", this.twitterLink?.trim().length ? this.twitterLink?.trim() : null),
+      new EmployeeLink("linkedin", this.linkedInLink?.trim().length ? this.linkedInLink?.trim() : null),
+    ];
+
+    this.userProfileService.updateEmplpyeeLinks(this.links).subscribe(o => { },
+      error => { },
+      () => this.loadEmployeeData()
+    );
+  }
+
+  uploadFile(event: Event) {
+    const target = event.target as HTMLInputElement;
+    const files = target.files as FileList;
+
+    if (files.length === 0) {
+      return;
+    }
+    this.profile.photo = null;
+    let fileToUpload: File = files[0];
+    const formData = new FormData();
+    formData.append('file', fileToUpload, fileToUpload.name);
+    this.uploadFilesService.uploadEmployeeImage(formData).subscribe(e => {
+      if (e.type === HttpEventType.Response) {
+        console.log('fileUploaded');
+      }
+    },
+      (error) => {
+        console.log(error);
+      },
+      () => this.loadEmployeeData()
+    );
+  }
+
+  uploadCVFile(event: Event) {
+    const target = event.target as HTMLInputElement;
+    const files = target.files as FileList;
+
+    if (files.length === 0) {
+      return;
+    }
+    this.profile.cv = null;
+    let fileToUpload: File = files[0];
+    const formData = new FormData();
+    formData.append('Cv', fileToUpload, fileToUpload.name);
+    this.uploadFilesService.uploadEmployeeCV(formData).subscribe(e => {
+      if (e.type === HttpEventType.Response) {
+        console.log('fileUploaded');
+      }
+    },
+      (error) => {
+        console.log(error);
+      },
+      () => this.loadEmployeeData()
+    );
   }
 }
-//this.postJobDto.skills = postjobform.value.skills.map((val, index) => ({ skillsId: val.id }));

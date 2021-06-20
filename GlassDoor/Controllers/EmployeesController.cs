@@ -355,54 +355,27 @@ namespace GlassDoor.Controllers
 
         [HttpPut("EmployeeLinks")]
         [Authorize(Roles = "Employee")]
-        public async Task<IActionResult> PutEmployee(ICollection<EmployeeLinksManager> EmployeeLinks)
+        public async Task<IActionResult> PutEmployee(ICollection<UpdateEmployeeLinksDto> employeeLinks)
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
             var emp = _unitOfWork.Employees.Find(e => e.UserId == user.Id).FirstOrDefault();
             var employee = _unitOfWork.Employees.GetEmpLinks(emp.Id);
 
-            foreach (var item in EmployeeLinks)
+            foreach (var item in employeeLinks)
             {
-                var empLink = employee.EmployeeLinks.FirstOrDefault(e => e.Name == item.FacebookName);
-                if (empLink == null)
+                if (item.Link != null)
                 {
-                    employee.EmployeeLinks.Add(new EmployeeLinks() { Name = item.FacebookName, Link = item.FacebookLink });
+                    var empLink = employee.EmployeeLinks.FirstOrDefault(e =>
+                        e.Name.Equals(item.Name, StringComparison.OrdinalIgnoreCase));
+                    if (empLink == null)
+                    {
+                        employee.EmployeeLinks.Add(new EmployeeLinks() {Name = item.Name.ToLower(), Link = item.Link});
+                    }
+                    else
+                    {
+                        empLink.Link = item.Link;
+                    }
                 }
-                else
-                {
-                    empLink.Link = item.FacebookLink;
-                }
-
-                var empLink2 = employee.EmployeeLinks.FirstOrDefault(e => e.Name == item.LinkedInName);
-                if (empLink2 == null)
-                {
-                    employee.EmployeeLinks.Add(new EmployeeLinks() { Name = item.LinkedInName, Link = item.LinkedInLink });
-                }
-                else
-                {
-                    empLink2.Link = item.LinkedInLink;
-                }
-
-                var empLink3 = employee.EmployeeLinks.FirstOrDefault(e => e.Name == item.TwitterName);
-                if (empLink3 == null)
-                {
-                    employee.EmployeeLinks.Add(new EmployeeLinks() { Name = item.TwitterName, Link = item.TwitterLink });
-                }
-                else
-                {
-                    empLink3.Link = item.TwitterLink;
-                }
-
-                var empLink4 = employee.EmployeeLinks.FirstOrDefault(e => e.Name == item.GithubName);
-                if (empLink4 == null)
-                {
-                    employee.EmployeeLinks.Add(new EmployeeLinks() { Name = item.GithubName, Link = item.GithubLink });
-                }
-                else
-                {
-                    empLink4.Link = item.GithubLink;
-                }
-
             }
             _unitOfWork.SaveChanges();
             return NoContent();
@@ -454,17 +427,18 @@ namespace GlassDoor.Controllers
         [Authorize(Roles = "Employee")]
         public async Task<IActionResult> UploadCv(IFormFile Cv)
         {
+            if (Cv == null)
+            {
+                return BadRequest("provide a file");
+            }
+
             var user = await _userManager.GetUserAsync(HttpContext.User);
             var emp = _unitOfWork.Employees.Find(e => e.UserId == user.Id).FirstOrDefault();
             var employee = _unitOfWork.Employees.GetEmpData(emp.Id);
             var path = Path.GetFullPath(Cv.FileName);
             //Guid.NewGuid();
             var fileName = employee.UserId;
-            if (employee.CV != null)
-            {
-                var pathToDelete = Path.Combine(Directory.GetCurrentDirectory(), employee.CV);
-                System.IO.File.Delete(pathToDelete);
-            }
+          
             if (Path.GetExtension(path).Contains(".pdf"))
             {
                 fileName += ".pdf";
@@ -473,7 +447,16 @@ namespace GlassDoor.Controllers
             {
                 fileName += ".docx";
             }
+            else
+            {
+                return BadRequest("file type isn't allowed, please upload word file or pdf");
+            }
 
+            if (employee.CV != null)
+            {
+                var pathToDelete = Path.Combine(Directory.GetCurrentDirectory(), employee.CV);
+                System.IO.File.Delete(pathToDelete);
+            }
 
             try
             {
