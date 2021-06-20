@@ -42,63 +42,63 @@ namespace GlassDoor.Controllers
             return companyRequestStatus;
         }
 
-        // PUT: api/CompanyRequestStatus/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutCompanyRequestStatus(int id, CompanyRequestStatus companyRequestStatus)
-        {
-            if (id != companyRequestStatus.Id)
-            {
-                return BadRequest();
-            }
+        //// PUT: api/CompanyRequestStatus/5
+        //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        //[HttpPut("{id}")]
+        //public async Task<IActionResult> PutCompanyRequestStatus(int id, CompanyRequestStatus companyRequestStatus)
+        //{
+        //    if (id != companyRequestStatus.Id)
+        //    {
+        //        return BadRequest();
+        //    }
 
-            _context.Entry(companyRequestStatus).State = EntityState.Modified;
+        //    _context.Entry(companyRequestStatus).State = EntityState.Modified;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CompanyRequestStatusExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+        //    try
+        //    {
+        //        await _context.SaveChangesAsync();
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!CompanyRequestStatusExists(id))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
 
-        // POST: api/CompanyRequestStatus
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<CompanyRequestStatus>> PostCompanyRequestStatus(CompanyRequestStatus companyRequestStatus)
-        {
-            _context.CompanyRequestStatus.Add(companyRequestStatus);
-            await _context.SaveChangesAsync();
+        //// POST: api/CompanyRequestStatus
+        //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        //[HttpPost]
+        //public async Task<ActionResult<CompanyRequestStatus>> PostCompanyRequestStatus(CompanyRequestStatus companyRequestStatus)
+        //{
+        //    _context.CompanyRequestStatus.Add(companyRequestStatus);
+        //    await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetCompanyRequestStatus", new { id = companyRequestStatus.Id }, companyRequestStatus);
-        }
+        //    return CreatedAtAction("GetCompanyRequestStatus", new { id = companyRequestStatus.Id }, companyRequestStatus);
+        //}
 
-        // DELETE: api/CompanyRequestStatus/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCompanyRequestStatus(int id)
-        {
-            var companyRequestStatus = await _context.CompanyRequestStatus.FindAsync(id);
-            if (companyRequestStatus == null)
-            {
-                return NotFound();
-            }
+        //// DELETE: api/CompanyRequestStatus/5
+        //[HttpDelete("{id}")]
+        //public async Task<IActionResult> DeleteCompanyRequestStatus(int id)
+        //{
+        //    var companyRequestStatus = await _context.CompanyRequestStatus.FindAsync(id);
+        //    if (companyRequestStatus == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            _context.CompanyRequestStatus.Remove(companyRequestStatus);
-            await _context.SaveChangesAsync();
+        //    _context.CompanyRequestStatus.Remove(companyRequestStatus);
+        //    await _context.SaveChangesAsync();
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
 
         private bool CompanyRequestStatusExists(int id)
         {

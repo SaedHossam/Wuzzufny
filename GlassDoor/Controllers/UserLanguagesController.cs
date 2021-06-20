@@ -42,63 +42,63 @@ namespace GlassDoor.Controllers
             return userLanguage;
         }
 
-        // PUT: api/UserLanguages/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutUserLanguage(int id, UserLanguage userLanguage)
-        {
-            if (id != userLanguage.Id)
-            {
-                return BadRequest();
-            }
+        //// PUT: api/UserLanguages/5
+        //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        //[HttpPut("{id}")]
+        //public async Task<IActionResult> PutUserLanguage(int id, UserLanguage userLanguage)
+        //{
+        //    if (id != userLanguage.Id)
+        //    {
+        //        return BadRequest();
+        //    }
 
-            _context.Entry(userLanguage).State = EntityState.Modified;
+        //    _context.Entry(userLanguage).State = EntityState.Modified;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!UserLanguageExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+        //    try
+        //    {
+        //        await _context.SaveChangesAsync();
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!UserLanguageExists(id))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
 
-        // POST: api/UserLanguages
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<UserLanguage>> PostUserLanguage(UserLanguage userLanguage)
-        {
-            _context.UserLanguages.Add(userLanguage);
-            await _context.SaveChangesAsync();
+        //// POST: api/UserLanguages
+        //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        //[HttpPost]
+        //public async Task<ActionResult<UserLanguage>> PostUserLanguage(UserLanguage userLanguage)
+        //{
+        //    _context.UserLanguages.Add(userLanguage);
+        //    await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetUserLanguage", new { id = userLanguage.Id }, userLanguage);
-        }
+        //    return CreatedAtAction("GetUserLanguage", new { id = userLanguage.Id }, userLanguage);
+        //}
 
-        // DELETE: api/UserLanguages/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUserLanguage(int id)
-        {
-            var userLanguage = await _context.UserLanguages.FindAsync(id);
-            if (userLanguage == null)
-            {
-                return NotFound();
-            }
+        //// DELETE: api/UserLanguages/5
+        //[HttpDelete("{id}")]
+        //public async Task<IActionResult> DeleteUserLanguage(int id)
+        //{
+        //    var userLanguage = await _context.UserLanguages.FindAsync(id);
+        //    if (userLanguage == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            _context.UserLanguages.Remove(userLanguage);
-            await _context.SaveChangesAsync();
+        //    _context.UserLanguages.Remove(userLanguage);
+        //    await _context.SaveChangesAsync();
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
 
         private bool UserLanguageExists(int id)
         {

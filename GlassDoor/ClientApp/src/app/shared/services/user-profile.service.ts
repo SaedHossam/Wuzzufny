@@ -1,7 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Observer } from 'rxjs';
+import { CarrerInterestDto } from '../../models/carrer-interest-dto';
+import { EducationAndExpDto } from '../../models/education-and-exp-dto';
 import { Employee } from '../../models/employee';
+import { EmployeeLink } from '../../models/employee-links';
+import { SkillAndLanguageDto } from '../../models/skill-and-language-dto';
+import { UpdateEmployeeDto } from '../../models/update-emplyee-dto';
+import { EmployeeDto } from '../../modules/company/models/employee-dto';
 import { EnvironmentUrlService } from './environment-url.service';
 
 @Injectable({
@@ -15,8 +21,28 @@ export class UserProfileService {
     return this.http.get<Employee>(this._envUrl.urlAddress + '/api/Employees/' + id);
   }
 
-  public editEmpProfile(empData: Employee) {
-    return this.http.put(this._envUrl.urlAddress + '/api/Employees/' + empData.id, empData);
+  public getMyProfileData():Observable<Employee> {
+    return this.http.get<Employee>(this._envUrl.urlAddress + '/api/Employees/me');
   }
 
+  public editEmpProfile(empData: UpdateEmployeeDto) {
+    return this.http.put(this._envUrl.urlAddress + '/api/Employees/UpdateEmployee/', empData);
+  }
+
+  public editCareerInterest_InUI(empData: CarrerInterestDto) {
+    return this.http.put(this._envUrl.urlAddress + '/api/Employees/jobCategory/', empData);
+  }
+
+  public editEduExp_InUI(empData: EducationAndExpDto) {
+    return this.http.put(this._envUrl.urlAddress + '/api/Employees/EducationAndExperience/', empData);
+  }
+
+  
+  public editSkill_Lang_InUI(empData: SkillAndLanguageDto) {
+    return this.http.put(this._envUrl.urlAddress + '/api/Employees/SkillAndLanguage/', empData);
+  }
+
+  public updateEmplpyeeLinks(links: EmployeeLink[]) {
+    return this.http.put(this._envUrl.urlAddress + '/api/Employees/EmployeeLinks/', links);
+  }
 }

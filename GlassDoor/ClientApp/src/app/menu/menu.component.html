@@ -8,13 +8,12 @@
     </a>
     <button (click)="isMenuCollapsed = !isMenuCollapsed" class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
     <div class="collapse navbar-collapse border-lg-0 mt-4 mt-lg-0" [ngbCollapse]="isMenuCollapsed" id="navbarSupportedContent">
-
       <!-- anonymous user -->
       <ul *ngIf='!isUserAuthenticated' class="navbar-nav mx-auto pt-2 pt-lg-0">
-        <li class="nav-item px-2">
+        <!--<li class="nav-item px-2">
           <a class="nav-link fw-medium" [routerLink]="['/home']" routerLinkActive="active"
              [routerLinkActiveOptions]="{exact: true}" (click)="isMenuCollapsed = true">Home</a>
-        </li>
+        </li>-->
       </ul>
 
 
@@ -31,14 +30,6 @@
         <li class="nav-item px-2">
           <a class="nav-link" [routerLink]="['/employee/jobs']" routerLinkActive="active"
              [routerLinkActiveOptions]="{exact: true}"> Explore </a>
-        </li>
-        <li class="nav-item px-2">
-          <a class="nav-link" [routerLink]="['/employee/profile']" routerLinkActive="active"
-             [routerLinkActiveOptions]="{exact: true}"> Profile Edit </a>
-        </li>
-        <li class="nav-item px-2">
-          <a class="nav-link" [routerLink]="['/employee/profile/1']" routerLinkActive="active"
-             [routerLinkActiveOptions]="{exact: true}"> Profile view </a>
         </li>
         <li class="nav-item px-2">
           <a class="nav-link" [routerLink]="['/employee/applications']" routerLinkActive="active"
@@ -75,11 +66,47 @@
         </ul>
         <ul *ngIf='isUserAuthenticated' class="navbar-nav mr-auto mt-2 mt-lg-0">
           <li class="nav-item">
-            <button class="btn btn-lg btn-primary rounded-pill bg-gradient order-0" (click)="logout()">Logout</button>
+            <div ngbDropdown>
+              <div ngbDropdownToggle class="mt-1">
+                <i class="bi bi-bell fs-4" style="cursor: pointer"></i>
+              </div>
+              <div ngbDropdownMenu class="dropdown-menu dropdown-menu-right">
+                <button ngbDropdownItem>notification 1 with some text</button>
+                <button ngbDropdownItem>notification 2 with some text</button>
+                <button ngbDropdownItem>notification 3 with some text</button>
+                <button ngbDropdownItem>notification 4 with some text</button>
+                <button ngbDropdownItem>notification 5 with some text</button>
+                <button ngbDropdownItem>notification 6 with some text</button>
+              </div>
+            </div>
+          </li>
+          <li class="nav-item">
+            <div ngbDropdown>
+              <div ngbDropdownToggle>
+                <i class="bi bi-list fs-2" style="cursor: pointer"></i>
+              </div>
+              <div ngbDropdownMenu class="dropdown-menu dropdown-menu-right">
+                <a ngbDropdownItem *ngIf='isUserAuthenticated && isUserEmployee' [routerLink]="['/employee/profile']">
+                  <i class="bi bi-person fs-5"></i> Edit Profile
+                </a>
+
+                <a ngbDropdownItem *ngIf='isUserAuthenticated && isUserEmployee' [routerLink]="['/employee/profile/public']">
+                  <i class="bi bi-person fs-5"></i> view public Profile
+                </a>
+
+                <a ngbDropdownItem *ngIf='isUserAuthenticated && isUserCompany' [routerLink]="['/company/profile']">
+                  <i class="bi bi-building fs-5"></i> Edit Company Profile
+                </a>
+
+                <div class="dropdown-divider"></div>
+
+                <!--<button class="btn btn-lg btn-primary rounded-pill bg-gradient order-0" (click)="logout()">Logout</button>-->
+                <button ngbDropdownItem (click)="logout()"><i class="bi bi-box-arrow-left fs-5"></i> Logout</button>
+              </div>
+            </div>
           </li>
         </ul>
       </form>
     </div>
   </div>
 </nav>
-

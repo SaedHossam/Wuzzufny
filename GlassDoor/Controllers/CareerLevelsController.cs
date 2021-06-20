@@ -28,7 +28,7 @@ namespace GlassDoor.Controllers
 
         // GET: api/CareerLevels
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<CareerLevelDto>>> GetCareerLevels()
+        public ActionResult<IEnumerable<CareerLevelDto>> GetCareerLevels()
         {
             //return await _context.CareerLevels.ToListAsync();
             return Ok(_mapper.Map<IEnumerable<CareerLevelDto>>(_unitOfWork.CareerLevel.GetAll()));
@@ -36,7 +36,7 @@ namespace GlassDoor.Controllers
 
         // GET: api/CareerLevels/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<CareerLevelDto>> GetCareerLevel(int id)
+        public ActionResult<CareerLevelDto> GetCareerLevel(int id)
         {
             var careerLevel = _mapper.Map<CareerLevelDto>(_unitOfWork.CareerLevel.Get(id));
 
@@ -48,65 +48,65 @@ namespace GlassDoor.Controllers
             return careerLevel;
         }
 
-        // PUT: api/CareerLevels/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutCareerLevel(int id, CareerLevelDto careerLevelDto)
-        {
-            if (id != careerLevelDto.Id)
-            {
-                return BadRequest();
-            }
+        //// PUT: api/CareerLevels/5
+        //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        //[HttpPut("{id}")]
+        //public async Task<IActionResult> PutCareerLevel(int id, CareerLevelDto careerLevelDto)
+        //{
+        //    if (id != careerLevelDto.Id)
+        //    {
+        //        return BadRequest();
+        //    }
 
-            var companySize = _mapper.Map<CareerLevel>(careerLevelDto);
+        //    var companySize = _mapper.Map<CareerLevel>(careerLevelDto);
 
-            _unitOfWork.CareerLevel.Update(companySize);
+        //    _unitOfWork.CareerLevel.Update(companySize);
 
-            try
-            {
-                _unitOfWork.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CareerLevelExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+        //    try
+        //    {
+        //        _unitOfWork.SaveChanges();
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!CareerLevelExists(id))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
 
-        // POST: api/CareerLevels
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<CareerLevelDto>> PostCareerLevel(CareerLevelDto careerLevelDto)
-        {
-            var careerLevel = _mapper.Map<CareerLevel>(careerLevelDto);
-            _unitOfWork.CareerLevel.Add(careerLevel);
-            _unitOfWork.SaveChanges();
-            return CreatedAtAction("GetCareerLevel", new { id = careerLevel.Id }, careerLevel);
-        }
+        //// POST: api/CareerLevels
+        //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        //[HttpPost]
+        //public async Task<ActionResult<CareerLevelDto>> PostCareerLevel(CareerLevelDto careerLevelDto)
+        //{
+        //    var careerLevel = _mapper.Map<CareerLevel>(careerLevelDto);
+        //    _unitOfWork.CareerLevel.Add(careerLevel);
+        //    _unitOfWork.SaveChanges();
+        //    return CreatedAtAction("GetCareerLevel", new { id = careerLevel.Id }, careerLevel);
+        //}
 
-        // DELETE: api/CareerLevels/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCareerLevel(int id)
-        {
-            var careerLevel = _unitOfWork.CareerLevel.Get(id);
-            if (careerLevel == null)
-            {
-                return NotFound();
-            }
+        //// DELETE: api/CareerLevels/5
+        //[HttpDelete("{id}")]
+        //public async Task<IActionResult> DeleteCareerLevel(int id)
+        //{
+        //    var careerLevel = _unitOfWork.CareerLevel.Get(id);
+        //    if (careerLevel == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            _unitOfWork.CareerLevel.Remove(careerLevel);
-            _unitOfWork.SaveChanges();
+        //    _unitOfWork.CareerLevel.Remove(careerLevel);
+        //    _unitOfWork.SaveChanges();
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
 
         private bool CareerLevelExists(int id)
         {

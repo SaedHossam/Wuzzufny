@@ -75,6 +75,10 @@ namespace DAL
                 .OnDelete(DeleteBehavior.NoAction);
 
 
+            builder.Entity<Job>().Property(j => j.TotalClicks).HasDefaultValue(0);
+
+
+
             //builder.Entity<ApplicationUser>().HasOne<Employee>(au => au.Employee).WithOne(e => e.User)
             //    .OnDelete(DeleteBehavior.Cascade);
             //builder.Entity<ApplicationUser>().HasOne<CompanyManager>(au => au.CompanyManager).WithOne(cm => cm.User)

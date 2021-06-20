@@ -1,15 +1,6 @@
-import { Employee } from "./employee";
+export class EmployeeLink {
 
-export class EmployeeLinks {
-
-  constructor(employeeId?: number, employee?: Employee)
-  {
-
-    this.employeeId = employeeId;
-    this.employee = employee;
-    
-
+  constructor(public name: string, public link: string) {
   }
-  public employeeId: number;
-  public employee: Employee;
+
 }

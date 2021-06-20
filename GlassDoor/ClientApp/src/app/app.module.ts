@@ -34,6 +34,7 @@ import { NotificationService } from './shared/services/notification.service';
 import { ToasterStub } from './models/toaster-stub';
 import { ToastrModule } from 'ngx-toastr';
 import { MenubarModule } from 'primeng/menubar';
+import { CarouselModule } from 'primeng/carousel';
 
 export function tokenGetter() {
   return localStorage.getItem("token");
@@ -63,12 +64,13 @@ export function tokenGetter() {
     InputNumberModule,
     DropdownModule,
     MenubarModule,
+    CarouselModule,
     ToastrModule.forRoot(),
 
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
-        allowedDomains: ["localhost:44390"],
+        allowedDomains: ["localhost:44390", "localhost:5001"],
         disallowedRoutes: []
       }
     }),

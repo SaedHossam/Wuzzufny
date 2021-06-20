@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Employee } from '../../../../models/employee';
-import { Gender } from '../../../../models/enums/gender.enum';
-import { Skills } from '../../../../models/skills';
 import { UserProfileService } from '../../../../shared/services/user-profile.service';
 
 @Component({
@@ -15,54 +13,58 @@ export class EmployeeProfileComponent implements OnInit {
   constructor(private service: UserProfileService, private ac: ActivatedRoute) { }
 
   profile: Employee = new Employee();
-  public response: { dbPath: '' };
+  linkedInLink: string;
+  facebookLink: string
+  twitterLink: string;
+  githubLink: string;
 
   ngOnInit(): void {
-    this.ac.params.subscribe(p => {
-      this.service.getEmpById(p.id).subscribe(a => {
-        this.profile = a;
-        console.log(this.profile);
+    let isMyprofile = false;
+    let id = 0;
+    this.ac.pathFromRoot[this.ac.pathFromRoot.length - 1].url.subscribe(u => {
+      isMyprofile = u[1].path == 'public';
+      if (isMyprofile) {
+        this.service.getMyProfileData().subscribe(a => {
+          this.profile = a;
 
-      });
+          a.employeeLinksNames.forEach((link, index, array) => array[index].link = this.toAbsoluteLink(link.link));
+
+          this.linkedInLink = a.employeeLinksNames.find(link => link.name == "linkedin")?.link;
+          this.facebookLink = a.employeeLinksNames.find(link => link.name == "facebook")?.link;
+          this.githubLink = a.employeeLinksNames.find(link => link.name == "github")?.link;
+          this.twitterLink = a.employeeLinksNames.find(link => link.name == "twitter")?.link;
+        });
+      }
+      else {
+        this.ac.params.subscribe(p => {
+          this.service.getEmpById(p.id).subscribe(a => {
+            this.profile = a;
+
+            a.employeeLinksNames.forEach((link, index, array) => array[index].link = this.toAbsoluteLink(link.link));
+
+            this.linkedInLink = a.employeeLinksNames.find(link => link.name == "linkedin")?.link;
+            this.facebookLink = a.employeeLinksNames.find(link => link.name == "facebook")?.link;
+            this.githubLink = a.employeeLinksNames.find(link => link.name == "github")?.link;
+            this.twitterLink = a.employeeLinksNames.find(link => link.name == "twitter")?.link;
+          });
+        });
+      }
+    });
+
+    this.service.getMyProfileData().subscribe(a => {
+      this.profile = a;
+
+      a.employeeLinksNames.forEach((link, index, array) => array[index].link = this.toAbsoluteLink(link.link));
+
+      this.linkedInLink = a.employeeLinksNames.find(link => link.name == "linkedin")?.link;
+      this.facebookLink = a.employeeLinksNames.find(link => link.name == "facebook")?.link;
+      this.githubLink = a.employeeLinksNames.find(link => link.name == "github")?.link;
+      this.twitterLink = a.employeeLinksNames.find(link => link.name == "twitter")?.link;
     });
   }
 
-  public uploadFinished = (event) => {
-    this.response = event;
-  }
-
-
-  public printDateOnly(date: Date) {
-
-    date = new Date(date);
-
-    const dayNames = new Array('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday');
-    const monthNames = new Array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
-
-    const dayOfWeek = date.getDay();
-    const dayOfMonth = date.getDate();
-    let sup = '';
-    const month = date.getMonth();
-    const year = date.getFullYear();
-
-    if (dayOfMonth === 1 || dayOfMonth === 21 || dayOfMonth === 31) {
-      sup = 'st';
-    } else if (dayOfMonth === 2 || dayOfMonth === 22) {
-      sup = 'nd';
-    } else if (dayOfMonth === 3 || dayOfMonth === 23) {
-      sup = 'rd';
-    } else {
-      sup = 'th';
-    }
-
-    const dateString = dayNames[dayOfWeek] + ', ' + dayOfMonth + sup + ' ' + monthNames[month] + ' ' + year;
-
-    return dateString;
-  }
-
   public printGender(value: number) {
-    return value == 0 ? "Male":"Female"
-  
+    return value == 0 ? "Male" : "Female"
   }
 
   public printMilitaryStatus(value: number) {
@@ -72,7 +74,7 @@ export class EmployeeProfileComponent implements OnInit {
       return "Exempted";
     else if (value == 2)
       return "Completed";
-    else 
+    else
       return "Postponed";
   }
 
@@ -80,5 +82,21 @@ export class EmployeeProfileComponent implements OnInit {
     return value == true ? "Yes" : "No";
   }
 
+  toAbsoluteLink(link: string) {
+    var result;
+    var startingUrl = "http://";
+    var httpsStartingUrl = "https://";
+    if (this.startWith(link, startingUrl) || this.startWith(link, httpsStartingUrl)) {
+      result = link;
+    }
+    else {
+      result = startingUrl + link;
+    }
+    return result;
+  }
+
+  startWith(string: string, subString: string) {
+    return string.indexOf(subString) == 0;
+  };
 
 }

@@ -17,6 +17,7 @@ import { CompanyLinks } from 'src/app/models/company-links';
 import { EditCompanyProfileDto } from '../../models/edit-company-profile-dto';
 import { FileUpload } from 'primeng/fileupload';
 import { HttpClient, HttpEventType } from '@angular/common/http';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-company-profile-edit',
@@ -46,8 +47,8 @@ export class CompanyProfileEditComponent implements OnInit {
     private _companyType: CompanyTypeService,
     private _companyIndustry: CompanyIndustryService,
     private _editProfileService:DisplayCompanyProfileService,
-    public _http :HttpClient
-
+    public _http: HttpClient,
+    private toastr: ToastrService
   ) { }
 
   ngOnInit(): void {
@@ -130,15 +131,12 @@ export class CompanyProfileEditComponent implements OnInit {
     .subscribe(e=>{
       if(e.type===HttpEventType.UploadProgress)
       this.progress=Math.round(100*e.loaded/e.total);
-      else if(e.type===HttpEventType.Response){
-        this.showSuccess('uploaded','your photo is uploaded successfully ');
+      else if(e.type===HttpEventType.Response) {
+        this.toastr.success('your photo is uploaded successfully ', 'uploaded');
       }
     })
   }
-  showSuccess(summary:string,detail:string){
-    //this.messageServices.add({severity:'success',summary:summary,detail:detail});
-    console.log({severity:'success',summary:summary,detail:detail})
-  }
+ 
   editProfile(editForm) {
 
     var links:CompanyLinksDto[] = [{link: editForm.value.facebookLink, id:this.facebookLink.id , name:"facebook"} ,{link: editForm.value.linkedinLink,id:this.linkedinLink.id , name:"linkedin" }]

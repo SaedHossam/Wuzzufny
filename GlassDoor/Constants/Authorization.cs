@@ -18,15 +18,20 @@ namespace GlassDoor.Constants
         public const string AdminEmail = "admin@glassdoor.com";
         public const string AdminPassword = "Aa12345";
         public const Roles AdminRole = Roles.Administrator;
+        public const string Admin = "Administrator";
 
         public const string CompanyUserName = "company@glassdoor.com";
         public const string CompanyEmail = "company@glassdoor.com";
         public const string CompanyPassword = "Aa12345";
         public const Roles  CompanyRole = Roles.Company;
+        public const string Company = "Company";
+
 
         public const string EmployeeUserName = "emp@glassdoor.com";
         public const string EmployeeEmail = "emp@glassdoor.com";
         public const string EmployeePassword = "Aa12345";
         public const Roles  EmployeeRole = Roles.Employee;
+        public const string Employee = "Employee";
+
     }
 }

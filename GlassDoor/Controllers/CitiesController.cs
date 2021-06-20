@@ -27,14 +27,14 @@ namespace GlassDoor.Controllers
 
         // GET: api/Cities
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<CityDto>>> GetCities()
+        public ActionResult<IEnumerable<CityDto>> GetCities()
         {
             return Ok(_mapper.Map<IEnumerable<CityDto>>(_unitOfWork.City.GetAll()));
         }
 
         // GET: api/Cities/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<City>> GetCity(int id)
+        public ActionResult<City> GetCity(int id)
         {
             var city = _unitOfWork.City.Get(id);
 
@@ -46,62 +46,62 @@ namespace GlassDoor.Controllers
             return city;
         }
 
-        // PUT: api/Cities/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutCity(int id, City city)
-        {
-            if (id != city.Id)
-            {
-                return BadRequest();
-            }
-
-            _unitOfWork.City.Update(city);
-            try
-            {
-                _unitOfWork.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CityExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-
-        //// POST: api/Cities
+        //// PUT: api/Cities/5
         //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<City>> PostCity(City city)
-        {
-            _unitOfWork.City.Add(city);
-            _unitOfWork.SaveChanges();
+        //[HttpPut("{id}")]
+        //public async Task<IActionResult> PutCity(int id, City city)
+        //{
+        //    if (id != city.Id)
+        //    {
+        //        return BadRequest();
+        //    }
 
-            return CreatedAtAction("GetCity", new { id = city.Id }, city);
-        }
+        //    _unitOfWork.City.Update(city);
+        //    try
+        //    {
+        //        _unitOfWork.SaveChanges();
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!CityExists(id))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
 
-        //// DELETE: api/Cities/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCity(int id)
-        {
-            var city = _unitOfWork.City.Get(id);
-            if (city == null)
-            {
-                return NotFound();
-            }
+        //    return NoContent();
+        //}
 
-            _unitOfWork.City.Remove(city);
-            _unitOfWork.SaveChanges();
+        ////// POST: api/Cities
+        ////// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        //[HttpPost]
+        //public async Task<ActionResult<City>> PostCity(City city)
+        //{
+        //    _unitOfWork.City.Add(city);
+        //    _unitOfWork.SaveChanges();
 
-            return NoContent();
-        }
+        //    return CreatedAtAction("GetCity", new { id = city.Id }, city);
+        //}
+
+        ////// DELETE: api/Cities/5
+        //[HttpDelete("{id}")]
+        //public async Task<IActionResult> DeleteCity(int id)
+        //{
+        //    var city = _unitOfWork.City.Get(id);
+        //    if (city == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    _unitOfWork.City.Remove(city);
+        //    _unitOfWork.SaveChanges();
+
+        //    return NoContent();
+        //}
 
         private bool CityExists(int id)
         {
