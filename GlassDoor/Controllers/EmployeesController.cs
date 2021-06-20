@@ -57,29 +57,48 @@ namespace GlassDoor.Controllers
 
         }
 
+        [Authorize(Roles = "Employee")]
+        [HttpGet("me")]
+        public async Task<ActionResult<Employee>> GetMyProfileData()
+        {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            var employee = _unitOfWork.Employees.Find(e => e.UserId == user.Id).FirstOrDefault();
+
+            if (employee == null)
+            {
+                return BadRequest("user is not employee");
+            }
+
+            employee = _unitOfWork.Employees.GetEmployeeDataById(employee.Id);
+
+            //var employee = _unitOfWork.Employees.GetEmployeeDataById(id);
+
+            return Ok(_mapper.Map<EmployeeDto>(employee));
+        }
+
         // PUT: api/Employees/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [Authorize(Roles = "Employee")]
         [HttpPut("UpdateEmployee")]
-        public async Task<IActionResult> PutEmployee( UpdateEmployeeDto updatedEmp)
+        public async Task<IActionResult> PutEmployee(UpdateEmployeeDto updatedEmp)
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
             var emp = _unitOfWork.Employees.Find(e => e.UserId == user.Id).FirstOrDefault();
             var employee = _unitOfWork.Employees.GetEmpData(emp.Id);
             employee.AlternativeMobileNumber = updatedEmp.AlternativeMobileNumber;
-            employee.BirthDate = updatedEmp.BirthDate;
-            employee.CareerLevelId = updatedEmp.CareerLevelId;
+            employee.BirthDate = updatedEmp.BirthDate.Date;
             employee.CountryId = updatedEmp.CountryId;
-            employee.CV = updatedEmp.CV;
-            employee.EducationLevelId = updatedEmp.EducationLevelId;
-            employee.ExperienceYears = updatedEmp.ExperienceYears;
+            employee.User.FirstName = updatedEmp.UserFirstName;
+            employee.User.LastName = updatedEmp.UserLastName;
+            //employee.EducationLevelId = updatedEmp.EducationLevelId;
+            //employee.ExperienceYears = updatedEmp.ExperienceYears;
             employee.Gender = updatedEmp.Gender;
             employee.IsWillingToRelocate = updatedEmp.IsWillingToRelocate;
             employee.CityId = updatedEmp.CityId;
-            employee.MinimumSalary = updatedEmp.MinimumSalary;
             employee.MobileNumber = updatedEmp.MobileNumber;
             employee.NationalityId = updatedEmp.NationalityId;
-            _unitOfWork.SaveChanges();        
+            employee.MilitaryStatus = updatedEmp.MilitaryStatus;
+            _unitOfWork.SaveChanges();
             return NoContent();
 
         }
@@ -98,144 +117,240 @@ namespace GlassDoor.Controllers
             return NoContent();
 
         }
-        
-        [HttpPut("jobCategory")]
+
+
         [Authorize(Roles = "Employee")]
-        public async Task<IActionResult> PutEmployee( PreferedJobCatDto EmployeeJobCategory)
+        [HttpPut("EducationAndExperience")]
+        public async Task<IActionResult> PutEmployee(EducationAndExpDto edu_exp)
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
             var emp = _unitOfWork.Employees.Find(e => e.UserId == user.Id).FirstOrDefault();
-            var employee = _unitOfWork.Employees.GetJobCateogyForOneEmp(emp.Id);
-
-            List<int> addedCat = new List<int>();
-            List<int> removeCat = new List<int>();
-            List<int> empCat = employee.PreferredJobCategories.Select(e => e.Id).ToList();
-
-            addedCat = EmployeeJobCategory.PreferredJobCategories.Except(empCat).ToList();
-
-            removeCat = empCat.Except(EmployeeJobCategory.PreferredJobCategories).ToList();
-
-            foreach (var removeCategory in removeCat)
+            var employee = _unitOfWork.Employees.GetEmpData(emp.Id);
+            if (edu_exp.EducationLevelId != 0)
             {
-                var categotyToRemove = _unitOfWork.JobCategory.Get(removeCategory);
-                employee.PreferredJobCategories.Remove(categotyToRemove);
-
-            }  
-            
-            foreach (var addedCategory in addedCat)
-            {
-                var categotyToAdd = _unitOfWork.JobCategory.Get(addedCategory);
-                employee.PreferredJobCategories.Add(categotyToAdd);
+                employee.EducationLevelId = edu_exp.EducationLevelId;
             }
-
+            if (edu_exp.ExperienceYears != 0)
+            {
+                employee.ExperienceYears = edu_exp.ExperienceYears;
+            }
             _unitOfWork.SaveChanges();
             return NoContent();
         }
 
-        [HttpPut("Skills")]
+        [HttpPut("jobCategory")]
         [Authorize(Roles = "Employee")]
-        public async Task<IActionResult> PutEmployee(SkillManager EmployeeSkills)
+        public async Task<IActionResult> PutEmployee(CarrerInterestDto EmployeeJobCategory)
+        {
+            // THIS API update all in career interset in the UI
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            var emp = _unitOfWork.Employees.Find(e => e.UserId == user.Id).FirstOrDefault();
+            var employee = _unitOfWork.Employees.GetJobCateogyForOneEmp(emp.Id);
+            var theSameEmployee = _unitOfWork.Employees.GetEmpJobTypes(emp.Id);
+
+            if (EmployeeJobCategory.CareerLevelId != null)
+            {
+                employee.CareerLevelId = EmployeeJobCategory.CareerLevelId;
+            }
+
+            if (EmployeeJobCategory.MinimumSalary != 0)
+            {
+                employee.MinimumSalary = EmployeeJobCategory.MinimumSalary;
+            }
+
+            if (EmployeeJobCategory.PreferredJobCategories != null)
+            {
+                List<int> addedCat = new List<int>();
+                List<int> removeCat = new List<int>();
+                List<int> empCat = employee.PreferredJobCategories.Select(e => e.Id).ToList();
+
+                addedCat = EmployeeJobCategory.PreferredJobCategories.Except(empCat).ToList();
+
+                removeCat = empCat.Except(EmployeeJobCategory.PreferredJobCategories).ToList();
+
+                foreach (var removeCategory in removeCat)
+                {
+                    var categotyToRemove = _unitOfWork.JobCategory.Get(removeCategory);
+                    employee.PreferredJobCategories.Remove(categotyToRemove);
+
+                }
+
+                foreach (var addedCategory in addedCat)
+                {
+                    var categotyToAdd = _unitOfWork.JobCategory.Get(addedCategory);
+                    employee.PreferredJobCategories.Add(categotyToAdd);
+                }
+            }
+            if (EmployeeJobCategory.JobTypeId != null)
+            {
+                List<int> addJobType = new List<int>();
+                List<int> removeJobType = new List<int>();
+                List<int> empJobType = theSameEmployee.JobTypes.Select(e => e.Id).ToList();
+
+                addJobType = EmployeeJobCategory.JobTypeId.Except(empJobType).ToList();
+
+                removeJobType = empJobType.Except(EmployeeJobCategory.JobTypeId).ToList();
+
+                foreach (var removeJobTypes in removeJobType)
+                {
+                    var JobTypeToRemove = _unitOfWork.JobType.Get(removeJobTypes);
+                    theSameEmployee.JobTypes.Remove(JobTypeToRemove);
+
+                }
+
+                foreach (var addedJobType in addJobType)
+                {
+                    var JobTypeToAdd = _unitOfWork.JobType.Get(addedJobType);
+                    theSameEmployee.JobTypes.Add(JobTypeToAdd);
+                }
+            }
+            _unitOfWork.SaveChanges();
+            return NoContent();
+        }
+
+        [HttpPut("SkillAndLanguage")]
+        [Authorize(Roles = "Employee")]
+        public async Task<IActionResult> PutEmployee(SkillAndLanguageDto EmployeeSkills)
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
             var emp = _unitOfWork.Employees.Find(e => e.UserId == user.Id).FirstOrDefault();
             var employee = _unitOfWork.Employees.GetEmpSkills(emp.Id);
+            var theSameEmployee = _unitOfWork.Employees.GetEmpLanguages(emp.Id);
 
-            List<int> addSkill = new List<int>();
-            List<int> removeSkill = new List<int>();
-            List<int> empSkill = employee.Skills.Select(e => e.Id).ToList();
-
-            addSkill = EmployeeSkills.SkillId.Except(empSkill).ToList();
-
-            removeSkill = empSkill.Except(EmployeeSkills.SkillId).ToList();
-
-            foreach (var removeSkills in removeSkill)
+            if (EmployeeSkills.SkillId != null)
             {
-                var skillToRemove = _unitOfWork.Skills.Get(removeSkills);
-                employee.Skills.Remove(skillToRemove);
+                List<int> addSkill = new List<int>();
+                List<int> removeSkill = new List<int>();
+                List<int> empSkill = employee.Skills.Select(e => e.Id).ToList();
 
-            }
+                addSkill = EmployeeSkills.SkillId.Except(empSkill).ToList();
 
-            foreach (var addedskill in addSkill)
-            {
-                var skillToAdd = _unitOfWork.Skills.Get(addedskill);
-                employee.Skills.Add(skillToAdd);
-            }
+                removeSkill = empSkill.Except(EmployeeSkills.SkillId).ToList();
 
-            _unitOfWork.SaveChanges();
-            return NoContent();
-        }
-        [HttpPut("JobTypes")]
-        [Authorize(Roles = "Employee")]
-        public async Task<IActionResult> PutEmployee(JobTypesManager EmployeeJobTypes)
-        {
-            var user = await _userManager.GetUserAsync(HttpContext.User);
-            var emp = _unitOfWork.Employees.Find(e => e.UserId == user.Id).FirstOrDefault();
-            var employee = _unitOfWork.Employees.GetEmpJobTypes(emp.Id);
-
-            List<int> addJobType = new List<int>();
-            List<int> removeJobType = new List<int>();
-            List<int> empJobType = employee.JobTypes.Select(e => e.Id).ToList();
-
-            addJobType = EmployeeJobTypes.JobTypeId.Except(empJobType).ToList();
-
-            removeJobType = empJobType.Except(EmployeeJobTypes.JobTypeId).ToList();
-
-            foreach (var removeJobTypes in removeJobType)
-            {
-                var JobTypeToRemove = _unitOfWork.JobType.Get(removeJobTypes);
-                employee.JobTypes.Remove(JobTypeToRemove);
-
-            }
-
-            foreach (var addedJobType in addJobType)
-            {
-                var JobTypeToAdd = _unitOfWork.JobType.Get(addedJobType);
-                employee.JobTypes.Add(JobTypeToAdd);
-            }
-
-            _unitOfWork.SaveChanges();
-            return NoContent();
-        }
-
-         [HttpPut("Languages")]
-        [Authorize(Roles = "Employee")]
-        public async Task<IActionResult> PutEmployee(LanguageManager EmployeeLanguages)
-        {
-            var user = await _userManager.GetUserAsync(HttpContext.User);
-            var emp = _unitOfWork.Employees.Find(e => e.UserId == user.Id).FirstOrDefault();
-            var employee = _unitOfWork.Employees.GetEmpLanguages(emp.Id);
-
-            List<int> addLanguage = new List<int>();
-            List<int> removeLanguage = new List<int>();
-            List<int> empLanguage = employee.UserLanguages.Select(e => e.Id).ToList();
-
-            addLanguage = EmployeeLanguages.LanguageId.Except(empLanguage).ToList();
-
-            removeLanguage = empLanguage.Except(EmployeeLanguages.LanguageId).ToList();
-
-            foreach (var removeLanguages in removeLanguage)
-            {
-                var LanguageToRemove = _unitOfWork.UserLanguage.Get(removeLanguages);
-                employee.UserLanguages.Remove(LanguageToRemove);
-
-            }
-
-            foreach (var addedLanguage in addLanguage)
-            {
-                var userLanguage = new UserLanguage
+                foreach (var removeSkills in removeSkill)
                 {
-                    EmployeeId = employee.Id,
-                    LanguageId = addedLanguage,
-                    Level = EmployeeLanguages.Level
+                    var skillToRemove = _unitOfWork.Skills.Get(removeSkills);
+                    employee.Skills.Remove(skillToRemove);
 
-                };
-                employee.UserLanguages.Add(userLanguage);
+                }
+
+                foreach (var addedskill in addSkill)
+                {
+                    var skillToAdd = _unitOfWork.Skills.Get(addedskill);
+                    employee.Skills.Add(skillToAdd);
+                }
+
             }
-           
+            if (EmployeeSkills.LanguageId != null)
+            {
+                List<int> addLanguage = new List<int>();
+                List<int> removeLanguage = new List<int>();
+                List<int> empLanguage = theSameEmployee.UserLanguages.Select(e => e.Id).ToList();
 
+                addLanguage = EmployeeSkills.LanguageId.Except(empLanguage).ToList();
+
+                removeLanguage = empLanguage.Except(EmployeeSkills.LanguageId).ToList();
+
+                foreach (var removeLanguages in removeLanguage)
+                {
+                    var LanguageToRemove = _unitOfWork.UserLanguage.Get(removeLanguages);
+                    theSameEmployee.UserLanguages.Remove(LanguageToRemove);
+
+                }
+
+                foreach (var addedLanguage in addLanguage)
+                {
+                    var userLanguage = new UserLanguage
+                    {
+                        EmployeeId = employee.Id,
+                        LanguageId = addedLanguage,
+                        Level = EmployeeSkills.Level
+
+                    };
+                    theSameEmployee.UserLanguages.Add(userLanguage);
+                }
+
+            }
             _unitOfWork.SaveChanges();
             return NoContent();
         }
+
+
+        // NO NEED
+
+        // NO NEED
+        //[HttpPut("JobTypes")]
+        //[Authorize(Roles = "Employee")]
+        //public async Task<IActionResult> PutEmployee(JobTypesManager EmployeeJobTypes)
+        //{
+        //    var user = await _userManager.GetUserAsync(HttpContext.User);
+        //    var emp = _unitOfWork.Employees.Find(e => e.UserId == user.Id).FirstOrDefault();
+        //    var employee = _unitOfWork.Employees.GetEmpJobTypes(emp.Id);
+
+        //    //List<int> addJobType = new List<int>();
+        //    //List<int> removeJobType = new List<int>();
+        //    //List<int> empJobType = employee.JobTypes.Select(e => e.Id).ToList();
+
+        //    //addJobType = EmployeeJobTypes.JobTypeId.Except(empJobType).ToList();
+
+        //    //removeJobType = empJobType.Except(EmployeeJobTypes.JobTypeId).ToList();
+
+        //    //foreach (var removeJobTypes in removeJobType)
+        //    //{
+        //    //    var JobTypeToRemove = _unitOfWork.JobType.Get(removeJobTypes);
+        //    //    employee.JobTypes.Remove(JobTypeToRemove);
+
+        //    //}
+
+        //    //foreach (var addedJobType in addJobType)
+        //    //{
+        //    //    var JobTypeToAdd = _unitOfWork.JobType.Get(addedJobType);
+        //    //    employee.JobTypes.Add(JobTypeToAdd);
+        //    //}
+
+        //    _unitOfWork.SaveChanges();
+        //    return NoContent();
+        //}
+
+        //[HttpPut("Languages")]
+        //[Authorize(Roles = "Employee")]
+        //public async Task<IActionResult> PutEmployee(LanguageManager EmployeeLanguages)
+        //{
+        //    var user = await _userManager.GetUserAsync(HttpContext.User);
+        //    var emp = _unitOfWork.Employees.Find(e => e.UserId == user.Id).FirstOrDefault();
+        //    var employee = _unitOfWork.Employees.GetEmpLanguages(emp.Id);
+
+        //    List<int> addLanguage = new List<int>();
+        //    List<int> removeLanguage = new List<int>();
+        //    List<int> empLanguage = employee.UserLanguages.Select(e => e.Id).ToList();
+
+        //    addLanguage = EmployeeLanguages.LanguageId.Except(empLanguage).ToList();
+
+        //    removeLanguage = empLanguage.Except(EmployeeLanguages.LanguageId).ToList();
+
+        //    foreach (var removeLanguages in removeLanguage)
+        //    {
+        //        var LanguageToRemove = _unitOfWork.UserLanguage.Get(removeLanguages);
+        //        employee.UserLanguages.Remove(LanguageToRemove);
+
+        //    }
+
+        //    foreach (var addedLanguage in addLanguage)
+        //    {
+        //        var userLanguage = new UserLanguage
+        //        {
+        //            EmployeeId = employee.Id,
+        //            LanguageId = addedLanguage,
+        //            Level = EmployeeLanguages.Level
+
+        //        };
+        //        employee.UserLanguages.Add(userLanguage);
+        //    }
+
+
+        //    _unitOfWork.SaveChanges();
+        //    return NoContent();
+        //}
 
 
         [HttpPut("EmployeeLinks")]
@@ -248,16 +363,46 @@ namespace GlassDoor.Controllers
 
             foreach (var item in EmployeeLinks)
             {
-                var empLink = employee.EmployeeLinks.FirstOrDefault(e => e.Name == item.Name);
+                var empLink = employee.EmployeeLinks.FirstOrDefault(e => e.Name == item.FacebookName);
                 if (empLink == null)
                 {
-                    employee.EmployeeLinks.Add(new EmployeeLinks() { Name = item.Name, Link = item.Link });
+                    employee.EmployeeLinks.Add(new EmployeeLinks() { Name = item.FacebookName, Link = item.FacebookLink });
                 }
                 else
                 {
-                    empLink.Link = item.Link;
+                    empLink.Link = item.FacebookLink;
                 }
-               
+
+                var empLink2 = employee.EmployeeLinks.FirstOrDefault(e => e.Name == item.LinkedInName);
+                if (empLink2 == null)
+                {
+                    employee.EmployeeLinks.Add(new EmployeeLinks() { Name = item.LinkedInName, Link = item.LinkedInLink });
+                }
+                else
+                {
+                    empLink2.Link = item.LinkedInLink;
+                }
+
+                var empLink3 = employee.EmployeeLinks.FirstOrDefault(e => e.Name == item.TwitterName);
+                if (empLink3 == null)
+                {
+                    employee.EmployeeLinks.Add(new EmployeeLinks() { Name = item.TwitterName, Link = item.TwitterLink });
+                }
+                else
+                {
+                    empLink3.Link = item.TwitterLink;
+                }
+
+                var empLink4 = employee.EmployeeLinks.FirstOrDefault(e => e.Name == item.GithubName);
+                if (empLink4 == null)
+                {
+                    employee.EmployeeLinks.Add(new EmployeeLinks() { Name = item.GithubName, Link = item.GithubLink });
+                }
+                else
+                {
+                    empLink4.Link = item.GithubLink;
+                }
+
             }
             _unitOfWork.SaveChanges();
             return NoContent();
@@ -271,7 +416,7 @@ namespace GlassDoor.Controllers
             var emp = _unitOfWork.Employees.Find(e => e.UserId == user.Id).FirstOrDefault();
             var employee = _unitOfWork.Employees.GetEmpData(emp.Id);
 
-            var fileName = employee.UserId+".png";
+            var fileName = employee.UserId + ".png";
 
             try
             {
@@ -281,14 +426,14 @@ namespace GlassDoor.Controllers
 
                 if (file.Length > 0)
                 {
-                 
+
                     var fullPath = Path.Combine(pathToSave, fileName);
                     var dbPath = Path.Combine(folderName, fileName);
 
                     using (var stream = new FileStream(fullPath, FileMode.Create))
                     {
                         file.CopyTo(stream);
-                        
+
                     }
                     employee.Photo = dbPath;
                     _unitOfWork.SaveChanges();
@@ -315,7 +460,7 @@ namespace GlassDoor.Controllers
             var path = Path.GetFullPath(Cv.FileName);
             //Guid.NewGuid();
             var fileName = employee.UserId;
-            if (employee.CV!=null)
+            if (employee.CV != null)
             {
                 var pathToDelete = Path.Combine(Directory.GetCurrentDirectory(), employee.CV);
                 System.IO.File.Delete(pathToDelete);

@@ -1,7 +1,9 @@
 import { AuthenticationService } from "../shared/services/authentication.service";
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SocialAuthService } from "angularx-social-login";
+import { Employee } from "../models/employee";
+import { UserProfileService } from "../shared/services/user-profile.service";
 
 @Component({
   selector: 'app-menu',
@@ -15,7 +17,7 @@ export class MenuComponent implements OnInit {
   public isUserAdmin: boolean = false;
   public isUserEmployee: boolean = false;
   public isUserCompany: boolean = false;
-
+  Emp: Employee = new Employee();
   constructor(private _authService: AuthenticationService, private _router: Router, private _socialAuthService: SocialAuthService) {
     this._authService.authChanged
       .subscribe(res => {
@@ -33,6 +35,7 @@ export class MenuComponent implements OnInit {
         this.isUserEmployee = this._authService.isUserEmployee();
         this.isUserCompany = this._authService.isUserCompany();
       });
+   
 
     this._socialAuthService.authState.subscribe(user => {
       this.isExternalAuth = user != null;

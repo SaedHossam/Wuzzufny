@@ -20,7 +20,9 @@ namespace DAL.Repositories
             return _appContext.Applications
                 .Include(a => a.Job)
                 .ThenInclude(b => b.Company)
+                .ThenInclude(c => c.CompanyIndustry)
                 .Include(c => c.Job).ThenInclude(d => d.City)
+                .Include(c => c.Job).ThenInclude(d => d.JobType)
                 .Include(c => c.Job).ThenInclude(d => d.Country).Where(a => a.EmployeeId == id && a.IsArchived== false && a.IsWithdrawn == false)
                 .ToList();
         }

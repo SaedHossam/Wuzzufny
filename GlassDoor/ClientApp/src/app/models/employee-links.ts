@@ -2,14 +2,9 @@ import { Employee } from "./employee";
 
 export class EmployeeLinks {
 
-  constructor(employeeId?: number, employee?: Employee)
+  constructor(public linkedInLink?: string, /*public linkedInName?: string,*/ /*public facebookName?: string,*/ public facebookLink?: string
+    , public twitterLink?: string/*, public twitterName?: string,*/ /*public githubName?: string,*/ ,public githubLink?: string  )
   {
-
-    this.employeeId = employeeId;
-    this.employee = employee;
-    
-
   }
-  public employeeId: number;
-  public employee: Employee;
+
 }

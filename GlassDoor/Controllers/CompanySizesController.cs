@@ -27,14 +27,14 @@ namespace GlassDoor.Controllers
 
         // GET: api/CompanySizes
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<CompanySizeDto>>> GetCompanySizes()
+        public ActionResult<IEnumerable<CompanySizeDto>> GetCompanySizes()
         {
             return Ok(_mapper.Map<IEnumerable<CompanySizeDto>>(_unitOfWork.CompanySize.GetAll()));
         }
 
         // GET: api/CompanySizes/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<CompanySizeDto>> GetCompanySize(int id)
+        public ActionResult<CompanySizeDto> GetCompanySize(int id)
         {
             var companySize = _unitOfWork.CompanySize.Get(id);
 
@@ -46,67 +46,67 @@ namespace GlassDoor.Controllers
             return Ok(_mapper.Map<CompanySizeDto>(companySize));
         }
 
-        // PUT: api/CompanySizes/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutCompanySize(int id, CompanySizeDto companySizeDto)
-        {
-            if (id != companySizeDto.Id)
-            {
-                return BadRequest();
-            }
+        //// PUT: api/CompanySizes/5
+        //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        //[HttpPut("{id}")]
+        //public async Task<IActionResult> PutCompanySize(int id, CompanySizeDto companySizeDto)
+        //{
+        //    if (id != companySizeDto.Id)
+        //    {
+        //        return BadRequest();
+        //    }
 
-            var companySize = _mapper.Map<CompanySize>(companySizeDto);
+        //    var companySize = _mapper.Map<CompanySize>(companySizeDto);
 
-            _unitOfWork.CompanySize.Update(companySize);
+        //    _unitOfWork.CompanySize.Update(companySize);
 
-            try
-            {
-                _unitOfWork.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CompanySizeExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+        //    try
+        //    {
+        //        _unitOfWork.SaveChanges();
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!CompanySizeExists(id))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
 
-        // POST: api/CompanySizes
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<CompanySizeDto>> PostCompanySize(CompanySizeCreateDto companySizeDto)
-        {
-            var companySize = _mapper.Map<CompanySize>(companySizeDto);
+        //// POST: api/CompanySizes
+        //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        //[HttpPost]
+        //public async Task<ActionResult<CompanySizeDto>> PostCompanySize(CompanySizeCreateDto companySizeDto)
+        //{
+        //    var companySize = _mapper.Map<CompanySize>(companySizeDto);
 
-            _unitOfWork.CompanySize.Add(companySize);
-            _unitOfWork.SaveChanges();
+        //    _unitOfWork.CompanySize.Add(companySize);
+        //    _unitOfWork.SaveChanges();
 
-            return CreatedAtAction("GetCompanySize", new { id = companySize.Id }, _mapper.Map<CompanySizeDto>(companySize));
-        }
+        //    return CreatedAtAction("GetCompanySize", new { id = companySize.Id }, _mapper.Map<CompanySizeDto>(companySize));
+        //}
 
-        // DELETE: api/CompanySizes/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCompanySize(int id)
-        {
-            var companySize = _unitOfWork.CompanySize.Get(id);
-            if (companySize == null)
-            {
-                return NotFound();
-            }
+        //// DELETE: api/CompanySizes/5
+        //[HttpDelete("{id}")]
+        //public async Task<IActionResult> DeleteCompanySize(int id)
+        //{
+        //    var companySize = _unitOfWork.CompanySize.Get(id);
+        //    if (companySize == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            _unitOfWork.CompanySize.Remove(companySize);
-            _unitOfWork.SaveChanges();
+        //    _unitOfWork.CompanySize.Remove(companySize);
+        //    _unitOfWork.SaveChanges();
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
 
         private bool CompanySizeExists(int id)
         {

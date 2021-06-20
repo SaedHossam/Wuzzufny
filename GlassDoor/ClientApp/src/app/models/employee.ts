@@ -1,3 +1,5 @@
+import { Data } from "@angular/router";
+import { Calendar } from "primeng/calendar";
 import { Application } from "./application";
 import { ApplicationUser } from "./application-user";
 import { CareerLevel } from "./career-level";
@@ -20,12 +22,11 @@ export class Employee {
     public countryName?: string, public isWillingToRelocate?: boolean,
     public mobileNumber?: string, public alternativeMobileNumber?: string, public careerLevelId?: number,
     public careerLevelName?: string, public jobTypesName?: JobTypes[], public preferredJobCategoriesName?: JobCategory,
-    public minimumSalary?: number, public experienceYears?: number, public skillsNames?: Skills[],
+    public minimumSalary?: number, public experienceYears?: number, public skillsNames?: Skills[], public skillId?: number,
     public userLanguagesNames?: UserLanguage[], public employeeLinksNames?: EmployeeLinks[],public cV?: string,
     public photo?: string, public summary?: string, public educationLevelId?: number,
     public educationLevelName?: string, public nationalityId?: number, public nationalityName?: string,
     public userFirstName?: string, public userLastName?: string, public email?: string)
-  {
-  }
+  {}
 
 }

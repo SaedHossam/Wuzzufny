@@ -57,7 +57,9 @@ namespace GlassDoor.Contexts
                 UserName = Authorization.EmployeeUserName,
                 Email = Authorization.EmployeeEmail,
                 EmailConfirmed = true,
-                PhoneNumberConfirmed = true
+                PhoneNumberConfirmed = true,
+                FirstName = "first",
+                LastName = "last"
             };
 
             if (userManager.Users.All(u => u.Id != employeeUser.Id))
@@ -264,7 +266,8 @@ namespace GlassDoor.Contexts
                     CompanySizeId = context.CompanySizes.First().Id,
                     CompanyTypeId = context.CompanyTypes.First().Id,
                     RequestStatusId = context.CompanyRequestStatus
-                        .First(r => r.Name == Enums.CompanyRequestStatus.Accepted.ToString()).Id
+                        .First(r => r.Name == Enums.CompanyRequestStatus.Accepted.ToString()).Id,
+                    Logo = "/Resources/company-logos/company-placeholder.png"
                 };
 
                 context.Companies.Add(company);

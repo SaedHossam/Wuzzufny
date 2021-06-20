@@ -75,16 +75,13 @@ namespace GlassDoor.Migrations
                     b.Property<string>("WithdrawReason")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("jobId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("ApplicationStatusId");
 
                     b.HasIndex("EmployeeId");
 
-                    b.HasIndex("jobId");
+                    b.HasIndex("JobId");
 
                     b.ToTable("Applications");
                 });

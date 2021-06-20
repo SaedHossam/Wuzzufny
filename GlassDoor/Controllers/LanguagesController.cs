@@ -46,63 +46,63 @@ namespace GlassDoor.Controllers
             return language;
         }
 
-        // PUT: api/Languages/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public IActionResult PutLanguage(int id, Language language)
-        {
-            if (id != language.Id)
-            {
-                return BadRequest();
-            }
+        //// PUT: api/Languages/5
+        //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        //[HttpPut("{id}")]
+        //public IActionResult PutLanguage(int id, Language language)
+        //{
+        //    if (id != language.Id)
+        //    {
+        //        return BadRequest();
+        //    }
 
-            _unitOfWork.Language.Update(language);
+        //    _unitOfWork.Language.Update(language);
 
-            try
-            {
-                _unitOfWork.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!LanguageExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+        //    try
+        //    {
+        //        _unitOfWork.SaveChanges();
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!LanguageExists(id))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
 
-        // POST: api/Languages
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public ActionResult<Language> PostLanguage(Language language)
-        {
-            _unitOfWork.Language.Add(language);
-            _unitOfWork.SaveChanges();
+        //// POST: api/Languages
+        //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        //[HttpPost]
+        //public ActionResult<Language> PostLanguage(Language language)
+        //{
+        //    _unitOfWork.Language.Add(language);
+        //    _unitOfWork.SaveChanges();
 
-            return CreatedAtAction("GetLanguage", new { id = language.Id }, language);
-        }
+        //    return CreatedAtAction("GetLanguage", new { id = language.Id }, language);
+        //}
 
-        // DELETE: api/Languages/5
-        [HttpDelete("{id}")]
-        public IActionResult DeleteLanguage(int id)
-        {
-            var language = _unitOfWork.Language.Get(id);
-            if (language == null)
-            {
-                return NotFound();
-            }
+        //// DELETE: api/Languages/5
+        //[HttpDelete("{id}")]
+        //public IActionResult DeleteLanguage(int id)
+        //{
+        //    var language = _unitOfWork.Language.Get(id);
+        //    if (language == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            _unitOfWork.Language.Remove(language);
-            _unitOfWork.SaveChanges();
+        //    _unitOfWork.Language.Remove(language);
+        //    _unitOfWork.SaveChanges();
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
 
         private bool LanguageExists(int id)
         {

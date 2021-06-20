@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using DAL;
 using DAL.Models;
+using GlassDoor.Constants;
 using GlassDoor.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -13,6 +14,7 @@ using System.Threading.Tasks;
 
 namespace GlassDoor.Controllers
 {
+    // TODO: add get application by id method
     [Route("api/[controller]")]
     [ApiController]
     public class ApplicationController : ControllerBase
@@ -29,8 +31,10 @@ namespace GlassDoor.Controllers
         }
 
         // GET: api/Application
+        // this methods takes no paramater
+        // it returns all user applications
         [HttpGet]
-        // [Authorize("Employee")]
+        [Authorize(Roles = Authorization.Employee)]
         public async Task<ActionResult<IEnumerable<ApplicationDto>>> GetApplications()
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
@@ -80,9 +84,10 @@ namespace GlassDoor.Controllers
         /// set IsArchived, IsViewed, and IsWithdrawn to false
         /// TODO: update job application (++)
         [HttpPost]
+        [Authorize(Roles = Authorization.Employee)]
         public async Task<ActionResult<ApplicationDto>> PostApplication([FromBody] int id)
         {
-            if ( !ModelState.IsValid)
+            if (!ModelState.IsValid)
                 return BadRequest();
 
             var user = await _userManager.GetUserAsync(HttpContext.User);

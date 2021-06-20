@@ -226,6 +226,8 @@ namespace GlassDoor.Controllers
                 return BadRequest("Error Occured!\nTry Again.");
             
             job.CompanyId = companyId.Value;
+
+            job.TotalClicks = 1;
             _unitOfWork.Jobs.Add(job);
             _unitOfWork.SaveChanges();
             return Ok(job);

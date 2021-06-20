@@ -48,61 +48,61 @@ namespace GlassDoor.Controllers
 
         //// PUT: api/Currencies/5
         //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public IActionResult PutCurrency(int id, Currency currency)
-        {
-            if (id != currency.Id)
-            {
-                return BadRequest();
-            }
+        //[HttpPut("{id}")]
+        //public IActionResult PutCurrency(int id, Currency currency)
+        //{
+        //    if (id != currency.Id)
+        //    {
+        //        return BadRequest();
+        //    }
 
-            _unitOfWork.Currency.Update(currency);
+        //    _unitOfWork.Currency.Update(currency);
 
-            try
-            {
-                _unitOfWork.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CurrencyExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+        //    try
+        //    {
+        //        _unitOfWork.SaveChanges();
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!CurrencyExists(id))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
 
-        // POST: api/Currencies
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public ActionResult<Currency> PostCurrency(Currency currency)
-        {
-            _unitOfWork.Currency.Add(currency);
-            _unitOfWork.SaveChanges();
+        //// POST: api/Currencies
+        //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        //[HttpPost]
+        //public ActionResult<Currency> PostCurrency(Currency currency)
+        //{
+        //    _unitOfWork.Currency.Add(currency);
+        //    _unitOfWork.SaveChanges();
 
-            return CreatedAtAction("GetCurrency", new { id = currency.Id }, currency);
-        }
+        //    return CreatedAtAction("GetCurrency", new { id = currency.Id }, currency);
+        //}
 
-        // DELETE: api/Currencies/5
-        [HttpDelete("{id}")]
-        public IActionResult DeleteCurrency(int id)
-        {
-            var currency = _unitOfWork.Currency.Get(id);
-            if (currency == null)
-            {
-                return NotFound();
-            }
+        //// DELETE: api/Currencies/5
+        //[HttpDelete("{id}")]
+        //public IActionResult DeleteCurrency(int id)
+        //{
+        //    var currency = _unitOfWork.Currency.Get(id);
+        //    if (currency == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            _unitOfWork.Currency.Remove(currency);
-            _unitOfWork.SaveChanges();
+        //    _unitOfWork.Currency.Remove(currency);
+        //    _unitOfWork.SaveChanges();
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
 
         private bool CurrencyExists(int id)
         {
