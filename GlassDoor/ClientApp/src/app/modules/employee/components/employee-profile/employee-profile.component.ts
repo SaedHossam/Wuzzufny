@@ -51,16 +51,16 @@ export class EmployeeProfileComponent implements OnInit {
       }
     });
 
-    this.service.getMyProfileData().subscribe(a => {
-      this.profile = a;
+    // this.service.getMyProfileData().subscribe(a => {
+    //   this.profile = a;
 
-      a.employeeLinksNames.forEach((link, index, array) => array[index].link = this.toAbsoluteLink(link.link));
+    //   a.employeeLinksNames.forEach((link, index, array) => array[index].link = this.toAbsoluteLink(link.link));
 
-      this.linkedInLink = a.employeeLinksNames.find(link => link.name == "linkedin")?.link;
-      this.facebookLink = a.employeeLinksNames.find(link => link.name == "facebook")?.link;
-      this.githubLink = a.employeeLinksNames.find(link => link.name == "github")?.link;
-      this.twitterLink = a.employeeLinksNames.find(link => link.name == "twitter")?.link;
-    });
+    //   this.linkedInLink = a.employeeLinksNames.find(link => link.name == "linkedin")?.link;
+    //   this.facebookLink = a.employeeLinksNames.find(link => link.name == "facebook")?.link;
+    //   this.githubLink = a.employeeLinksNames.find(link => link.name == "github")?.link;
+    //   this.twitterLink = a.employeeLinksNames.find(link => link.name == "twitter")?.link;
+    // });
   }
 
   public printGender(value: number) {

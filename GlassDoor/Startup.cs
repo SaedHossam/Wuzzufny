@@ -158,6 +158,9 @@ namespace GlassDoor
         {
             // configuration for upload api
             //app.UseStaticFiles();
+            Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(), @"Resources/images"));
+            Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(), @"Resources/cv"));
+            Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(), @"Resources/company-logos"));
 
             string cachePeriod = env.IsDevelopment() ? "600" : "31536000";
             app.UseStaticFiles(new StaticFileOptions()
@@ -170,7 +173,10 @@ namespace GlassDoor
 
                     var directoryName = new FileInfo(staticFileResponceContext.File.PhysicalPath).Directory?.Name;
 
-                    if (directoryName != null && directoryName.Equals("images", StringComparison.OrdinalIgnoreCase))
+                    if (directoryName != null && (directoryName.Equals("images", StringComparison.OrdinalIgnoreCase) ||
+                                                  directoryName.Equals("company-logos", StringComparison.OrdinalIgnoreCase) ||
+                                                  directoryName.Equals("cv", StringComparison.OrdinalIgnoreCase)
+                        ))
                     {
                         staticFileResponceContext.Context.Response.Headers.Append("Cache-Control", $"public, no-store");
                     }
