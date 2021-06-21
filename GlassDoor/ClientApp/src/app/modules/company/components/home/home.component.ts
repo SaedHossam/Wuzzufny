@@ -14,6 +14,8 @@ export class HomeComponent implements OnInit {
   public value1: Date;
   public value2: String;
   companyJobs: Job[] = [];
+  openJobs: Job[];
+  closedJobs: Job[];
   constructor(private primengConfig: PrimeNGConfig, private companyJobService: DiplayCompanyJobsService,
     private _router: Router,
     private _editJobServie: EditJobService) { }
@@ -23,6 +25,8 @@ export class HomeComponent implements OnInit {
     this.companyJobService.getCompanyJobs().subscribe((a) => {
       console.log(a);
       this.companyJobs = a;
+      this.openJobs = a.filter(j => j.isOpen);
+      this.closedJobs = a.filter(j => !j.isOpen);
     });
   }
   closeJob(id) {

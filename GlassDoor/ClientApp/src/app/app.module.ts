@@ -34,6 +34,7 @@ import { NotificationService } from './shared/services/notification.service';
 import { ToasterStub } from './models/toaster-stub';
 import { ToastrModule } from 'ngx-toastr';
 import { MenubarModule } from 'primeng/menubar';
+import { InternalServerComponent } from './error-pages/internal-server/internal-server.component';
 
 export function tokenGetter() {
   return localStorage.getItem("token");
@@ -48,7 +49,8 @@ export function tokenGetter() {
     ForbiddenComponent,
     HomeComponent,
     RecruitmentComponent,
-    EmployerRegisterComponent
+    EmployerRegisterComponent,
+    InternalServerComponent
   ],
   imports: [
     BrowserModule,

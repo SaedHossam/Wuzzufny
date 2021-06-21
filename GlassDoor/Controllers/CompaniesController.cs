@@ -25,7 +25,7 @@ namespace GlassDoor.Controllers
         private readonly IUnitOfWork _unitOfWork;
         private readonly UserManager<ApplicationUser> _userManager;
         private IEmailSender _emailSender;
-
+        
         public CompaniesController(ApplicationDbContext context, IMapper mapper, IUnitOfWork unitOfWork, IEmailSender emailSender, UserManager<ApplicationUser> userManager)
         {
             _context = context;
@@ -63,19 +63,24 @@ namespace GlassDoor.Controllers
             var user = await _userManager.GetUserAsync(HttpContext.User);
             var companyId = _unitOfWork.CompaniesManagers.Find(c => c.UserId == user.Id).First().Id;
             var company = _context.Companies
-                .Include(a=>a.Locations)
-                .Include(a=>a.CompanyLinks)
-                .Include(a=> a.CompanyIndustry)
+                .Include(a => a.Locations)
+                .Include(a => a.CompanyLinks)
+                .Include(a => a.CompanyIndustry)
                 .Include(a => a.CompanySize)
                 .Include(a => a.CompanyType)
+                .Include(a => a.Locations)
+                    .ThenInclude(c => c.Country)
                 .FirstOrDefault(a => a.Id == companyId);
 
             if (company == null)
             {
                 return NotFound();
             }
+            var companyDto = _mapper.Map<CompanyProfileDto>(company);
+            companyDto.City = company.Locations.FirstOrDefault() != null ? company.Locations.FirstOrDefault().Name : "Not Entered";
+            companyDto.Country = company.Locations.FirstOrDefault() != null ? company.Locations.FirstOrDefault().Country?.Name : "Not Entered";
 
-            return _mapper.Map<CompanyProfileDto>(company);
+            return companyDto;
         }
         // PUT: api/Companies/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754

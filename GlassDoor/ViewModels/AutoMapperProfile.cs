@@ -219,7 +219,11 @@ namespace GlassDoor.ViewModels
             //   .ReverseMap();
 
 
-            CreateMap<CompanyProfileDto, Company>().ReverseMap();
+            CreateMap<CompanyProfileDto, Company>()
+                .ForPath(c => c.CompanyIndustry.Name, map => map.MapFrom(c => c.CompanyIndustry))
+                .ForPath(c => c.CompanySize.Name, map => map.MapFrom(c => c.CompanySize))
+                .ForPath(c => c.CompanyType.Name, map => map.MapFrom(c => c.CompanyType))
+                .ReverseMap();
             CreateMap<CompanyLinksDto, CompanyLinks>().ReverseMap();
 
 

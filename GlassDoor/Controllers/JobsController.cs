@@ -58,7 +58,7 @@ namespace GlassDoor.Controllers
             if (companyId == null)
                 return Unauthorized("Can't Access Company jobs with Employee Account!");
 
-            var companyJobs = _unitOfWork.Jobs.GetAllJobData().Where(c => c.CompanyId == companyId && c.IsOpen == true);
+            var companyJobs = _unitOfWork.Jobs.GetAllJobData().Where(c => c.CompanyId == companyId);
             return Ok(_mapper.Map<IEnumerable<JobViewModel>>(companyJobs));
         }
         [HttpGet("companyJobsData")]

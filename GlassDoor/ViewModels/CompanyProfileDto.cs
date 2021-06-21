@@ -1,8 +1,5 @@
-﻿using DAL.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace GlassDoor.ViewModels
 {
@@ -14,9 +11,11 @@ namespace GlassDoor.ViewModels
         public string AboutUs { get; set; }
         public DateTime? YearFounded { get; set; }
         public string Phone { get; set; }
-        public CompanyTypeDto CompanyType { get; set; }
-        public CompanyIndustryDto CompanyIndustry { get; set; }
-        public CompanySizeDto CompanySize { get; set; }
+        public string CompanyType { get; set; }
+        public string CompanyIndustry { get; set; }
+        public string CompanySize { get; set; }
+        public string City { get; set; }
+        public string Country { get; set; }
         public ICollection<CityDto> Locations { get; set; }
         public ICollection<CompanyLinksDto> CompanyLinks { get; set; }
     }
