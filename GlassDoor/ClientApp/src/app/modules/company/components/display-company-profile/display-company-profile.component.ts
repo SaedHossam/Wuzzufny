@@ -12,24 +12,7 @@ import { DisplayCompanyProfileService } from '../../services/display-company-pro
 export class DisplayCompanyProfileComponent implements OnInit {
 
   constructor(private displayProfileService: DisplayCompanyProfileService) { }
-  companyprofile: CompanyProfileDto={
-    "id":1,
-    "name":"Mycompany",
-    "logo":"dfd",
-    "aboutUs":"we are here",
-    "YearFounded":new Date("2016-01-17T08:44:29+0100"),
-    "phone":1001982,
-    "CompanyTypeId":1,
-    "companyIndustryId":1,
-    "companyIndustry":"field",
-    "companyType":"high level",
-    "cities":[],
-    "companyLinks":{
-       id:1,
-       name:"facebook",
-      link:"hello.com"
-    }
-  };
+  companyprofile: CompanyProfileDto;
 
   ngOnInit(): void {
     this.displayProfileService.getCompanyProfile().subscribe(a => {
