@@ -30,6 +30,7 @@ namespace DAL
         IUserLanguageRepository UserLanguage { get; }
         ICompanyRequestStatusRepository CompanyRequestStatus { get; }
         ICompanyApplicationStatusRepository CompanyApplicationStatus { get; }
+        IApplicationStatus ApplicationStatus { get; }
         int SaveChanges();
     }
 }

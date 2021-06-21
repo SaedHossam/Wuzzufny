@@ -45,8 +45,15 @@ namespace glassDoor.ViewModels
         public bool IsOpen { get; set; }
         public DateTime CreatedDate { get; set; }
         public string CompanyName { get; set; }
+        // Name of Company
         public string Name { get; set; }
-
         public string Logo { get; set; }
+        public int TotalApplications { get; set; }
+        public int TotalViews { get; set; }
+        public int ApplicationViewed { get; set; } = 0;
+        public int ApplicationInConsideration { get; set; } = 0;
+        public int ApplicationRejected { get; set; } = 0;
+        public int ApplicationHired { get; set; } = 0;
+
     }
 }

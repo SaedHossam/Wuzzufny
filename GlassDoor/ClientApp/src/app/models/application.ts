@@ -5,6 +5,7 @@ export class Application {
     public jobId?: number,
     public applicationId?: number,
     public companyLogo?: string,
+    public status?: string,
     public jobTitle?: string,
     public companyName?: string,
     public companyId?: number,

@@ -29,5 +29,7 @@ export class JobDetailsDto {
     public name?: string,
     public logo?: string,
     public skillsNames?: Skills[],
-    public applied?: boolean) { }
+    public applied?: boolean,
+    public vacancies?: number,
+  ) { }
 }

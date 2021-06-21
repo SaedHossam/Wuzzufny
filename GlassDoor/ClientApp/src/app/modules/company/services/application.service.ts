@@ -12,11 +12,16 @@ export class ApplicationService {
   constructor(
     private http: HttpClient,
     private _envUrl: EnvironmentUrlService
-  ) {}
-  public getAllJobApplications = (jobId: number) => {
-    return this.http.get<ApplicationDto[]>(
-      `${this._envUrl.urlAddress}/api/Applications/jobId/${jobId}`
-    );
+  ) { }
+  public getAllJobApplications = (jobId: number, status = "all") => {
+    if (status !== "all")
+      return this.http.get<ApplicationDto[]>(
+        `${this._envUrl.urlAddress}/api/Applications/jobId/${jobId}/${status}`
+      );
+    else
+      return this.http.get<ApplicationDto[]>(
+        `${this._envUrl.urlAddress}/api/Applications/jobId/${jobId}`
+      );
   };
   public getJobApplication = (applicationId: number) => {
     return this.http.get<ApplicationDto>(

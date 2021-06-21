@@ -1,14 +1,15 @@
-import { CompanyApplicationStatusDto } from './../../models/company-application-status-dto';
 import { ApplicationDto } from './../../models/application-dto';
 import { Application } from './../../../../models/application';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ApplicationService } from '../../services/application.service';
-import { EditApplicationStatusDto } from '../../models/edit-application-status-dto';
+import { ToastrService } from 'ngx-toastr';
+import { error } from '@angular/compiler/src/util';
+import { EditApplicationStatusDto } from "../../models/edit-application-status-dto";
 
-// interface status {
-//   status:string
-// }
+interface status {
+  status:string
+}
 
 @Component({
   selector: 'app-application-status',
@@ -18,24 +19,19 @@ import { EditApplicationStatusDto } from '../../models/edit-application-status-d
 export class ApplicationStatusComponent implements OnInit {
   application:ApplicationDto;
  
-  // statuses:status[];
-  statuses:CompanyApplicationStatusDto[];
+  statuses:status[];
   selectedStatus:string;
   
-  constructor(private _applicationService:ApplicationService,private _route:ActivatedRoute) { 
-    // this.statuses = [
-    //   {status:"inconsideration"},
-    //   {status:"accepted"},
-    //   {status:"rejected"},
-    //   {status:"viewed"}
-    // ]
+  constructor(private _applicationService: ApplicationService, private _route: ActivatedRoute, private toastr: ToastrService) {
+    this.statuses = [
+      {status:"In Consideration"},
+      {status:"Accepted"},
+      {status:"Rejected"},
+      {status:"Viewed"}
+    ]
   }
 
   ngOnInit(): void {
-    this._applicationService.getAllCompanyApplicationStatus().subscribe(a =>{
-      this.statuses = a;
-    })
-
     this._route.params.subscribe(p =>{
       this._applicationService.getJobApplication(p.id).subscribe(app=>{
         // this.application=app;
@@ -46,10 +42,12 @@ export class ApplicationStatusComponent implements OnInit {
     })
   }
 
-  editStatus(){
-    const statusDto:EditApplicationStatusDto = {id:this.application.id, status:this.selectedStatus};
-    this._applicationService.editStatus(statusDto).subscribe(a=>{
-      console.log(a);
-    })
+  editStatus(status: string) {
+    const statusDto: EditApplicationStatusDto = { id: this.application.id, status: status };
+    console.log(statusDto);
+    this._applicationService.editStatus(statusDto).subscribe(a => {
+      this.toastr.success(`Status Changed successfully`, 'Success');
+
+    }, error => console.log(error))
   }
 }

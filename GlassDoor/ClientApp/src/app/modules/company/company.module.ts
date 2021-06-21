@@ -1,13 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { CompanyRoutingModule } from './company-routing.module';
 import { HomeComponent } from './components/home/home.component';
 import { PostJobComponent } from './components/post-job/post-job.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CalendarModule } from 'primeng/calendar';
 import { PasswordModule } from 'primeng/password';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
 import {ChipsModule} from 'primeng/chips';
 import {AutoCompleteModule} from 'primeng/autocomplete';
 import {EditorModule} from 'primeng/editor';
@@ -23,6 +21,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { CompanyProfileEditComponent } from './components/company-profile-edit/company-profile-edit.component';
 import {MultiSelectModule} from 'primeng/multiselect';
 import {FileUploadModule} from 'primeng/fileupload';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -50,6 +49,7 @@ import {FileUploadModule} from 'primeng/fileupload';
     SelectButtonModule,
     RippleModule,
     InputNumberModule,
+    NgbModule,
     MultiSelectModule,
     FileUploadModule
   ]

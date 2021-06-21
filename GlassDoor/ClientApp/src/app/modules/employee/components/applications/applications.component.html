@@ -34,23 +34,27 @@
                     <button ngbDropdownItem (click)="archiveApplication(application.id)"> <i class="bi bi-archive"></i> Archive </button>
                   </div>
                 </div>
-               
+
                 <p class="card-text w-50 w-md-25 text-end ms-auto"> {{application.city}}, {{application.country}} </p>
                 <p class="card-text w-50 w-md-25 text-end ms-auto"> {{application.postDate | date}} </p>
               </div>
             </div>
             <div class="row">
               <p>
-                <span class="badge bg-secondary"> Applied </span> {{application.applyDate | date}}
+                <span class="badge bg-secondary" *ngIf="application.status == 'Applied'"> Applied </span>
+              <span class="badge bg-primary" *ngIf="application.status == 'Viewed'"> Viewed </span> 
+              <span class="badge bg-danger" *ngIf="application.status == 'Rejected'"> Rejected </span>
+              <span class="badge bg-warning" *ngIf="application.status == 'Hired'"> Hired </span> 
+              <span class="badge bg-success" *ngIf="application.status == 'InConsideration'"> In Consideration </span> {{application.applyDate | date}}
               </p>
             </div>
             <div class="row">
               <p>
                 {{application.jobStatistics.totalApplications}} <span class="text-muted fw-bold"> Application (s) </span> |
                 {{application.vacancies}} <span class="text-primary fw-bold"> Vacancies </span> |
-                {{application.jobStatistics.viewedApplications
-                }} <span class="text-warning fw-bold"> Viewed </span> |
-                {{application.jobStatistics.inConsidrationApplications}} <span class="text-success fw-bold"> in Cinsidration </span> |
+                {{application.jobStatistics.viewedApplications}}
+                <span class="text-warning fw-bold"> Viewed </span> |
+                {{application.jobStatistics.inConsiderationApplications}} <span class="text-success fw-bold"> in Cinsidration </span> |
                 {{application.jobStatistics.rejectedApplications}} <span class="text-danger fw-bold"> Not Selected </span>
               </p>
             </div>
@@ -94,7 +98,7 @@ companyName: "company"
 country: "Egypt"
 industry: "IT"
 jobId: 9
-jobStatistics: {totalApplications: 1, viewedApplications: 0, inConsidrationApplications: 0, rejectedApplications: 0, hiredApplications: 0, …}
+jobStatistics: {totalApplications: 1, viewedApplications: 0, inConsiderationApplications: 0, rejectedApplications: 0, hiredApplications: 0, …}
 jobTitle: "title"
 jobType: "Shift Based"
 postDate: "2021-06-19T11:45:10.5488142"-->

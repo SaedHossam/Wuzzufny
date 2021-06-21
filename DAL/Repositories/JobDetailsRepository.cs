@@ -20,30 +20,21 @@ namespace DAL.Repositories
         public JobDetails GetJobDetails(int id)
         {
 
-            return _appContext.JobsDetails.Include(j => j.Job)
+            return _appContext.JobsDetails
+                .Include(j => j.Job)
                 .Include(c => c.CareerLevel)
                 .Include(e => e.EducationLevel)
                 .Include(s => s.SalaryCurrency)
                 .Include(c => c.JobCategory)
                 .Include(c => c.Job.Country)
                 .Include(c => c.Job.City)
-                .Include(c => c.Job.Skills).ThenInclude(js => js.Skills)
+                .Include(c => c.Job.Skills)
+                    .ThenInclude(js => js.Skills)
                 .Include(s => s.SalaryRate)
                 .Include(c => c.Job.Company)
-                .ThenInclude(d => d.CompanyIndustry)
+                    .ThenInclude(d => d.CompanyIndustry)
                 .Include(c => c.Job.JobType)
                 .FirstOrDefault(a => a.JobId == id);
-
-
-            /* return _appContext.JobsDetails.Include(a=>a.Job).ThenInclude(c=>c.Country).ThenInclude(c=>c.Cities).FirstOrDefault(a=>a.JobId == id);*/
-            ///
-
-            //var dataset = _appContext.JobsDetails
-            //.Where(x => x.JobId == id)
-            //.Select(x => new { x.Job.Country.Name, x.Job.Title, x.Job.City.Id ,})
-            //.FirstOrDefault();
-
-            //return dataset;
         }
     }
 }

@@ -1,5 +1,3 @@
-import { JobStatisticsViewModel } from "./job-statistics-view-model";
-
 export class Job {
   constructor(
     public id?: number,
@@ -13,7 +11,11 @@ export class Job {
     public companyName?: string,
     public logo?: string,
     public name?: string,
-    public jobStatisticsViewModel?: JobStatisticsViewModel
-  )
-  { }
-} 
+    public totalApplications?: number,
+    public totalViews?: number,
+    public applicationViewed?: number,
+    public applicationInConsideration?: number,
+    public applicationRejected?: number,
+    public applicationHired?: number,
+  ) { }
+}

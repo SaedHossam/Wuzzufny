@@ -1,12 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EmployeeRoutingModule } from './employee-routing.module';
 import { ApplyJobComponent } from "./components/apply-job/apply-job.component";
-//import { CalendarModule } from "primeng/calendar";
-//import { PasswordModule } from "primeng/password";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { CardModule, } from 'primeng/card';

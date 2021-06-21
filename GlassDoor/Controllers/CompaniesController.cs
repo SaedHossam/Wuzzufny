@@ -65,19 +65,23 @@ namespace GlassDoor.Controllers
             var companyId = _unitOfWork.CompaniesManagers.Find(c => c.UserId == user.Id).First().Id;
             var company = _context.Companies
                 .Include(a=>a.Locations)
-                .ThenInclude(a=>a.cities)
+                .ThenInclude(a=>a.cities).ThenInclude(c => c.Country)
                 .Include(a=>a.CompanyLinks)
                 .Include(a=> a.CompanyIndustry)
                 .Include(a => a.CompanySize)
                 .Include(a => a.CompanyType)
+                .Include(a => a.Locations)
                 .FirstOrDefault(a => a.Id == companyId);
 
             if (company == null)
             {
                 return NotFound();
             }
+            var companyDto = _mapper.Map<CompanyProfileDto>(company);
+            companyDto.City = company.Locations.FirstOrDefault() != null ? company.Locations.FirstOrDefault()?.cities?.Name : "Not Entered";
+            companyDto.Country = company.Locations.FirstOrDefault() != null ? company.Locations.FirstOrDefault()?.cities?.Country?.Name : "Not Entered";
 
-            return _mapper.Map<CompanyProfileDto>(company);
+            return companyDto;
         }
         // PUT: api/Companies/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754

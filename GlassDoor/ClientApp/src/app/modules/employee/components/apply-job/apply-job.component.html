@@ -81,7 +81,7 @@
               <span class="fw-bold text-black-50">Posted date :</span> {{job.createdDate | date}}
             </p>
             <p class="card-text">
-              <span class="fw-bold text-black-50" *ngIf="true">Vacancy :</span> 5 (note: to be changed)
+              <span class="fw-bold text-black-50" *ngIf="true">Vacancy :</span> {{job.vacancies}}
             </p>
             <p class="card-text">
               <span class="fw-bold text-black-50"> Job nature :</span> {{job.jobType}}

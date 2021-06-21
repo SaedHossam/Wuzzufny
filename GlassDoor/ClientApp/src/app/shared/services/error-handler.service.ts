@@ -21,7 +21,7 @@ export class ErrorHandlerService implements HttpInterceptor {
       )
   }
 
-  private handleError = (error: HttpErrorResponse): string => {
+  public handleError = (error: HttpErrorResponse): string => {
     if (error.status === 404) {
       return this.handleNotFound(error);
     }
@@ -33,6 +33,9 @@ export class ErrorHandlerService implements HttpInterceptor {
     }
     else if (error.status === 403) {
       return this.handleForbidden(error);
+    }
+    else if (error.status === 500) {
+      this.handle500Error(error);
     }
   }
 
@@ -60,6 +63,16 @@ export class ErrorHandlerService implements HttpInterceptor {
     else {
       return error.error ? error.error : error.message;
     }
+  }
+
+  public errorMessage: string = '';
+  private handle500Error = (error: HttpErrorResponse) => {
+    this.createErrorMessage(error);
+    this._router.navigate(['/500']);
+  }
+
+  private createErrorMessage = (error: HttpErrorResponse) => {
+    this.errorMessage = error.error ? error.error : error.statusText;
   }
 
   private handleUnauthorized = (error: HttpErrorResponse) => {

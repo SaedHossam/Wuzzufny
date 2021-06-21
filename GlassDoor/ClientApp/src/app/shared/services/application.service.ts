@@ -16,12 +16,12 @@ export class ApplicationService {
 
   public withdrawApplication = (applicationId: number) => {
     return this._http.put<Application>(
-      `${this._envUrl.urlAddress}/api/Application/${applicationId}`, true);
+      `${this._envUrl.urlAddress}/api/Application/withdraw`, applicationId);
   };
 
   // TODO: update api
   public archiveApplication = (applicationId: number) => {
     return this._http.put<Application>(
-      `${this._envUrl.urlAddress}/api/Application/${applicationId}`, { id: applicationId, arc: true });
+      `${this._envUrl.urlAddress}/api/Application`, { id: applicationId, archived: true });
   };
 }

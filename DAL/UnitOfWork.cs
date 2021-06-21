@@ -34,6 +34,7 @@ namespace DAL
         private IUserLanguageRepository _userLanguage;
         private ICompanyRequestStatusRepository _companyRequestStatus;
         private ICompanyApplicationStatusRepository _companyApplicationStatus;
+        private IApplicationStatus _applicationStatus;
         public UnitOfWork(ApplicationDbContext context)
         {
             _context = context;
@@ -66,6 +67,8 @@ namespace DAL
         public IUserLanguageRepository UserLanguage => _userLanguage ??= new UserLanguageRepository(_context);
         public ICompanyRequestStatusRepository CompanyRequestStatus => _companyRequestStatus ??= new CompanyRequestStatusRepository(_context);
         public ICompanyApplicationStatusRepository CompanyApplicationStatus => _companyApplicationStatus ??= new CompanyApplicationStatusRepository(_context);
+        public IApplicationStatus ApplicationStatus => _applicationStatus ??= new ApplicationStatusRepository(_context);
+
 
 
 

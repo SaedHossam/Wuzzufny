@@ -14,6 +14,7 @@ import { CompanyGuard } from "./shared/guards/company.guard";
 import { EmployeeGuard } from "./shared/guards/employee.guard";
 import { RecruitmentComponent } from "./recruitment/recruitment.component";
 import { EmployerRegisterComponent } from "./employer-register/employer-register.component";
+import { InternalServerComponent } from './error-pages/internal-server/internal-server.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -26,6 +27,7 @@ const routes: Routes = [
   { path: 'recruitment', component: RecruitmentComponent },
   { path: 'employer-register', component: EmployerRegisterComponent },
   { path: '404', component: NotFoundComponent },
+  { path: '500', component: InternalServerComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', redirectTo: '/404', pathMatch: 'full' },
 ];

@@ -35,7 +35,7 @@ namespace GlassDoor.Controllers
 
         // GET: api/Employees
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Employee>>> GetEmployees()
+        public ActionResult<IEnumerable<Employee>> GetEmployees()
         {
             var empData = _unitOfWork.Employees.GetEmployeeData();
             if (empData == null)
@@ -46,7 +46,7 @@ namespace GlassDoor.Controllers
 
         // GET: api/Employees/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Employee>> GetEmployee(int id)
+        public ActionResult<Employee> GetEmployee(int id)
         {
             var employee = _unitOfWork.Employees.GetEmployeeDataById(id);
 

@@ -4,15 +4,17 @@ using DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NetTopologySuite.Geometries;
 
 namespace GlassDoor.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210619192320_added-ApplicationStatus-updated-Job")]
+    partial class addedApplicationStatusupdatedJob
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,9 +53,6 @@ namespace GlassDoor.Migrations
                     b.Property<DateTime?>("ArchiveDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("CompanyApplicationStatusId")
-                        .HasColumnType("int");
-
                     b.Property<int>("EmployeeId")
                         .HasColumnType("int");
 
@@ -79,8 +78,6 @@ namespace GlassDoor.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CompanyApplicationStatusId");
 
                     b.HasIndex("ApplicationStatusId");
 
@@ -262,21 +259,6 @@ namespace GlassDoor.Migrations
                     b.ToTable("Companies");
                 });
 
-            modelBuilder.Entity("DAL.Models.CompanyApplicationStatus", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("CompanyApplicationStatuses");
-                });
-
             modelBuilder.Entity("DAL.Models.CompanyIndustry", b =>
                 {
                     b.Property<int>("Id")
@@ -313,21 +295,6 @@ namespace GlassDoor.Migrations
                     b.HasIndex("CompanyId");
 
                     b.ToTable("CompanyLinks");
-                });
-
-            modelBuilder.Entity("DAL.Models.CompanyLocation", b =>
-                {
-                    b.Property<int>("cityId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("companyId")
-                        .HasColumnType("int");
-
-                    b.HasKey("cityId", "companyId");
-
-                    b.HasIndex("companyId");
-
-                    b.ToTable("companyLocations");
                 });
 
             modelBuilder.Entity("DAL.Models.CompanyManager", b =>
@@ -1013,10 +980,6 @@ namespace GlassDoor.Migrations
 
             modelBuilder.Entity("DAL.Models.Application", b =>
                 {
-                    b.HasOne("DAL.Models.CompanyApplicationStatus", null)
-                        .WithMany("Applications")
-                        .HasForeignKey("CompanyApplicationStatusId");
-
                     b.HasOne("DAL.Models.ApplicationStatus", "ApplicationStatus")
                         .WithMany("Applications")
                         .HasForeignKey("ApplicationStatusId")
@@ -1091,25 +1054,6 @@ namespace GlassDoor.Migrations
                         .IsRequired();
 
                     b.Navigation("Company");
-                });
-
-            modelBuilder.Entity("DAL.Models.CompanyLocation", b =>
-                {
-                    b.HasOne("DAL.Models.City", "cities")
-                        .WithMany("companyLocations")
-                        .HasForeignKey("cityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DAL.Models.Company", "companies")
-                        .WithMany("companyLocations")
-                        .HasForeignKey("companyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("cities");
-
-                    b.Navigation("companies");
                 });
 
             modelBuilder.Entity("DAL.Models.CompanyManager", b =>
@@ -1422,8 +1366,6 @@ namespace GlassDoor.Migrations
 
             modelBuilder.Entity("DAL.Models.City", b =>
                 {
-                    b.Navigation("companyLocations");
-
                     b.Navigation("Employees");
 
                     b.Navigation("Jobs");
@@ -1433,16 +1375,9 @@ namespace GlassDoor.Migrations
                 {
                     b.Navigation("CompanyLinks");
 
-                    b.Navigation("companyLocations");
-
                     b.Navigation("CompanyManagers");
 
                     b.Navigation("Jobs");
-                });
-
-            modelBuilder.Entity("DAL.Models.CompanyApplicationStatus", b =>
-                {
-                    b.Navigation("Applications");
                 });
 
             modelBuilder.Entity("DAL.Models.CompanyIndustry", b =>

@@ -1,3 +1,30 @@
-{{application.status}}
+<!--{{application.status}}
 <br>
-<p-selectButton [options]="statuses" [(ngModel)]="selectedStatus" optionLabel="name" optionValue="name" [multiple]="false" (click)="editStatus()"></p-selectButton>
+<p-selectButton [options]="statuses" [(ngModel)]="selectedStatus" optionLabel="status" optionValue="status" [multiple]="false" (click)="editStatus()"></p-selectButton>-->
+
+<div class="container">
+  <div class="row my-5">
+    <div class="col-8">
+      <h1> Employee Profile-View here</h1>
+    </div>
+    <div class="col-4">
+      <div class="btn-group" role="group" aria-label="Basic radio toggle button group" *ngIf="application != null">
+
+        <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off"  value="Viewed" (click)="editStatus('Viewed')" [(ngModel)] ="selectedStatus">
+        <label class="btn btn-outline-primary" for="btnradio1">Viewed</label>
+
+        <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off" value="InConsideration" (click)="editStatus('InConsideration')" [(ngModel)] ="selectedStatus">
+        <label class="btn btn-outline-success" for="btnradio3">In Consideration</label>
+
+        <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off" value="Rejected" (click)="editStatus('Rejected')" [(ngModel)] ="selectedStatus">
+        <label class="btn btn-outline-danger" for="btnradio2">Rejected</label>
+
+        <input type="radio" class="btn-check" name="btnradio" id="btnradio4" autocomplete="off" value="Hired" (click)="editStatus('Hired')" [(ngModel)] ="selectedStatus">
+        <label class="btn btn-outline-warning" for="btnradio4"> Hired </label>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
