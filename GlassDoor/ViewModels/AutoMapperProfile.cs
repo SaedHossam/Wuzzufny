@@ -43,7 +43,7 @@ namespace GlassDoor.ViewModels
             CreateMap<UserLanguageDto, UserLanguage>().ReverseMap();
             CreateMap<EmployeeLinksDto, EmployeeLinks>().ReverseMap();
             CreateMap<CompanyEmployeeDto, Employee>().ReverseMap();
-            
+
             CreateMap<CompanyApplicationDto, Application>()
                 .ForPath(a => a.Employee.User.FirstName, map => map.MapFrom(a => a.EmployeeFirstName))
                 .ForPath(a => a.Employee.User.LastName, map => map.MapFrom(a => a.EmployeeLastName))
@@ -55,9 +55,9 @@ namespace GlassDoor.ViewModels
                 .ForPath(a => a.Employee.Photo, map => map.MapFrom(a => a.EmployeePhoto))
                 .ForPath(a => a.ApplicationStatus.Name, map => map.MapFrom(a => a.Status))
                 .ReverseMap();
-            
+
             CreateMap<List<CompanyApplicationDto>, List<Application>>().ReverseMap();
-            
+
 
             CreateMap<CompanyJobDetailsDto, JobDetails>().ReverseMap();
             CreateMap<CompanyJobSkillDto, JobSkill>().ReverseMap();
@@ -116,8 +116,16 @@ namespace GlassDoor.ViewModels
                 .ForMember(d => d.SkillsNames, map => map.MapFrom(s => s.Job.Skills))
                 .ForMember(d => d.Vacancies, map => map.MapFrom(s => s.Job.NumberOfVacancies))
                 .ReverseMap();
-            
-            CreateMap<PostJobDto, Job>().ReverseMap();
+
+            CreateMap<PostJobDto, Job>()
+                .ForMember(j => j.AcceptedApplications, opt => opt.Ignore())
+                .ForMember(j => j.ViewedApplications, opt => opt.Ignore())
+                .ForMember(j => j.TotalClicks, opt => opt.Ignore())
+                .ForMember(j => j.RejectedApplications, opt => opt.Ignore())
+                .ForMember(j => j.InConsiderationApplications, opt => opt.Ignore())
+                .ForMember(j => j.TotalApplications, opt => opt.Ignore())
+                .ForMember(j => j.WithdrawnApplications, opt => opt.Ignore())
+                .ReverseMap();
 
             CreateMap<Job, Job>();
 
@@ -205,7 +213,7 @@ namespace GlassDoor.ViewModels
                 //.ForMember(d =>d.Email, map => map.MapFrom(s => s.Email))
                 .ReverseMap();
 
-            
+
 
 
             // update job category
@@ -229,7 +237,7 @@ namespace GlassDoor.ViewModels
 
             CreateMap<Company, Company>().ReverseMap();
             CreateMap<CompanyLocationDto, CompanyLocation>().ReverseMap();
-           
+
 
 
             CreateMap<Company, CompanyRequestsDto>()

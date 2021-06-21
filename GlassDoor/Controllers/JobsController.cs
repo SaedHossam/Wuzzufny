@@ -25,7 +25,7 @@ namespace GlassDoor.Controllers
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
         private readonly UserManager<ApplicationUser> _userManager;
-        
+
         public JobsController(IMapper mapper, IUnitOfWork unitOfWork, UserManager<ApplicationUser> userManager, ApplicationDbContext context)
         {
             _mapper = mapper;
@@ -49,12 +49,12 @@ namespace GlassDoor.Controllers
         public async Task<ActionResult<IEnumerable<JobViewModel>>> GetCompanyJobs()
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
-            
+
             if (user == null)
                 return BadRequest("Can't find User!\nlogin and try again.");
-            
+
             var companyId = _unitOfWork.CompaniesManagers?.Find(c => c.UserId == user.Id).First().Id;
-            
+
             if (companyId == null)
                 return Unauthorized("Can't Access Company jobs with Employee Account!");
 
@@ -64,13 +64,13 @@ namespace GlassDoor.Controllers
         [HttpGet("companyJobsData")]
         [Authorize(Roles = "Company")]
         public async Task<ActionResult<IEnumerable<CompanyJobDto>>> GetCompanyJobsData()
-         {
+        {
             var user = await _userManager.GetUserAsync(HttpContext.User);
             var companyId = _unitOfWork.CompaniesManagers.Find(c => c.UserId == user.Id).First().Id;
             var companyJobs = _context.Jobs
-                .Include(a=>a.Skills)
-                    .ThenInclude(a=>a.Skills)
-                .Include(a=>a.JobDetails)
+                .Include(a => a.Skills)
+                    .ThenInclude(a => a.Skills)
+                .Include(a => a.JobDetails)
                 .Include(a => a.JobDetails.CareerLevel)
                 .Include(a => a.JobDetails.JobCategory)
                 .Include(a => a.JobDetails.EducationLevel)
@@ -140,17 +140,12 @@ namespace GlassDoor.Controllers
         [Authorize(Roles = "Company")]
         public IActionResult PutJob(int id, [FromBody] PostJobDto postedjob)
         {
-            if (id != postedjob.Id)
-            {
-                return BadRequest();
-            }
+            postedjob.Id = id;
 
-            var job = _mapper.Map<Job>(postedjob);
             var oldJob = _context.Jobs.Include(j => j.JobDetails).Include(j => j.Skills).FirstOrDefault(j => j.Id == id);
-            job.JobDetails.Id = oldJob.JobDetails.Id;
-            job.CompanyId = oldJob.CompanyId;
-            //update job
-            _mapper.Map<Job, Job>(job, oldJob);
+            postedjob.IsOpen = true;
+            postedjob.JobDetails.Id = oldJob.JobDetails.Id;
+            _mapper.Map(postedjob, oldJob);
 
             try
             {
@@ -220,10 +215,10 @@ namespace GlassDoor.Controllers
                 return BadRequest("Can't find User!");
 
             var companyId = _unitOfWork.CompaniesManagers?.Find(c => c.UserId == user.Id).FirstOrDefault().Id;
-            
+
             if (companyId == null)
                 return BadRequest("Error Occured!\nTry Again.");
-            
+
             job.CompanyId = companyId.Value;
 
             job.TotalClicks = 1;

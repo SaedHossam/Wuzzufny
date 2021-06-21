@@ -57,7 +57,7 @@ namespace GlassDoor.Controllers
 
             await _userManager.AddToRoleAsync(user, Authorization.Roles.Employee.ToString());
 
-            var employee = new Employee() { UserId = user.Id };
+            var employee = new Employee() { UserId = user.Id, Photo = "Resources/images/user-m.png" };
             _unitOfWork.Employees.Add(employee);
             _unitOfWork.SaveChanges();
 
@@ -148,7 +148,7 @@ namespace GlassDoor.Controllers
                     await _userManager.AddToRoleAsync(user, Authorization.Roles.Employee.ToString());
                     await _userManager.AddLoginAsync(user, info);
 
-                    var employee = new Employee() { UserId = user.Id };
+                    var employee = new Employee() { UserId = user.Id, Photo = "Resources/images/user-m.png" };
                     _unitOfWork.Employees.Add(employee);
                     _unitOfWork.SaveChanges();
                 }

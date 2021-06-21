@@ -59,7 +59,7 @@ namespace GlassDoor.Contexts
                 EmailConfirmed = true,
                 PhoneNumberConfirmed = true,
                 FirstName = "first",
-                LastName = "last"
+                LastName = "last",
             };
 
             if (userManager.Users.All(u => u.Id != employeeUser.Id))
@@ -252,7 +252,7 @@ namespace GlassDoor.Contexts
 
             if (!context.Employees.Any())
             {
-                var employee = new Employee() { UserId = employeeUser.Id };
+                var employee = new Employee() { UserId = employeeUser.Id, Photo = "Resources/images/user-m.png" };
                 context.Employees.Add(employee);
                 context.SaveChanges();
             }

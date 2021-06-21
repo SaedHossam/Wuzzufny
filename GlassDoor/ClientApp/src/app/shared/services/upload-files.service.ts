@@ -18,4 +18,9 @@ export class UploadFilesService {
     return this._http.post(this._envUrl.urlAddress + '/api/employees/uploadcv', fileToUpload,
       { reportProgress: true, observe: 'events' });
   }
+
+  public uploadCompanyLogo = (fileToUpload: FormData) => {
+    return this._http.post(this._envUrl.urlAddress + '/api/companies/upload', fileToUpload,
+      { reportProgress: true, observe: 'events' });
+  }
 }

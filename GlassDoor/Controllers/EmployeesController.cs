@@ -404,7 +404,7 @@ namespace GlassDoor.Controllers
             try
             {
                 var formCollection = await Request.ReadFormAsync();
-                var folderName = Path.Combine("Resources", "Images");
+                var folderName = Path.Combine("Resources", "images");
                 var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
 
                 if (file.Length > 0)
@@ -471,7 +471,7 @@ namespace GlassDoor.Controllers
             try
             {
                 var formCollection = await Request.ReadFormAsync();
-                var folderName = Path.Combine("Resources", "Cv");
+                var folderName = Path.Combine("Resources", "cv");
                 var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
 
                 if (Cv.Length > 0)

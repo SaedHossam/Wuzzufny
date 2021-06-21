@@ -11,9 +11,9 @@ export class EditJobService {
     private http: HttpClient,
     private _envUrl: EnvironmentUrlService
   ) {}
-  public editJob = (editJobDto: PostJobDto) => {
+  public editJob = (id: number ,editJobDto: PostJobDto) => {
     return this.http.put<PostJobDto>(
-      `${this._envUrl.urlAddress}/api/jobs/${editJobDto.id}`,
+      `${this._envUrl.urlAddress}/api/jobs/${id}`,
       editJobDto
     );
   };

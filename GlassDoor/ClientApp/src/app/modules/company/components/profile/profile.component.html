@@ -13,9 +13,9 @@
             </div>
             <div class="col-10">
               <h3>{{company.name}}</h3>
-              <h6> Industry: {{company.companyIndustry}}</h6>
+              <h6> Industry: {{company.companyIndustry1}}</h6>
               <span class="fw-bold"> Size:</span>
-              <span>  {{company.companySize}} </span> <br /><span class="fw-bold">Head Quarter:</span> <span> {{company.city}}, {{company.country}}</span>
+              <span>  {{company.companySize1}} </span> <br /><span class="fw-bold">Head Quarter:</span> <span> {{company.city}}, {{company.country}}</span>
             </div>
           </div>
         </div>
@@ -60,15 +60,15 @@
             <span class="mx-1" *ngIf="company.phone != null"> <i class="bi bi-telephone-fill me-1"></i> {{company.phone}} </span>
             <span class="mx-1" *ngIf="company.phone == null"> <i class="bi bi-telephone-fill me-1"></i> Not Entered </span>
             <span class="mx-1"> <i class="bi bi-geo-alt-fill me-1"></i> {{company.city}}, {{company.country}} </span>
-            <span class="mx-1"> <i class="bi bi-people-fill me-1"></i>  {{company.companySize}} </span>
-            <span class="mx-1"> <i class="bi bi-building me-1"></i>  {{company.companyIndustry}} </span>
+            <span class="mx-1"> <i class="bi bi-people-fill me-1"></i>  {{company.companySize1}} </span>
+            <span class="mx-1"> <i class="bi bi-building me-1"></i>  {{company.companyIndustry1}} </span>
             <span class="mx-1">
               <i class="bi bi-calendar3"></i> Founded at
-              <span *ngIf="company.yearFounded != null"> {{company.yearFounded}} </span>
+              <span *ngIf="company.yearFounded != null"> {{company.yearFounded | date:'yyyy'}} </span>
               <span *ngIf="company.yearFounded == null"> Not Entered </span>
             </span>
             <span class="mx-1">
-              <i class="bi bi-building me-1"></i>  {{company.companyType}}
+              <i class="bi bi-building me-1"></i>  {{company.companyType1}}
             </span>
           </div>
         </div>

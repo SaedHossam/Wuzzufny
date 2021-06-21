@@ -1,85 +1,106 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-10 col-lg-9 col-xl-8">
+      <div class="card">
+        <div class="card-body">
+          <form [formGroup]="editProfileForm" autocomplete="off" novalidate (ngSubmit)="editProfile(editProfileForm)">
+            <div class="form-group">
+              <div class="row mb-5">
+                <div class="col-12 col-sm-3">
+                  <div class="avatar avatar-xl mx-md-3 shadow">
+                    <img [src]="companyProfile.logo" alt="" *ngIf="companyProfile?.logo">
+                  </div>
+                </div>
+                <div class="col-12 col-sm-9 mt-3 mt-sm-2">
+                  <h3>Company Logo</h3>
+                  <p>You can upload a .jpg, .png, or .gif photo with max size of 5MB.</p>
+                  <input #file formControlName="logo" id="file" type="file" class="form-control"
+                         (change)="uploadFile($event)" style="display: none;">
+                  <button type="button" class="btn btn-primary" (click)="file.click()">upload</button>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="title">Name</label>
+              <input type="text" class="form-control" placeholder="Name" formControlName="name">
+              <small class="form-text text-muted">please Enter company name.</small>
+            </div>
 
-<h1>Edit Company profile</h1>
-<div class="row">
-  <div class="col-6 pb-4">
-    <form [formGroup]="editProfileForm" autocomplete="off" novalidate (ngSubmit)="editProfile(editProfileForm)">
-    <div class="form-group">
-      <input #file formControlName="logo"
-      id="file"
-      type="file"
-      class="form-control"
-      (change)="uploadFile($event)" style="display: none;">
-      <button class="btn btn-primary" (click)="file.click()">upload</button>
+            <div class="form-group">
+              <label for="title">About Us</label>
+              <textarea class="form-control" placeholder="About us" formControlName="aboutUs" rows="5"></textarea>
+              <small class="form-text text-muted">please Enter descriptive company details.</small>
+            </div>
+
+            <div class="form-group">
+              <label for="title">phone</label>
+              <input type="text" class="form-control" placeholder="phone" formControlName="phone">
+              <small class="form-text text-muted">please Enter company phone.</small>
+            </div>
+
+            <div class="form-group">
+              <label for="title">Year founded</label> <br>
+              <p-calendar view="month" [yearNavigator]="true" dateFormat="M - yy" yearRange="1900:{{maxYearRange}}"
+                          formControlName="yearFounded" showButtonBar="true" [showIcon]="true" [maxDate]="dateNow"></p-calendar>
+            </div>
+
+            <div class="row">
+              <div class="col-6">
+                <div class="form-group">
+                  <label for="companyIndustry">company industry</label>
+                  <select name="companyIndustry" class="form-select" formControlName="companyIndustry">
+                    <option *ngFor="let i of companyIndustries" [value]="i.id">
+                      {{i.name}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="form-group">
+                  <label for="companySize">company size</label>
+                  <select name="companySize" class="form-select" formControlName="companySize">
+                    <option *ngFor="let i of companySizes" [value]="i.id">
+                      {{i.name}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="companyType">company type</label>
+              <select name="companyType" class="form-select" formControlName="companyType">
+                <option *ngFor="let i of companyTypes" [value]="i.id">
+                  {{i.name}}
+                </option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="title">Facebook link</label>
+              <input type="text" class="form-control" formControlName="facebookLink">
+            </div>
+            <div class="form-group">
+              <label for="title">Linkedin Link</label>
+              <input type="text" class="form-control" formControlName="linkedinLink">
+            </div>
+            <div class="form-group">
+              <label for="title">WebSite Link</label>
+              <input type="text" class="form-control" formControlName="websiteLink">
+            </div>
+            <div class="form-group">
+              <label for="title">Email</label>
+              <input type="text" class="form-control" formControlName="email">
+            </div>
+
+            <div class="form-group">
+              <p-multiSelect [options]="cities" optionLabel="name" display="chip" formControlName="locations">
+              </p-multiSelect>
+            </div>
+            <button class="btn btn-primary mt-3" type="submit">Save Changes</button>
+          </form>
+        </div>
+      </div>
     </div>
-        <div class="form-group">
-            <label for="title">Name</label>
-            <input type="text" class="form-control" placeholder="Name" formControlName="name">
-            <small class="form-text text-muted">please Enter company name.</small>
-          </div>
-
-        <div class="form-group">
-        <label for="title">About Us</label>
-        <input type="text" class="form-control" placeholder="About us" formControlName="aboutUs">
-        <small class="form-text text-muted">please Enter descriptive company details.</small>
-      </div>
-
-      <div class="form-group">
-        <label for="title">phone</label>
-        <input type="text" class="form-control" placeholder="phone" formControlName="phone">
-        <small class="form-text text-muted">please Enter company phone.</small>
-      </div>
-
-      <!-- <div class="form-group">
-        <label for="title">logo</label>
-        <input type="text" class="form-control"  formControlName="logo">
-      </div> -->
-
-      <div class="form-group">
-        <label for="title">Year founded</label> <br>
-        <p-calendar view="month" [yearNavigator]="true" dateFormat="M - yy" yearRange="1900:{{maxYearRange}}" formControlName="yearFounded" showButtonBar="true" [maxDate]="dateNow"></p-calendar>
-      </div>
-
-      <div class="form-group">
-        <label for="companyIndustry">company industry</label>
-        <select name="companyIndustry" class="form-control" formControlName="companyIndustry">
-          <option *ngFor="let i of companyIndustries" [value]="i.id">
-            {{i.name}}
-          </option>
-        </select>
-      </div>
-
-      <div class="form-group">
-        <label for="companySize">company size</label>
-        <select name="companySize" class="form-control" formControlName="companySize">
-          <option *ngFor="let i of companySizes" [value]="i.id">
-            {{i.name}}
-          </option>
-        </select>
-      </div>
-
-      <div class="form-group">
-        <label for="companyType">company type</label>
-        <select name="companyType" class="form-control" formControlName="companyType">
-          <option *ngFor="let i of companyTypes" [value]="i.id">
-            {{i.name}}
-          </option>
-        </select>
-      </div>
-      
-      <div class="form-group">
-        <label for="title">facebook link</label>
-        <input type="text" class="form-control" formControlName="facebookLink" >
-      </div>
-      <div class="form-group">
-        <label for="title">linkedin link</label>
-        <input type="text" class="form-control" formControlName="linkedinLink" >
-      </div>
-
-      <p-multiSelect [options]="cities" optionLabel="name" display="chip" formControlName="locations"></p-multiSelect>
-      <button type="submit">submit</button>
-
-  
-    </form>
-    
   </div>
 </div>

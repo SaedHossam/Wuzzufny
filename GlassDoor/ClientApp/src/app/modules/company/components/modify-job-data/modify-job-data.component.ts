@@ -1,4 +1,3 @@
-import { logging } from 'protractor';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
@@ -24,7 +23,7 @@ import { SalaryRateService } from 'src/app/shared/services/salary-rate.service';
 import { SkillService } from 'src/app/shared/services/skill.service';
 import { PostJobDto } from '../../models/post-job-dto';
 import { EditJobService } from '../../services/edit-job.service';
-import { PostJobService } from '../../services/post-job.service';
+import { JobDetailsDto } from "../../models/job-details-dto";
 
 @Component({
   selector: 'app-modify-job-data',
@@ -160,25 +159,52 @@ export class ModifyJobDataComponent implements OnInit {
     this.results = this.skills.filter(c => c.name.startsWith(event.query));
   }
   public postjob(postjobform) {
-    this.postJobDto.title = postjobform.value.title;
-    this.postJobDto.cityId = postjobform.value.cityId;
-    this.postJobDto.jobTypeId = postjobform.value.jobTypeId;
-    this.postJobDto.countryId = postjobform.value.countryId;
-    this.postJobDto.numberOfVacancies = postjobform.value.numberOfVacancies;
-    this.postJobDto.jobDetails.experienceNeededMin = postjobform.value.experienceNeededMin;
-    this.postJobDto.jobDetails.experienceNeededMax = postjobform.value.experienceNeededMax;
-    this.postJobDto.jobDetails.careerLevelId = postjobform.value.careerLevelId;
-    this.postJobDto.jobDetails.educationLevelId = postjobform.value.educationLevelId;
-    this.postJobDto.jobDetails.salaryMin = postjobform.value.salaryMin;
-    this.postJobDto.jobDetails.salaryMax = postjobform.value.salaryMax;
-    this.postJobDto.jobDetails.salaryCurrencyId = postjobform.value.salaryCurrencyId;
-    this.postJobDto.jobDetails.salaryRateId = postjobform.value.salaryRateId;
-    this.postJobDto.jobDetails.jobCategoryId = postjobform.value.jobCategoryId;
-    this.postJobDto.jobDetails.description = postjobform.value.description;
-    this.postJobDto.jobDetails.requirements = postjobform.value.requirements;
-    this.postJobDto.jobDetails.responsibilities = postjobform.value.responsibilities;
-    this.postJobDto.skills = postjobform.value.skills.map((val, index) => ({ SkillsId: val.id }));
-    this._editJobService.editJob(this.postJobDto).subscribe(a => {
+
+    let modifiedJob: PostJobDto = new PostJobDto(
+      postjobform.value.title,
+      postjobform.value.jobTypeId,
+      postjobform.value.cityId,
+      postjobform.value.countryId,
+      postjobform.value.numberOfVacancies,
+      new JobDetailsDto(
+        postjobform.value.experienceNeededMin,
+        postjobform.value.experienceNeededMax,
+        postjobform.value.careerLevelId,
+        postjobform.value.educationLevelId,
+        postjobform.value.salaryMin,
+        postjobform.value.salaryMax,
+        postjobform.value.salaryCurrencyId,
+        postjobform.value.salaryRateId,
+        postjobform.value.jobCategoryId,
+        postjobform.value.description,
+        postjobform.value.requirements,
+        postjobform.value.responsibilities
+      ),
+      postjobform.value.skills.map((val, index) => ({ SkillsId: val.id }))
+    );
+
+    //modifiedJob.title = postjobform.value.title;
+    //modifiedJob.cityId = postjobform.value.cityId;
+    //modifiedJob.jobTypeId = postjobform.value.jobTypeId;
+    //modifiedJob.countryId = postjobform.value.countryId;
+    //modifiedJob.numberOfVacancies = postjobform.value.numberOfVacancies;
+    //modifiedJob.jobDetails.experienceNeededMin = postjobform.value.experienceNeededMin;
+    //modifiedJob.jobDetails.experienceNeededMax = postjobform.value.experienceNeededMax;
+    //modifiedJob.jobDetails.careerLevelId = postjobform.value.careerLevelId;
+    //modifiedJob.jobDetails.educationLevelId = postjobform.value.educationLevelId;
+    //modifiedJob.jobDetails.salaryMin = postjobform.value.salaryMin;
+    //modifiedJob.jobDetails.salaryMax = postjobform.value.salaryMax;
+    //modifiedJob.jobDetails.salaryCurrencyId = postjobform.value.salaryCurrencyId;
+    //modifiedJob.jobDetails.salaryRateId = postjobform.value.salaryRateId;
+    //modifiedJob.jobDetails.jobCategoryId = postjobform.value.jobCategoryId;
+    //modifiedJob.jobDetails.description = postjobform.value.description;
+    //modifiedJob.jobDetails.requirements = postjobform.value.requirements;
+    //modifiedJob.jobDetails.responsibilities = postjobform.value.responsibilities;
+    //modifiedJob.skills = postjobform.value.skills.map((val, index) => ({ SkillsId: val.id }));
+
+    console.log(modifiedJob)
+
+    this._editJobService.editJob(this.postJobDto.id, modifiedJob).subscribe(a => {
       console.log(a);
       this._router.navigate(['/company/']);
     })
