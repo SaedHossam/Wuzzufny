@@ -57,7 +57,7 @@ namespace GlassDoor.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("archived")]
-        [Authorize(Roles = "Employee")]
+        [Authorize(Roles = Authorization.Employee)]
         public async Task<ActionResult<IEnumerable<ApplicationDto>>> GetArchivedApplications()
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
@@ -136,22 +136,22 @@ namespace GlassDoor.Controllers
         // if archived = true, then archive application, and update archive date
         // else unarchive application, and set date to null
         [HttpPut]
-        [Authorize(Roles = "Employee")]
-        //public IActionResult ArchiveApplication([FromBody] ArchiveApplicationDto archiveApplication)
-        //{
-        //    var application = _unitOfWork.Application.Find(a => a.Id == archiveApplication.Id).FirstOrDefault();
-        //    if (application == null)
-        //        return BadRequest("Cann't Find Application!");
+        [Authorize(Roles = Authorization.Employee)]
+        public IActionResult ArchiveApplication([FromBody] ArchiveApplicationDto archiveApplication)
+        {
+            var application = _unitOfWork.Application.Find(a => a.Id == archiveApplication.Id).FirstOrDefault();
+            if (application == null)
+                return BadRequest("Cann't Find Application!");
 
-        //    if (application.IsWithdrawn == true)
-        //        return BadRequest("This application is withdrawn.");
+            if (application.IsWithdrawn == true)
+                return BadRequest("This application is withdrawn.");
 
-        //    application.IsArchived = archiveApplication.Archived;
-        //    application.ArchiveDate = archiveApplication.Archived ? DateTime.Now : null;
-        //    _unitOfWork.Application.Update(application);
-        //    _unitOfWork.SaveChanges();
-        //    return Ok(application);
-        //}
+            application.IsArchived = archiveApplication.Archived;
+            application.ArchiveDate = archiveApplication.Archived ? DateTime.Now : null;
+            _unitOfWork.Application.Update(application);
+            _unitOfWork.SaveChanges();
+            return Ok(application);
+        }
 
         // summary
         // this method takes application id as paramter 
@@ -159,7 +159,7 @@ namespace GlassDoor.Controllers
         // else it withdraw application
         // TODO: update job application count
         [HttpPut("withdraw")]
-        [Authorize(Roles = "Employee")]
+        [Authorize(Roles = Authorization.Employee)]
         public IActionResult WithdrawApplication([FromBody] int id)
         {
             var application = _unitOfWork.Application.Find(a => a.Id == id).FirstOrDefault();
@@ -184,9 +184,9 @@ namespace GlassDoor.Controllers
             {
                 job.ViewedApplications--;
             }
-            else if (application.ApplicationStatusId == applicationStatuses.Where(s => s.Name == Enums.ApplicationStatus.InConsidration.ToString()).First().Id)
+            else if (application.ApplicationStatusId == applicationStatuses.Where(s => s.Name == Enums.ApplicationStatus.InConsideration.ToString()).First().Id)
             {
-                job.InConsidrationApplications--;
+                job.InConsiderationApplications--;
             }
             else if (application.ApplicationStatusId == applicationStatuses.Where(s => s.Name == Enums.ApplicationStatus.Rejected.ToString()).First().Id)
             {

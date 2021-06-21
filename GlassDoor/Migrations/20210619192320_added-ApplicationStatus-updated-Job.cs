@@ -41,7 +41,7 @@ namespace GlassDoor.Migrations
                 defaultValue: 0);
 
             migrationBuilder.AddColumn<int>(
-                name: "InConsidrationApplications",
+                name: "InConsiderationApplications",
                 table: "Jobs",
                 type: "int",
                 nullable: false,
@@ -113,7 +113,7 @@ namespace GlassDoor.Migrations
                 table: "Jobs");
 
             migrationBuilder.DropColumn(
-                name: "InConsidrationApplications",
+                name: "InConsiderationApplications",
                 table: "Jobs");
 
             migrationBuilder.DropColumn(

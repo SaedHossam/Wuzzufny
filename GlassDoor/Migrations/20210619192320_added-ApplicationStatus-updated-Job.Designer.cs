@@ -547,7 +547,7 @@ namespace GlassDoor.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("InConsidrationApplications")
+                    b.Property<int>("InConsiderationApplications")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasDefaultValue(0);

@@ -12,6 +12,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'postjob', component: PostJobComponent },
+  { path: 'applications/:id/:status', component: JobApplicationsComponent },
   { path: 'applications/:id', component: JobApplicationsComponent },
   { path: 'status/:id', component: ApplicationStatusComponent },
   { path: 'profile2', component: DisplayCompanyProfileComponent },

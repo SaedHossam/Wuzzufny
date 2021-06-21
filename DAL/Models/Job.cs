@@ -27,7 +27,7 @@ namespace DAL.Models
         public int AcceptedApplications { get; set; }
         public int RejectedApplications { get; set; }
         public int ViewedApplications { get; set; }
-        public int InConsidrationApplications { get; set; }
+        public int InConsiderationApplications { get; set; }
         public int WithdrawnApplications { get; set; }
         public bool IsOpen { get; set; }
 

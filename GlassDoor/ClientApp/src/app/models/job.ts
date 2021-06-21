@@ -14,7 +14,7 @@ export class Job {
     public totalApplications?: number,
     public totalViews?: number,
     public applicationViewed?: number,
-    public applicationInConsidration?: number,
+    public applicationInConsideration?: number,
     public applicationRejected?: number,
     public applicationHired?: number,
   ) { }

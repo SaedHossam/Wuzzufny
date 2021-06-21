@@ -13,6 +13,7 @@ export class ApplicationsComponent implements OnInit {
   applications: Application[];
   ngOnInit(): void {
     this.applicationService.getApplications().subscribe(a => {
+      console.log(a);
       this.applications = a;
     })
   }

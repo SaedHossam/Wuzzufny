@@ -14,20 +14,21 @@
 <div class="container">
   <div class="row my-5">
     <div class="col-8">
-      <div class="col-12 mt-2" *ngFor="let job of [1, 2, 3]">
+      <div class="col-12 mt-2" *ngFor="let application of applications">
         <div class="card shadow mb-3">
           <div class="card-body" [routerLink]="['/company/status',application.id]">
+          <!--<div class="card-body">-->
             <div class="row g-0 px-1 ps-md-4 pe-md-3 py-3 align-items-center">
               <div class="col-2">
                 <div class="avatar avatar-xl me-3 shadow">
-                  <img src="../../../../../assets/Images/gallery/MANIAC.jpg" class="img-fluid shadow">
+                  <img [src]="application.employeePhoto" class="img-fluid shadow">
                 </div>
               </div>
               <div class="col-1"></div>
               <div class="col-5">
-                <h3 class="card-title text-primary"> Employee Name </h3>
-                <h5 class="card-text text-dark fw-bold"> Alexandria, Egypt | 24 years old</h5>
-                <p class="card-text mx-1"> ExperienceYears </p>
+                <h3 class="card-title text-primary"> {{application.employeeFirstName}} {{application.employeeLastName}} </h3>
+                <h5 class="card-text text-dark fw-bold"> {{application.employeeCity}}, {{application.employeeCountry}} | {{ ageFromDateOfBirthday(application.employeeBirthDate) }} years old</h5>
+                <p class="card-text mx-1"> {{application.employeeExperience}} year (s) of Experience</p>
                 <p class="card-text mx-1">
                   <svg id="Capa_1" enable-background="new 0 0 512 512" height="24" viewBox="0 0 512 512" width="24" xmlns="http://www.w3.org/2000/svg">
                     <path d="m501.991 128.354-241-85.031c-3.229-1.14-6.752-1.14-9.981 0l-241 85.031c-5.992 2.114-10.002 7.774-10.01 14.128s3.989 12.023 9.976 14.151l241 85.677c1.625.578 3.325.867 5.024.867 1.7 0 3.399-.289 5.024-.867l241-85.677c5.987-2.128 9.983-7.797 9.976-14.151-.008-6.354-4.018-12.014-10.009-14.128z" />
@@ -35,12 +36,17 @@
                     <path d="m256 273.177c-5.149 0-10.22-.875-15.073-2.6l-135.483-48.165v66.008c0 16.149 16.847 29.806 50.073 40.59 28.961 9.4 64.647 14.577 100.483 14.577s71.521-5.177 100.483-14.577c33.226-10.784 50.073-24.441 50.073-40.59v-66.008l-135.482 48.165c-4.854 1.725-9.925 2.6-15.074 2.6z" />
                   </svg>
                   <span class="mx-1">
-                    Education Level
+                    {{application.employeeEducation}}
                   </span>
                 </p>
               </div>
               <div class="col-4">
-                <p class="card-text w-50 w-md-25 text-end ms-auto"> Apply Date </p>
+                <p class="card-text w-50 w-md-25 text-end ms-auto">Applied on <br> {{application.applyDate | date}} </p>
+                <p class="text-end position-absolute badge bg-primary" style="bottom:20px; right:40px" *ngIf="application.status == 'Viewed'"> {{application.status}}</p>
+                <p class="text-end position-absolute badge bg-secondary" style="bottom:20px; right:40px" *ngIf="application.status == 'Applied'"> {{application.status}}</p>
+                <p class="text-end position-absolute badge bg-danger" style="bottom:20px; right:40px" *ngIf="application.status == 'Rejected'"> {{application.status}}</p>
+                <p class="text-end position-absolute badge bg-warning" style="bottom:20px; right:40px" *ngIf="application.status == 'Hired'"> {{application.status}}</p>
+                <p class="text-end position-absolute badge bg-success" style="bottom:20px; right:40px" *ngIf="application.status == 'InConsideration'"> {{application.status}}</p>
               </div>
             </div>
           </div>
@@ -76,7 +82,7 @@
     <div class="col-4">
       <form id="search-form">
         <div class="row">
-          <span>Search jobs</span>
+          <span>Search Applications</span>
 
           <div class="input-group mb-3">
             <input type="text" id="search2" name="jobTitle" class="form-control" placeholder="Search job title or company...">

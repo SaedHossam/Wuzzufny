@@ -1,3 +1,3 @@
 export enum ApplicationStatus {
-  Applied = 1, Viewed, InConsidration, Rejected, Hired
+  Applied = 1, Viewed, InConsideration, Rejected, Hired
 }

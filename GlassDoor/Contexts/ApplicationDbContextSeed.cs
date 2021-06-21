@@ -240,7 +240,7 @@ namespace GlassDoor.Contexts
                 {
                     new ApplicationStatus() {Name = Enums.ApplicationStatus.Applied.ToString()},
                     new ApplicationStatus() {Name = Enums.ApplicationStatus.Viewed.ToString()},
-                    new ApplicationStatus() {Name = Enums.ApplicationStatus.InConsidration.ToString()},
+                    new ApplicationStatus() {Name = Enums.ApplicationStatus.InConsideration.ToString()},
                     new ApplicationStatus() {Name = Enums.ApplicationStatus.Rejected.ToString()},
                     new ApplicationStatus() {Name = Enums.ApplicationStatus.Hired.ToString()},
 

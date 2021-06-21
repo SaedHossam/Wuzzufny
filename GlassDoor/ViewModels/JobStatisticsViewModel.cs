@@ -9,7 +9,7 @@ namespace GlassDoor.ViewModels
     {
         public int TotalApplications { get; set; }
         public int ViewedApplications { get; set; }
-        public int InConsidrationApplications { get; set; }
+        public int InConsiderationApplications { get; set; }
         public int RejectedApplications { get; set; }
         public int HiredApplications { get; set; }
         public int TotalClicks { get; set; }

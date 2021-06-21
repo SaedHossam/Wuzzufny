@@ -4,6 +4,8 @@ import { Application } from './../../../../models/application';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ApplicationService } from '../../services/application.service';
+import { ToastrService } from 'ngx-toastr';
+import { error } from '@angular/compiler/src/util';
 
 interface status {
   status:string
@@ -20,9 +22,9 @@ export class ApplicationStatusComponent implements OnInit {
   statuses:status[];
   selectedStatus:string;
   
-  constructor(private _applicationService:ApplicationService,private _route:ActivatedRoute) { 
+  constructor(private _applicationService: ApplicationService, private _route: ActivatedRoute, private toastr: ToastrService) {
     this.statuses = [
-      {status:"In Considration"},
+      {status:"In Consideration"},
       {status:"Accepted"},
       {status:"Rejected"},
       {status:"Viewed"}
@@ -40,10 +42,12 @@ export class ApplicationStatusComponent implements OnInit {
     })
   }
 
-  editStatus(){
-    const statusDto:StatusDto = {id:this.application.id, status:this.selectedStatus};
-    this._applicationService.editStatus(statusDto).subscribe(a=>{
-      console.log(a);
-    })
+  editStatus(status: string) {
+    const statusDto: StatusDto = { id: this.application.id, status: status };
+    console.log(statusDto);
+    this._applicationService.editStatus(statusDto).subscribe(a => {
+      this.toastr.success(`Status Changed successfully`, 'Success');
+
+    }, error => console.log(error))
   }
 }

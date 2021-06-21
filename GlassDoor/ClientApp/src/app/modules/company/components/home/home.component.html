@@ -18,7 +18,7 @@
   <div class="row">
     <div class="col-12">
       <div class="card" *ngFor="let job of companyJobs" >
-        <div class="card-body" [routerLink]="['/company/applications',job.id]">
+        <div class="card-body" >
           <div class="row">
             <div class="col-12 col-lg-4">
               <h4 class="card-title text-primary">{{job.title}}</h4>
@@ -28,11 +28,11 @@
               <p class="card-text badge bg-light-secondary mx-1">{{job.applicationViewed}} job views | {{job.totalApplications}} total applications</p>
             </div>
             <div class="col-12 col-lg-8 text-center">
-              <button type="button" class="btn btn-secondary btn-arrow-right">{{job.totalApplications}} Application</button>
-              <button type="button" class="btn btn-primary btn-arrow-right">{{job.applicationViewed}} Viewed</button>
-              <button type="button" class="btn btn-danger btn-arrow-right">{{job.applicationRejected}} Rejected</button>
-              <button type="button" class="btn btn-success btn-arrow-right">{{job.applicationInConsidration}} In Consideration</button>
-              <button type="button" class="btn btn-warning btn-arrow-right">{{job.applicationHired}} Hired</button>
+              <button type="button" class="btn btn-secondary btn-arrow-right" [routerLink]="['/company/applications/'+job.id]"> {{job.totalApplications}} Application</button>
+              <button type="button" class="btn btn-primary btn-arrow-right" [routerLink]="['/company/applications/'+job.id+'/viewed']">{{job.applicationViewed}} Viewed</button>
+              <button type="button" class="btn btn-danger btn-arrow-right" [routerLink]="['/company/applications/'+job.id+'/rejected']">{{job.applicationRejected}} Rejected</button>
+              <button type="button" class="btn btn-success btn-arrow-right" [routerLink]="['/company/applications/'+job.id+'/InConsideration']">{{job.applicationInConsideration}} In Consideration</button>
+              <button type="button" class="btn btn-warning btn-arrow-right" [routerLink]="['/company/applications/'+job.id+'/hired']">{{job.applicationHired}} Hired</button>
             </div>
           </div>
         </div>

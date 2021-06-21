@@ -51,7 +51,7 @@ namespace glassDoor.ViewModels
         public int TotalApplications { get; set; }
         public int TotalViews { get; set; }
         public int ApplicationViewed { get; set; } = 0;
-        public int ApplicationInConsidration { get; set; } = 0;
+        public int ApplicationInConsideration { get; set; } = 0;
         public int ApplicationRejected { get; set; } = 0;
         public int ApplicationHired { get; set; } = 0;
 

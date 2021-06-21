@@ -77,7 +77,7 @@ namespace DAL
             builder.Entity<Job>().Property(j => j.TotalClicks).HasDefaultValue(0);
             builder.Entity<Job>().Property(j => j.TotalApplications).HasDefaultValue(0);
             builder.Entity<Job>().Property(j => j.AcceptedApplications).HasDefaultValue(0);
-            builder.Entity<Job>().Property(j => j.InConsidrationApplications).HasDefaultValue(0); 
+            builder.Entity<Job>().Property(j => j.InConsiderationApplications).HasDefaultValue(0); 
             builder.Entity<Job>().Property(j => j.RejectedApplications).HasDefaultValue(0);
             builder.Entity<Job>().Property(j => j.ViewedApplications).HasDefaultValue(0); 
             builder.Entity<Job>().Property(j => j.WithdrawnApplications).HasDefaultValue(0);
