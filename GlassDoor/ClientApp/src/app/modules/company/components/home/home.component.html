@@ -29,7 +29,7 @@
                     <h5 class="card-text text-dark fw-bold">{{job.jobCityName}}, {{job.jobCountryName}}</h5>
                     <p class="card-text badge bg-light-secondary mx-1">{{job.numberOfVacancies}} Vacancies</p>
                     <p class="card-text badge bg-light-secondary mx-1">posted on {{job.createdDate | date}}</p>
-                    <p class="card-text badge bg-light-secondary mx-1">{{job.applicationViewed}} job views | {{job.totalApplications}} total applications</p>
+                    <p class="card-text badge bg-light-secondary mx-1">{{job.totalViews}} job views | {{job.totalApplications}} total applications</p>
                   </div>
                   <div class="col-12 col-lg-8 text-center">
                     <button type="button" class="btn btn-secondary btn-arrow-right" [routerLink]="['/company/applications/'+job.id]"> {{job.totalApplications}} Application</button>
