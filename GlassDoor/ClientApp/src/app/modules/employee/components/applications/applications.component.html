@@ -1,13 +1,136 @@
 <div class="container">
   <div class="row my-5">
     <div class="col-8">
-      <!--<div *ngFor="let job of jobs" class="col-12 mt-2">-->
-      <div *ngFor="let application of applications" class="col-12 mt-2">
+
+      <nav ngbNav #nav="ngbNav" class="nav-tabs">
+        <ng-container ngbNavItem>
+          <a ngbNavLink>Applications</a>
+          <ng-template ngbNavContent>
+            <h1>Applications here</h1>
+            <div *ngFor="let application of openApplications" class="col-12 mt-2">
+              <div class="card shadow mb-3">
+                <div class="card-body position-relative">
+                  <div class="row ps-md-1 pe-md-2 py-3 align-items-center ">
+                    <div class="col-2">
+                      <img [src]="application.companyLogo" class="img-fluid shadow me-1" alt="Company Logo">
+                    </div>
+                    <div class="col-6">
+                      <h4 class="card-title text-primary"> {{application.companyName}} </h4>
+                      <h3 class="card-text text-dark fw-bold"> {{application.jobTitle}} </h3>
+                      <p class="card-text badge bg-light-secondary mx-1">{{application.industry}}</p>
+                      <p class="card-text badge bg-warning mx-1"><i class="bi bi-clock"></i>  {{application.jobType}} </p>
+                    </div>
+                    <div class="col-4">
+                      <div ngbDropdown class="d-inline-block position-absolute" style="top:20px;right:30px">
+                        <i class="bi bi-three-dots" ngbDropdownToggle style="cursor: pointer"></i>
+                        <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="shadow">
+                          <button ngbDropdownItem (click)="withdrawApplication(application.id)">
+                            <i size="16" class="">
+                              <svg width="16" height="16" preserveAspectRatio="none" viewBox="0 0 24 24">
+                                <path fill="#001433" d="M14.239 7.766c3.182 0 5.761 2.627 5.761 5.867S17.42 19.5 14.239 19.5H6.557c-.172 0-.341-.008-.51-.023v-1.933h8.192c2.057 0 3.736-1.646 3.836-3.716l.005-.195c0-2.094-1.617-3.805-3.65-3.906l-.191-.005H6.048V7.789c.168-.015.337-.023.51-.023h7.68zM8.345 4.5l1.449 1.444L6.897 8.83l2.897 2.887-1.449 1.443L4 8.831 8.345 4.5z"></path>
+                              </svg>
+                            </i>
+                            Withdraw
+                          </button>
+                          <button ngbDropdownItem (click)="archiveApplication(application.id, true)"> <i class="bi bi-archive"></i> Archive </button>
+                        </div>
+                      </div>
+
+                      <p class="card-text w-50 w-md-25 text-end ms-auto"> {{application.city}}, {{application.country}} </p>
+                      <p class="card-text w-50 w-md-25 text-end ms-auto"> {{application.postDate | date}} </p>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <p>
+                      <span class="badge bg-secondary" *ngIf="application.status == 'Applied'"> Applied </span>
+                      <span class="badge bg-primary" *ngIf="application.status == 'Viewed'"> Viewed </span>
+                      <span class="badge bg-danger" *ngIf="application.status == 'Rejected'"> Rejected </span>
+                      <span class="badge bg-warning" *ngIf="application.status == 'Hired'"> Hired </span>
+                      <span class="badge bg-success" *ngIf="application.status == 'InConsideration'"> In Consideration </span> {{application.applyDate | date}}
+                    </p>
+                  </div>
+                  <div class="row">
+                    <p>
+                      {{application.jobStatistics.totalApplications}} <span class="text-muted fw-bold"> Application (s) </span> |
+                      {{application.vacancies}} <span class="text-primary fw-bold"> Vacancies </span> |
+                      {{application.jobStatistics.viewedApplications}}
+                      <span class="text-warning fw-bold"> Viewed </span> |
+                      {{application.jobStatistics.inConsiderationApplications}} <span class="text-success fw-bold"> in Cinsidration </span> |
+                      {{application.jobStatistics.rejectedApplications}} <span class="text-danger fw-bold"> Not Selected </span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+        </ng-container>
+        <ng-container ngbNavItem>
+          <a ngbNavLink>Archived</a>
+          
+          <ng-template ngbNavContent>
+            <h1>Archived here</h1>
+            <div *ngFor="let application of archivedApplications" class="col-12 mt-2">
+              <div class="card shadow mb-3">
+                <div class="card-body position-relative">
+                  <div class="row ps-md-1 pe-md-2 py-3 align-items-center ">
+                    <div class="col-2">
+                      <img [src]="application.companyLogo" class="img-fluid shadow me-1" alt="Company Logo">
+                    </div>
+                    <div class="col-6">
+                      <h4 class="card-title text-primary"> {{application.companyName}} </h4>
+                      <h3 class="card-text text-dark fw-bold"> {{application.jobTitle}} </h3>
+                      <p class="card-text badge bg-light-secondary mx-1">{{application.industry}}</p>
+                      <p class="card-text badge bg-warning mx-1"><i class="bi bi-clock"></i>  {{application.jobType}} </p>
+                    </div>
+                    <div class="col-4">
+                      <div ngbDropdown class="d-inline-block position-absolute" style="top:20px;right:30px">
+                        <i class="bi bi-three-dots" ngbDropdownToggle style="cursor: pointer"></i>
+                        <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="shadow">
+                          <button ngbDropdownItem (click)="withdrawApplication(application.id)">
+                            <i size="16" class="">
+                              <svg width="16" height="16" preserveAspectRatio="none" viewBox="0 0 24 24">
+                                <path fill="#001433" d="M14.239 7.766c3.182 0 5.761 2.627 5.761 5.867S17.42 19.5 14.239 19.5H6.557c-.172 0-.341-.008-.51-.023v-1.933h8.192c2.057 0 3.736-1.646 3.836-3.716l.005-.195c0-2.094-1.617-3.805-3.65-3.906l-.191-.005H6.048V7.789c.168-.015.337-.023.51-.023h7.68zM8.345 4.5l1.449 1.444L6.897 8.83l2.897 2.887-1.449 1.443L4 8.831 8.345 4.5z"></path>
+                              </svg>
+                            </i>
+                            Withdraw
+                          </button>
+                          <button ngbDropdownItem (click)="archiveApplication(application.id, false)"> <i class="bi bi-archive"></i> UnArchive </button>
+                        </div>
+                      </div>
+
+                      <p class="card-text w-50 w-md-25 text-end ms-auto"> {{application.city}}, {{application.country}} </p>
+                      <p class="card-text w-50 w-md-25 text-end ms-auto"> {{application.postDate | date}} </p>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <p>
+                      <span class="badge bg-secondary" *ngIf="application.status == 'Applied'"> Applied </span>
+                      <span class="badge bg-primary" *ngIf="application.status == 'Viewed'"> Viewed </span>
+                      <span class="badge bg-danger" *ngIf="application.status == 'Rejected'"> Rejected </span>
+                      <span class="badge bg-warning" *ngIf="application.status == 'Hired'"> Hired </span>
+                      <span class="badge bg-success" *ngIf="application.status == 'InConsideration'"> In Consideration </span> {{application.applyDate | date}}
+                    </p>
+                  </div>
+                  <div class="row">
+                    <p>
+                      {{application.jobStatistics.totalApplications}} <span class="text-muted fw-bold"> Application (s) </span> |
+                      {{application.vacancies}} <span class="text-primary fw-bold"> Vacancies </span> |
+                      {{application.jobStatistics.viewedApplications}}
+                      <span class="text-warning fw-bold"> Viewed </span> |
+                      {{application.jobStatistics.inConsiderationApplications}} <span class="text-success fw-bold"> in Cinsidration </span> |
+                      {{application.jobStatistics.rejectedApplications}} <span class="text-danger fw-bold"> Not Selected </span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+        </ng-container>
+      </nav>
+
+
+      <!--<div *ngFor="let application of applications" class="col-12 mt-2">
         <div class="card shadow mb-3">
-          <!--<div class="ms-auto me-3 mt-2">
-            <i class="bi bi-three-dots"></i>
-          </div>-->
-          <!--<div class="card-body" [routerLink]="['/employee/apply/',job.id]">-->
           <div class="card-body position-relative">
             <div class="row ps-md-1 pe-md-2 py-3 align-items-center ">
               <div class="col-2">
@@ -31,7 +154,7 @@
                       </i>
                       Withdraw
                     </button>
-                    <button ngbDropdownItem (click)="archiveApplication(application.id)"> <i class="bi bi-archive"></i> Archive </button>
+                    <button ngbDropdownItem (click)="archiveApplication(application.id, true)"> <i class="bi bi-archive"></i> Archive </button>
                   </div>
                 </div>
 
@@ -42,10 +165,10 @@
             <div class="row">
               <p>
                 <span class="badge bg-secondary" *ngIf="application.status == 'Applied'"> Applied </span>
-              <span class="badge bg-primary" *ngIf="application.status == 'Viewed'"> Viewed </span> 
-              <span class="badge bg-danger" *ngIf="application.status == 'Rejected'"> Rejected </span>
-              <span class="badge bg-warning" *ngIf="application.status == 'Hired'"> Hired </span> 
-              <span class="badge bg-success" *ngIf="application.status == 'InConsideration'"> In Consideration </span> {{application.applyDate | date}}
+                <span class="badge bg-primary" *ngIf="application.status == 'Viewed'"> Viewed </span>
+                <span class="badge bg-danger" *ngIf="application.status == 'Rejected'"> Rejected </span>
+                <span class="badge bg-warning" *ngIf="application.status == 'Hired'"> Hired </span>
+                <span class="badge bg-success" *ngIf="application.status == 'InConsideration'"> In Consideration </span> {{application.applyDate | date}}
               </p>
             </div>
             <div class="row">
@@ -60,7 +183,8 @@
             </div>
           </div>
         </div>
-      </div>
+      </div>-->
+
     </div>
     <div class="col-4">
       <form id="search-form">
@@ -77,28 +201,5 @@
         </div>
       </form>
     </div>
-    <!--<ul ngbNav #nav="ngbNav" class="nav-tabs">
-      <li ngbNavItem>
-        <a ngbNavLink>First</a>
-        <ng-template ngbNavContent>First content</ng-template>
-      </li>
-      <li ngbNavItem>
-        <a ngbNavLink>Second</a>
-        <ng-template ngbNavContent>Second content</ng-template>
-      </li>
-    </ul>
-    <div [ngbNavOutlet]="nav"></div>-->
   </div>
 </div>
-<!--applyDate: "2021-06-19T14:47:20.5338165"
-city: "Qena"
-companyId: 1
-companyLogo: null
-companyName: "company"
-country: "Egypt"
-industry: "IT"
-jobId: 9
-jobStatistics: {totalApplications: 1, viewedApplications: 0, inConsiderationApplications: 0, rejectedApplications: 0, hiredApplications: 0, …}
-jobTitle: "title"
-jobType: "Shift Based"
-postDate: "2021-06-19T11:45:10.5488142"-->

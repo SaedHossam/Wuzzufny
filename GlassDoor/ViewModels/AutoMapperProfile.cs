@@ -153,6 +153,7 @@ namespace GlassDoor.ViewModels
                 .ForMember(a => a.Industry, map => map.MapFrom(s => s.Job.Company.CompanyIndustry.Name))
                 .ForMember(a => a.Vacancies, map => map.MapFrom(s => s.Job.NumberOfVacancies))
                 .ForMember(a => a.Status, map => map.MapFrom(s => s.ApplicationStatus.Name))
+                .ForMember(a => a.IsArchived, map => map.MapFrom(s => s.IsArchived))
                 .ForPath(a => a.JobStatistics.ViewedApplications, map => map.MapFrom(s => s.Job.ViewedApplications))
                 .ForPath(a => a.JobStatistics.TotalClicks, map => map.MapFrom(s => s.Job.TotalClicks))
                 .ForPath(a => a.JobStatistics.RejectedApplications, map => map.MapFrom(s => s.Job.RejectedApplications))

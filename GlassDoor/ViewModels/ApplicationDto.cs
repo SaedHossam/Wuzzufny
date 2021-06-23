@@ -23,6 +23,7 @@ namespace GlassDoor.ViewModels
         public int Vacancies { get; set; }
         public JobStatisticsViewModel JobStatistics { get; set; }
         public string Status { get; set; }
+        public bool IsArchived { get; set; }
 
     }
     public class ArchiveApplicationDto

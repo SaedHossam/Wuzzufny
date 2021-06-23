@@ -16,6 +16,7 @@ export class Application {
     public applyDate?: Date,
     public postDate?: Date,
     public vacancies?: number,
+    public isArchived?: boolean,
     public jobStatisticsViewModel?: JobStatisticsViewModel
   ) {
   }

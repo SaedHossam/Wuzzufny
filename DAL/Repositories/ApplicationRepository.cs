@@ -25,7 +25,7 @@ namespace DAL.Repositories
                 .Include(c => c.Job).ThenInclude(d => d.JobType)
                 .Include(c => c.Job).ThenInclude(d => d.Country)
                 .Include(c => c.ApplicationStatus)
-                .Where(a => a.EmployeeId == id && a.IsArchived== false && a.IsWithdrawn == false)
+                .Where(a => a.EmployeeId == id && a.IsWithdrawn == false)
                 .ToList();
         }
 

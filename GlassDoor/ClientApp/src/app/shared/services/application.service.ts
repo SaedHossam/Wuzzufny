@@ -20,8 +20,8 @@ export class ApplicationService {
   };
 
   // TODO: update api
-  public archiveApplication = (applicationId: number) => {
+  public archiveApplication = (applicationId: number, archive: boolean) => {
     return this._http.put<Application>(
-      `${this._envUrl.urlAddress}/api/Application`, { id: applicationId, archived: true });
+      `${this._envUrl.urlAddress}/api/Application`, { id: applicationId, archived: archive });
   };
 }

@@ -11,10 +11,16 @@ export class ApplicationsComponent implements OnInit {
 
   constructor(public applicationService: ApplicationService) { }
   applications: Application[];
+  openApplications: Application[];
+  archivedApplications: Application[];
   ngOnInit(): void {
     this.applicationService.getApplications().subscribe(a => {
-
+      console.log(a);
       this.applications = a;
+      this.openApplications = a.filter(a => a.isArchived == false);
+      console.log(this.openApplications);
+      this.archivedApplications = a.filter(a => a.isArchived == true);
+      console.log(this.archivedApplications);
     })
   }
 
@@ -24,8 +30,8 @@ export class ApplicationsComponent implements OnInit {
     });
   }
 
-  archiveApplication(applicationId: number) {
-    this.applicationService.archiveApplication(applicationId).subscribe(a => {
+  archiveApplication(applicationId: number, archive: boolean) {
+    this.applicationService.archiveApplication(applicationId, archive).subscribe(a => {
       this.ngOnInit();
     });
   }
