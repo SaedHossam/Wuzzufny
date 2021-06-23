@@ -23,7 +23,7 @@ export class DisplayCompanyJobsComponent implements OnInit {
   ngOnInit(): void {
     this.companyJobService.getCompanyjobs().subscribe((a) => {
       this.companyJobs = a;
-      console.log(this.companyJobs);
+
     });
   }
   editJobData(job) {
@@ -32,8 +32,7 @@ export class DisplayCompanyJobsComponent implements OnInit {
   closeJob(id) {
     if (window.confirm('Confirm closing job')) {
       this._editJobServie.closeJob(id).subscribe((j) => {
-        console.log(j);
-        console.log('closed');
+
       });
     }
   }

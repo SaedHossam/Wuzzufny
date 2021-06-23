@@ -17,7 +17,7 @@ export class DisplayCompanyProfileComponent implements OnInit {
   ngOnInit(): void {
     this.displayProfileService.getCompanyProfile().subscribe(a => {
       this.companyprofile = a;
-      console.log(this.companyprofile);
+
     })
   }
 

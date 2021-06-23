@@ -124,7 +124,7 @@ export class ProfileComponent implements OnInit {
       }
     },
       (error) => {
-        console.log(error);
+
       });
   }
 
@@ -197,7 +197,7 @@ export class ProfileComponent implements OnInit {
     formData.append('file', fileToUpload, fileToUpload.name);
     this.uploadFilesService.uploadEmployeeImage(formData).subscribe(e => {
       if (e.type === HttpEventType.Response) {
-        console.log('fileUploaded');
+
         this.toastrService.success('saved your changes successfuly', 'success');
       }
     },
@@ -221,7 +221,7 @@ export class ProfileComponent implements OnInit {
     formData.append('Cv', fileToUpload, fileToUpload.name);
     this.uploadFilesService.uploadEmployeeCV(formData).subscribe(e => {
       if (e.type === HttpEventType.Response) {
-        console.log('fileUploaded');
+
         this.toastrService.success('saved your changes successfuly', 'success');
       }
     },

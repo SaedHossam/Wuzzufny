@@ -53,6 +53,7 @@ namespace GlassDoor.ViewModels
                 .ForPath(a => a.Employee.ExperienceYears, map => map.MapFrom(a => a.EmployeeExperience))
                 .ForPath(a => a.Employee.EducationLevel.Name, map => map.MapFrom(a => a.EmployeeEducation))
                 .ForPath(a => a.Employee.Photo, map => map.MapFrom(a => a.EmployeePhoto))
+                .ForPath(a => a.Employee.Id, map => map.MapFrom(a => a.EmployeeId))
                 .ForPath(a => a.ApplicationStatus.Name, map => map.MapFrom(a => a.Status))
                 .ReverseMap();
 
@@ -232,6 +233,7 @@ namespace GlassDoor.ViewModels
                 .ForPath(c => c.CompanyIndustry.Name, map => map.MapFrom(c => c.CompanyIndustry1))
                 .ForPath(c => c.CompanySize.Name, map => map.MapFrom(c => c.CompanySize1))
                 .ForPath(c => c.CompanyType.Name, map => map.MapFrom(c => c.CompanyType1))
+                .ForMember(c => c.Logo, map => map.MapFrom(c => c.Logo))
                 .ReverseMap();
             CreateMap<CompanyLinksDto, CompanyLinks>().ReverseMap();
 

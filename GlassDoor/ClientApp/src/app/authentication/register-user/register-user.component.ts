@@ -57,7 +57,6 @@ export class RegisterUserComponent implements OnInit {
 
     this._authService.registerUser("api/accounts/registration", user)
       .subscribe(_ => {
-        console.log("Successful registration");
         // this._router.navigate(["/authentication/login"]);
 
         this.showSuccess = true;

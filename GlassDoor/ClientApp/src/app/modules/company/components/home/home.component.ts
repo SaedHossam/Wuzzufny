@@ -23,7 +23,7 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.primengConfig.ripple = true;
     this.companyJobService.getCompanyJobs().subscribe((a) => {
-      console.log(a);
+
       this.companyJobs = a;
       this.openJobs = a.filter(j => j.isOpen);
       this.closedJobs = a.filter(j => !j.isOpen);

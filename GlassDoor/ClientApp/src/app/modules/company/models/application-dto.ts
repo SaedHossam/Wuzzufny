@@ -10,6 +10,7 @@ export interface ApplicationDto {
   employeeCountry: string,
   employeeBirthDate: Date,
   employeeExperience: number,
+  employeeId: number,
   employeeEducation: string,
   employeePhoto: string
 }

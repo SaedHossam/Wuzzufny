@@ -89,7 +89,6 @@ export class EmployerRegisterComponent implements OnInit {
 
     this._companyService.registerCompany(company)
       .subscribe(_ => {
-        console.log("Successful registration");
         this.showSuccess = true;
         this.successMessage = 'we received your request and we will send you an email within 24 hours.';
       },

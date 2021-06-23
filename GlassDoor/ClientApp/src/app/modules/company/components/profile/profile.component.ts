@@ -20,7 +20,9 @@ export class ProfileComponent implements OnInit {
   ngOnInit(): void {
     this.isLoading = true;
     this.displayProfileService.getCompanyProfile().subscribe(a => {
+      console.log(a);
       this.company = a;
+      console.log(this.company);
       this.facebook = this.company.companyLinks.find(l => l.name == "facebook")?.link;
       this.email = this.company.companyLinks.find(l => l.name == "email")?.link;
       this.website = this.company.companyLinks.find(l => l.name == "website")?.link;
