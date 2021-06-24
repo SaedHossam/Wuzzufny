@@ -1,6 +1,6 @@
 <div class="container">
-  <div class="row my-5">
-    <div class="col-8">
+  <div class="row justify-content-center my-5">
+    <div class="col-12 col-md-8 order-1 order-md-0">
       <div *ngFor="let job of jobs" class="col-12 mt-2">
         <div class="card shadow mb-3">
           <div class="card-body" [routerLink]="['/employee/apply/',job.id]">
@@ -45,9 +45,12 @@
           </div>
         </div>
       </div>
+      <div *ngIf="!isLoading && jobs.length === 0" class="text-center">
+        <p class="text-muted fs-4 mt-4">No jobs yet</p>
+      </div>
     </div>
 
-    <div class="col-4">
+    <div class="col-8 col-md-4 order-0 order-md-1">
       <form id="search-form">
         <div class="row">
           <span>Search jobs</span>

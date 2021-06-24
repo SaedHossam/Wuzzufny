@@ -197,11 +197,12 @@ namespace GlassDoor.Controllers
             application.ApplicationStatusId = applicationStatuses.First(s => s.Name == applicationDto.Status).Id;
 
             // increment new status count
-            if (application.ApplicationStatusId == applicationStatuses.Where(s => s.Name == Enums.ApplicationStatus.Viewed.ToString()).First().Id)
-            {
-                job.ViewedApplications++;
-            }
-            else if (application.ApplicationStatusId == applicationStatuses.Where(s => s.Name == Enums.ApplicationStatus.InConsideration.ToString()).First().Id)
+            //if (application.ApplicationStatusId == applicationStatuses.Where(s => s.Name == Enums.ApplicationStatus.Viewed.ToString()).First().Id)
+            //{
+            //    job.ViewedApplications++;
+            //}
+            //else
+            if (application.ApplicationStatusId == applicationStatuses.Where(s => s.Name == Enums.ApplicationStatus.InConsideration.ToString()).First().Id)
             {
                 job.InConsiderationApplications++;
             }

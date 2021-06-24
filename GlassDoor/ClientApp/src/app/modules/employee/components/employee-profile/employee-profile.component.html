@@ -18,6 +18,14 @@
                 <p class="text-muted font-size-sm">{{profile.cityName}}, {{profile.countryName}}</p>
                 <p class="text-muted font-size-sm">{{printGender(profile.gender)}}</p>
                 <p class="text-muted font-size-sm">{{profile.birthDate | date}}</p>
+
+                <!--<div *ngIf="profile.cv" class="col-auto py-1 fs-5">
+                  <a [href]="profile.cv">view cv</a>
+                </div>
+
+                <div *ngIf="!profile.cv" class="col-auto">
+                  <p>Candidate don't have cv yet</p>
+                </div>-->
               </div>
             </div>
           </div>
@@ -92,15 +100,6 @@
               <div class="col-sm-8 text-secondary">
                 <span>{{profile.mobileNumber}}</span> <span *ngIf="profile.alternativeMobileNumber">/
                   {{profile.alternativeMobileNumber}}</span>
-              </div>
-            </div>
-            <hr>
-            <div class="row">
-              <div class="col-sm-4">
-                <h6 class="mb-0">Career Level</h6>
-              </div>
-              <div class="col-sm-8 text-secondary">
-                {{profile.careerLevelName}}
               </div>
             </div>
 

@@ -1,6 +1,6 @@
 <div class="container">
-  <div class="row my-5">
-    <div class="col-8">
+  <div class="row justify-content-center my-5">
+    <div class="col-12 col-md-8 order-1 order-md-0">
       <nav ngbNav #nav="ngbNav" class="nav-tabs">
         <ng-container ngbNavItem>
           <a ngbNavLink>Applications</a>
@@ -59,6 +59,10 @@
                   </div>
                 </div>
               </div>
+            </div>
+
+            <div *ngIf="openApplications?.length === 0" class="text-center">
+              <p class="text-muted fs-4 mt-4">No Applications yet</p>
             </div>
           </ng-template>
         </ng-container>
@@ -121,6 +125,10 @@
                 </div>
               </div>
             </div>
+
+            <div *ngIf="archivedApplications?.length === 0" class="text-center">
+              <p class="text-muted fs-4 mt-4">No Applications yet</p>
+            </div>
           </ng-template>
         </ng-container>
       </nav>
@@ -128,7 +136,7 @@
       <div [ngbNavOutlet]="nav" class="mt-4"></div>
 
     </div>
-    <div class="col-4">
+    <div class="col-8 col-md-4 order-0 order-md-1">
       <form id="search-form">
         <div class="row">
           <span>Search jobs</span>

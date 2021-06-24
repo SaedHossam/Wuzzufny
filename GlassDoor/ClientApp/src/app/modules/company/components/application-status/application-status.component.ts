@@ -54,6 +54,9 @@ export class ApplicationStatusComponent implements OnInit {
           this.facebookLink = a.employeeLinksNames.find(link => link.name == "facebook")?.link;
           this.githubLink = a.employeeLinksNames.find(link => link.name == "github")?.link;
           this.twitterLink = a.employeeLinksNames.find(link => link.name == "twitter")?.link;
+
+          console.log(a);
+          console.log(this.profile);
         });
 
       })
