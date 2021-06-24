@@ -10,7 +10,7 @@ import { ApplicationsComponent } from "./components/applications/applications.co
 
 
 const routes: Routes = [
-  { path: 'home', component: HomeComponent },
+  //{ path: 'home', component: HomeComponent },
   { path: 'jobs', component: ViewJobComponent },
   { path: 'apply/:id', component: ApplyJobComponent },
   { path: 'profile', component: ProfileComponent },
@@ -18,7 +18,7 @@ const routes: Routes = [
   { path: 'profile/:id', component: EmployeeProfileComponent },
   { path: 'upload', component: UploadComponent },
   { path: 'applications', component: ApplicationsComponent },
-  { path: '', redirectTo: 'home', pathMatch: 'full' }
+  { path: '', redirectTo: 'jobs', pathMatch: 'full' }
 ];
 
 @NgModule({

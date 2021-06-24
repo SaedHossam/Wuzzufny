@@ -19,10 +19,10 @@
 
       <!-- Admin user -->
       <ul *ngIf='isUserAuthenticated && isUserAdmin' class="navbar-nav mx-auto pt-2 pt-lg-0">
-        <li class="nav-item px-2">
+        <!--<li class="nav-item px-2">
           <a class="nav-link" [routerLink]="['/privacy']" routerLinkActive="active"
              [routerLinkActiveOptions]="{exact: true}"> Privacy </a>
-        </li>
+        </li>-->
       </ul>
 
       <!-- Employee user -->
@@ -60,7 +60,7 @@
                [routerLinkActiveOptions]="{exact: true}">Register</a>
           </li>
           <li class="nav-item">
-            <a class="btn btn-lg btn-warning rounded-pill bg-gradient mx-1" [routerLink]="['/recruitment']" routerLinkActive="active"
+            <a class="btn btn-lg btn-warning rounded-pill bg-gradient mx-1" [routerLink]="['/employer-register']" routerLinkActive="active"
                [routerLinkActiveOptions]="{exact: true}">Employer?</a>
           </li>
         </ul>
