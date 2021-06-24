@@ -36,6 +36,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { MenubarModule } from 'primeng/menubar';
 import { CarouselModule } from 'primeng/carousel';
 import { InternalServerComponent } from './error-pages/internal-server/internal-server.component';
+import {ConfirmationService} from 'primeng/api';
 
 export function tokenGetter() {
   return localStorage.getItem("token");
@@ -106,7 +107,8 @@ export function tokenGetter() {
     },
     CompanyService,
     PasswordConfirmationValidatorService,
-    CompanyIndustryService
+    CompanyIndustryService,
+    ConfirmationService
   ],
   bootstrap: [AppComponent]
 })

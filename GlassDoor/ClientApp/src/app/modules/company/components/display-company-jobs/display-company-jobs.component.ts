@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { Job } from 'src/app/models/job';
 import { PostJobDto } from '../../models/post-job-dto';
 import { DiplayCompanyJobsService } from '../../services/diplay-company-jobs.service';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-display-company-jobs',
@@ -17,8 +18,9 @@ export class DisplayCompanyJobsComponent implements OnInit {
   constructor(
     private companyJobService: DiplayCompanyJobsService,
     private _router: Router,
-    private _editJobServie: EditJobService
-  ) {}
+    private _editJobServie: EditJobService,
+    private confirmationService: ConfirmationService
+  ) { }
 
   ngOnInit(): void {
     this.companyJobService.getCompanyjobs().subscribe((a) => {
@@ -30,10 +32,16 @@ export class DisplayCompanyJobsComponent implements OnInit {
     this._router.navigate(['/company/editJob/'], { state: { job: job } });
   }
   closeJob(id) {
-    if (window.confirm('Confirm closing job')) {
-      this._editJobServie.closeJob(id).subscribe((j) => {
+    this.confirmationService.confirm({
+      message: 'Are you sure that you want to proceed?',
+      header: 'Confirmation',
+      icon: 'pi pi-exclamation-triangle',
 
-      });
-    }
+      accept: () => {
+        this._editJobServie.closeJob(id).subscribe((j) => {
+
+        });
+      }
+    });
   }
 }

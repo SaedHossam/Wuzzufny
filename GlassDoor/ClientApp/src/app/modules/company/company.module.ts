@@ -22,7 +22,7 @@ import { DisplayCompanyJobsComponent } from './components/display-company-jobs/d
 import { ModifyJobDataComponent } from './components/modify-job-data/modify-job-data.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { CompanyProfileEditComponent } from './components/company-profile-edit/company-profile-edit.component';
-
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
 
 @NgModule({
   declarations: [
@@ -51,7 +51,8 @@ import { CompanyProfileEditComponent } from './components/company-profile-edit/c
     InputNumberModule,
     NgbModule,
     MultiSelectModule,
-    FileUploadModule
+    FileUploadModule,
+    ConfirmDialogModule,
   ]
 })
 export class CompanyModule { }
