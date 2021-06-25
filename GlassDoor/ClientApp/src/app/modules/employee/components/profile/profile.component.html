@@ -11,7 +11,7 @@
                   <div class="row mb-4">
                     <div class="col-6 col-sm-3 col-lg-2">
                       <div class="avatar avatar-xl me-3 shadow">
-                        <img [src]="profile.photo" alt="" *ngIf="profile.photo">
+                        <img [src]="profile.photo" alt="" *ngIf="profile.photo && progress == 100">
                         <img src="../../../../../assets/Images/gallery/user-m.png" alt=""
                              *ngIf="!profile.photo && profile.gender == 0">
                         <img src="../../../../../assets/Images/gallery/user-f.png" alt=""
@@ -20,12 +20,18 @@
                     </div>
                     <div class="col-12 col-sm-9 col-lg-10 mt-3 mt-sm-2" [formGroup]="imageUpload">
                       <h3>Profile Photo</h3>
-                      <p>You can upload a .jpg, .png, or .gif photo with max size of 5MB.</p>
+                      <p>You can upload a .jpg, .png, or .gif photo with max size of 1MB.</p>
                       <em *ngIf="profilePhotoSizeError" class="mb-4 text-danger fw-bold">upload photo with max size of 1MB, try reducing the quality <br /></em>
                       <em *ngIf="profilePhotoTypeError" class="mb-4 text-danger fw-bold">upload valid image <br /></em>
 
-                      <input #file formControlName="imageFile" type="file" class="d-none" (change)="uploadFile($event)" accept="image/png, image/gif, image/jpeg">
-                      <button class="btn btn-primary" (click)="file.click()" [disabled]="progress < 100">upload</button>
+                      <!--<input #file formControlName="imageFile" type="file" class="d-none" (change)="uploadFile($event)" accept="image/png, image/gif, image/jpeg">
+                      <button class="btn btn-primary" (click)="file.click()" [disabled]="progress < 100">upload</button>-->
+                      <p-fileUpload mode="basic" name="file" url="./api/employees/upload"
+                                    accept="image/png, image/gif, image/jpeg"
+                                    (onProgress)="onProgress($event)" maxFileSize="1048576" (onUpload)="onUpload($event);"
+                                    [auto]="true" chooseLabel="upload photo"
+                                    [disabled]="progress < 100"></p-fileUpload>
+
                       <div *ngIf="progress < 100" class="d-inline-block position-relative">
                         <span class="position-absolute" style="z-index: 5; top: 15px; left:10px">{{progress}}%</span>
                         <p-progressSpinner [style]="{width: '50px', height: '50px'}" styleClass="custom-spinner" strokeWidth="5" fill="#EEEEEE" animationDuration=".5s">
@@ -257,7 +263,7 @@
                     <div class="form-group mb-4">
                       <span class="p-fluid">
                         <p-autoComplete [suggestions]="skillsList" field="name" (completeMethod)="searchSkills($event)"
-                                        [multiple]="true" [(ngModel)]="employeeSkills" name="skillId"></p-autoComplete>
+                                        [multiple]="true" [(ngModel)]="employeeSkills" name="skillId" [dropdown]="true" [virtualScroll]="true"></p-autoComplete>
                       </span>
                     </div>
 
@@ -325,11 +331,26 @@
                     <div *ngIf="!profile.cv" class="col-auto">
                       <p>you don't have cv yet, upload one to start finding matching jobs</p>
                     </div>
+                    <em *ngIf="profileCvSizeError" class="mb-4 text-danger fw-bold">upload file with max size of 5MB<br /></em>
+                    <em *ngIf="profileCvTypeError" class="mb-4 text-danger fw-bold">upload valid file (PDF or word document)<br /></em>
 
                     <div [formGroup]="cvUpload" class="col-auto">
-                      <input #cvFile formControlName="cvFile" type="file" class="d-none"
-                             (change)="uploadCVFile($event)">
-                      <button class="btn btn-primary" (click)="cvFile.click()">upload new cv</button>
+                      <!--<input #cvFile formControlName="cvFile" type="file" class="d-none"
+                             (change)="uploadCVFile($event)" accept="application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+                      <button class="btn btn-primary" (click)="cvFile.value=null;cvFile.click();" [disabled]="progress < 100">upload new cv</button>-->
+
+                      <p-fileUpload #fubauto mode="basic" name="Cv" url="./api/employees/uploadcv"
+                                    accept="application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                                    (onProgress)="onProgress($event)" maxFileSize="5242880" (onUpload)="onUpload($event)"
+                                    [auto]="true" chooseLabel="upload CV"
+                                    [disabled]="progress < 100"></p-fileUpload>
+
+                      <div *ngIf="progress < 100" class="d-inline-block position-relative">
+                        <span class="position-absolute" style="z-index: 5; top: 15px; left:10px">{{progress}}%</span>
+                        <p-progressSpinner [style]="{width: '50px', height: '50px'}" styleClass="custom-spinner" strokeWidth="5" fill="#EEEEEE" animationDuration=".5s">
+                        </p-progressSpinner>
+                      </div>
+
                     </div>
                   </div>
                 </ng-template>

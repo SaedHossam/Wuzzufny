@@ -44,8 +44,8 @@
           </div>
           <div class="row">
             <a *ngIf="email" [href]="emailLink" ><i class="bi bi-envelope me-3"></i> {{(email.length>6)? (email | slice:0:20)+'..':(email)}} </a>
-            <a *ngIf="facebook" [href]="facebook"><i class="bi bi-facebook me-3"></i> {{facebook}}</a>
-            <a *ngIf="linkedin" [href]="linkedin"><i class="bi bi-linkedin me-3"></i> {{linkedin}} </a>
+            <a *ngIf="facebook" [href]="facebook"><i class="bi bi-facebook me-3"></i> {{(facebook.length>6)? (facebook | slice:0:20)+'..':(facebook)}}</a>
+            <a *ngIf="linkedin" [href]="linkedin"><i class="bi bi-linkedin me-3"></i> {{(linkedin.length>6)? (linkedin | slice:0:20)+'..':(linkedin)}} </a>
           </div>
         </div>
       </div>

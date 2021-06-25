@@ -7,27 +7,25 @@ import { ButtonModule } from 'primeng/button';
 import { CardModule, } from 'primeng/card';
 import { ViewJobComponent } from "./components/view-job/view-job.component";
 import { RippleModule } from 'primeng/ripple';
-import { HomeComponent } from './home/home.component';
 import { SkeletonModule } from 'primeng/skeleton';
 import { ToastrModule } from 'ngx-toastr';
 import { EmployeeProfileComponent } from './components/employee-profile/employee-profile.component';
-import { UploadComponent } from './components/upload/upload.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { ApplicationsComponent } from './components/applications/applications.component';
 import { CalendarModule } from 'primeng/calendar';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { FileUploadModule } from 'primeng/fileupload';
 
 @NgModule({
   declarations: [
     ViewJobComponent,
     ApplyJobComponent,
-    HomeComponent,
     ProfileComponent,
     ApplicationsComponent,
     EmployeeProfileComponent,
-    UploadComponent
   ],
 
   imports: [
@@ -43,6 +41,8 @@ import { CalendarModule } from 'primeng/calendar';
     MultiSelectModule,
     AutoCompleteModule,
     CalendarModule,
+    ProgressSpinnerModule,
+    FileUploadModule,
     ToastrModule.forRoot(),
 
   ]

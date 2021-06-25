@@ -14,7 +14,6 @@ import { NotFoundComponent } from "./error-pages/not-found/not-found.component";
 import { JwtModule } from "@auth0/angular-jwt";
 import { RouterModule } from '@angular/router';
 import { AuthGuard } from './shared/guards/auth.guard';
-import { PrivacyComponent } from './privacy/privacy.component';
 import { ForbiddenComponent } from './forbidden/forbidden.component';
 import { HomeComponent } from './home/home.component';
 import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
@@ -22,7 +21,6 @@ import { GoogleLoginProvider } from 'angularx-social-login';
 import { CalendarModule} from "primeng/calendar";
 import { FormsModule, ReactiveFormsModule  } from "@angular/forms"
 import { PasswordModule} from "primeng/password";
-import { RecruitmentComponent } from './recruitment/recruitment.component';
 import { EmployerRegisterComponent } from './employer-register/employer-register.component'
 import { InputNumberModule } from 'primeng/inputnumber';
 import { CompanyService } from "./shared/services/company.service";
@@ -47,10 +45,8 @@ export function tokenGetter() {
     AppComponent,
     MenuComponent,
     NotFoundComponent,
-    PrivacyComponent,
     ForbiddenComponent,
     HomeComponent,
-    RecruitmentComponent,
     EmployerRegisterComponent,
     InternalServerComponent
   ],

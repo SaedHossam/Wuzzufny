@@ -54,9 +54,6 @@ export class ApplicationStatusComponent implements OnInit {
           this.facebookLink = a.employeeLinksNames.find(link => link.name == "facebook")?.link;
           this.githubLink = a.employeeLinksNames.find(link => link.name == "github")?.link;
           this.twitterLink = a.employeeLinksNames.find(link => link.name == "twitter")?.link;
-
-          console.log(a);
-          console.log(this.profile);
         });
 
       })
@@ -68,7 +65,7 @@ export class ApplicationStatusComponent implements OnInit {
     this._applicationService.editStatus(statusDto).subscribe(a => {
       this.toastr.success(`Status Changed successfully`, 'Success');
 
-    }, error => console.log(error))
+    }, error => {})
   }
 
   public ageFromDateOfBirthday(dateOfBirth: any): number {

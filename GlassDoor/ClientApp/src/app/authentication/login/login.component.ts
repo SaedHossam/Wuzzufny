@@ -68,7 +68,8 @@ export class LoginComponent implements OnInit {
           idToken: user.idToken
         }
         this.validateExternalAuth(externalAuth);
-      }, error => console.log(error))
+      },
+        error => { })
   }
 
   private validateExternalAuth(externalAuth: ExternalAuthDto) {

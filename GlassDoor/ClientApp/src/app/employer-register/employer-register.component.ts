@@ -47,18 +47,12 @@ export class EmployerRegisterComponent implements OnInit {
       this.industries = industries;
     },
       error => {
-        //this.errorMessage = error;
-        //this.showError = true;
-        console.log(error);
       })
 
     this._companySizeService.getCompanySizes().subscribe(companySizes => {
       this.companySizes = companySizes;
     },
       error => {
-        //this.errorMessage = error;
-        //this.showError = true;
-        console.log(error);
       })
   }
 

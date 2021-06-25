@@ -7,12 +7,10 @@ import { ForbiddenComponent } from './forbidden/forbidden.component';
 import { HomeComponent } from './home/home.component';
 import { ApplyJobComponent } from './modules/employee/components/apply-job/apply-job.component';
 import { ViewJobComponent } from './modules/employee/components/view-job/view-job.component';
-import { PrivacyComponent } from './privacy/privacy.component';
 import { AdminGuard } from './shared/guards/admin.guard';
 import { AuthGuard } from './shared/guards/auth.guard';
 import { CompanyGuard } from "./shared/guards/company.guard";
 import { EmployeeGuard } from "./shared/guards/employee.guard";
-import { RecruitmentComponent } from "./recruitment/recruitment.component";
 import { EmployerRegisterComponent } from "./employer-register/employer-register.component";
 import { InternalServerComponent } from './error-pages/internal-server/internal-server.component';
 
@@ -22,9 +20,7 @@ const routes: Routes = [
   { path: 'admin', loadChildren: () => import("./modules/admin/admin.module").then(m => m.AdminModule), canActivate: [AuthGuard, AdminGuard] },
   { path: 'company', loadChildren: () => import("./modules/company/company.module").then(m => m.CompanyModule), canActivate: [AuthGuard, CompanyGuard] },
   { path: 'employee', loadChildren: () => import("./modules/employee/employee.module").then(m => m.EmployeeModule), canActivate: [AuthGuard, EmployeeGuard] },
-  { path: 'privacy', component: PrivacyComponent, canActivate: [AuthGuard] },
   { path: 'forbidden', component: ForbiddenComponent },
-  { path: 'recruitment', component: RecruitmentComponent },
   { path: 'employer-register', component: EmployerRegisterComponent },
   { path: '404', component: NotFoundComponent },
   { path: '500', component: InternalServerComponent },

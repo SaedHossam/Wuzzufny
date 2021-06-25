@@ -18,7 +18,7 @@
                   <em *ngIf="profilePhotoTypeError" class="mb-4">upload valid image <br /></em>
                   <input #file formControlName="logo" id="file" type="file" class="form-control"
                          (change)="uploadFile($event)" style="display: none;" accept="image/png, image/gif, image/jpeg">
-                  <button type="button" class="btn btn-primary" (click)="file.click()" [disabled]="progress < 100">upload</button>
+                  <button type="button" class="btn btn-primary" (click)="file.value=null;file.click()" [disabled]="progress < 100">upload</button>
                   <div *ngIf="progress < 100" class="d-inline-block position-relative">
                     <span class="position-absolute" style="z-index: 5; top: 15px; left:10px">{{progress}}%</span>
                     <p-progressSpinner [style]="{width: '50px', height: '50px'}" styleClass="custom-spinner" strokeWidth="5" fill="#EEEEEE" animationDuration=".5s">

@@ -15,12 +15,9 @@ export class ApplicationsComponent implements OnInit {
   archivedApplications: Application[];
   ngOnInit(): void {
     this.applicationService.getApplications().subscribe(a => {
-      console.log(a);
       this.applications = a;
       this.openApplications = a.filter(a => a.isArchived === false);
-      console.log(this.openApplications);
       this.archivedApplications = a.filter(a => a.isArchived === true);
-      console.log(this.archivedApplications);
     })
   }
 

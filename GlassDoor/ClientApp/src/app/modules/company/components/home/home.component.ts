@@ -42,6 +42,9 @@ export class HomeComponent implements OnInit {
         this._editJobServie.closeJob(id).subscribe((j) => {
           this.companyJobService.getCompanyJobs().subscribe((a) => {
             this.companyJobs = a;
+
+            this.openJobs = a.filter(j => j.isOpen);
+            this.closedJobs = a.filter(j => !j.isOpen);
           });
         });
       }

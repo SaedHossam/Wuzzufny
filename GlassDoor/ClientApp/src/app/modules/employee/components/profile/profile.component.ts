@@ -67,8 +67,10 @@ export class ProfileComponent implements OnInit {
   githubLink: string;
   profilePhotoSizeError: boolean = false;
   profilePhotoTypeError: boolean = false;
-  progress: number;
+  progress: number =100;
 
+  profileCvSizeError: boolean = false;
+  profileCvTypeError: boolean = false;
   birthDateStruct: any;
 
   constructor(
@@ -132,7 +134,7 @@ export class ProfileComponent implements OnInit {
   }
 
   searchSkills(event) {
-    this.skillsList = this.skills.filter(c => c.name.startsWith(event.query));
+    this.skillsList = this.skills.filter(c => c.name.toLowerCase().includes(event.query.toLowerCase()));
   }
 
   update() {
@@ -187,63 +189,14 @@ export class ProfileComponent implements OnInit {
     );
   }
 
-  uploadFile(event: Event) {
-    const target = event.target as HTMLInputElement;
-    const files = target.files as FileList;
-
-    if (files.length === 0) {
-      return;
-    } else if (files[0].size > 1048576) {
-      this.profilePhotoSizeError = true
-      return;
-    } else if (!['image/png', 'image/gif', 'image/jpeg'].includes(files[0].type)) {
-      this.profilePhotoTypeError = true;
-      return;
-    }
-
-    this.profilePhotoSizeError = false;
-    this.profilePhotoTypeError = false;
+  onUpload(event) {
+    this.toastrService.success('File Uploaded');
 
     this.profile.photo = null;
-    let fileToUpload: File = files[0];
-    const formData = new FormData();
-    formData.append('file', fileToUpload, fileToUpload.name);
-    this.uploadFilesService.uploadEmployeeImage(formData).subscribe(e => {
-      if (e.type === HttpEventType.UploadProgress)
-        this.progress = Math.round(100 * e.loaded / e.total);
-      else if (e.type === HttpEventType.Response) {
-
-        this.toastrService.success('saved your changes successfuly', 'success');
-      }
-    },
-      (error) => {
-        console.log(error);
-      },
-      () => this.loadEmployeeData()
-    );
+    this.loadEmployeeData();
   }
 
-  uploadCVFile(event: Event) {
-    const target = event.target as HTMLInputElement;
-    const files = target.files as FileList;
-
-    if (files.length === 0) {
-      return;
-    }
-    this.profile.cv = null;
-    let fileToUpload: File = files[0];
-    const formData = new FormData();
-    formData.append('Cv', fileToUpload, fileToUpload.name);
-    this.uploadFilesService.uploadEmployeeCV(formData).subscribe(e => {
-      if (e.type === HttpEventType.Response) {
-
-        this.toastrService.success('saved your changes successfuly', 'success');
-      }
-    },
-      (error) => {
-        console.log(error);
-      },
-      () => this.loadEmployeeData()
-    );
+  onProgress(event) {
+    this.progress = event.progress;
   }
 }
