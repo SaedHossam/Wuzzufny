@@ -9,5 +9,6 @@ namespace DAL.Repositories.Interfaces
 {
     public interface ICompanyRepository : IRepository<Company>
     {
+        Company GetCompany(int id);
     }
 }

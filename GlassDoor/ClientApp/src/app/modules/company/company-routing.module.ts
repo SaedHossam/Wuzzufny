@@ -16,10 +16,10 @@ const routes: Routes = [
   { path: 'applications/:id/:status', component: JobApplicationsComponent },
   { path: 'applications/:id', component: JobApplicationsComponent },
   { path: 'status/:id', component: ApplicationStatusComponent },
-  { path: 'profile2', component: DisplayCompanyProfileComponent },
   { path: 'jobs', component: DisplayCompanyJobsComponent },
   { path: 'editJob/:id', component: ModifyJobDataComponent },
   { path: 'profile', component: ProfileComponent },
+  { path: 'profile/:id', component: ProfileComponent },
   { path: 'editprofile', component: CompanyProfileEditComponent},
   { path: '', redirectTo: 'home', pathMatch: 'full' },
 ];

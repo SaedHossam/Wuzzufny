@@ -35,6 +35,7 @@ namespace GlassDoor.ViewModels
         public string Requirements { get; set; }
         public string Responsibilities { get; set; }
 
+        public int CompanyId { get; set; }
         public string CompanyName { get; set; }
         public DateTime? YearFounded { get; set; }
         public string Name { get; set; }

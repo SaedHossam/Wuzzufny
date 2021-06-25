@@ -20,6 +20,7 @@ export class ViewJobComponent implements OnInit {
     this.service.getJobs().subscribe(a => {
       this.jobs = a;
       this.isLoading = false;
+      console.log(a);
     });
   }
 

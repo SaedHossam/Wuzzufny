@@ -5,7 +5,7 @@
         <div class="card-body" [routerLink]="['/employee/apply/',job.id]">
           <div class="row px-1 ps-md-4 pe-md-3 py-3 align-items-center">
             <div class="col-2">
-              <img [src]="job.logo" class="img-fluid shadow" alt="company logo">
+              <img [src]="job.logo" [routerLink]="['/employee/company/',job.companyId]" class="img-fluid pointer shadow" alt="company logo">
             </div>
             <div class="col-10">
               <div class="row">
@@ -15,7 +15,7 @@
               </div>
               <div class="row mt-2">
                 <div class="col-4">
-                  <h4 class="card-title text-primary">{{job.companyName}}</h4>
+                  <h4 class="card-title pointer text-primary"  [routerLink]="['/employee/company/',job.companyId]">{{job.companyName}} <i class="bi bi-link-45deg"></i></h4>
                   <span class="badge bg-success">{{job.category}}</span>
                 </div>
 

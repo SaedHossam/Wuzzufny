@@ -8,6 +8,7 @@ export class Job {
     public jobCountryName?: string,
     public isOpen?: boolean,
     public createdDate?: Date,
+    public companyId?: number,
     public companyName?: string,
     public logo?: string,
     public name?: string,

@@ -65,6 +65,9 @@ export class ProfileComponent implements OnInit {
   facebookLink: string
   twitterLink: string;
   githubLink: string;
+  profilePhotoSizeError: boolean = false;
+  profilePhotoTypeError: boolean = false;
+  progress: number;
 
   birthDateStruct: any;
 
@@ -102,7 +105,7 @@ export class ProfileComponent implements OnInit {
       this.career.careerLevelId = a.careerLevelId;
       this.career.jobTypeId = a.jobTypesName.map((jobTypes) => jobTypes.id);
       this.career.preferredJobCategories = a.preferredJobCategoriesName.map((jobCategory) => jobCategory.id);
-      
+
       this.edu_exp.educationLevelId = a.educationLevelId;
       this.edu_exp.experienceYears = a.experienceYears;
 
@@ -134,7 +137,7 @@ export class ProfileComponent implements OnInit {
 
   update() {
     this.profile.birthDate = new Date(this.birthDateStruct.year, this.birthDateStruct.month - 1, this.birthDateStruct.day + 1);
-    this.userProfileService.editEmpProfile(this.profile).subscribe(a => { 
+    this.userProfileService.editEmpProfile(this.profile).subscribe(a => {
       this.toastrService.success('saved your changes successfuly', 'success');
     },
       error => { },
@@ -145,7 +148,7 @@ export class ProfileComponent implements OnInit {
   updateCarrerInterest() {
     this.userProfileService.editCareerInterest_InUI(this.career).subscribe(a => {
       this.toastrService.success('saved your changes successfuly', 'success');
-     },
+    },
       error => { },
       () => this.loadEmployeeData()
     );
@@ -154,7 +157,7 @@ export class ProfileComponent implements OnInit {
   updateEduExp_InUI() {
     this.userProfileService.editEduExp_InUI(this.edu_exp).subscribe(a => {
       this.toastrService.success('saved your changes successfuly', 'success');
-     },
+    },
       error => { },
       () => this.loadEmployeeData()
     );
@@ -164,7 +167,7 @@ export class ProfileComponent implements OnInit {
     this.skill_lang.skillId = this.employeeSkills.map((val, index) => (val.id));
     this.userProfileService.editSkill_Lang_InUI(this.skill_lang).subscribe(a => {
       this.toastrService.success('saved your changes successfuly', 'success');
-     },
+    },
       error => { },
       () => this.loadEmployeeData()
     );
@@ -190,13 +193,25 @@ export class ProfileComponent implements OnInit {
 
     if (files.length === 0) {
       return;
+    } else if (files[0].size > 1048576) {
+      this.profilePhotoSizeError = true
+      return;
+    } else if (!['image/png', 'image/gif', 'image/jpeg'].includes(files[0].type)) {
+      this.profilePhotoTypeError = true;
+      return;
     }
+
+    this.profilePhotoSizeError = false;
+    this.profilePhotoTypeError = false;
+
     this.profile.photo = null;
     let fileToUpload: File = files[0];
     const formData = new FormData();
     formData.append('file', fileToUpload, fileToUpload.name);
     this.uploadFilesService.uploadEmployeeImage(formData).subscribe(e => {
-      if (e.type === HttpEventType.Response) {
+      if (e.type === HttpEventType.UploadProgress)
+        this.progress = Math.round(100 * e.loaded / e.total);
+      else if (e.type === HttpEventType.Response) {
 
         this.toastrService.success('saved your changes successfuly', 'success');
       }
