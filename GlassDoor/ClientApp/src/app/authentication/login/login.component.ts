@@ -63,13 +63,13 @@ export class LoginComponent implements OnInit {
     this._authService.signInWithGoogle()
       .then(res => {
         const user: SocialUser = { ...res };
-        console.log(user);
         const externalAuth: ExternalAuthDto = {
           provider: user.provider,
           idToken: user.idToken
         }
         this.validateExternalAuth(externalAuth);
-      }, error => console.log(error))
+      },
+        error => { })
   }
 
   private validateExternalAuth(externalAuth: ExternalAuthDto) {

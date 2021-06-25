@@ -21,6 +21,7 @@ export class JobDetailsDto {
     public jobTitle?: string,
     public jobCountry?: string,
     public jobCity?: string,
+    public companyId?: number,
     public companyName?: string,
     public jobType?: string,
     public salaryCurrencyCode?: string,

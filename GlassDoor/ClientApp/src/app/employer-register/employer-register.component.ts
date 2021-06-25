@@ -47,18 +47,12 @@ export class EmployerRegisterComponent implements OnInit {
       this.industries = industries;
     },
       error => {
-        //this.errorMessage = error;
-        //this.showError = true;
-        console.log(error);
       })
 
     this._companySizeService.getCompanySizes().subscribe(companySizes => {
       this.companySizes = companySizes;
     },
       error => {
-        //this.errorMessage = error;
-        //this.showError = true;
-        console.log(error);
       })
   }
 
@@ -89,7 +83,6 @@ export class EmployerRegisterComponent implements OnInit {
 
     this._companyService.registerCompany(company)
       .subscribe(_ => {
-        console.log("Successful registration");
         this.showSuccess = true;
         this.successMessage = 'we received your request and we will send you an email within 24 hours.';
       },

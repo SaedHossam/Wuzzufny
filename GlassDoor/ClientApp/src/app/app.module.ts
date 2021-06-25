@@ -14,7 +14,6 @@ import { NotFoundComponent } from "./error-pages/not-found/not-found.component";
 import { JwtModule } from "@auth0/angular-jwt";
 import { RouterModule } from '@angular/router';
 import { AuthGuard } from './shared/guards/auth.guard';
-import { PrivacyComponent } from './privacy/privacy.component';
 import { ForbiddenComponent } from './forbidden/forbidden.component';
 import { HomeComponent } from './home/home.component';
 import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
@@ -22,7 +21,6 @@ import { GoogleLoginProvider } from 'angularx-social-login';
 import { CalendarModule} from "primeng/calendar";
 import { FormsModule, ReactiveFormsModule  } from "@angular/forms"
 import { PasswordModule} from "primeng/password";
-import { RecruitmentComponent } from './recruitment/recruitment.component';
 import { EmployerRegisterComponent } from './employer-register/employer-register.component'
 import { InputNumberModule } from 'primeng/inputnumber';
 import { CompanyService } from "./shared/services/company.service";
@@ -36,6 +34,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { MenubarModule } from 'primeng/menubar';
 import { CarouselModule } from 'primeng/carousel';
 import { InternalServerComponent } from './error-pages/internal-server/internal-server.component';
+import {ConfirmationService} from 'primeng/api';
 
 export function tokenGetter() {
   return localStorage.getItem("token");
@@ -46,10 +45,8 @@ export function tokenGetter() {
     AppComponent,
     MenuComponent,
     NotFoundComponent,
-    PrivacyComponent,
     ForbiddenComponent,
     HomeComponent,
-    RecruitmentComponent,
     EmployerRegisterComponent,
     InternalServerComponent
   ],
@@ -106,7 +103,8 @@ export function tokenGetter() {
     },
     CompanyService,
     PasswordConfirmationValidatorService,
-    CompanyIndustryService
+    CompanyIndustryService,
+    ConfirmationService
   ],
   bootstrap: [AppComponent]
 })

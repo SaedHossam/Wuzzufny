@@ -276,7 +276,7 @@
               <br>
               <span class="p-fluid">
                 <p-autoComplete formControlName="skills" id="skills" [suggestions]="results" field="name" (completeMethod)="search($event)"
-                                [multiple]="true"></p-autoComplete>
+                                [multiple]="true" [dropdown]="true" [virtualScroll]="true"></p-autoComplete>
               </span>
               <small class="form-text text-muted">please choose skills.</small>
             </div>

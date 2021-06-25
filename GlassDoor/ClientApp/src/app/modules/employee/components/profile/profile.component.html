@@ -11,18 +11,32 @@
                   <div class="row mb-4">
                     <div class="col-6 col-sm-3 col-lg-2">
                       <div class="avatar avatar-xl me-3 shadow">
-                        <img [src]="profile.photo" alt="" *ngIf="profile.photo">
+                        <img [src]="profile.photo" alt="" *ngIf="profile.photo && progress == 100">
                         <img src="../../../../../assets/Images/gallery/user-m.png" alt=""
-                          *ngIf="!profile.photo && profile.gender == 0">
+                             *ngIf="!profile.photo && profile.gender == 0">
                         <img src="../../../../../assets/Images/gallery/user-f.png" alt=""
-                          *ngIf="!profile.photo && profile.gender == 1">
+                             *ngIf="!profile.photo && profile.gender == 1">
                       </div>
                     </div>
                     <div class="col-12 col-sm-9 col-lg-10 mt-3 mt-sm-2" [formGroup]="imageUpload">
                       <h3>Profile Photo</h3>
-                      <p>You can upload a .jpg, .png, or .gif photo with max size of 5MB.</p>
-                      <input #file formControlName="imageFile" type="file" class="d-none" (change)="uploadFile($event)">
-                      <button class="btn btn-primary" (click)="file.click()">upload</button>
+                      <p>You can upload a .jpg, .png, or .gif photo with max size of 1MB.</p>
+                      <em *ngIf="profilePhotoSizeError" class="mb-4 text-danger fw-bold">upload photo with max size of 1MB, try reducing the quality <br /></em>
+                      <em *ngIf="profilePhotoTypeError" class="mb-4 text-danger fw-bold">upload valid image <br /></em>
+
+                      <!--<input #file formControlName="imageFile" type="file" class="d-none" (change)="uploadFile($event)" accept="image/png, image/gif, image/jpeg">
+                      <button class="btn btn-primary" (click)="file.click()" [disabled]="progress < 100">upload</button>-->
+                      <p-fileUpload mode="basic" name="file" url="./api/employees/upload"
+                                    accept="image/png, image/gif, image/jpeg"
+                                    (onProgress)="onProgress($event)" maxFileSize="1048576" (onUpload)="onUpload($event);"
+                                    [auto]="true" chooseLabel="upload photo"
+                                    [disabled]="progress < 100"></p-fileUpload>
+
+                      <div *ngIf="progress < 100" class="d-inline-block position-relative">
+                        <span class="position-absolute" style="z-index: 5; top: 15px; left:10px">{{progress}}%</span>
+                        <p-progressSpinner [style]="{width: '50px', height: '50px'}" styleClass="custom-spinner" strokeWidth="5" fill="#EEEEEE" animationDuration=".5s">
+                        </p-progressSpinner>
+                      </div>
                     </div>
                   </div>
                   <hr />
@@ -34,15 +48,15 @@
                           <div class="col-12 mb-4">
                             <h3>Summary</h3>
                             <textarea [(ngModel)]="profile.summary" name="summary" class="form-control"
-                              rows="5"></textarea>
+                                      rows="5"></textarea>
                           </div>
 
                           <h3>Your Personal Info</h3>
                           <div class="col-12 col-md-6">
                             <div class="form-group position-relative has-icon-left mb-4">
                               <input type="text" id="firstName" class="form-control form-control-xl"
-                                placeholder="First Name" [(ngModel)]="profile.userFirstName" name="userFirstName"
-                                required />
+                                     placeholder="First Name" [(ngModel)]="profile.userFirstName" name="userFirstName"
+                                     required />
                               <div class="form-control-icon">
                                 <i class="bi bi-person"></i>
                               </div>
@@ -51,8 +65,8 @@
                           <div class="col-12 col-md-6">
                             <div class="form-group position-relative has-icon-left mb-4">
                               <input type="text" id="lastName" class="form-control form-control-xl"
-                                placeholder="Last Name" [(ngModel)]="profile.userLastName" name="userLastName"
-                                required />
+                                     placeholder="Last Name" [(ngModel)]="profile.userLastName" name="userLastName"
+                                     required />
                               <div class="form-control-icon">
                                 <i class="bi bi-person"></i>
                               </div>
@@ -65,11 +79,12 @@
                               <span>Birth Date</span>
                               <div class="input-group">
                                 <input class="form-control" placeholder="yyyy-mm-dd"
-                                  [minDate]="{year: 1980, month:1, day:1}" outsideDays="hidden" firstDayOfWeek="6"
-                                  name="dp" [(ngModel)]="birthDateStruct" ngbDatepicker #d="ngbDatepicker" required>
+                                       [minDate]="{year: 1980, month:1, day:1}" outsideDays="hidden" firstDayOfWeek="6"
+                                       name="dp" [(ngModel)]="birthDateStruct" ngbDatepicker #d="ngbDatepicker" required>
                                 <div class="input-group-append">
-                                  <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button"><i
-                                      class="bi bi-calendar3"></i></button>
+                                  <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button">
+                                    <i class="bi bi-calendar3"></i>
+                                  </button>
                                 </div>
                               </div>
                             </div>
@@ -79,7 +94,7 @@
                         <div class="form-group">
                           <span class="d-block">Gender</span>
                           <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic"
-                            [(ngModel)]="profile.gender">
+                               [(ngModel)]="profile.gender">
                             <label ngbButtonLabel class="btn-light">
                               <input ngbButton type="radio" [value]="0"> Male
                             </label>
@@ -99,9 +114,10 @@
                         <div class="form-group">
                           <label>Military Status</label>
                           <select class="form-select" [(ngModel)]="profile.militaryStatus" name="Military Status">
-                            <option
-                              *ngFor="let name of ['NotApplicable','Exempted','Completed','Postponed']; let i = index"
-                              [value]="i">{{name}}</option>
+                            <option *ngFor="let name of ['NotApplicable','Exempted','Completed','Postponed']; let i = index"
+                                    [value]="i">
+                              {{name}}
+                            </option>
                           </select>
                         </div>
 
@@ -120,11 +136,13 @@
                           </select>
                         </div>
 
-                        <label>Would you be willing to relocate to another city or country if you find the right
-                          opportunity?</label>
+                        <label>
+                          Would you be willing to relocate to another city or country if you find the right
+                          opportunity?
+                        </label>
                         <div class="form-check form-switch">
                           <input class="form-check-input mt-1" type="checkbox" name="isWillingToRelocate"
-                            [(ngModel)]="profile.isWillingToRelocate">
+                                 [(ngModel)]="profile.isWillingToRelocate">
                           <span class="fs-5">{{profile.isWillingToRelocate ? 'Yes' : 'No'}}</span>
                         </div>
 
@@ -133,7 +151,7 @@
                           <div class="col-12 col-md-6">
                             <div class="form-group position-relative has-icon-left mb-4">
                               <input type="tel" class="form-control form-control-xl" placeholder="Mobile Number"
-                                [(ngModel)]="profile.mobileNumber" name="mobileNumber" required />
+                                     [(ngModel)]="profile.mobileNumber" name="mobileNumber" required />
                               <div class="form-control-icon">
                                 <i class="bi bi-phone"></i>
                               </div>
@@ -142,8 +160,8 @@
                           <div class="col-12 col-md-6">
                             <div class="form-group position-relative has-icon-left mb-4">
                               <input type="tel" class="form-control form-control-xl"
-                                placeholder="Alternative Mobile Number" [(ngModel)]="profile.alternativeMobileNumber"
-                                name="aternativeMobile" />
+                                     placeholder="Alternative Mobile Number" [(ngModel)]="profile.alternativeMobileNumber"
+                                     name="aternativeMobile" />
                               <div class="form-control-icon">
                                 <i class="bi bi-phone"></i>
                               </div>
@@ -151,8 +169,10 @@
                           </div>
                         </div>
 
-                        <button class="btn btn-primary" (click)="update()" [disabled]="!personalInfo.valid">Save
-                          Changes</button>
+                        <button class="btn btn-primary" (click)="update()" [disabled]="!personalInfo.valid">
+                          Save
+                          Changes
+                        </button>
                       </form>
                     </div>
                   </div>
@@ -175,16 +195,16 @@
                     <h4>What type(s) of job are you open to?</h4>
                     <div class="form-group position-relative">
                       <p-multiSelect [(ngModel)]="career.jobTypeId" name="jobTypeId"
-                        defaultLabel="Select your preferd job types" [options]="jobTypes" optionLabel="name"
-                        optionValue="id" [filter]="false" [showHeader]="false" selectedItemsLabel="{0} items selected">
+                                     defaultLabel="Select your preferd job types" [options]="jobTypes" optionLabel="name"
+                                     optionValue="id" [filter]="false" [showHeader]="false" selectedItemsLabel="{0} items selected">
                       </p-multiSelect>
                     </div>
 
                     <h4>What are the job titles that describe what you are looking for?</h4>
                     <div class="form-group">
                       <p-multiSelect [(ngModel)]="career.preferredJobCategories" name="preferredJobCategories"
-                        defaultLabel="Select your preferd job titles" [options]="jobCategories" optionLabel="name"
-                        optionValue="id" selectedItemsLabel="{0} items selected"></p-multiSelect>
+                                     defaultLabel="Select your preferd job titles" [options]="jobCategories" optionLabel="name"
+                                     optionValue="id" selectedItemsLabel="{0} items selected"></p-multiSelect>
                     </div>
 
                     <div class="row">
@@ -193,7 +213,7 @@
                       <div class="col-4">
                         <div class="form-group position-relative has-icon-left">
                           <input type="number" class="form-control" placeholder="10,000"
-                            [(ngModel)]="career.minimumSalary" name="minimumSalary">
+                                 [(ngModel)]="career.minimumSalary" name="minimumSalary">
                           <div class="form-control-icon">
                             <i class="bi bi-currency-dollar"></i>
                           </div>
@@ -226,7 +246,7 @@
                       <div class="col-4">
                         <div class="form-group">
                           <input type="number" class="form-control" min="0" [(ngModel)]="edu_exp.experienceYears"
-                            name="experienceYears">
+                                 name="experienceYears">
                         </div>
                       </div>
                     </div>
@@ -243,15 +263,15 @@
                     <div class="form-group mb-4">
                       <span class="p-fluid">
                         <p-autoComplete [suggestions]="skillsList" field="name" (completeMethod)="searchSkills($event)"
-                          [multiple]="true" [(ngModel)]="employeeSkills" name="skillId"></p-autoComplete>
+                                        [multiple]="true" [(ngModel)]="employeeSkills" name="skillId" [dropdown]="true" [virtualScroll]="true"></p-autoComplete>
                       </span>
                     </div>
 
                     <h4>What languages do you know?</h4>
                     <div class="form-group mb-4">
                       <p-multiSelect [(ngModel)]="skill_lang.languageId" name="languageId" [filter]="false"
-                        [showHeader]="false" defaultLabel="Select at least one" [options]="languages" optionLabel="name"
-                        optionValue="id" selectedItemsLabel="{0} items selected"></p-multiSelect>
+                                     [showHeader]="false" defaultLabel="Select at least one" [options]="languages" optionLabel="name"
+                                     optionValue="id" selectedItemsLabel="{0} items selected"></p-multiSelect>
                     </div>
 
                     <button class="btn btn-primary" (click)="updateSkills_Lang_InUI()">Save changes</button>
@@ -266,7 +286,7 @@
                     <h4>Your Online Presence</h4>
                     <div class="form-group position-relative has-icon-left mb-4">
                       <input type="text" class="form-control form-control-xl" placeholder="LinkedIn"
-                        [(ngModel)]="linkedInLink" name="linkedIn" />
+                             [(ngModel)]="linkedInLink" name="linkedIn" />
                       <div class="form-control-icon">
                         <i class="bi bi-linkedin"></i>
                       </div>
@@ -274,7 +294,7 @@
 
                     <div class="form-group position-relative has-icon-left mb-4">
                       <input type="text" class="form-control form-control-xl" placeholder="Facebook"
-                        [(ngModel)]="facebookLink" name="Facebook" />
+                             [(ngModel)]="facebookLink" name="Facebook" />
                       <div class="form-control-icon">
                         <i class="bi bi-facebook"></i>
                       </div>
@@ -282,7 +302,7 @@
 
                     <div class="form-group position-relative has-icon-left mb-4">
                       <input type="text" class="form-control form-control-xl" placeholder="Twitter"
-                        [(ngModel)]="twitterLink" name="twitter" />
+                             [(ngModel)]="twitterLink" name="twitter" />
                       <div class="form-control-icon">
                         <i class="bi bi-twitter"></i>
                       </div>
@@ -290,7 +310,7 @@
 
                     <div class="form-group position-relative has-icon-left mb-4">
                       <input type="text" class="form-control form-control-xl" placeholder="GitHub"
-                        [(ngModel)]="githubLink" name="github" />
+                             [(ngModel)]="githubLink" name="github" />
                       <div class="form-control-icon">
                         <i class="bi bi-github"></i>
                       </div>
@@ -311,11 +331,26 @@
                     <div *ngIf="!profile.cv" class="col-auto">
                       <p>you don't have cv yet, upload one to start finding matching jobs</p>
                     </div>
+                    <em *ngIf="profileCvSizeError" class="mb-4 text-danger fw-bold">upload file with max size of 5MB<br /></em>
+                    <em *ngIf="profileCvTypeError" class="mb-4 text-danger fw-bold">upload valid file (PDF or word document)<br /></em>
 
                     <div [formGroup]="cvUpload" class="col-auto">
-                      <input #cvFile formControlName="cvFile" type="file" class="d-none"
-                        (change)="uploadCVFile($event)">
-                      <button class="btn btn-primary" (click)="cvFile.click()">upload new cv</button>
+                      <!--<input #cvFile formControlName="cvFile" type="file" class="d-none"
+                             (change)="uploadCVFile($event)" accept="application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+                      <button class="btn btn-primary" (click)="cvFile.value=null;cvFile.click();" [disabled]="progress < 100">upload new cv</button>-->
+
+                      <p-fileUpload #fubauto mode="basic" name="Cv" url="./api/employees/uploadcv"
+                                    accept="application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                                    (onProgress)="onProgress($event)" maxFileSize="5242880" (onUpload)="onUpload($event)"
+                                    [auto]="true" chooseLabel="upload CV"
+                                    [disabled]="progress < 100"></p-fileUpload>
+
+                      <div *ngIf="progress < 100" class="d-inline-block position-relative">
+                        <span class="position-absolute" style="z-index: 5; top: 15px; left:10px">{{progress}}%</span>
+                        <p-progressSpinner [style]="{width: '50px', height: '50px'}" styleClass="custom-spinner" strokeWidth="5" fill="#EEEEEE" animationDuration=".5s">
+                        </p-progressSpinner>
+                      </div>
+
                     </div>
                   </div>
                 </ng-template>

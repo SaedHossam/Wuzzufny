@@ -4,6 +4,8 @@ import { PrimeNGConfig } from 'primeng/api';
 import { Job } from '../../../../models/job';
 import { DiplayCompanyJobsService } from '../../services/diplay-company-jobs.service';
 import { EditJobService } from '../../services/edit-job.service';
+import { ConfirmationService } from 'primeng/api';
+import { Message } from 'primeng/api';
 
 @Component({
   selector: 'app-home',
@@ -16,27 +18,36 @@ export class HomeComponent implements OnInit {
   companyJobs: Job[] = [];
   openJobs: Job[];
   closedJobs: Job[];
+  msgs: Message[] = [];
+
   constructor(private primengConfig: PrimeNGConfig, private companyJobService: DiplayCompanyJobsService,
-    private _router: Router,
-    private _editJobServie: EditJobService) { }
+    private _router: Router, private _editJobServie: EditJobService, private confirmationService: ConfirmationService) { }
 
   ngOnInit(): void {
     this.primengConfig.ripple = true;
     this.companyJobService.getCompanyJobs().subscribe((a) => {
-      console.log(a);
+
       this.companyJobs = a;
       this.openJobs = a.filter(j => j.isOpen);
       this.closedJobs = a.filter(j => !j.isOpen);
     });
   }
   closeJob(id) {
-    if (window.confirm('Confirm closing job')) {
-      this._editJobServie.closeJob(id).subscribe((j) => {
-        this.companyJobService.getCompanyJobs().subscribe((a) => {
-          this.companyJobs = a;
-        });
-      });
-    }
-  }
+    this.confirmationService.confirm({
+      message: 'Are you sure that you want to proceed?',
+      header: 'Confirmation',
+      icon: 'pi pi-exclamation-triangle',
 
+      accept: () => {
+        this._editJobServie.closeJob(id).subscribe((j) => {
+          this.companyJobService.getCompanyJobs().subscribe((a) => {
+            this.companyJobs = a;
+
+            this.openJobs = a.filter(j => j.isOpen);
+            this.closedJobs = a.filter(j => !j.isOpen);
+          });
+        });
+      }
+    });
+  }
 }

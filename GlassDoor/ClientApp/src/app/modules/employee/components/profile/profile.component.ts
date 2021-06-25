@@ -65,7 +65,12 @@ export class ProfileComponent implements OnInit {
   facebookLink: string
   twitterLink: string;
   githubLink: string;
+  profilePhotoSizeError: boolean = false;
+  profilePhotoTypeError: boolean = false;
+  progress: number =100;
 
+  profileCvSizeError: boolean = false;
+  profileCvTypeError: boolean = false;
   birthDateStruct: any;
 
   constructor(
@@ -102,7 +107,7 @@ export class ProfileComponent implements OnInit {
       this.career.careerLevelId = a.careerLevelId;
       this.career.jobTypeId = a.jobTypesName.map((jobTypes) => jobTypes.id);
       this.career.preferredJobCategories = a.preferredJobCategoriesName.map((jobCategory) => jobCategory.id);
-      
+
       this.edu_exp.educationLevelId = a.educationLevelId;
       this.edu_exp.experienceYears = a.experienceYears;
 
@@ -124,17 +129,17 @@ export class ProfileComponent implements OnInit {
       }
     },
       (error) => {
-        console.log(error);
+
       });
   }
 
   searchSkills(event) {
-    this.skillsList = this.skills.filter(c => c.name.startsWith(event.query));
+    this.skillsList = this.skills.filter(c => c.name.toLowerCase().includes(event.query.toLowerCase()));
   }
 
   update() {
     this.profile.birthDate = new Date(this.birthDateStruct.year, this.birthDateStruct.month - 1, this.birthDateStruct.day + 1);
-    this.userProfileService.editEmpProfile(this.profile).subscribe(a => { 
+    this.userProfileService.editEmpProfile(this.profile).subscribe(a => {
       this.toastrService.success('saved your changes successfuly', 'success');
     },
       error => { },
@@ -145,7 +150,7 @@ export class ProfileComponent implements OnInit {
   updateCarrerInterest() {
     this.userProfileService.editCareerInterest_InUI(this.career).subscribe(a => {
       this.toastrService.success('saved your changes successfuly', 'success');
-     },
+    },
       error => { },
       () => this.loadEmployeeData()
     );
@@ -154,7 +159,7 @@ export class ProfileComponent implements OnInit {
   updateEduExp_InUI() {
     this.userProfileService.editEduExp_InUI(this.edu_exp).subscribe(a => {
       this.toastrService.success('saved your changes successfuly', 'success');
-     },
+    },
       error => { },
       () => this.loadEmployeeData()
     );
@@ -164,7 +169,7 @@ export class ProfileComponent implements OnInit {
     this.skill_lang.skillId = this.employeeSkills.map((val, index) => (val.id));
     this.userProfileService.editSkill_Lang_InUI(this.skill_lang).subscribe(a => {
       this.toastrService.success('saved your changes successfuly', 'success');
-     },
+    },
       error => { },
       () => this.loadEmployeeData()
     );
@@ -184,51 +189,14 @@ export class ProfileComponent implements OnInit {
     );
   }
 
-  uploadFile(event: Event) {
-    const target = event.target as HTMLInputElement;
-    const files = target.files as FileList;
+  onUpload(event) {
+    this.toastrService.success('File Uploaded');
 
-    if (files.length === 0) {
-      return;
-    }
     this.profile.photo = null;
-    let fileToUpload: File = files[0];
-    const formData = new FormData();
-    formData.append('file', fileToUpload, fileToUpload.name);
-    this.uploadFilesService.uploadEmployeeImage(formData).subscribe(e => {
-      if (e.type === HttpEventType.Response) {
-        console.log('fileUploaded');
-        this.toastrService.success('saved your changes successfuly', 'success');
-      }
-    },
-      (error) => {
-        console.log(error);
-      },
-      () => this.loadEmployeeData()
-    );
+    this.loadEmployeeData();
   }
 
-  uploadCVFile(event: Event) {
-    const target = event.target as HTMLInputElement;
-    const files = target.files as FileList;
-
-    if (files.length === 0) {
-      return;
-    }
-    this.profile.cv = null;
-    let fileToUpload: File = files[0];
-    const formData = new FormData();
-    formData.append('Cv', fileToUpload, fileToUpload.name);
-    this.uploadFilesService.uploadEmployeeCV(formData).subscribe(e => {
-      if (e.type === HttpEventType.Response) {
-        console.log('fileUploaded');
-        this.toastrService.success('saved your changes successfuly', 'success');
-      }
-    },
-      (error) => {
-        console.log(error);
-      },
-      () => this.loadEmployeeData()
-    );
+  onProgress(event) {
+    this.progress = event.progress;
   }
 }

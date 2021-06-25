@@ -44,6 +44,7 @@ namespace glassDoor.ViewModels
         public string JobCountryName { get; set; }
         public bool IsOpen { get; set; }
         public DateTime CreatedDate { get; set; }
+        public int CompanyId { get; set; }
         public string CompanyName { get; set; }
         // Name of Company
         public string Name { get; set; }

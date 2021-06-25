@@ -19,7 +19,7 @@ export class JobApplicationsComponent implements OnInit {
   ngOnInit(): void {
     this._route.params.subscribe((p) => {
       this._applicationService.getAllJobApplications(p.id, p.status).subscribe((a) => {
-        console.log(a);
+
         this.applications = a;
       });
     });

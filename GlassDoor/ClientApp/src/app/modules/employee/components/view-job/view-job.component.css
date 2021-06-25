@@ -2,18 +2,17 @@
   cursor: pointer;
 }
 
-.card:hover {
-  transform: scale(1.03);
-}
-
-.card img {
-  width: 100px;
-  max-height: 100px;
-  border-radius: 26px;
-  cursor: pointer;
-}
-
-  .card img:hover {
-    transform: scale(1.2);
+  .card .card-body h4:hover {
+    transform: scale(1.1);
   }
 
+  .card img {
+    width: 100px;
+    max-height: 100px;
+    border-radius: 26px;
+    cursor: pointer;
+  }
+
+    .card img:hover {
+      transform: scale(1.2);
+    }

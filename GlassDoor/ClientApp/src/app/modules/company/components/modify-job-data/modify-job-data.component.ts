@@ -87,17 +87,13 @@ export class ModifyJobDataComponent implements OnInit {
     private _editJobService: EditJobService,
     private _route: ActivatedRoute
 
-  ) {
-
-    // console.log(this._router.getCurrentNavigation().extras.state.job);
-
-  }
+  ) {  }
   public results: Skills[];
 
   ngOnInit(): void {
     this._route.params.subscribe((p) => {
       this._editJobService.getJob(p.id).then((a) => {
-        console.log(a);
+
         this.postJobDto = a;
         //fill form with job data
         this.postjobform.get('title').setValue(this.postJobDto.title);
@@ -183,29 +179,9 @@ export class ModifyJobDataComponent implements OnInit {
       postjobform.value.skills.map((val, index) => ({ SkillsId: val.id }))
     );
 
-    //modifiedJob.title = postjobform.value.title;
-    //modifiedJob.cityId = postjobform.value.cityId;
-    //modifiedJob.jobTypeId = postjobform.value.jobTypeId;
-    //modifiedJob.countryId = postjobform.value.countryId;
-    //modifiedJob.numberOfVacancies = postjobform.value.numberOfVacancies;
-    //modifiedJob.jobDetails.experienceNeededMin = postjobform.value.experienceNeededMin;
-    //modifiedJob.jobDetails.experienceNeededMax = postjobform.value.experienceNeededMax;
-    //modifiedJob.jobDetails.careerLevelId = postjobform.value.careerLevelId;
-    //modifiedJob.jobDetails.educationLevelId = postjobform.value.educationLevelId;
-    //modifiedJob.jobDetails.salaryMin = postjobform.value.salaryMin;
-    //modifiedJob.jobDetails.salaryMax = postjobform.value.salaryMax;
-    //modifiedJob.jobDetails.salaryCurrencyId = postjobform.value.salaryCurrencyId;
-    //modifiedJob.jobDetails.salaryRateId = postjobform.value.salaryRateId;
-    //modifiedJob.jobDetails.jobCategoryId = postjobform.value.jobCategoryId;
-    //modifiedJob.jobDetails.description = postjobform.value.description;
-    //modifiedJob.jobDetails.requirements = postjobform.value.requirements;
-    //modifiedJob.jobDetails.responsibilities = postjobform.value.responsibilities;
-    //modifiedJob.skills = postjobform.value.skills.map((val, index) => ({ SkillsId: val.id }));
-
-    console.log(modifiedJob)
 
     this._editJobService.editJob(this.postJobDto.id, modifiedJob).subscribe(a => {
-      console.log(a);
+
       this._router.navigate(['/company/']);
     })
 

@@ -29,7 +29,7 @@ namespace GlassDoor.Controllers
             // ToDo: use better query than this
             var dateList = Enumerable.Range(0, 7)
                 .Select(offset => DateTime.Today.AddDays(-1 * offset))
-                .ToArray();
+                .ToArray().Reverse();
 
             List<JobsByDate> jobs = new List<JobsByDate>();
             foreach (var date in dateList)

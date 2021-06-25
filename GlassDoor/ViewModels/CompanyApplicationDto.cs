@@ -17,6 +17,7 @@ namespace GlassDoor.ViewModels
         public string EmployeeCountry { get; set; }
         public DateTime EmployeeBirthDate { get; set; }
         public int EmployeeExperience { get; set; }
+        public int EmployeeId { get; set; }
         public string EmployeeEducation { get; set; }
         public string EmployeePhoto { get; set; }
     }

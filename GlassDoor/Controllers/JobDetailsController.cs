@@ -57,6 +57,9 @@ namespace GlassDoor.Controllers
             if (details == null)
                 return NotFound();
             details.Applied = _unitOfWork.Application.Find(a => a.JobId == details.JobId && a.EmployeeId == empId).FirstOrDefault() != null;
+            var job = _unitOfWork.Jobs.Get(details.JobId);
+            job.TotalClicks++;
+            _unitOfWork.SaveChanges();
             return  Ok(_mapper.Map<JobDetailsDto>(details));
 
         }

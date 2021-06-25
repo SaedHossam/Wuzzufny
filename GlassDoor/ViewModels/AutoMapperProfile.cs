@@ -53,6 +53,7 @@ namespace GlassDoor.ViewModels
                 .ForPath(a => a.Employee.ExperienceYears, map => map.MapFrom(a => a.EmployeeExperience))
                 .ForPath(a => a.Employee.EducationLevel.Name, map => map.MapFrom(a => a.EmployeeEducation))
                 .ForPath(a => a.Employee.Photo, map => map.MapFrom(a => a.EmployeePhoto))
+                .ForPath(a => a.Employee.Id, map => map.MapFrom(a => a.EmployeeId))
                 .ForPath(a => a.ApplicationStatus.Name, map => map.MapFrom(a => a.Status))
                 .ReverseMap();
 
@@ -68,6 +69,7 @@ namespace GlassDoor.ViewModels
             CreateMap<Job, JobViewModel>()
                 .ForMember(a => a.JobCityName, map => map.MapFrom(s => s.City.Name))
                 .ForMember(a => a.JobCountryName, map => map.MapFrom(s => s.Country.Name))
+                .ForMember(a => a.CompanyId, map => map.MapFrom(s => s.Company.Id))
                 .ForMember(a => a.CompanyName, map => map.MapFrom(s => s.Company.Name))
                 .ForMember(d => d.Name, map => map.MapFrom(s => s.Company.CompanyIndustry.Name))
                 .ForMember(a => a.Logo, map => map.MapFrom(s => s.Company.Logo))
@@ -106,6 +108,7 @@ namespace GlassDoor.ViewModels
                 .ForMember(d => d.JobCountry, map => map.MapFrom(s => s.Job.Country.Name))
                 .ForMember(d => d.JobCity, map => map.MapFrom(s => s.Job.City.Name))
                 .ForMember(d => d.JobTitle, map => map.MapFrom(s => s.Job.Title))
+                .ForMember(d => d.CompanyId, map => map.MapFrom(s => s.Job.Company.Id))
                 .ForMember(d => d.CompanyName, map => map.MapFrom(s => s.Job.Company.Name))
                 .ForMember(d => d.YearFounded, map => map.MapFrom(s => s.Job.Company.YearFounded))
                 .ForMember(d => d.Name, map => map.MapFrom(s => s.Job.Company.CompanyIndustry.Name))
@@ -152,6 +155,7 @@ namespace GlassDoor.ViewModels
                 .ForMember(a => a.Industry, map => map.MapFrom(s => s.Job.Company.CompanyIndustry.Name))
                 .ForMember(a => a.Vacancies, map => map.MapFrom(s => s.Job.NumberOfVacancies))
                 .ForMember(a => a.Status, map => map.MapFrom(s => s.ApplicationStatus.Name))
+                .ForMember(a => a.IsArchived, map => map.MapFrom(s => s.IsArchived))
                 .ForPath(a => a.JobStatistics.ViewedApplications, map => map.MapFrom(s => s.Job.ViewedApplications))
                 .ForPath(a => a.JobStatistics.TotalClicks, map => map.MapFrom(s => s.Job.TotalClicks))
                 .ForPath(a => a.JobStatistics.RejectedApplications, map => map.MapFrom(s => s.Job.RejectedApplications))
@@ -232,6 +236,7 @@ namespace GlassDoor.ViewModels
                 .ForPath(c => c.CompanyIndustry.Name, map => map.MapFrom(c => c.CompanyIndustry1))
                 .ForPath(c => c.CompanySize.Name, map => map.MapFrom(c => c.CompanySize1))
                 .ForPath(c => c.CompanyType.Name, map => map.MapFrom(c => c.CompanyType1))
+                .ForMember(c => c.Logo, map => map.MapFrom(c => c.Logo))
                 .ReverseMap();
             CreateMap<CompanyLinksDto, CompanyLinks>().ReverseMap();
 

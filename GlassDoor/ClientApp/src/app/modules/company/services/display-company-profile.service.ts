@@ -11,14 +11,20 @@ import { EditCompanyProfileDto } from '../models/edit-company-profile-dto';
 })
 export class DisplayCompanyProfileService {
 
-  constructor(private http:HttpClient, private _envUrl:EnvironmentUrlService) { }
-  public getCompanyProfile=()=>{
- return this.http.get<CompanyProfileDto>(this._envUrl.urlAddress+"/api/companies/CompanyProfile")
+  constructor(private http: HttpClient, private _envUrl: EnvironmentUrlService) { }
+  public getCompanyProfile = () => {
+    return this.http.get<CompanyProfileDto>(this._envUrl.urlAddress + "/api/companies/CompanyProfile")
   }
-  public getCompanyProfileEdit=()=>{
-    return this.http.get<CompanyProfile>(this._envUrl.urlAddress+"/api/companies/CompanyProfile")
-     }
-     public putCompanyProfile=(companyProfile:EditCompanyProfileDto)=>{
-      return this.http.put<EditCompanyProfileDto>(this._envUrl.urlAddress+"/api/companies/"+companyProfile.id,companyProfile)
-       }
+
+  public getCompanyProfileById = (id: number) => {
+    return this.http.get<CompanyProfileDto>(this._envUrl.urlAddress + "/api/companies/CompanyProfile/"+id)
+  }
+
+  public getCompanyProfileEdit = () => {
+    return this.http.get<CompanyProfile>(this._envUrl.urlAddress + "/api/companies/CompanyProfile")
+  }
+
+  public putCompanyProfile = (companyProfile: EditCompanyProfileDto) => {
+    return this.http.put<EditCompanyProfileDto>(this._envUrl.urlAddress + "/api/companies/" + companyProfile.id, companyProfile)
+  }
 }

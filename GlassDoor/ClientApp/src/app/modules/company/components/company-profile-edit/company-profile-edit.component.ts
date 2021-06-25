@@ -43,6 +43,8 @@ export class CompanyProfileEditComponent implements OnInit {
   dateNow: Date = new Date();
   public progress: number;
   public message: string;
+  profilePhotoSizeError: boolean = false;
+  profilePhotoTypeError: boolean = false;
 
   constructor(
     private displayProfileService: DisplayCompanyProfileService,
@@ -62,15 +64,14 @@ export class CompanyProfileEditComponent implements OnInit {
     this.editProfileForm = new FormGroup({
       'aboutUs': new FormControl(null, [Validators.required]),
       'name': new FormControl(null, [Validators.required]),
-      'logo': new FormControl(null, [Validators.required]),
+      'logo': new FormControl(null),
       'phone': new FormControl(null, [Validators.required]),
       'yearFounded': new FormControl(null, [Validators.required]),
       'companyIndustry': new FormControl(null, [Validators.required]),
-      // 'companyLinks': new FormControl(null, [Validators.required]),
-      'facebookLink': new FormControl(null, [Validators.required]),
-      'linkedinLink': new FormControl(null, [Validators.required]),
-      'websiteLink': new FormControl(null, [Validators.required]),
-      'email': new FormControl(null, [Validators.required]),
+      'facebookLink': new FormControl(null),
+      'linkedinLink': new FormControl(null),
+      'websiteLink': new FormControl(null),
+      'email': new FormControl(null, [Validators.required, Validators.email]),
       'companySize': new FormControl(null, [Validators.required]),
       'companyType': new FormControl(null, [Validators.required]),
       'locations': new FormControl(null, [Validators.required]),
@@ -93,7 +94,6 @@ export class CompanyProfileEditComponent implements OnInit {
       this.email = this.companyLinks?.find(l => l.name == "email");
 
 
-      // console.log(this.companyProfile);
       this.editProfileForm.get('aboutUs').setValue(this.companyProfile.aboutUs);
       this.editProfileForm.get('name').setValue(this.companyProfile.name);
       this.editProfileForm.get('phone').setValue(this.companyProfile.phone);
@@ -108,7 +108,7 @@ export class CompanyProfileEditComponent implements OnInit {
       this.editProfileForm.get('companyType').setValue(this.companyProfile.companyType.id);
 
       this.editProfileForm.get('locations').setValue(this.companyProfile.locations.map((val, index) => ({ countryId: val.cities.countryId, id: val.cities.id, name: val.cities.name })));
-      //console.log(this.companyProfile);
+
     });
 
 
@@ -127,6 +127,17 @@ export class CompanyProfileEditComponent implements OnInit {
     if (event.target.files.Length == 0) {
       return;
     }
+    else if (event.target.files[0].size > 1048576) {
+      this.profilePhotoSizeError = true
+      return;
+    } else if (!['image/png', 'image/gif', 'image/jpeg'].includes(event.target.files[0].type)) {
+      this.profilePhotoTypeError = true;
+      return;
+    }
+
+    this.profilePhotoSizeError = false;
+    this.profilePhotoTypeError = false;
+
     let fileToUpload = event.target.files[0];
     const formData = new FormData();
     formData.append('file', fileToUpload, fileToUpload.name);
@@ -146,15 +157,15 @@ export class CompanyProfileEditComponent implements OnInit {
 
   editProfile(editForm) {
     var links: CompanyLinksDto[] = [
-      { link: editForm.value.facebookLink, id: this.facebookLink.id, name: "facebook" },
-      { link: editForm.value.linkedinLink, id: this.linkedinLink.id, name: "linkedin" },
-      { link: editForm.value.websiteLink, id: this.website.id, name: "website" },
-      { link: editForm.value.email, id: this.email.id, name: "email" }
+      { link: editForm.value.facebookLink, name: "facebook" },
+      { link: editForm.value.linkedinLink, name: "linkedin" },
+      { link: editForm.value.websiteLink, name: "website" },
+      { link: editForm.value.email, name: "email" }
     ]
     var companyProfileEdit: EditCompanyProfileDto = {
       id: this.companyProfile.id,
       name: editForm.value.name,
-      logo: editForm.value.logo,
+      logo: this.companyProfile.logo,
       aboutUs: editForm.value.aboutUs,
       yearFounded: editForm.value.yearFounded,
       phone: editForm.value.phone,
@@ -163,11 +174,19 @@ export class CompanyProfileEditComponent implements OnInit {
       companySizeId: editForm.value.companySize,
       locations: editForm.value.locations.map((val, index) => ({ cityId: val.id, companyId: this.companyProfile.id })),
       companyLinks: links,
-      requestStatusId: this.companyProfile.requestStatusId
+      requestStatusId: this.companyProfile.requestStatusId,
     }
-    //console.log(companyProfileEdit);
+
     this._editProfileService.putCompanyProfile(companyProfileEdit).subscribe(response => {
       this.toastr.success('saved your changes', 'saved');
     })
+  }
+
+  public validateControl = (controlName: string) => {
+    return this.editProfileForm.controls[controlName].invalid && this.editProfileForm.controls[controlName].touched
+  }
+
+  public hasError = (controlName: string, errorName: string) => {
+    return this.editProfileForm.controls[controlName].hasError(errorName)
   }
 }

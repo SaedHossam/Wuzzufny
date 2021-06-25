@@ -21,7 +21,7 @@ export class ApplyJobComponent implements OnInit {
       this.service.getjobdbyid(p.id).subscribe(a => {
         this.job = a;
 
-        console.log(a);
+
       });
     });
   }

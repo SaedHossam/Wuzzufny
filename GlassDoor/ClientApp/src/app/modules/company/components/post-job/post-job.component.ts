@@ -119,7 +119,7 @@ export class PostJobComponent implements OnInit {
   }
 
   search(event) {
-    this.results = this.skills.filter(c => c.name.startsWith(event.query));
+    this.results = this.skills.filter(c => c.name.toLowerCase().includes(event.query.toLowerCase()));
   }
 
 

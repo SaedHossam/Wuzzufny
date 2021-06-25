@@ -8,96 +8,108 @@
               <div class="row mb-5">
                 <div class="col-12 col-sm-3">
                   <div class="avatar avatar-xl mx-md-3 shadow">
-                    <img [src]="companyProfile.logo" alt="" *ngIf="companyProfile?.logo">
+                    <img [src]="companyProfile.logo" alt="Company Logo" *ngIf="companyProfile?.logo">
                   </div>
                 </div>
                 <div class="col-12 col-sm-9 mt-3 mt-sm-2">
                   <h3>Company Logo</h3>
-                  <p>You can upload a .jpg, .png, or .gif photo with max size of 5MB.</p>
+                  <p>You can upload a .jpg, .png, or .gif photo with max size of 1MB.</p>
+                  <em *ngIf="profilePhotoSizeError" class="mb-4">upload photo with max size of 1MB, try reducing the quality <br /></em>
+                  <em *ngIf="profilePhotoTypeError" class="mb-4">upload valid image <br /></em>
                   <input #file formControlName="logo" id="file" type="file" class="form-control"
-                         (change)="uploadFile($event)" style="display: none;">
-                  <button type="button" class="btn btn-primary" (click)="file.click()">upload</button>
+                         (change)="uploadFile($event)" style="display: none;" accept="image/png, image/gif, image/jpeg">
+                  <button type="button" class="btn btn-primary" (click)="file.value=null;file.click()" [disabled]="progress < 100">upload</button>
+                  <div *ngIf="progress < 100" class="d-inline-block position-relative">
+                    <span class="position-absolute" style="z-index: 5; top: 15px; left:10px">{{progress}}%</span>
+                    <p-progressSpinner [style]="{width: '50px', height: '50px'}" styleClass="custom-spinner" strokeWidth="5" fill="#EEEEEE" animationDuration=".5s">
+                    </p-progressSpinner>
+                  </div>
                 </div>
               </div>
             </div>
             <div class="form-group">
-              <label for="title">Name</label>
-              <input type="text" class="form-control" placeholder="Name" formControlName="name">
-              <small class="form-text text-muted">please Enter company name.</small>
+              <label for="name">Name</label>
+              <input type="text" class="form-control" placeholder="Name" formControlName="name" id="name">
+              <em *ngIf="validateControl('name') && hasError('name','required')">Name is required</em>
             </div>
 
             <div class="form-group">
-              <label for="title">About Us</label>
-              <textarea class="form-control" placeholder="About us" formControlName="aboutUs" rows="5"></textarea>
-              <small class="form-text text-muted">please Enter descriptive company details.</small>
+              <label for="aboutUs">About Us</label>
+              <textarea class="form-control" placeholder="About us" formControlName="aboutUs" id="aboutUs" rows="5"></textarea>
+              <em *ngIf="validateControl('aboutUs') && hasError('aboutUs','required')">AboutUs describes the company, it is required</em>
             </div>
 
             <div class="form-group">
-              <label for="title">phone</label>
-              <input type="text" class="form-control" placeholder="phone" formControlName="phone">
-              <small class="form-text text-muted">please Enter company phone.</small>
+              <label for="phone">Contact phone</label>
+              <input type="text" class="form-control" placeholder="phone" formControlName="phone" id="phone">
+              <em *ngIf="validateControl('phone') && hasError('phone','required')">Contact phone is required</em>
             </div>
 
             <div class="form-group">
-              <label for="title">Year founded</label> <br>
+              <label for="yearFounded">Year founded</label> <br>
               <p-calendar view="month" [yearNavigator]="true" dateFormat="M - yy" yearRange="1900:{{maxYearRange}}"
-                          formControlName="yearFounded" showButtonBar="true" [showIcon]="true" [maxDate]="dateNow"></p-calendar>
+                          formControlName="yearFounded" id="yearFounded" showButtonBar="true" [showIcon]="true" [maxDate]="dateNow"></p-calendar>
             </div>
 
             <div class="row">
               <div class="col-6">
                 <div class="form-group">
                   <label for="companyIndustry">company industry</label>
-                  <select name="companyIndustry" class="form-select" formControlName="companyIndustry">
+                  <select name="companyIndustry" class="form-select" formControlName="companyIndustry" id="companyIndustry">
                     <option *ngFor="let i of companyIndustries" [value]="i.id">
                       {{i.name}}
                     </option>
                   </select>
+                  <em *ngIf="validateControl('companyIndustry') && hasError('companyIndustry','required')">choose the industry of your company</em>
                 </div>
               </div>
               <div class="col-6">
                 <div class="form-group">
                   <label for="companySize">company size</label>
-                  <select name="companySize" class="form-select" formControlName="companySize">
+                  <select name="companySize" class="form-select" formControlName="companySize" id="companySize">
                     <option *ngFor="let i of companySizes" [value]="i.id">
                       {{i.name}}
                     </option>
                   </select>
+                  <em *ngIf="validateControl('companySize') && hasError('companySize','required')">choose the size of your company</em>
                 </div>
               </div>
             </div>
 
             <div class="form-group">
               <label for="companyType">company type</label>
-              <select name="companyType" class="form-select" formControlName="companyType">
+              <select name="companyType" class="form-select" formControlName="companyType" id="companyType">
                 <option *ngFor="let i of companyTypes" [value]="i.id">
                   {{i.name}}
                 </option>
               </select>
+              <em *ngIf="validateControl('companyType') && hasError('companyType','required')">choose the type of your company </em>
             </div>
 
             <div class="form-group">
-              <label for="title">Facebook link</label>
-              <input type="text" class="form-control" formControlName="facebookLink">
+              <label for="facebookLink">Facebook link</label>
+              <input type="text" class="form-control" formControlName="facebookLink" id="facebookLink">
             </div>
             <div class="form-group">
-              <label for="title">Linkedin Link</label>
-              <input type="text" class="form-control" formControlName="linkedinLink">
+              <label for="linkedinLink">Linkedin Link</label>
+              <input type="text" class="form-control" formControlName="linkedinLink" id="linkedinLink">
             </div>
             <div class="form-group">
-              <label for="title">WebSite Link</label>
-              <input type="text" class="form-control" formControlName="websiteLink">
+              <label for="websiteLink">WebSite Link</label>
+              <input type="text" class="form-control" formControlName="websiteLink" id="websiteLink">
             </div>
             <div class="form-group">
-              <label for="title">Email</label>
-              <input type="text" class="form-control" formControlName="email">
+              <label for="email">Contact Email</label>
+              <input type="text" class="form-control" formControlName="email" id="email">
+              <em *ngIf="validateControl('email') && hasError('email','email')">please enter a valid email</em>
             </div>
 
             <div class="form-group">
-              <p-multiSelect [options]="cities" optionLabel="name" display="chip" formControlName="locations">
+              <label for="locations">We have branches in:</label>
+              <p-multiSelect [options]="cities" class="d-block" optionLabel="name" display="chip" formControlName="locations" id="locations">
               </p-multiSelect>
             </div>
-            <button class="btn btn-primary mt-3" type="submit">Save Changes</button>
+            <button class="btn btn-primary mt-3" type="submit" [disabled]="!editProfileForm.valid">Save Changes</button>
           </form>
         </div>
       </div>
