@@ -1,0 +1,81 @@
+<div class="container">
+  <div class="row justify-content-center mt-5">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="row justify-content-between">
+            <div class="col-auto">
+              <h3>Manage Jobs</h3>
+            </div>
+            <div class="col-auto text-end">
+              <a class="btn btn-primary" [routerLink]="['/company/postjob']">Add New Post</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <nav ngbNav #nav="ngbNav" class="nav-tabs">
+        <ng-container ngbNavItem>
+          <a ngbNavLink>Open Jobs</a>
+          <ng-template ngbNavContent>
+            <div class="card" *ngFor="let job of openJobs">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-12 col-lg-4">
+                    <h4 class="card-title text-primary">{{job.title}}</h4>
+                    <h5 class="card-text text-dark fw-bold">{{job.jobCityName}}, {{job.jobCountryName}}</h5>
+                    <p class="card-text badge bg-light-secondary mx-1">{{job.numberOfVacancies}} Vacancies</p>
+                    <p class="card-text badge bg-light-secondary mx-1">posted on {{job.createdDate | date}}</p>
+                    <p class="card-text badge bg-light-secondary mx-1">{{job.totalViews}} job views | {{job.totalApplications}} total applications</p>
+                  </div>
+                  <div class="col-12 col-lg-8 text-center">
+                    <button type="button" class="btn btn-secondary btn-arrow-right" [routerLink]="['/company/applications/'+job.id]"> {{job.totalApplications}} Application</button>
+                    <button type="button" class="btn btn-primary btn-arrow-right" [routerLink]="['/company/applications/'+job.id+'/viewed']">{{job.applicationViewed}} Viewed</button>
+                    <button type="button" class="btn btn-danger btn-arrow-right" [routerLink]="['/company/applications/'+job.id+'/rejected']">{{job.applicationRejected}} Rejected</button>
+                    <button type="button" class="btn btn-success btn-arrow-right" [routerLink]="['/company/applications/'+job.id+'/InConsideration']">{{job.applicationInConsideration}} In Consideration</button>
+                    <button type="button" class="btn btn-warning btn-arrow-right" [routerLink]="['/company/applications/'+job.id+'/hired']">{{job.applicationHired}} Hired</button>
+                  </div>
+                </div>
+              </div>
+              <button class="btn btn-light-danger position-absolute" (click)="closeJob(job.id)" style="bottom:10px; right:20px;"> Close Job</button>
+              <button class="btn btn-light-warning position-absolute" style="bottom:10px; right:130px;" [routerLink]="['/company/editJob',job.id]"> Edit</button>
+            </div>
+          </ng-template>
+        </ng-container>
+        <ng-container ngbNavItem>
+          <a ngbNavLink>Closed Jobs</a>
+          <ng-template ngbNavContent>
+            <div class="card" *ngFor="let job of closedJobs">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-12 col-lg-4">
+                    <h4 class="card-title text-primary">{{job.title}}</h4>
+                    <h5 class="card-text text-dark fw-bold">{{job.jobCityName}}, {{job.jobCountryName}}</h5>
+                    <p class="card-text badge bg-light-secondary mx-1">{{job.numberOfVacancies}} Vacancies</p>
+                    <p class="card-text badge bg-light-secondary mx-1">posted on {{job.createdDate | date}}</p>
+                    <p class="card-text badge bg-light-secondary mx-1">{{job.applicationViewed}} job views | {{job.totalApplications}} total applications</p>
+                  </div>
+                  <div class="col-12 col-lg-8 text-center">
+                    <button type="button" class="btn btn-secondary btn-arrow-right" [routerLink]="['/company/applications/'+job.id]"> {{job.totalApplications}} Application</button>
+                    <button type="button" class="btn btn-primary btn-arrow-right" [routerLink]="['/company/applications/'+job.id+'/viewed']">{{job.applicationViewed}} Viewed</button>
+                    <button type="button" class="btn btn-danger btn-arrow-right" [routerLink]="['/company/applications/'+job.id+'/rejected']">{{job.applicationRejected}} Rejected</button>
+                    <button type="button" class="btn btn-success btn-arrow-right" [routerLink]="['/company/applications/'+job.id+'/InConsideration']">{{job.applicationInConsideration}} In Consideration</button>
+                    <button type="button" class="btn btn-warning btn-arrow-right" [routerLink]="['/company/applications/'+job.id+'/hired']">{{job.applicationHired}} Hired</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+        </ng-container>
+      </nav>
+
+      <div [ngbNavOutlet]="nav" class="mt-2"></div>
+
+      <p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000"></p-confirmDialog>
+    </div>
+  </div>
+</div>
+

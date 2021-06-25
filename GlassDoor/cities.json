@@ -1,0 +1,116 @@
+[
+    {
+        "Country": "Egypt",
+        "Name": "Egypt",
+        "Cities": [
+            {
+                "governorate_name_ar": "القاهرة",
+                "Name": "Cairo"
+            },
+            {
+                "governorate_name_ar": "الجيزة",
+                "Name": "Giza"
+            },
+            {
+                "governorate_name_ar": "الأسكندرية",
+                "Name": "Alexandria"
+            },
+            {
+                "governorate_name_ar": "الدقهلية",
+                "Name": "Dakahlia"
+            },
+            {
+                "governorate_name_ar": "البحر الأحمر",
+                "Name": "Red Sea"
+            },
+            {
+                "governorate_name_ar": "البحيرة",
+                "Name": "Beheira"
+            },
+            {
+                "governorate_name_ar": "الفيوم",
+                "Name": "Fayoum"
+            },
+            {
+                "governorate_name_ar": "الغربية",
+                "Name": "Gharbiya"
+            },
+            {
+                "governorate_name_ar": "الإسماعلية",
+                "Name": "Ismailia"
+            },
+            {
+                "governorate_name_ar": "المنوفية",
+                "Name": "Menofia"
+            },
+            {
+                "governorate_name_ar": "المنيا",
+                "Name": "Minya"
+            },
+            {
+                "governorate_name_ar": "القليوبية",
+                "Name": "Qaliubiya"
+            },
+            {
+                "governorate_name_ar": "الوادي الجديد",
+                "Name": "New Valley"
+            },
+            {
+                "governorate_name_ar": "السويس",
+                "Name": "Suez"
+            },
+            {
+                "governorate_name_ar": "اسوان",
+                "Name": "Aswan"
+            },
+            {
+                "governorate_name_ar": "اسيوط",
+                "Name": "Assiut"
+            },
+            {
+                "governorate_name_ar": "بني سويف",
+                "Name": "Beni Suef"
+            },
+            {
+                "governorate_name_ar": "بورسعيد",
+                "Name": "Port Said"
+            },
+            {
+                "governorate_name_ar": "دمياط",
+                "Name": "Damietta"
+            },
+            {
+                "governorate_name_ar": "الشرقية",
+                "Name": "Sharkia"
+            },
+            {
+                "governorate_name_ar": "جنوب سيناء",
+                "Name": "South Sinai"
+            },
+            {
+                "governorate_name_ar": "كفر الشيخ",
+                "Name": "Kafr Al sheikh"
+            },
+            {
+                "governorate_name_ar": "مطروح",
+                "Name": "Matrouh"
+            },
+            {
+                "governorate_name_ar": "الأقصر",
+                "Name": "Luxor"
+            },
+            {
+                "governorate_name_ar": "قنا",
+                "Name": "Qena"
+            },
+            {
+                "governorate_name_ar": "شمال سيناء",
+                "Name": "North Sinai"
+            },
+            {
+                "governorate_name_ar": "سوهاج",
+                "Name": "Sohag"
+            }
+        ]
+    }
+]

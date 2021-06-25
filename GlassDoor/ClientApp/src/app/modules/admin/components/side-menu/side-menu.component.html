@@ -1,0 +1,39 @@
+<a (click)="collapse.toggle()" class="burger-btn d-block d-xl-none mt-2 ms-2"><i #toggleButton class="bi bi-justify fs-3"></i></a>
+<div id="sidebar" class="active" #menu>
+  <div class="sidebar-wrapper active" #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
+    <div class="sidebar-header">
+      <div class="d-flex justify-content-end">
+        <div class="toggler">
+          <a (click)="collapse.toggle()" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="sidebar-menu">
+      <ul class="menu mt-0">
+        <li class="sidebar-title mt-0">Menu</li>
+        <li class="sidebar-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+          <a class="sidebar-link" [routerLink]="['/admin/home']">
+            <i class="bi bi-grid-fill"></i><span>Dashboard</span>
+          </a>
+        </li>
+        <li class="sidebar-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+          <a class="sidebar-link" [routerLink]="['/admin/companies-requests']">
+            <i class="bi bi-grid-fill"></i><span>Companies Requests</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
+  </div>
+</div>
+
+
+
+
+<!--<a (click)="isCollapsed = true" class="burger-btn d-block d-xl-none"><i class="bi bi-justify fs-3"></i></a>
+
+<p-sidebar [(visible)]="isCollapsed" [baseZIndex]="10000">
+  <h1 style="font-weight:normal">Left Sidebar</h1>
+  <p-button type="button" (click)="isCollapsed = false" label="Save" styleClass="p-button-success"></p-button>
+  <p-button type="button" (click)="isCollapsed = false" label="Cancel" styleClass="p-button-secondary"></p-button>
+</p-sidebar>-->

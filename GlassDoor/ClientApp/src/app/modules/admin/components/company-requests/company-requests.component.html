@@ -1,0 +1,100 @@
+<app-side-menu></app-side-menu>
+
+<div id="main">
+  <section class="section">
+    <div class="card">
+      <div class="card-body">
+        <h3>Companies requests waiting for action</h3>
+
+        <table class="table table-bordered table-striped shadow mt-5">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Name</th>
+              <th scope="col">Company Industry</th>
+              <th scope="col">Company Size</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let request of requests">
+            <td>{{ request.number }}</td>
+            <td>{{ request.name }}</td>
+            <td>{{ request.industry}}</td>
+            <td>{{ request.size }}</td>
+            <td><button class="btn btn-secondary" (click)="this.requestId= request.id;open(content)">Details</button></td>
+          </tr>
+          <tr>
+            <td *ngIf="requests?.length === 0" class="text-center fs-4" colspan="5">currently there is no pending requests</td>
+          </tr>
+          </tbody>
+        </table>
+
+        <div class="d-flex justify-content-between p-2">
+          <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize" (pageChange)="refreshCompanies()">
+          </ngb-pagination>
+
+          <select class="custom-select" style="width: auto" [(ngModel)]="pageSize" (ngModelChange)="refreshCompanies()">
+            <option [ngValue]="5">5 items per page</option>
+            <option [ngValue]="10">10 items per page</option>
+            <option [ngValue]="20">20 items per page</option>
+          </select>
+        </div>
+      </div>
+
+
+      <ng-template #content let-modal>
+        <div class="modal-header">
+          <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
+          <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <table class="table table-bordered">
+            <tbody>
+              <tr>
+                <th scope="row">Company Name</th>
+                <td>{{requestDetails?.name}}</td>
+              </tr>
+              <tr>
+                <th scope="row">Company Industry</th>
+                <td>{{requestDetails?.industry}}</td>
+              </tr>
+              <tr>
+                <th scope="row">Company Size</th>
+                <td>{{requestDetails?.size}}</td>
+              </tr>
+              <tr>
+                <th scope="row">First Name</th>
+                <td>{{requestDetails?.firstName}}</td>
+              </tr>
+              <tr>
+                <th scope="row">Last Name</th>
+                <td>{{requestDetails?.lastName}}</td>
+              </tr>
+              <tr>
+                <th scope="row">Title</th>
+                <td>{{requestDetails?.title}}</td>
+              </tr>
+              <tr>
+                <th scope="row">email</th>
+                <td>{{requestDetails?.email}}</td>
+              </tr>
+              <tr>
+                <th scope="row">Phone Number</th>
+                <td>{{requestDetails?.phoneNumber}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+          <button type="button" class="btn btn-primary" (click)="approve(requestDetails?.id, true);modal.close('Approve click')">Approve</button>
+          <button type="button" class="btn btn-danger" (click)="approve(requestDetails?.id, false);modal.close('Approve click')">Reject</button>
+        </div>
+      </ng-template>
+    </div>
+  </section>
+</div>
+

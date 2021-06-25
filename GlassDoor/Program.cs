@@ -6,8 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DAL.Models;
 using GlassDoor.Contexts;
-using GlassDoor.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -20,8 +20,6 @@ namespace GlassDoor
             var host = CreateHostBuilder(args)
                 .Build();
 
-
-
             using (var scope = host.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
@@ -31,7 +29,7 @@ namespace GlassDoor
                     //Seed Default Users
                     var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
                     var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
-                    await ApplicationDbContextSeed.SeedEssentialsAsync(userManager, roleManager);
+                    await ApplicationDbContextSeed.SeedEssentialsAsync(userManager, roleManager, host);
                 }
                 catch (Exception ex)
                 {
@@ -39,7 +37,6 @@ namespace GlassDoor
                     logger.LogError(ex, "An error occurred seeding the DB.");
                 }
             }
-
 
             host.Run();
         }

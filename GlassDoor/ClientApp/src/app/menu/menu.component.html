@@ -1,0 +1,95 @@
+<div style="height: 70px"></div>
+
+<nav class="navbar navbar-expand-lg navbar-light fixed-top py-1 backdrop border-bottom shadow bg-white" data-navbar-on-scroll="data-navbar-on-scroll">
+  <div class="container">
+    <a class="navbar-brand d-flex align-items-center fw-bolder fs-2 fst-italic" [routerLink]="['/home']">
+      <div class="text-info">Wuzzuf</div>
+      <div class="text-warning">ny</div>
+    </a>
+    <!--<button (click)="isMenuCollapsed = !isMenuCollapsed" class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>-->
+    <div class="d-flex w-75 border-lg-0 mt-lg-0" id="navbarSupportedContent">
+      <!-- Employee user -->
+      <ul *ngIf='isUserAuthenticated && isUserEmployee' class="navbar-nav flex-row mx-auto pt-2 pt-lg-0">
+        <li class="nav-item px-2">
+          <a class="nav-link" [routerLink]="['/employee/jobs']" routerLinkActive="active"
+             [routerLinkActiveOptions]="{exact: true}"> Explore </a>
+        </li>
+        <li class="nav-item px-2">
+          <a class="nav-link" [routerLink]="['/employee/applications']" routerLinkActive="active"
+             [routerLinkActiveOptions]="{exact: true}"> Applications </a>
+        </li>
+      </ul>
+
+      <!-- Company user -->
+      <ul *ngIf='isUserAuthenticated && isUserCompany' class="navbar-nav flex-row mx-auto pt-2 pt-lg-0">
+        <li class="nav-item px-2">
+          <a class="nav-link" [routerLink]="['/company/postjob']" routerLinkActive="active"
+             [routerLinkActiveOptions]="{exact: true}"> Post a job </a>
+        </li>
+        <li class="nav-item px-2">
+          <a class="nav-link" [routerLink]="['/company/profile']" routerLinkActive="active"
+             [routerLinkActiveOptions]="{exact: true}"> Profile </a>
+        </li>
+      </ul>
+
+      <form class="form-inline my-lg-0 pl-lg-5 ms-auto">
+        <ul *ngIf='!isUserAuthenticated' class="navbar-nav flex-row mr-auto pt-2 pt-lg-0">
+          <li class="nav-item">
+            <a class="btn btn-lg btn-primary rounded-pill bg-gradient mx-1 order-0" [routerLink]="['/authentication/login']" routerLinkActive="active"
+               [routerLinkActiveOptions]="{exact: true}">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="btn btn-lg btn-secondary rounded-pill bg-gradient mx-1" [routerLink]="['/authentication/register']" routerLinkActive="active"
+               [routerLinkActiveOptions]="{exact: true}">Register</a>
+          </li>
+          <li class="nav-item">
+            <a class="btn btn-lg btn-warning rounded-pill bg-gradient mx-1" [routerLink]="['/employer-register']" routerLinkActive="active"
+               [routerLinkActiveOptions]="{exact: true}">Employer?</a>
+          </li>
+        </ul>
+        <ul *ngIf='isUserAuthenticated' class="navbar-nav mr-auto mt-2 mt-lg-0">
+          <!--<li class="nav-item">
+            <div ngbDropdown>
+              <div ngbDropdownToggle class="mt-1">
+                <i class="bi bi-bell fs-4" style="cursor: pointer"></i>
+              </div>
+              <div ngbDropdownMenu class="dropdown-menu dropdown-menu-right">
+                <button ngbDropdownItem>notification 1 with some text</button>
+                <button ngbDropdownItem>notification 2 with some text</button>
+                <button ngbDropdownItem>notification 3 with some text</button>
+                <button ngbDropdownItem>notification 4 with some text</button>
+                <button ngbDropdownItem>notification 5 with some text</button>
+                <button ngbDropdownItem>notification 6 with some text</button>
+              </div>
+            </div>
+          </li>-->
+          <li class="nav-item">
+            <div ngbDropdown>
+              <div ngbDropdownToggle>
+                <i class="bi bi-list fs-2" style="cursor: pointer"></i>
+              </div>
+              <div ngbDropdownMenu class="dropdown-menu dropdown-menu-right">
+                <a ngbDropdownItem *ngIf='isUserAuthenticated && isUserEmployee' [routerLink]="['/employee/profile']">
+                  <i class="bi bi-person fs-5"></i> Edit Profile
+                </a>
+
+                <a ngbDropdownItem *ngIf='isUserAuthenticated && isUserEmployee' [routerLink]="['/employee/profile/public']">
+                  <i class="bi bi-person fs-5"></i> view public Profile
+                </a>
+
+                <a ngbDropdownItem *ngIf='isUserAuthenticated && isUserCompany' [routerLink]="['/company/editprofile']">
+                  <i class="bi bi-building fs-5"></i> Edit Company Profile
+                </a>
+
+                <div class="dropdown-divider"></div>
+
+                <!--<button class="btn btn-lg btn-primary rounded-pill bg-gradient order-0" (click)="logout()">Logout</button>-->
+                <button ngbDropdownItem (click)="logout()"><i class="bi bi-box-arrow-left fs-5"></i> Logout</button>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </form>
+    </div>
+  </div>
+</nav>

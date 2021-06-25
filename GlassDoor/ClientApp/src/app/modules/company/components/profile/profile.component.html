@@ -1,0 +1,79 @@
+<div class="container mt-5">
+  <div class="row" *ngIf="!isLoading">
+    <!-- Edit button could be added at first section -->
+    <!-- Company Logo, Name, Industry, Size, and Location -->
+    <div class="col-12">
+      <div class="card mb-3">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-2">
+              <div class="avatar avatar-xl me-3 shadow">
+                <img [src]="company.logo" alt="Company Logo" *ngIf="company?.logo">
+              </div>
+            </div>
+            <div class="col-10">
+              <h3>{{company.name}}</h3>
+              <h6> Industry: {{company.companyIndustry1}}</h6>
+              <span class="fw-bold"> Size:</span>
+              <span>  {{company.companySize1}} </span> <br /><span class="fw-bold">Head Quarter:</span> <span> {{company.city}}, {{company.country}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-9">
+      <div class="card mb-3">
+        <div class="card-body">
+          <h1>About Us</h1>
+          <hr />
+          <p>
+            {{company.aboutUs}}
+          </p>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col-3">
+      <div class="card mb-3"  *ngIf="!(email == null && linkedin == null && facebook == null)">
+        <div class="card-body">
+          <div class="card-title">
+            <h3>Follow Us</h3>
+            <hr />
+          </div>
+          <div class="row">
+            <a *ngIf="email" [href]="emailLink" ><i class="bi bi-envelope me-3"></i> {{(email.length>6)? (email | slice:0:20)+'..':(email)}} </a>
+            <a *ngIf="facebook" [href]="facebook"><i class="bi bi-facebook me-3"></i> {{(facebook.length>6)? (facebook | slice:0:20)+'..':(facebook)}}</a>
+            <a *ngIf="linkedin" [href]="linkedin"><i class="bi bi-linkedin me-3"></i> {{(linkedin.length>6)? (linkedin | slice:0:20)+'..':(linkedin)}} </a>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <h3>Company Info</h3>
+            <hr />
+          </div>
+          <div class="row">
+            <a *ngIf="website" [href]="website" class="mx-1"> <i class="bi bi-globe me-1"></i>  {{website}} </a>
+            <span class="mx-1" *ngIf="company.phone != null"> <i class="bi bi-telephone-fill me-1"></i> {{company.phone}} </span>
+            <span class="mx-1" *ngIf="company.phone == null"> <i class="bi bi-telephone-fill me-1"></i> Not Entered </span>
+            <span class="mx-1"> <i class="bi bi-geo-alt-fill me-1"></i> {{company.city}}, {{company.country}} </span>
+            <span class="mx-1"> <i class="bi bi-people-fill me-1"></i>  {{company.companySize1}} </span>
+            <span class="mx-1"> <i class="bi bi-building me-1"></i>  {{company.companyIndustry1}} </span>
+            <span class="mx-1">
+              <i class="bi bi-calendar3"></i> Founded at
+              <span *ngIf="company.yearFounded != null"> {{company.yearFounded | date:'yyyy'}} </span>
+              <span *ngIf="company.yearFounded == null"> Not Entered </span>
+            </span>
+            <span class="mx-1">
+              <i class="bi bi-building me-1"></i>  {{company.companyType1}}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

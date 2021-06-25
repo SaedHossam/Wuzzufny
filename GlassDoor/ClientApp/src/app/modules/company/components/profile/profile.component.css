@@ -1,0 +1,24 @@
+.avatar.avatar-xl .avatar-content, .avatar.avatar-xl img {
+  width: 100px;
+  height: 100px;
+  font-size: 1.4rem;
+}
+/*.card {
+  cursor: pointer;
+}
+
+  .card:hover {
+    transform: scale(1.03);
+  }
+
+  .card img {
+    width: 100px;
+    max-height: 100px;
+    border-radius: 26px;
+    cursor: pointer;
+  }
+
+    .card img:hover {
+      transform: scale(1.2);
+    }*/
+

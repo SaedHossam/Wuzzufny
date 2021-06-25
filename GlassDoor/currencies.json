@@ -1,0 +1,27 @@
+[
+	{
+		"Symbol": "$",
+		"Name": "US Dollar",
+		"Code": "USD"
+	},
+	{
+		"Symbol": "€",
+		"Name": "Euro",
+		"Code": "EUR"
+	},
+	{
+		"Symbol": "EGP",
+		"Name": "Egyptian Pound",
+		"Code": "EGP"
+	},
+	{
+		"Symbol": "SR",
+		"Name": "Saudi Riyal",
+		"Code": "SAR"
+	},
+	{
+		"Symbol": "AED",
+		"Name": "United Arab Emirates Dirham",
+		"Code": "AED"
+	}
+]

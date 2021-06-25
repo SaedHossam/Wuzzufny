@@ -14,9 +14,24 @@ namespace GlassDoor.Constants
             Company
         }
 
-        public const string default_username = "admin";
-        public const string default_email = "admin@glassdoor.com";
-        public const string default_password = "Pa$$w0rd.";
-        public const Roles default_role = Roles.Administrator;
+        public const string AdminUserName = "admin@wuzzufny.com";
+        public const string AdminEmail = "admin@wuzzufny.com";
+        public const string AdminPassword = "Aa12345";
+        public const Roles AdminRole = Roles.Administrator;
+        public const string Admin = "Administrator";
+
+        public const string CompanyUserName = "company@wuzzufny.com";
+        public const string CompanyEmail = "company@wuzzufny.com";
+        public const string CompanyPassword = "Aa12345";
+        public const Roles  CompanyRole = Roles.Company;
+        public const string Company = "Company";
+
+
+        public const string EmployeeUserName = "emp@wuzzufny.com";
+        public const string EmployeeEmail = "emp@wuzzufny.com";
+        public const string EmployeePassword = "Aa12345";
+        public const Roles  EmployeeRole = Roles.Employee;
+        public const string Employee = "Employee";
+
     }
 }

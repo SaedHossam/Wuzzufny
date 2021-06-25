@@ -1,0 +1,218 @@
+<div class="container">
+  <div class="row my-5">
+    <div class="col-8">
+
+      <div class="card mb-3">
+        <div class="card-body p-4">
+          <div class="row">
+            <div class="col-sm-4">
+              <h6 class="mb-0">summary</h6>
+            </div>
+            <div class="col-sm-8 text-secondary">
+              {{profile.summary}}
+            </div>
+          </div>
+
+          <hr>
+
+          <div class="row">
+            <div class="col-sm-4">
+              <h6 class="mb-0">militaryStatus</h6>
+            </div>
+            <div class="col-sm-8 text-secondary">
+              {{printMilitaryStatus(profile.militaryStatus)}}
+            </div>
+          </div>
+
+          <hr>
+
+          <div class="row">
+            <div class="col-sm-4">
+              <h6 class="mb-0">isWillingToRelocate</h6>
+            </div>
+            <div class="col-sm-8 text-secondary">
+              {{willingToRelocate(profile.isWillingToRelocate)}}
+            </div>
+          </div>
+
+          <hr>
+
+          <div class="row">
+            <div class="col-sm-4">
+              <h6 class="mb-0">Phone</h6>
+            </div>
+            <div class="col-sm-8 text-secondary">
+              <span>{{profile.mobileNumber}}</span> <span *ngIf="profile.alternativeMobileNumber">
+                /
+                {{profile.alternativeMobileNumber}}
+              </span>
+            </div>
+          </div>
+
+          <hr>
+
+          <div class="row">
+            <div class="col-sm-4">
+              <h6 class="mb-0">Prefered Job Types</h6>
+            </div>
+            <ul class="col-sm-8 text-secondary list-inline">
+              <li class="list-inline-item" *ngFor="let item of profile.jobTypesName">
+                <span class="badge bg-light text-dark shadow-sm">{{item.name}}</span>
+              </li>
+            </ul>
+          </div>
+
+          <hr>
+
+          <div class="row">
+            <div class="col-sm-4">
+              <h6 class="mb-0">user Languages</h6>
+            </div>
+            <ul class="col-sm-8 text-secondary list-inline">
+              <li class="list-inline-item" *ngFor="let item of profile.userLanguagesNames">
+                <span class="badge bg-light text-dark shadow-sm">{{item.name}}</span>
+              </li>
+            </ul>
+          </div>
+
+          <hr>
+
+          <div class="row">
+            <div class="col-sm-4">
+              <h6 class="mb-0">Education Level</h6>
+            </div>
+            <div class="col-sm-8 text-secondary">
+              {{profile.educationLevelName}}
+            </div>
+          </div>
+
+          <hr>
+
+          <div class="row">
+            <div class="col-sm-4">
+              <h6 class="mb-0">Career Level</h6>
+            </div>
+            <div class="col-sm-8 text-secondary">
+              {{profile.careerLevelName}}
+            </div>
+          </div>
+
+          <hr>
+
+          <div class="row">
+            <div class="col-sm-4">
+              <h6 class="mb-0">minimum Salary</h6>
+            </div>
+            <div class="col-sm-8 text-secondary">
+              {{profile.minimumSalary}}
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-sm-4">
+              <h6 class="mb-0">Experience Years</h6>
+            </div>
+            <div class="col-sm-8 text-secondary">
+              {{profile.experienceYears}}
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-sm-4">
+              <h6 class="mb-0">Skills</h6>
+            </div>
+            <ul class="col-sm-8 text-secondary list-inline">
+              <li class="list-inline-item" *ngFor="let item of profile.skillsNames">
+                <span class="badge bg-light text-dark shadow-sm mx-2 px-3 py-2">{{item.name}}</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="row ">
+        <div class="card p-0">
+          <div class="card-header"><h5>Status</h5></div>
+          <div class="card-body">
+            <div class="btn-group d-inline" role="group" aria-label="Basic radio toggle button group" *ngIf="application != null">
+
+              <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" value="Viewed" (click)="editStatus('Viewed')" [(ngModel)]="selectedStatus">
+              <label class="btn btn-outline-primary" for="btnradio1">Viewed</label>
+
+              <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off" value="InConsideration" (click)="editStatus('InConsideration')" [(ngModel)]="selectedStatus">
+              <label class="btn btn-outline-success" for="btnradio3">In Consideration</label>
+
+              <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off" value="Rejected" (click)="editStatus('Rejected')" [(ngModel)]="selectedStatus">
+              <label class="btn btn-outline-danger" for="btnradio2">Rejected</label>
+
+              <input type="radio" class="btn-check" name="btnradio" id="btnradio4" autocomplete="off" value="Hired" (click)="editStatus('Hired')" [(ngModel)]="selectedStatus">
+              <label class="btn btn-outline-warning" for="btnradio4"> Hired </label>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="row">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex flex-column align-items-center text-center">
+              <img [src]="profile.photo" alt="user photo" *ngIf="profile.photo" class="rounded-circle shadow-sm"
+                   width="150">
+              <img src="../../../../../assets/Images/gallery/user-m.png" alt="user photo"
+                   class="rounded-circle shadow-sm" width="150" *ngIf="!profile.photo && profile.gender == 0">
+              <img src="../../../../../assets/Images/gallery/user-f.png" alt="user photo"
+                   class="rounded-circle shadow-sm" width="150" *ngIf="!profile.photo && profile.gender == 1">
+              <div class="mt-3">
+                <h4>{{profile.userFirstName}} {{profile.userLastName}}</h4>
+                <p class="text-muted font-size-sm">{{profile.cityName}}, {{profile.countryName}}</p>
+                <p class="text-muted font-size-sm">{{printGender(profile.gender)}}</p>
+                <p class="text-muted font-size-sm">{{ageFromDateOfBirthday(profile.birthDate)}} years old</p>
+
+                <div *ngIf="profile['cv']" class="col-auto py-1 fs-5">
+                  <a [href]="profile['cv']">view cv</a>
+                </div>
+
+                <div *ngIf="!profile['cv']" class="col-auto">
+                  <p>Candidate don't have cv</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="card mt-3 px-3 py-2">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+              <h6 class="mb-0"><i class="bi bi-envelope"></i> Email</h6>
+              <a [href]="profile.email" class="text-secondary">{{profile.email}}</a>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap"
+                *ngIf="linkedInLink">
+              <h6 class="mb-0"><i class="bi bi-linkedin"></i> LinkedIn</h6>
+              <a [href]="linkedInLink" class="text-secondary">{{linkedInLink}}</a>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap" *ngIf="githubLink">
+              <h6 class="mb-0"><i class="bi bi-github"></i> GitHub</h6>
+              <a [href]="githubLink" class="text-secondary">{{githubLink}}</a>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap"
+                *ngIf="facebookLink">
+              <h6 class="mb-0"><i class="bi bi-facebook"></i> Facebook</h6>
+              <a [href]="facebookLink" class="text-secondary">{{facebookLink}}</a>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap" *ngIf="twitterLink">
+              <h6 class="mb-0"><i class="bi bi-twitter"></i> Twitter</h6>
+              <a [href]="twitterLink" class="text-secondary">{{twitterLink}}</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+

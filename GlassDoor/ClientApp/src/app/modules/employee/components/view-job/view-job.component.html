@@ -1,0 +1,69 @@
+<div class="container">
+  <div class="row justify-content-center my-5">
+    <div class="col-12 col-md-8 order-1 order-md-0">
+      <div *ngFor="let job of jobs" class="col-12 mt-2">
+        <div class="card shadow mb-3">
+          <div class="card-body" [routerLink]="['/employee/apply/',job.id]">
+            <div class="row g-0 px-1 ps-md-4 pe-md-3 py-3 align-items-center">
+              <div class="col-2">
+                <img [src]="job.logo" [routerLink]="['/employee/company/',job.companyId]" class="img-fluid shadow" alt="company logo">
+              </div>
+              <div class="col-6">
+                <h4 class="card-title text-primary" [routerLink]="['/employee/company/',job.companyId]">{{job.companyName}} <i class="bi bi-link-45deg"></i>  </h4>
+                <h3 class="card-text text-dark fw-bold">{{job.title}}</h3>
+                <p class="card-text badge bg-light-secondary mx-1">{{job.name}}</p>
+                <p class="card-text badge bg-warning mx-1"><i class="bi bi-clock"></i> {{job.jobTypeName}}</p>
+              </div>
+              <div class="col-4">
+                <p class="card-text w-50 w-md-25 text-end ms-auto">{{job.jobCityName}} , {{job.jobCountryName}}</p>
+                <p class="card-text w-50 w-md-25 text-end ms-auto">{{job.createdDate | date}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="isLoading">
+        <div *ngFor="let item of [1,2,3]">
+          <div class="card shadow mb-3">
+            <div class="card-body">
+              <div class="row g-0 px-1 ps-md-4 pe-md-3 py-3 align-items-center">
+                <div class="col-2">
+                  <p-skeleton shape="circle" size="4rem" styleClass="p-mr-2"></p-skeleton>
+                </div>
+                <div class="col-6">
+                  <p-skeleton width="10rem" styleClass="p-mb-2"></p-skeleton>
+                  <p-skeleton width="10rem" styleClass="p-mb-2"></p-skeleton>
+                  <p-skeleton width="10rem" styleClass="p-mb-2"></p-skeleton>
+                </div>
+                <div class="col-4">
+                  <p-skeleton width="10rem" styleClass="p-mb-2"></p-skeleton>
+                  <p-skeleton width="10rem" styleClass="p-mb-2"></p-skeleton>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="!isLoading && jobs.length === 0" class="text-center">
+        <p class="text-muted fs-4 mt-4">No jobs yet</p>
+      </div>
+    </div>
+
+    <div class="col-8 col-md-4 order-0 order-md-1">
+      <form id="search-form">
+        <div class="row">
+          <span>Search jobs</span>
+
+          <div class="input-group mb-3">
+            <input type="text" [(ngModel)]="jobTitle" id="search2" name="jobTitle" class="form-control" placeholder="Search job title or company...">
+            <button type="submit" class="btn btn-outline-secondary" (click)="searchAJob()" [disabled]="!jobTitle">
+              <i class="pi pi-search"></i>
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
