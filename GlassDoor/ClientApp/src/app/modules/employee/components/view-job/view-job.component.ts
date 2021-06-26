@@ -24,7 +24,7 @@ export class ViewJobComponent implements OnInit {
   }
 
   searchAJob() {
-    this.service.searchForAJob(this.jobTitle, "e").subscribe(j => {
+    this.service.searchForAJob(this.jobTitle).subscribe(j => {
       this.jobs = j;
     });
   }

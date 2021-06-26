@@ -6,7 +6,7 @@
       <div class="card-body">
         <h3>Companies requests waiting for action</h3>
 
-        <table class="table table-bordered table-striped shadow mt-5">
+        <table class="table table-bordered shadow mt-5">
           <thead>
             <tr>
               <th scope="col">#</th>
@@ -16,17 +16,22 @@
               <th scope="col"></th>
             </tr>
           </thead>
-          <tbody>
-          <tr *ngFor="let request of requests">
-            <td>{{ request.number }}</td>
-            <td>{{ request.name }}</td>
-            <td>{{ request.industry}}</td>
-            <td>{{ request.size }}</td>
-            <td><button class="btn btn-secondary" (click)="this.requestId= request.id;open(content)">Details</button></td>
-          </tr>
-          <tr>
-            <td *ngIf="requests?.length === 0" class="text-center fs-4" colspan="5">currently there is no pending requests</td>
-          </tr>
+          <tbody *ngIf="!isLoading">
+            <tr *ngFor="let request of requests">
+              <td>{{ request.number }}</td>
+              <td>{{ request.name }}</td>
+              <td>{{ request.industry}}</td>
+              <td>{{ request.size }}</td>
+              <td><button class="btn btn-secondary" (click)="this.requestId= request.id;open(content)">Details</button></td>
+            </tr>
+            <tr>
+              <td *ngIf="requests?.length === 0" class="text-center fs-4" colspan="5">currently there is no pending requests</td>
+            </tr>
+          </tbody>
+          <tbody *ngIf="isLoading">
+            <tr>
+              <td  colspan="5"><p-skeleton width="100%" height="4rem"></p-skeleton></td>
+            </tr>
           </tbody>
         </table>
 

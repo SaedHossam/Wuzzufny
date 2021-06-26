@@ -25,8 +25,8 @@ export class JobService {
   }
 
 
-  searchForAJob(term: string, loc: string): Observable<Job[]>{
-    return this.http.get<Job[]>(this._envUrl.urlAddress + '/api/jobs/Search/' + term + '/' + loc);
+  searchForAJob(term: string): Observable<Job[]>{
+    return this.http.get<Job[]>(this._envUrl.urlAddress + '/api/jobs/Search/' + term);
   }
 
   applyJob(id: number) {
