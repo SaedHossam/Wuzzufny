@@ -9,7 +9,7 @@
                 <img [src]="job.logo" [routerLink]="['/employee/company/',job.companyId]" class="img-fluid shadow" alt="company logo">
               </div>
               <div class="col-6">
-                <h4 class="card-title text-primary" [routerLink]="['/employee/company/',job.companyId]">{{job.companyName}} <i class="bi bi-link-45deg"></i>  </h4>
+                <h4 class="card-title text-primary d-inline-block" [routerLink]="['/employee/company/',job.companyId]">{{job.companyName}} <i class="bi bi-link-45deg"></i>  </h4>
                 <h3 class="card-text text-dark fw-bold">{{job.title}}</h3>
                 <p class="card-text badge bg-light-secondary mx-1">{{job.name}}</p>
                 <p class="card-text badge bg-warning mx-1"><i class="bi bi-clock"></i> {{job.jobTypeName}}</p>

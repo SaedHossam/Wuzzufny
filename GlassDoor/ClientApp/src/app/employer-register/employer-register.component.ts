@@ -23,6 +23,7 @@ export class EmployerRegisterComponent implements OnInit {
   public successMessage: string;
   public industries: Industry[];
   public companySizes: CompanySize[];
+  public isLoading: boolean = false;
 
   constructor(private _passConfValidator: PasswordConfirmationValidatorService,
     private _companyService: CompanyService, private _companyIndustryService: CompanyIndustryService, private _companySizeService: CompanySizeService) { }
@@ -66,6 +67,7 @@ export class EmployerRegisterComponent implements OnInit {
 
   public registerCompany = (registerFormValue) => {
     this.showError = false;
+    this.isLoading = true;
     const formValues = { ...registerFormValue };
 
     const company: CompanyForRegistrationDto = {
@@ -89,6 +91,10 @@ export class EmployerRegisterComponent implements OnInit {
         error => {
           this.errorMessage = error;
           this.showError = true;
-        })
+        },
+        () => {
+          this.isLoading = false;
+        }
+        )
   }
 }

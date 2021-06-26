@@ -18,6 +18,7 @@ export class RegisterUserComponent implements OnInit {
   public showError: boolean;
   public showSuccess: boolean;
   public successMessage: string;
+  public isLoading: boolean = false;
 
   constructor(private _authService: AuthenticationService, private _passConfValidator: PasswordConfirmationValidatorService, private _router: Router, private _envUrl: EnvironmentUrlService) { }
 
@@ -44,6 +45,7 @@ export class RegisterUserComponent implements OnInit {
 
   public registerUser = (registerFormValue) => {
     this.showError = false;
+    this.isLoading = true;
     const formValues = { ...registerFormValue };
 
     const user: UserForRegistrationDto = {
@@ -65,6 +67,9 @@ export class RegisterUserComponent implements OnInit {
         error => {
           this.errorMessage = error;
           this.showError = true;
+        },
+        () => {
+          this.isLoading = false;
         })
   }
 }

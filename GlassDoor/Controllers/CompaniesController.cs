@@ -62,7 +62,7 @@ namespace GlassDoor.Controllers
         public async Task<ActionResult<CompanyProfileDto>> GetCompanyProfile()
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
-            var companyId = _unitOfWork.CompaniesManagers.Find(c => c.UserId == user.Id).First().Id;
+            var companyId = _unitOfWork.CompaniesManagers.Find(c => c.UserId == user.Id).First().CompanyId;
 
             var company = _unitOfWork.Company.GetCompany(companyId);
 
@@ -147,7 +147,7 @@ namespace GlassDoor.Controllers
         public async Task<IActionResult> Upload(IFormFile file)
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
-            var companyId = _unitOfWork.CompaniesManagers.Find(c => c.UserId == user.Id).FirstOrDefault().Id;
+            var companyId = _unitOfWork.CompaniesManagers.Find(c => c.UserId == user.Id).FirstOrDefault()?.CompanyId;
             var company = _unitOfWork.Companies.Find(a => a.Id == companyId).FirstOrDefault();
             var fileName = user.Id + ".png";
 
@@ -218,7 +218,7 @@ namespace GlassDoor.Controllers
         {
             try
             {
-                var statusId = _context.CompanyRequestStatus.FirstOrDefault(s => s.Name == Enums.CompanyRequestStatus.UnderReview.ToString()).Id;
+                var statusId = _context.CompanyRequestStatus.FirstOrDefault(s => s.Name == Enums.CompanyRequestStatus.UnderReview.ToString())?.Id;
                 var companies =
                     _mapper.Map<IEnumerable<CompanyRequestsDto>>(
                         _context.Companies

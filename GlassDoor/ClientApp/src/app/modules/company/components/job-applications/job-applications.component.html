@@ -1,23 +1,10 @@
-<!--<div class="row">
-    <div *ngFor="let application of applications">
-        applyDate: {{application.applyDate}}
-        status: {{application.status}}
-        birthDate: {{application.employee.birthDate}}
-        cv: {{application.employee.cv}}
-        experienceYears: {{application.employee.experienceYears}}
-        gender: {{application.employee.gender}}
-        isWillingToRelocate: {{application.employee.isWillingToRelocate}}
-        <a class="btn btn-info" [routerLink]="['/company/status',application.id]">Details</a>
-    </div>
-</div>-->
-
 <div class="container">
-  <div class="row my-5">
+  <div class="row justify-content-center my-5">
     <div class="col-8">
       <div class="col-12 mt-2" *ngFor="let application of applications">
         <div class="card shadow mb-3">
           <div class="card-body" [routerLink]="['/company/status',application.id]">
-          <!--<div class="card-body">-->
+            <!--<div class="card-body">-->
             <div class="row g-0 px-1 ps-md-4 pe-md-3 py-3 align-items-center">
               <div class="col-2">
                 <div class="avatar avatar-xl me-3 shadow">
@@ -52,46 +39,11 @@
           </div>
         </div>
       </div>
-
-
-
-      <!--<div *ngIf="isLoading">
-        <div *ngFor="let item of [1,2,3]">
-          <div class="card shadow mb-3">
-            <div class="card-body">
-              <div class="row g-0 px-1 ps-md-4 pe-md-3 py-3 align-items-center">
-                <div class="col-2">
-                  <p-skeleton shape="circle" size="4rem" styleClass="p-mr-2"></p-skeleton>
-                </div>
-                <div class="col-6">
-                  <p-skeleton width="10rem" styleClass="p-mb-2"></p-skeleton>
-                  <p-skeleton width="10rem" styleClass="p-mb-2"></p-skeleton>
-                  <p-skeleton width="10rem" styleClass="p-mb-2"></p-skeleton>
-                </div>
-                <div class="col-4">
-                  <p-skeleton width="10rem" styleClass="p-mb-2"></p-skeleton>
-                  <p-skeleton width="10rem" styleClass="p-mb-2"></p-skeleton>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>-->
     </div>
-
-    <div class="col-4">
-      <form id="search-form">
-        <div class="row">
-          <span>Search Applications</span>
-
-          <div class="input-group mb-3">
-            <input type="text" id="search2" name="jobTitle" class="form-control" placeholder="Search job title or company...">
-            <button type="submit" class="btn btn-outline-secondary">
-              <i class="pi pi-search"></i>
-            </button>
-          </div>
-        </div>
-      </form>
+    <div class="col-8">
+      <div *ngIf="applications.length === 0" class="text-center">
+        <h3 class="text-muted d-inline-block">No Applications Here</h3>
+      </div>
     </div>
   </div>
 </div>

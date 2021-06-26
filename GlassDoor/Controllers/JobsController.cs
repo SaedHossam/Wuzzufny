@@ -41,7 +41,8 @@ namespace GlassDoor.Controllers
         {
             // todo add company industry to job ( IT )
             var allJobData = _unitOfWork.Jobs.GetAllJobData();
-            return Ok(_mapper.Map<IEnumerable<JobViewModel>>(allJobData));
+            var openJobs = allJobData.Where(j=> j.IsOpen == true);
+            return Ok(_mapper.Map<IEnumerable<JobViewModel>>(openJobs));
         }
 
         [HttpGet("companyJobs")]
@@ -53,7 +54,7 @@ namespace GlassDoor.Controllers
             if (user == null)
                 return BadRequest("Can't find User!\nlogin and try again.");
 
-            var companyId = _unitOfWork.CompaniesManagers?.Find(c => c.UserId == user.Id).First().Id;
+            var companyId = _unitOfWork.CompaniesManagers?.Find(c => c.UserId == user.Id).First().CompanyId;
 
             if (companyId == null)
                 return Unauthorized("Can't Access Company jobs with Employee Account!");
@@ -66,7 +67,7 @@ namespace GlassDoor.Controllers
         public async Task<ActionResult<IEnumerable<CompanyJobDto>>> GetCompanyJobsData()
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
-            var companyId = _unitOfWork.CompaniesManagers.Find(c => c.UserId == user.Id).First().Id;
+            var companyId = _unitOfWork.CompaniesManagers.Find(c => c.UserId == user.Id).First().CompanyId;
             var companyJobs = _context.Jobs
                 .Include(a => a.Skills)
                     .ThenInclude(a => a.Skills)
@@ -123,19 +124,17 @@ namespace GlassDoor.Controllers
         }
 
 
-        [HttpGet("Search/{term}/{loc}")]
-        public ActionResult<IEnumerable<JobViewModel>> Search(string term, string loc)
+        [HttpGet("Search/{term}")]
+        public ActionResult<IEnumerable<JobViewModel>> Search(string term)
         {
             var res = _unitOfWork.Jobs.GetAllJobData().Where(i => i.Title.Contains(term, StringComparison.InvariantCultureIgnoreCase)
                 || i.Company.Name.Contains(term, StringComparison.InvariantCultureIgnoreCase)
-                || i.Country.Name.Contains(loc, StringComparison.InvariantCultureIgnoreCase)
-                || i.City.Name.Contains(loc, StringComparison.InvariantCultureIgnoreCase)).ToList();
+                || i.City.Name.Contains(term, StringComparison.InvariantCultureIgnoreCase)).ToList();
             return Ok(_mapper.Map<IEnumerable<JobViewModel>>(res));
 
         }
 
         // PUT: api/Jobs/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         [Authorize(Roles = "Company")]
         public IActionResult PutJob(int id, [FromBody] PostJobDto postedjob)
@@ -214,7 +213,7 @@ namespace GlassDoor.Controllers
             if (user == null)
                 return BadRequest("Can't find User!");
 
-            var companyId = _unitOfWork.CompaniesManagers?.Find(c => c.UserId == user.Id).FirstOrDefault().Id;
+            var companyId = _unitOfWork.CompaniesManagers?.Find(c => c.UserId == user.Id).FirstOrDefault().CompanyId;
 
             if (companyId == null)
                 return BadRequest("Error Occured!\nTry Again.");

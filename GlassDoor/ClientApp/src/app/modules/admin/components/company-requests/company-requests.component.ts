@@ -17,6 +17,7 @@ export class CompanyRequestsComponent implements OnInit {
   requests: CompanyRequest[];
   requestDetails: CompanyRequest;
   requestId: number;
+  isLoading: boolean = false;
 
   constructor(private _companyRequestsService: CompanyRequestsService, private modalService: NgbModal) { }
 
@@ -25,11 +26,13 @@ export class CompanyRequestsComponent implements OnInit {
   }
 
   loadComapiesRequestes() {
+    this.isLoading = true;
     this._companyRequestsService.getCompaniesRequests().subscribe(a => {
       this.allRequests = a;
       this.collectionSize = this.allRequests.length;
 
       this.refreshCompanies();
+      this.isLoading = false;
     });
   }
 
@@ -52,8 +55,14 @@ export class CompanyRequestsComponent implements OnInit {
   }
 
   approve(id: number, accept: boolean) {
+    this.isLoading = true;
+
     this._companyRequestsService.changeCompanyRequestStatus(new CompanyRequestStatus(id, accept)).subscribe((result) => {
-      this.loadComapiesRequestes();
-    });
+    },
+      () => { },
+      () => {
+        this.loadComapiesRequestes();
+      }
+    );
   }
 }
