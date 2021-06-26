@@ -1,0 +1,1286 @@
+<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'   width='3408' height='1390' viewBox='0 0 3408 1390' >
+  <script type='text/ecmascript'>
+  <![CDATA[
+  function hghl(el) { for ( var i in el ){ var elem = document.getElementById(el[i]); if ( elem != null ) elem.setAttribute('class','highlight');  }  }
+  function uhghl(el) { for ( var i in el ){ var elem = document.getElementById(el[i]); if ( elem != null ) elem.setAttribute('class','scene'); }  } 
+  ]]>
+  </script> 
+
+<style type='text/css'>
+  text                { fill:#000000; font-family: Trebuchet MS, 'Trebuchet MS', Dialog; font-size:13.0px; }
+  a text:hover        { fill:#0d196f; text-shadow: 0px 0px 6px #d0ce00; font-size:13px; font-weight: bold;}
+  text.highlight      { fill:#0d196f; text-shadow: 0px 0px 4px #eac533; font-size:13px; font-weight: bold;}
+  text.white          { fill:#ffffff; }
+  text.colType        { fill:#b3b3b3; }
+  text.relName        { fill:#9c9a9a; }
+  text.legendTitle    { fill:#d65c68; font-weight:bold; }
+  text.legendSubTitle { fill:#717171; font-size:11px; }
+  path                { stroke:#857f70; stroke-width:1.45; fill:none;}
+  path.virtual        { stroke:#a67822; }
+  path.logo           { fill:#fbeac0;fill-opacity:1;stroke-width:0.3;stroke:#222222; }
+  path.dotted         { stroke-dasharray:4,2; }
+  path.scene          { stroke-width:10; opacity:0;}
+  path.highlight      { stroke-width:3; stroke:#0054c5; opacity:0.8;}
+  rect.entity         { fill:#ffffff; stroke:#777; stroke-width:1;shape-rendering:crispEdges; filter:url(#shadow); }
+  line.delim          { stroke-width:1; shape-rendering:crispEdges; }
+  text.callout        { fill:#000000; font-family: Trebuchet MS, 'Trebuchet MS', Dialog; font-size:14.0px; }
+  rect.callout        { fill:url(#calloutGradient); stroke:#bebdbd; stroke-width:0.5; }
+  rect.grp            { stroke:#a1a1a1; stroke-width:3; opacity:0.25; }
+  path.bgPattern      { fill:none;stroke-width:0.6;stroke:#e5e9ed; }
+</style>
+<defs>
+  <radialGradient id='layoutBgB' cx='100%' cy='100%' r='100%'  >
+    <stop offset='0%' stop-color='#dfdfdf' />
+    <stop offset='100%' stop-color='#f2f2f2' />
+  </radialGradient>
+  <pattern id="layoutBgA" width="60" height="34.64" patternUnits="userSpaceOnUse">
+    <rect width="100%" height="100%" fill="#f0f1f3" />
+    <path class='bgPattern' d='M 0 17.32 L 10 0 L 30 0 L 40 17.326 L 30 34.64 L 10 34.64 Z' />
+    <path class='bgPattern' d='M 40 17.32 L 60 17.32 Z' />
+  </pattern>
+  <!-- https://norbat.de/svg-pattern-3d-webmuster/ -->
+  <linearGradient id='groupUnderTitleLine' x1='0%' y1='0%' x2='100%' y2='0%' >
+    <stop offset='0%' stop-color='#999999' stop-opacity='0.7'/>
+    <stop offset='100%' stop-color='#999999' stop-opacity='0' />
+  </linearGradient>
+  <radialGradient id='calloutGradient' cx='25%' cy='20%' r='80%' fx='10%' fy='10%'>
+    <stop offset='0%' stop-color='#ffffff' />
+    <stop offset='100%' stop-color='#f8f6d1' />
+  </radialGradient>
+  <filter id="shadow" width="120%" height="120%">
+    <feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#333" flood-opacity="0.2" />
+  </filter>
+  <!--
+  <filter id='shadow2' width='120%' height='120%'>
+    <feOffset result='offOut' in='SourceGraphic' dx='0' dy='0' />
+    <feColorMatrix result='matrixOut' in='offOut'
+                   values='0.5 0 0 0 0 0 0.5 0 0 0 0 0 0.5 0 0 0 0 0 0.5 0' />
+    <feGaussianBlur result='blurOut' in='matrixOut' stdDeviation='3' />
+    <feBlend in='SourceGraphic' in2='blurOut' />
+  </filter>
+  -->
+  <filter id='fkShadow' height='130%'>
+    <feGaussianBlur in='SourceAlpha' stdDeviation='1.5'/> <!-- stdDeviation is how much to blur -->
+    <feOffset dx='1.2' dy='1.2' result='offsetblur'/> <!-- how much to offset -->
+    <feMerge>
+      <feMergeNode/> <!-- this contains the offset blurred image -->
+      <feMergeNode in='SourceGraphic'/> <!-- this contains the element that the filter is applied to -->
+    </feMerge>
+  </filter>
+  <radialGradient id='legendGradient' cx='5%' cy='5%' r='100%' >
+    <stop offset='0%' stop-color='#e4eeff' stop-opacity='1'/>
+    <stop offset='100%' stop-color='#c3d2ea' stop-opacity='1' />
+  </radialGradient>
+  <symbol id='calloutArrowDown' >
+    <path d='M 0,0 L 8,12 L 16,0 z' style='fill:#f8f6d1;stroke:none; filter: url(#shadow);' />
+    <path d='M 0,0 L 8,12 L 16,0' style='stroke:#bebdbd; stroke-width:0.5;' />
+  </symbol>
+  <symbol id='calloutArrowUp' >
+    <path d='M 0,16 L 8,4 L 16,16 z' style='fill:#ffffff; stroke:none; filter: url(#shadow);' />
+    <path d='M 0,16 L 8,4 L 16,16' style='stroke:#bebdbd; stroke-width:0.5;' />
+  </symbol>
+  <symbol id='pk' >
+    <g transform='scale(0.99)'>
+      <path style='fill:#f0d938;stroke:#906b25;stroke-width:0.6;stroke-linecap:round;stroke-linejoin:round;'
+            d='M 9.3678877,3.5695485 C 9.1030218,3.2729386 9.0796382,2.7628519 9.3396185,2.4517097 9.5449651,2.1956495 9.9040386,2.0980533 10.199638,2.2169415 10.533525,2.3415459 10.775153,2.706942 10.750675,3.0842709 10.737029,3.3980003 10.541153,3.699122 10.258248,3.8066067 9.966649,3.9250429 9.6169668,3.8418805 9.4008073,3.6062324 9.3894892,3.5943518 9.3785264,3.582104 9.3678886,3.5695487 z M 11.226617,6.9916004 C 11.888137,6.3548946 12.293488,5.4172188 12.311087,4.442353 12.378144,2.7379364 11.248678,1.0541269 9.7322318,0.44767357 8.3887112,-0.1280313 6.7865012,0.26822889 5.8918395,1.4007929 5.080823,2.3839145 4.9336815,3.8452096 5.3635544,5.101615 L 4.3670905,5.315913 C 4.0664984,5.3682645 4.0967703,5.6316724 4.2574957,5.8208829 L 4.9124,6.5655244 4.1543436,7.2512357 3.2136002,7.2163506 3.1674775,8.5586827 2.0406832,8.5086512 1.5965306,8.9299953 1.5471661,10.179833 0.75616674,10.195223 0.2112857,10.758575 0.15354288,11.735988 0.07199052,12.765553 c 0.36440953,0.238225 0.79006967,0.195492 1.44938278,-0.02675 L 6.3033562,8.1282037 6.8217102,8.6765688 C 6.9985465,8.8799427 7.3003699,8.7497574 7.358381,8.5016252 L 7.4938877,7.5084164 c 0.8537488,0.3985387 1.8303125,0.4711541 2.6851793,0.1427713 0.393927,-0.1407258 0.746858,-0.3701772 1.04755,-0.6595873 z'/>
+      <path d='M 6.8014948,6.3102123 0.15369063,13.024481 0.21560535,12.141962 6.0062342,6.2683782 z'
+            style='fill:#ffe5a5;fill-opacity:1;stroke:#906b25;stroke-width:0.06912433;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:3.00300009'/>
+    </g>
+  </symbol>
+  <symbol id='idx1' >
+    <g transform='scale(0.99)'>
+      <rect width='4' height='4' x='7' y='1' style='fill:#ffff3f;stroke:#b48333;stroke-width:0.6;' ry='0.83'/>
+      <rect width='4' height='4' x='1' y='7' style='fill:#ffff3f;stroke:#b48333;stroke-width:0.6;' ry='0.832'/>
+      <rect width='4' height='4' x='7' y='7' style='fill:#ffff3f;stroke:#b48333;stroke-width:0.6;' ry='0.832'/>
+    </g>
+  </symbol>
+  <symbol id='idx2' >
+    <g transform='scale(0.99)'>
+      <rect width='4' height='3' x='6' y='1' style='fill:#7fc8e9;stroke:#2f6f8c;stroke-width:0.6;' ry='0.83'/>
+      <rect width='7' height='3' x='3' y='6' style='fill:#7fc8e9;stroke:#2f6f8c;stroke-width:0.6;' ry='0.832'/>
+    </g>
+  </symbol>
+  <symbol id='unq' >
+    <g transform='scale(0.99)'>
+      <rect style='fill:none;stroke:#7e4d31;stroke-width:0.71934468;stroke-linecap:round;stroke-linejoin:round;'
+            width='2.29' height='8.43' x='7.48' y='-0.76' ry='1.14' transform='matrix(0.701,0.713,-0.727,0.685,0,0)' />
+      <path style='fill:white;stroke:#858585;stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;'
+            d='m 26.04,8.64 a 4.13,4.13 0 1 1 -8.26,0 4.13,4.13 0 1 1 8.26,0 z'
+            transform='matrix(1.025,0,0,0.987,-14.690,-3.862)' />
+      <text x='5.8' y='7.4' style='font-size:7px;fill:#8a8a8a;'>1</text>
+    </g>
+  </symbol>
+  <symbol id='idx' >
+    <g transform='scale(0.99)'>
+      <rect style='fill:none;stroke:#7e4d31;stroke-width:0.71934468;stroke-linecap:round;stroke-linejoin:round;'
+            width='2.29' height='8.43' x='7.48' y='-0.76' ry='1.14' transform='matrix(0.701,0.713,-0.727,0.685,0,0)' />
+      <path style='fill:white;stroke:#858585;stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;'
+            d='m 26.04,8.64 a 4.13,4.13 0 1 1 -8.26,0 4.13,4.13 0 1 1 8.26,0 z'
+            transform='matrix(1.025,0,0,0.987,-14.690,-3.862)' />
+    </g>
+  </symbol>
+  <symbol id='fk' >
+    <g transform='scale(0.87)'>
+      <path style='fill:#6a88cd;stroke:#5a72a8;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;'
+            d='M 12.48,0.33 7.07,0.89 9.067,2.974 0.329,11.731 1.073,12.597 9.811,3.841 11.77,5.78 z' />
+    </g>
+  </symbol>
+  <symbol id='ref' >
+    <g transform='scale(0.87)'>
+      <path style='fill:#f0d938;stroke:#906b25;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;'
+            d='M 0.10,12.70 5.31,12.15 3.40,10.06 11.82,1.32 11.11,0.45 2.68,9.19 0.80,7.24 z'/>
+    </g>
+  </symbol>
+  <symbol id='flag0' >
+    <g transform='scale(0.92)'>
+      <path style='fill:#b7d0f6;stroke:#000000;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;'
+            d='M 0.12,12.67 0.16,7.22 C 2.59,7.22 4.13,8.78 9.22,4.22 5.68,4.98 2.53,4.50 0.09,1.80 z'/>
+    </g>
+  </symbol>
+  <symbol id='flag1' >
+    <g transform='scale(0.92)'>
+      <path style='fill:#f4a393;stroke:#000000;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;'
+            d='M 0.12,12.67 0.16,7.22 C 2.59,7.22 4.13,8.78 9.22,4.22 5.68,4.98 2.53,4.50 0.09,1.80 z'/>
+    </g>
+  </symbol>
+  <symbol id='flag2' >
+    <g transform='scale(0.92)'>
+      <path style='fill:#77ec8b;stroke:#000000;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;'
+            d='M 0.12,12.67 0.16,7.22 C 2.59,7.22 4.13,8.78 9.22,4.22 5.68,4.98 2.53,4.50 0.09,1.80 z'/>
+    </g>
+  </symbol>
+  <symbol id='nn' >
+    <path style='stroke:#9b3e50;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;'
+          d='M 0,0 3,3 M 0,3 3,0 z'/>
+  </symbol>
+  <symbol id='view' >
+    <g transform='scale(0.99)'>
+      <line x1='12' y1='6' x2='19' y2='0' stroke='black' stroke-width='0.5' />
+      <line x1='0' y1='6' x2='7' y2='0' stroke='black' stroke-width='0.5' />
+      <circle cx='3' cy='6' r='3' fill='#f9ebbc' stroke='black' stroke-width='0.5'/>
+      <circle cx='10' cy='6' r='3' fill='#f9ebbc' stroke='black' stroke-width='0.5'/>
+    </g>
+  </symbol>
+</defs>
+
+<defs>  <marker id='arrow01' viewBox='0 0 16.00 8.00' refX='8.00' refY='4.00' markerWidth='16.00' markerHeight='8.00' orient='auto'>
+    <path d='M 8.000,4.000 L 16.000,4.000 L 8.000,0.000 L 16.000,4.000 L 8.000,8.000' />
+  </marker>
+  <marker id='arrow1' viewBox='0 0 16.00 8.00' refX='8.00' refY='4.00' markerWidth='16.00' markerHeight='8.00' orient='auto'>
+    <path d='M 8.000,4.000 L 16.000,4.000 L 8.000,0.000 L 16.000,4.000 L 8.000,8.000' />
+  </marker>
+  <marker id='foot01' viewBox='0 0 16.00 8.00' refX='8.00' refY='4.00' markerWidth='16.00' markerHeight='8.00' orient='auto'>
+    <path d='M 0.00,4.00 L 16.00,4.00 z' />
+    <circle cx='12.00' cy='4.00' r='2.67' style='fill:white;stroke:#5e554d;' />
+    <path d='M 4.00,0.00 L 4.00, 8.00 z' />
+  </marker>
+  <marker id='foot0p' viewBox='0 0 16.00 8.00' refX='8.00' refY='4.00' markerWidth='16.00' markerHeight='8.00' orient='auto'>
+    <path d='M 0.00,4.00 L 16.00,4.00 z' />
+    <circle cx='12.00' cy='4.00' r='2.67' style='fill:white;stroke:#5e554d;' />
+    <path d='M 0.00,0.00 L 8.00,4.00 L 0.00,8.00' />
+  </marker>
+  <marker id='foot1' viewBox='0 0 16.00 8.00' refX='8.00' refY='4.00' markerWidth='16.00' markerHeight='8.00' orient='auto'>
+    <path d='M 0.00,4.00 L 16.00,4.00 z' />
+    <path d='M 8.00,0.00 L 8.00, 8.00 z' />
+    <path d='M 4.00,0.00 L 4.00, 8.00 z' />
+  </marker>
+  <marker id='foot1p' viewBox='0 0 16.00 8.00' refX='8.00' refY='4.00' markerWidth='16.00' markerHeight='8.00' orient='auto'>
+    <path d='M 0.00,4.00 L 16.00,4.00 z' />
+    <path d='M 8.00,0.00 L 8.00, 8.00 z' />
+    <path d='M 0.00,0.00 L 8.00,4.00 L 0.00,8.00' />
+  </marker>
+  <linearGradient id='tbg_BEBEF4' x1='0%' y1='0%' x2='0%' y2='100%' >
+     <stop offset='0%' stop-color='#E3E3FE' /> 
+     <stop offset='40%' stop-color='#CECEFF' /> 
+     <stop offset='100%' stop-color='#B3B3E5' /> 
+  </linearGradient>
+  <linearGradient id='tbg_BED3F4' x1='0%' y1='0%' x2='0%' y2='100%' >
+     <stop offset='0%' stop-color='#E3EDFE' /> 
+     <stop offset='40%' stop-color='#CEE1FF' /> 
+     <stop offset='100%' stop-color='#B3C6E5' /> 
+  </linearGradient>
+  <linearGradient id='tbg_C7F4BE' x1='0%' y1='0%' x2='0%' y2='100%' >
+     <stop offset='0%' stop-color='#E7FEE3' /> 
+     <stop offset='40%' stop-color='#D6FFCE' /> 
+     <stop offset='100%' stop-color='#BBE5B3' /> 
+  </linearGradient>
+  <linearGradient id='tbg_D1BEF4' x1='0%' y1='0%' x2='0%' y2='100%' >
+     <stop offset='0%' stop-color='#ECE3FE' /> 
+     <stop offset='40%' stop-color='#DFCEFF' /> 
+     <stop offset='100%' stop-color='#C4B3E5' /> 
+  </linearGradient>
+  <linearGradient id='tbg_F4DDBE' x1='0%' y1='0%' x2='0%' y2='100%' >
+     <stop offset='0%' stop-color='#FEF2E3' /> 
+     <stop offset='40%' stop-color='#FFEACE' /> 
+     <stop offset='100%' stop-color='#E5CFB3' /> 
+  </linearGradient>
+  <linearGradient id='tbg_3986C1' x1='0%' y1='0%' x2='0%' y2='100%' >
+     <stop offset='0%' stop-color='#E3F2FE' /> 
+     <stop offset='40%' stop-color='#CEE9FF' /> 
+     <stop offset='100%' stop-color='#B3CFE5' /> 
+  </linearGradient>
+</defs>
+
+<!-- == Desktop == -->
+<rect x='1' y='1' width='3406' height='1388' rx='8' ry='8' style='fill:url(#layoutBgA); stroke:#84827b; stroke-width:0.5;' />
+<rect x='1' y='1' width='3406' height='1388' rx='8' ry='8' style='fill:url(#layoutBgTr);' />
+
+<!-- == Legend == -->
+<g transform='translate(10,10)'>
+  <rect x='10' y='10' width='230' height='56' rx='6' ry='6' style='fill:url(#legendGradient);filter:url(#shadow);'/> 
+  <text x='20' y='25' class='legendTitle' >SqlServer</text> 
+  <a xlink:href='https://dbschema.com'><text x='20' y='39' class='legendSubTitle'><tspan>(c) DbSchema</tspan></text></a> 
+  <text x='20' y='53' class='legendSubTitle'><tspan>Hover columns to read the comments.</tspan></text> 
+</g>
+
+<g transform='translate(0,110)'>
+<!-- == Fk 'Applications_FK_Applications_ApplicationStatuses_ApplicationStatusId' == -->
+<path id='Applications_FK_Applications_ApplicationStatuses_ApplicationStatusId'  onmouseover="hghl(['Applications_FK_Applications_ApplicationStatuses_ApplicationStatusId','dbo.Applications.ApplicationStatusId','dbo.ApplicationStatuses.Id'])" onmouseout="uhghl(['Applications_FK_Applications_ApplicationStatuses_ApplicationStatusId','dbo.Applications.ApplicationStatusId','dbo.ApplicationStatuses.Id'])" transform='translate(8,0)' class='scene' d='M 2304,224L 2368,224' >
+	<title>Fk FK_Applications_ApplicationStatuses_ApplicationStatusId
+Applications ref ApplicationStatuses ( ApplicationStatusId -&gt; Id )</title>
+</path>
+<path transform='translate(8,0)' marker-start='url(#foot1p)' marker-end='url(#arrow1)'    d='M 2304,224L 2368,224' ><title>Fk FK_Applications_ApplicationStatuses_ApplicationStatusId
+Applications ref ApplicationStatuses ( ApplicationStatusId -&gt; Id )</title></path>
+<text x='2313' y='219' transform='rotate(0 2313,219)' class='relName'>ApplicationStatusId</text>
+<!-- == Fk 'Applications_FK_Applications_CompanyApplicationStatuses_CompanyApplicationStatusId' == -->
+<path id='Applications_FK_Applications_CompanyApplicationStatuses_CompanyApplicationStatusId'  onmouseover="hghl(['Applications_FK_Applications_CompanyApplicationStatuses_CompanyApplicationStatusId','dbo.Applications.CompanyApplicationStatusId','dbo.CompanyApplicationStatuses.Id'])" onmouseout="uhghl(['Applications_FK_Applications_CompanyApplicationStatuses_CompanyApplicationStatusId','dbo.Applications.CompanyApplicationStatusId','dbo.CompanyApplicationStatuses.Id'])" transform='translate(8,0)' class='scene' d='M 2304,64L 2368,64' >
+	<title>Fk FK_Applications_CompanyApplicationStatuses_CompanyApplicationStatusId
+Applications ref CompanyApplicationStatuses ( CompanyApplicationStatusId -&gt; Id )</title>
+</path>
+<path transform='translate(8,0)' marker-start='url(#foot0p)' marker-end='url(#arrow1)'  class='dotted '  d='M 2304,64L 2368,64' ><title>Fk FK_Applications_CompanyApplicationStatuses_CompanyApplicationStatusId
+Applications ref CompanyApplicationStatuses ( CompanyApplicationStatusId -&gt; Id )</title></path>
+<text x='2313' y='59' transform='rotate(0 2313,59)' class='relName'>CompanyApplicationStatusId</text>
+<!-- == Fk 'Applications_FK_Applications_Employees_EmployeeId' == -->
+<path id='Applications_FK_Applications_Employees_EmployeeId'  onmouseover="hghl(['Applications_FK_Applications_Employees_EmployeeId','dbo.Applications.EmployeeId','dbo.Employees.Id'])" onmouseout="uhghl(['Applications_FK_Applications_Employees_EmployeeId','dbo.Applications.EmployeeId','dbo.Employees.Id'])" transform='translate(8,0)' class='scene' d='M 2064,48L 2024,48Q 2016,48 2016,40L 2016,24Q 2016,16 2008,16L 1128,16Q 1120,16 1120,24L 1120,32' >
+	<title>Fk FK_Applications_Employees_EmployeeId
+Applications ref Employees ( EmployeeId -&gt; Id )</title>
+</path>
+<path transform='translate(8,0)' marker-start='url(#foot1p)' marker-end='url(#arrow1)'    d='M 2064,48L 2024,48Q 2016,48 2016,40L 2016,24Q 2016,16 2008,16L 1128,16Q 1120,16 1120,24L 1120,32' ><title>Fk FK_Applications_Employees_EmployeeId
+Applications ref Employees ( EmployeeId -&gt; Id )</title></path>
+<text x='2006' y='43' transform='rotate(0 2006,43)' class='relName'>EmployeeId</text>
+<!-- == Fk 'Applications_FK_Applications_Jobs_JobId' == -->
+<path id='Applications_FK_Applications_Jobs_JobId'  onmouseover="hghl(['Applications_FK_Applications_Jobs_JobId','dbo.Applications.jobId','dbo.Jobs.Id'])" onmouseout="uhghl(['Applications_FK_Applications_Jobs_JobId','dbo.Applications.jobId','dbo.Jobs.Id'])" transform='translate(8,0)' class='scene' d='M 2064,64L 2000,64' >
+	<title>Fk FK_Applications_Jobs_JobId
+Applications ref Jobs ( jobId -&gt; Id )</title>
+</path>
+<path transform='translate(8,0)' marker-start='url(#foot1p)' marker-end='url(#arrow1)'    d='M 2064,64L 2000,64' ><title>Fk FK_Applications_Jobs_JobId
+Applications ref Jobs ( jobId -&gt; Id )</title></path>
+<text x='2044' y='59' transform='rotate(0 2044,59)' class='relName'>jobId</text>
+<!-- == Fk 'AspNetRoleClaims_FK_AspNetRoleClaims_AspNetRoles_RoleId' == -->
+<path id='AspNetRoleClaims_FK_AspNetRoleClaims_AspNetRoles_RoleId'  onmouseover="hghl(['AspNetRoleClaims_FK_AspNetRoleClaims_AspNetRoles_RoleId','dbo.AspNetRoleClaims.RoleId','dbo.AspNetRoles.Id'])" onmouseout="uhghl(['AspNetRoleClaims_FK_AspNetRoleClaims_AspNetRoles_RoleId','dbo.AspNetRoleClaims.RoleId','dbo.AspNetRoles.Id'])" transform='translate(8,0)' class='scene' d='M 1456,720L 1408,720' >
+	<title>Fk FK_AspNetRoleClaims_AspNetRoles_RoleId
+AspNetRoleClaims ref AspNetRoles ( RoleId -&gt; Id )</title>
+</path>
+<path transform='translate(8,0)' marker-start='url(#foot1p)' marker-end='url(#arrow1)'    d='M 1456,720L 1408,720' ><title>Fk FK_AspNetRoleClaims_AspNetRoles_RoleId
+AspNetRoleClaims ref AspNetRoles ( RoleId -&gt; Id )</title></path>
+<text x='1429' y='715' transform='rotate(0 1429,715)' class='relName'>RoleId</text>
+<!-- == Fk 'AspNetUserClaims_FK_AspNetUserClaims_AspNetUsers_UserId' == -->
+<path id='AspNetUserClaims_FK_AspNetUserClaims_AspNetUsers_UserId'  onmouseover="hghl(['AspNetUserClaims_FK_AspNetUserClaims_AspNetUsers_UserId','dbo.AspNetUserClaims.UserId','dbo.AspNetUsers.Id'])" onmouseout="uhghl(['AspNetUserClaims_FK_AspNetUserClaims_AspNetUsers_UserId','dbo.AspNetUserClaims.UserId','dbo.AspNetUsers.Id'])" transform='translate(8,0)' class='scene' d='M 1152,1120L 1128,1120Q 1120,1120 1120,1112L 1120,1016Q 1120,1008 1112,1008L 1104,1008' >
+	<title>Fk FK_AspNetUserClaims_AspNetUsers_UserId
+AspNetUserClaims ref AspNetUsers ( UserId -&gt; Id )</title>
+</path>
+<path transform='translate(8,0)' marker-start='url(#foot1p)' marker-end='url(#arrow1)'    d='M 1152,1120L 1128,1120Q 1120,1120 1120,1112L 1120,1016Q 1120,1008 1112,1008L 1104,1008' ><title>Fk FK_AspNetUserClaims_AspNetUsers_UserId
+AspNetUserClaims ref AspNetUsers ( UserId -&gt; Id )</title></path>
+<text x='1125' y='1115' transform='rotate(0 1125,1115)' class='relName'>UserId</text>
+<!-- == Fk 'AspNetUserLogins_FK_AspNetUserLogins_AspNetUsers_UserId' == -->
+<path id='AspNetUserLogins_FK_AspNetUserLogins_AspNetUsers_UserId'  onmouseover="hghl(['AspNetUserLogins_FK_AspNetUserLogins_AspNetUsers_UserId','dbo.AspNetUserLogins.UserId','dbo.AspNetUsers.Id'])" onmouseout="uhghl(['AspNetUserLogins_FK_AspNetUserLogins_AspNetUsers_UserId','dbo.AspNetUserLogins.UserId','dbo.AspNetUsers.Id'])" transform='translate(8,0)' class='scene' d='M 864,1104L 864,1024' >
+	<title>Fk FK_AspNetUserLogins_AspNetUsers_UserId
+AspNetUserLogins ref AspNetUsers ( UserId -&gt; Id )</title>
+</path>
+<path transform='translate(8,0)' marker-start='url(#foot1p)' marker-end='url(#arrow1)'    d='M 864,1104L 864,1024' ><title>Fk FK_AspNetUserLogins_AspNetUsers_UserId
+AspNetUserLogins ref AspNetUsers ( UserId -&gt; Id )</title></path>
+<text x='867' y='1102' transform='rotate(270 867,1102)' class='relName'>UserId</text>
+<!-- == Fk 'AspNetUserRoles_FK_AspNetUserRoles_AspNetRoles_RoleId' == -->
+<path id='AspNetUserRoles_FK_AspNetUserRoles_AspNetRoles_RoleId'  onmouseover="hghl(['AspNetUserRoles_FK_AspNetUserRoles_AspNetRoles_RoleId','dbo.AspNetUserRoles.RoleId','dbo.AspNetRoles.Id'])" onmouseout="uhghl(['AspNetUserRoles_FK_AspNetUserRoles_AspNetRoles_RoleId','dbo.AspNetUserRoles.RoleId','dbo.AspNetRoles.Id'])" transform='translate(8,0)' class='scene' d='M 1184,928L 1184,816' >
+	<title>Fk FK_AspNetUserRoles_AspNetRoles_RoleId
+AspNetUserRoles ref AspNetRoles ( RoleId -&gt; Id )</title>
+</path>
+<path transform='translate(8,0)' marker-start='url(#foot1p)' marker-end='url(#arrow1)'    d='M 1184,928L 1184,816' ><title>Fk FK_AspNetUserRoles_AspNetRoles_RoleId
+AspNetUserRoles ref AspNetRoles ( RoleId -&gt; Id )</title></path>
+<text x='1187' y='926' transform='rotate(270 1187,926)' class='relName'>RoleId</text>
+<!-- == Fk 'AspNetUserRoles_FK_AspNetUserRoles_AspNetUsers_UserId' == -->
+<path id='AspNetUserRoles_FK_AspNetUserRoles_AspNetUsers_UserId'  onmouseover="hghl(['AspNetUserRoles_FK_AspNetUserRoles_AspNetUsers_UserId','dbo.AspNetUserRoles.UserId','dbo.AspNetUsers.Id'])" onmouseout="uhghl(['AspNetUserRoles_FK_AspNetUserRoles_AspNetUsers_UserId','dbo.AspNetUserRoles.UserId','dbo.AspNetUsers.Id'])" transform='translate(8,0)' class='scene' d='M 1152,944L 1104,944' >
+	<title>Fk FK_AspNetUserRoles_AspNetUsers_UserId
+AspNetUserRoles ref AspNetUsers ( UserId -&gt; Id )</title>
+</path>
+<path transform='translate(8,0)' marker-start='url(#foot1p)' marker-end='url(#arrow1)'    d='M 1152,944L 1104,944' ><title>Fk FK_AspNetUserRoles_AspNetUsers_UserId
+AspNetUserRoles ref AspNetUsers ( UserId -&gt; Id )</title></path>
+<text x='1125' y='939' transform='rotate(0 1125,939)' class='relName'>UserId</text>
+<!-- == Fk 'AspNetUserTokens_FK_AspNetUserTokens_AspNetUsers_UserId' == -->
+<path id='AspNetUserTokens_FK_AspNetUserTokens_AspNetUsers_UserId'  onmouseover="hghl(['AspNetUserTokens_FK_AspNetUserTokens_AspNetUsers_UserId','dbo.AspNetUserTokens.UserId','dbo.AspNetUsers.Id'])" onmouseout="uhghl(['AspNetUserTokens_FK_AspNetUserTokens_AspNetUsers_UserId','dbo.AspNetUserTokens.UserId','dbo.AspNetUsers.Id'])" transform='translate(8,0)' class='scene' d='M 752,1104L 752,1000Q 752,992 760,992L 832,992' >
+	<title>Fk FK_AspNetUserTokens_AspNetUsers_UserId
+AspNetUserTokens ref AspNetUsers ( UserId -&gt; Id )</title>
+</path>
+<path transform='translate(8,0)' marker-start='url(#foot1p)' marker-end='url(#arrow1)'    d='M 752,1104L 752,1000Q 752,992 760,992L 832,992' ><title>Fk FK_AspNetUserTokens_AspNetUsers_UserId
+AspNetUserTokens ref AspNetUsers ( UserId -&gt; Id )</title></path>
+<text x='755' y='1102' transform='rotate(270 755,1102)' class='relName'>UserId</text>
+<!-- == Fk 'Cities_FK_Cities_Countries_CountryId' == -->
+<path id='Cities_FK_Cities_Countries_CountryId'  onmouseover="hghl(['Cities_FK_Cities_Countries_CountryId','dbo.Cities.CountryId','dbo.Countries.Id'])" onmouseout="uhghl(['Cities_FK_Cities_Countries_CountryId','dbo.Cities.CountryId','dbo.Countries.Id'])" transform='translate(8,0)' class='scene' d='M 2672,912L 2232,912Q 2224,912 2224,904L 2224,576' >
+	<title>Fk FK_Cities_Countries_CountryId
+Cities ref Countries ( CountryId -&gt; Id )</title>
+</path>
+<path transform='translate(8,0)' marker-start='url(#foot1p)' marker-end='url(#arrow1)'    d='M 2672,912L 2232,912Q 2224,912 2224,904L 2224,576' ><title>Fk FK_Cities_Countries_CountryId
+Cities ref Countries ( CountryId -&gt; Id )</title></path>
+<text x='2625' y='907' transform='rotate(0 2625,907)' class='relName'>CountryId</text>
+<!-- == Fk 'CityCompany_FK_CityCompany_Cities_LocationsId' == -->
+<path id='CityCompany_FK_CityCompany_Cities_LocationsId'  onmouseover="hghl(['CityCompany_FK_CityCompany_Cities_LocationsId','dbo.CityCompany.LocationsId','dbo.Cities.Id'])" onmouseout="uhghl(['CityCompany_FK_CityCompany_Cities_LocationsId','dbo.CityCompany.LocationsId','dbo.Cities.Id'])" transform='translate(8,0)' class='scene' d='M 2912,912L 2848,912' >
+	<title>Fk FK_CityCompany_Cities_LocationsId
+CityCompany ref Cities ( LocationsId -&gt; Id )</title>
+</path>
+<path transform='translate(8,0)' marker-start='url(#foot1p)' marker-end='url(#arrow1)'    d='M 2912,912L 2848,912' ><title>Fk FK_CityCompany_Cities_LocationsId
+CityCompany ref Cities ( LocationsId -&gt; Id )</title></path>
+<text x='2856' y='907' transform='rotate(0 2856,907)' class='relName'>LocationsId</text>
+<!-- == Fk 'CityCompany_FK_CityCompany_Companies_CompaniesId' == -->
+<path id='CityCompany_FK_CityCompany_Companies_CompaniesId'  onmouseover="hghl(['CityCompany_FK_CityCompany_Companies_CompaniesId','dbo.CityCompany.CompaniesId','dbo.Companies.Id'])" onmouseout="uhghl(['CityCompany_FK_CityCompany_Companies_CompaniesId','dbo.CityCompany.CompaniesId','dbo.Companies.Id'])" transform='translate(8,0)' class='scene' d='M 2912,896L 2904,896Q 2896,896 2896,888L 2896,440Q 2896,432 2904,432L 2912,432' >
+	<title>Fk FK_CityCompany_Companies_CompaniesId
+CityCompany ref Companies ( CompaniesId -&gt; Id )</title>
+</path>
+<path transform='translate(8,0)' marker-start='url(#foot1p)' marker-end='url(#arrow1)'    d='M 2912,896L 2904,896Q 2896,896 2896,888L 2896,440Q 2896,432 2904,432L 2912,432' ><title>Fk FK_CityCompany_Companies_CompaniesId
+CityCompany ref Companies ( CompaniesId -&gt; Id )</title></path>
+<text x='2848' y='891' transform='rotate(0 2848,891)' class='relName'>CompaniesId</text>
+<!-- == Fk 'Companies_FK_Companies_CompanyIndustries_CompanyIndustryId' == -->
+<path id='Companies_FK_Companies_CompanyIndustries_CompanyIndustryId'  onmouseover="hghl(['Companies_FK_Companies_CompanyIndustries_CompanyIndustryId','dbo.Companies.CompanyIndustryId','dbo.CompanyIndustries.Id'])" onmouseout="uhghl(['Companies_FK_Companies_CompanyIndustries_CompanyIndustryId','dbo.Companies.CompanyIndustryId','dbo.CompanyIndustries.Id'])" transform='translate(8,0)' class='scene' d='M 3120,448L 3160,448Q 3168,448 3168,456L 3168,552Q 3168,560 3176,560L 3184,560' >
+	<title>Fk FK_Companies_CompanyIndustries_CompanyIndustryId
+Companies ref CompanyIndustries ( CompanyIndustryId -&gt; Id )</title>
+</path>
+<path transform='translate(8,0)' marker-start='url(#foot0p)' marker-end='url(#arrow1)'  class='dotted '  d='M 3120,448L 3160,448Q 3168,448 3168,456L 3168,552Q 3168,560 3176,560L 3184,560' ><title>Fk FK_Companies_CompanyIndustries_CompanyIndustryId
+Companies ref CompanyIndustries ( CompanyIndustryId -&gt; Id )</title></path>
+<text x='3129' y='443' transform='rotate(0 3129,443)' class='relName'>CompanyIndustryId</text>
+<!-- == Fk 'Companies_FK_Companies_CompanyRequestStatus_RequestStatusId' == -->
+<path id='Companies_FK_Companies_CompanyRequestStatus_RequestStatusId'  onmouseover="hghl(['Companies_FK_Companies_CompanyRequestStatus_RequestStatusId','dbo.Companies.RequestStatusId','dbo.CompanyRequestStatus.Id'])" onmouseout="uhghl(['Companies_FK_Companies_CompanyRequestStatus_RequestStatusId','dbo.Companies.RequestStatusId','dbo.CompanyRequestStatus.Id'])" transform='translate(8,0)' class='scene' d='M 2944,464L 2944,520Q 2944,528 2936,528L 2840,528Q 2832,528 2832,536L 2832,544' >
+	<title>Fk FK_Companies_CompanyRequestStatus_RequestStatusId
+Companies ref CompanyRequestStatus ( RequestStatusId -&gt; Id )</title>
+</path>
+<path transform='translate(8,0)' marker-start='url(#foot1p)' marker-end='url(#arrow1)'    d='M 2944,464L 2944,520Q 2944,528 2936,528L 2840,528Q 2832,528 2832,536L 2832,544' ><title>Fk FK_Companies_CompanyRequestStatus_RequestStatusId
+Companies ref CompanyRequestStatus ( RequestStatusId -&gt; Id )</title></path>
+<text x='2956' y='465' transform='rotate(90 2956,465)' class='relName'>RequestStatusId</text>
+<!-- == Fk 'Companies_FK_Companies_CompanySizes_CompanySizeId' == -->
+<path id='Companies_FK_Companies_CompanySizes_CompanySizeId'  onmouseover="hghl(['Companies_FK_Companies_CompanySizes_CompanySizeId','dbo.Companies.CompanySizeId','dbo.CompanySizes.Id'])" onmouseout="uhghl(['Companies_FK_Companies_CompanySizes_CompanySizeId','dbo.Companies.CompanySizeId','dbo.CompanySizes.Id'])" transform='translate(8,0)' class='scene' d='M 2912,400L 2848,400' >
+	<title>Fk FK_Companies_CompanySizes_CompanySizeId
+Companies ref CompanySizes ( CompanySizeId -&gt; Id )</title>
+</path>
+<path transform='translate(8,0)' marker-start='url(#foot0p)' marker-end='url(#arrow1)'  class='dotted '  d='M 2912,400L 2848,400' ><title>Fk FK_Companies_CompanySizes_CompanySizeId
+Companies ref CompanySizes ( CompanySizeId -&gt; Id )</title></path>
+<text x='2834' y='395' transform='rotate(0 2834,395)' class='relName'>CompanySizeId</text>
+<!-- == Fk 'Companies_FK_Companies_CompanyTypes_CompanyTypeId' == -->
+<path id='Companies_FK_Companies_CompanyTypes_CompanyTypeId'  onmouseover="hghl(['Companies_FK_Companies_CompanyTypes_CompanyTypeId','dbo.Companies.CompanyTypeId','dbo.CompanyTypes.Id'])" onmouseout="uhghl(['Companies_FK_Companies_CompanyTypes_CompanyTypeId','dbo.Companies.CompanyTypeId','dbo.CompanyTypes.Id'])" transform='translate(8,0)' class='scene' d='M 2960,464L 2960,544' >
+	<title>Fk FK_Companies_CompanyTypes_CompanyTypeId
+Companies ref CompanyTypes ( CompanyTypeId -&gt; Id )</title>
+</path>
+<path transform='translate(8,0)' marker-start='url(#foot0p)' marker-end='url(#arrow1)'  class='dotted '  d='M 2960,464L 2960,544' ><title>Fk FK_Companies_CompanyTypes_CompanyTypeId
+Companies ref CompanyTypes ( CompanyTypeId -&gt; Id )</title></path>
+<text x='2972' y='465' transform='rotate(90 2972,465)' class='relName'>CompanyTypeId</text>
+<!-- == Fk 'CompanyLinks_FK_CompanyLinks_Companies_CompanyId' == -->
+<path id='CompanyLinks_FK_CompanyLinks_Companies_CompanyId'  onmouseover="hghl(['CompanyLinks_FK_CompanyLinks_Companies_CompanyId','dbo.CompanyLinks.CompanyId','dbo.Companies.Id'])" onmouseout="uhghl(['CompanyLinks_FK_CompanyLinks_Companies_CompanyId','dbo.CompanyLinks.CompanyId','dbo.Companies.Id'])" transform='translate(8,0)' class='scene' d='M 2832,160L 2832,248Q 2832,256 2840,256L 2912,256' >
+	<title>Fk FK_CompanyLinks_Companies_CompanyId
+CompanyLinks ref Companies ( CompanyId -&gt; Id )</title>
+</path>
+<path transform='translate(8,0)' marker-start='url(#foot1p)' marker-end='url(#arrow1)'    d='M 2832,160L 2832,248Q 2832,256 2840,256L 2912,256' ><title>Fk FK_CompanyLinks_Companies_CompanyId
+CompanyLinks ref Companies ( CompanyId -&gt; Id )</title></path>
+<text x='2844' y='161' transform='rotate(90 2844,161)' class='relName'>CompanyId</text>
+<!-- == Fk 'CompanyManagers_FK_CompanyManagers_AspNetUsers_UserId' == -->
+<path id='CompanyManagers_FK_CompanyManagers_AspNetUsers_UserId'  onmouseover="hghl(['CompanyManagers_FK_CompanyManagers_AspNetUsers_UserId','dbo.CompanyManagers.UserId','dbo.AspNetUsers.Id'])" onmouseout="uhghl(['CompanyManagers_FK_CompanyManagers_AspNetUsers_UserId','dbo.CompanyManagers.UserId','dbo.AspNetUsers.Id'])" transform='translate(8,0)' class='scene' d='M 3216,368L 3216,520Q 3216,528 3208,528L 3144,528Q 3136,528 3136,536L 3136,824Q 3136,832 3128,832L 1104,832' >
+	<title>Fk FK_CompanyManagers_AspNetUsers_UserId
+CompanyManagers ref AspNetUsers ( UserId -&gt; Id )</title>
+</path>
+<path transform='translate(8,0)' marker-start='url(#foot01)' marker-end='url(#arrow1)'  class='dotted '  d='M 3216,368L 3216,520Q 3216,528 3208,528L 3144,528Q 3136,528 3136,536L 3136,824Q 3136,832 3128,832L 1104,832' ><title>Fk FK_CompanyManagers_AspNetUsers_UserId
+CompanyManagers ref AspNetUsers ( UserId -&gt; Id )</title></path>
+<text x='3228' y='369' transform='rotate(90 3228,369)' class='relName'>UserId</text>
+<!-- == Fk 'CompanyManagers_FK_CompanyManagers_Companies_CompanyId' == -->
+<path id='CompanyManagers_FK_CompanyManagers_Companies_CompanyId'  onmouseover="hghl(['CompanyManagers_FK_CompanyManagers_Companies_CompanyId','dbo.CompanyManagers.CompanyId','dbo.Companies.Id'])" onmouseout="uhghl(['CompanyManagers_FK_CompanyManagers_Companies_CompanyId','dbo.CompanyManagers.CompanyId','dbo.Companies.Id'])" transform='translate(8,0)' class='scene' d='M 3184,272L 3120,272' >
+	<title>Fk FK_CompanyManagers_Companies_CompanyId
+CompanyManagers ref Companies ( CompanyId -&gt; Id )</title>
+</path>
+<path transform='translate(8,0)' marker-start='url(#foot1p)' marker-end='url(#arrow1)'    d='M 3184,272L 3120,272' ><title>Fk FK_CompanyManagers_Companies_CompanyId
+CompanyManagers ref Companies ( CompanyId -&gt; Id )</title></path>
+<text x='3130' y='267' transform='rotate(0 3130,267)' class='relName'>CompanyId</text>
+<!-- == Fk 'EmployeeJobCategory_FK_EmployeeJobCategory_Employees_EmployeesId' == -->
+<path id='EmployeeJobCategory_FK_EmployeeJobCategory_Employees_EmployeesId'  onmouseover="hghl(['EmployeeJobCategory_FK_EmployeeJobCategory_Employees_EmployeesId','dbo.EmployeeJobCategory.EmployeesId','dbo.Employees.Id'])" onmouseout="uhghl(['EmployeeJobCategory_FK_EmployeeJobCategory_Employees_EmployeesId','dbo.EmployeeJobCategory.EmployeesId','dbo.Employees.Id'])" transform='translate(8,0)' class='scene' d='M 1200,304L 1136,304' >
+	<title>Fk FK_EmployeeJobCategory_Employees_EmployeesId
+EmployeeJobCategory ref Employees ( EmployeesId -&gt; Id )</title>
+</path>
+<path transform='translate(8,0)' marker-start='url(#foot1p)' marker-end='url(#arrow1)'    d='M 1200,304L 1136,304' ><title>Fk FK_EmployeeJobCategory_Employees_EmployeesId
+EmployeeJobCategory ref Employees ( EmployeesId -&gt; Id )</title></path>
+<text x='1137' y='299' transform='rotate(0 1137,299)' class='relName'>EmployeesId</text>
+<!-- == Fk 'EmployeeJobCategory_FK_EmployeeJobCategory_JobCategories_PreferredJobCategoriesId' == -->
+<path id='EmployeeJobCategory_FK_EmployeeJobCategory_JobCategories_PreferredJobCategoriesId'  onmouseover="hghl(['EmployeeJobCategory_FK_EmployeeJobCategory_JobCategories_PreferredJobCategoriesId','dbo.EmployeeJobCategory.PreferredJobCategoriesId','dbo.JobCategories.Id'])" onmouseout="uhghl(['EmployeeJobCategory_FK_EmployeeJobCategory_JobCategories_PreferredJobCategoriesId','dbo.EmployeeJobCategory.PreferredJobCategoriesId','dbo.JobCategories.Id'])" transform='translate(8,0)' class='scene' d='M 1424,320L 1488,320' >
+	<title>Fk FK_EmployeeJobCategory_JobCategories_PreferredJobCategoriesId
+EmployeeJobCategory ref JobCategories ( PreferredJobCategoriesId -&gt; Id )</title>
+</path>
+<path transform='translate(8,0)' marker-start='url(#foot1p)' marker-end='url(#arrow1)'    d='M 1424,320L 1488,320' ><title>Fk FK_EmployeeJobCategory_JobCategories_PreferredJobCategoriesId
+EmployeeJobCategory ref JobCategories ( PreferredJobCategoriesId -&gt; Id )</title></path>
+<text x='1433' y='315' transform='rotate(0 1433,315)' class='relName'>PreferredJobCategoriesId</text>
+<!-- == Fk 'EmployeeJobType_FK_EmployeeJobType_Employees_EmployeesId' == -->
+<path id='EmployeeJobType_FK_EmployeeJobType_Employees_EmployeesId'  onmouseover="hghl(['EmployeeJobType_FK_EmployeeJobType_Employees_EmployeesId','dbo.EmployeeJobType.EmployeesId','dbo.Employees.Id'])" onmouseout="uhghl(['EmployeeJobType_FK_EmployeeJobType_Employees_EmployeesId','dbo.EmployeeJobType.EmployeesId','dbo.Employees.Id'])" transform='translate(8,0)' class='scene' d='M 752,464L 752,408Q 752,400 760,400L 872,400Q 880,400 880,392L 880,384' >
+	<title>Fk FK_EmployeeJobType_Employees_EmployeesId
+EmployeeJobType ref Employees ( EmployeesId -&gt; Id )</title>
+</path>
+<path transform='translate(8,0)' marker-start='url(#foot1p)' marker-end='url(#arrow1)'    d='M 752,464L 752,408Q 752,400 760,400L 872,400Q 880,400 880,392L 880,384' ><title>Fk FK_EmployeeJobType_Employees_EmployeesId
+EmployeeJobType ref Employees ( EmployeesId -&gt; Id )</title></path>
+<text x='755' y='462' transform='rotate(270 755,462)' class='relName'>EmployeesId</text>
+<!-- == Fk 'EmployeeJobType_FK_EmployeeJobType_JobTypes_JobTypesId' == -->
+<path id='EmployeeJobType_FK_EmployeeJobType_JobTypes_JobTypesId'  onmouseover="hghl(['EmployeeJobType_FK_EmployeeJobType_JobTypes_JobTypesId','dbo.EmployeeJobType.JobTypesId','dbo.JobTypes.Id'])" onmouseout="uhghl(['EmployeeJobType_FK_EmployeeJobType_JobTypes_JobTypesId','dbo.EmployeeJobType.JobTypesId','dbo.JobTypes.Id'])" transform='translate(8,0)' class='scene' d='M 768,496L 848,496' >
+	<title>Fk FK_EmployeeJobType_JobTypes_JobTypesId
+EmployeeJobType ref JobTypes ( JobTypesId -&gt; Id )</title>
+</path>
+<path transform='translate(8,0)' marker-start='url(#foot1p)' marker-end='url(#arrow1)'    d='M 768,496L 848,496' ><title>Fk FK_EmployeeJobType_JobTypes_JobTypesId
+EmployeeJobType ref JobTypes ( JobTypesId -&gt; Id )</title></path>
+<text x='777' y='491' transform='rotate(0 777,491)' class='relName'>JobTypesId</text>
+<!-- == Fk 'EmployeeLinks_FK_EmployeeLinks_Employees_EmployeeId' == -->
+<path id='EmployeeLinks_FK_EmployeeLinks_Employees_EmployeeId'  onmouseover="hghl(['EmployeeLinks_FK_EmployeeLinks_Employees_EmployeeId','dbo.EmployeeLinks.EmployeeId','dbo.Employees.Id'])" onmouseout="uhghl(['EmployeeLinks_FK_EmployeeLinks_Employees_EmployeeId','dbo.EmployeeLinks.EmployeeId','dbo.Employees.Id'])" transform='translate(8,0)' class='scene' d='M 784,288L 848,288' >
+	<title>Fk FK_EmployeeLinks_Employees_EmployeeId
+EmployeeLinks ref Employees ( EmployeeId -&gt; Id )</title>
+</path>
+<path transform='translate(8,0)' marker-start='url(#foot1p)' marker-end='url(#arrow1)'    d='M 784,288L 848,288' ><title>Fk FK_EmployeeLinks_Employees_EmployeeId
+EmployeeLinks ref Employees ( EmployeeId -&gt; Id )</title></path>
+<text x='793' y='283' transform='rotate(0 793,283)' class='relName'>EmployeeId</text>
+<!-- == Fk 'EmployeeSkill_FK_EmployeeSkill_Employees_EmployeesId' == -->
+<path id='EmployeeSkill_FK_EmployeeSkill_Employees_EmployeesId'  onmouseover="hghl(['EmployeeSkill_FK_EmployeeSkill_Employees_EmployeesId','dbo.EmployeeSkill.EmployeesId','dbo.Employees.Id'])" onmouseout="uhghl(['EmployeeSkill_FK_EmployeeSkill_Employees_EmployeesId','dbo.EmployeeSkill.EmployeesId','dbo.Employees.Id'])" transform='translate(8,0)' class='scene' d='M 1200,480L 1128,480Q 1120,480 1120,472L 1120,384' >
+	<title>Fk FK_EmployeeSkill_Employees_EmployeesId
+EmployeeSkill ref Employees ( EmployeesId -&gt; Id )</title>
+</path>
+<path transform='translate(8,0)' marker-start='url(#foot1p)' marker-end='url(#arrow1)'    d='M 1200,480L 1128,480Q 1120,480 1120,472L 1120,384' ><title>Fk FK_EmployeeSkill_Employees_EmployeesId
+EmployeeSkill ref Employees ( EmployeesId -&gt; Id )</title></path>
+<text x='1137' y='475' transform='rotate(0 1137,475)' class='relName'>EmployeesId</text>
+<!-- == Fk 'EmployeeSkill_FK_EmployeeSkill_Skills_SkillsId' == -->
+<path id='EmployeeSkill_FK_EmployeeSkill_Skills_SkillsId'  onmouseover="hghl(['EmployeeSkill_FK_EmployeeSkill_Skills_SkillsId','dbo.EmployeeSkill.SkillsId','dbo.Skills.Id'])" onmouseout="uhghl(['EmployeeSkill_FK_EmployeeSkill_Skills_SkillsId','dbo.EmployeeSkill.SkillsId','dbo.Skills.Id'])" transform='translate(8,0)' class='scene' d='M 1328,560L 1328,664Q 1328,672 1336,672L 1952,672' >
+	<title>Fk FK_EmployeeSkill_Skills_SkillsId
+EmployeeSkill ref Skills ( SkillsId -&gt; Id )</title>
+</path>
+<path transform='translate(8,0)' marker-start='url(#foot1p)' marker-end='url(#arrow1)'    d='M 1328,560L 1328,664Q 1328,672 1336,672L 1952,672' ><title>Fk FK_EmployeeSkill_Skills_SkillsId
+EmployeeSkill ref Skills ( SkillsId -&gt; Id )</title></path>
+<text x='1340' y='561' transform='rotate(90 1340,561)' class='relName'>SkillsId</text>
+<!-- == Fk 'Employees_FK_Employees_AspNetUsers_UserId' == -->
+<path id='Employees_FK_Employees_AspNetUsers_UserId'  onmouseover="hghl(['Employees_FK_Employees_AspNetUsers_UserId','dbo.Employees.UserId','dbo.AspNetUsers.Id'])" onmouseout="uhghl(['Employees_FK_Employees_AspNetUsers_UserId','dbo.Employees.UserId','dbo.AspNetUsers.Id'])" transform='translate(8,0)' class='scene' d='M 1040,384L 1040,688' >
+	<title>Fk FK_Employees_AspNetUsers_UserId
+Employees ref AspNetUsers ( UserId -&gt; Id )</title>
+</path>
+<path transform='translate(8,0)' marker-start='url(#foot01)' marker-end='url(#arrow1)'  class='dotted '  d='M 1040,384L 1040,688' ><title>Fk FK_Employees_AspNetUsers_UserId
+Employees ref AspNetUsers ( UserId -&gt; Id )</title></path>
+<text x='1052' y='385' transform='rotate(90 1052,385)' class='relName'>UserId</text>
+<!-- == Fk 'Employees_FK_Employees_CareerLevels_CareerLevelId' == -->
+<path id='Employees_FK_Employees_CareerLevels_CareerLevelId'  onmouseover="hghl(['Employees_FK_Employees_CareerLevels_CareerLevelId','dbo.Employees.CareerLevelId','dbo.CareerLevels.Id'])" onmouseout="uhghl(['Employees_FK_Employees_CareerLevels_CareerLevelId','dbo.Employees.CareerLevelId','dbo.CareerLevels.Id'])" transform='translate(8,0)' class='scene' d='M 848,96L 496,96' >
+	<title>Fk FK_Employees_CareerLevels_CareerLevelId
+Employees ref CareerLevels ( CareerLevelId -&gt; Id )</title>
+</path>
+<path transform='translate(8,0)' marker-start='url(#foot0p)' marker-end='url(#arrow1)'  class='dotted '  d='M 848,96L 496,96' ><title>Fk FK_Employees_CareerLevels_CareerLevelId
+Employees ref CareerLevels ( CareerLevelId -&gt; Id )</title></path>
+<text x='777' y='91' transform='rotate(0 777,91)' class='relName'>CareerLevelId</text>
+<!-- == Fk 'Employees_FK_Employees_Cities_CityId' == -->
+<path id='Employees_FK_Employees_Cities_CityId'  onmouseover="hghl(['Employees_FK_Employees_Cities_CityId','dbo.Employees.CityId','dbo.Cities.Id'])" onmouseout="uhghl(['Employees_FK_Employees_Cities_CityId','dbo.Employees.CityId','dbo.Cities.Id'])" transform='translate(8,0)' class='scene' d='M 1104,384L 1104,664Q 1104,672 1112,672L 1128,672Q 1136,672 1136,680L 1136,856Q 1136,864 1144,864L 2696,864Q 2704,864 2704,872L 2704,880' >
+	<title>Fk FK_Employees_Cities_CityId
+Employees ref Cities ( CityId -&gt; Id )</title>
+</path>
+<path transform='translate(8,0)' marker-start='url(#foot0p)' marker-end='url(#arrow1)'  class='dotted '  d='M 1104,384L 1104,664Q 1104,672 1112,672L 1128,672Q 1136,672 1136,680L 1136,856Q 1136,864 1144,864L 2696,864Q 2704,864 2704,872L 2704,880' ><title>Fk FK_Employees_Cities_CityId
+Employees ref Cities ( CityId -&gt; Id )</title></path>
+<text x='1116' y='385' transform='rotate(90 1116,385)' class='relName'>CityId</text>
+<!-- == Fk 'Employees_FK_Employees_Countries_CountryId' == -->
+<path id='Employees_FK_Employees_Countries_CountryId'  onmouseover="hghl(['Employees_FK_Employees_Countries_CountryId','dbo.Employees.CountryId','dbo.Countries.Id'])" onmouseout="uhghl(['Employees_FK_Employees_Countries_CountryId','dbo.Employees.CountryId','dbo.Countries.Id'])" transform='translate(8,0)' class='scene' d='M 1136,368L 1176,368Q 1184,368 1184,376L 1184,584Q 1184,592 1192,592L 2088,592Q 2096,592 2096,584L 2096,576' >
+	<title>Fk FK_Employees_Countries_CountryId
+Employees ref Countries ( CountryId -&gt; Id )</title>
+</path>
+<path transform='translate(8,0)' marker-start='url(#foot0p)' marker-end='url(#arrow1)'  class='dotted '  d='M 1136,368L 1176,368Q 1184,368 1184,376L 1184,584Q 1184,592 1192,592L 2088,592Q 2096,592 2096,584L 2096,576' ><title>Fk FK_Employees_Countries_CountryId
+Employees ref Countries ( CountryId -&gt; Id )</title></path>
+<text x='1145' y='363' transform='rotate(0 1145,363)' class='relName'>CountryId</text>
+<!-- == Fk 'Employees_FK_Employees_Countries_NationalityId' == -->
+<path id='Employees_FK_Employees_Countries_NationalityId'  onmouseover="hghl(['Employees_FK_Employees_Countries_NationalityId','dbo.Employees.NationalityId','dbo.Countries.Id'])" onmouseout="uhghl(['Employees_FK_Employees_Countries_NationalityId','dbo.Employees.NationalityId','dbo.Countries.Id'])" transform='translate(8,0)' class='scene' d='M 1136,256L 1736,256Q 1744,256 1744,264L 1744,456Q 1744,464 1752,464L 2104,464Q 2112,464 2112,472L 2112,480' >
+	<title>Fk FK_Employees_Countries_NationalityId
+Employees ref Countries ( NationalityId -&gt; Id )</title>
+</path>
+<path transform='translate(8,0)' marker-start='url(#foot0p)' marker-end='url(#arrow1)'  class='dotted '  d='M 1136,256L 1736,256Q 1744,256 1744,264L 1744,456Q 1744,464 1752,464L 2104,464Q 2112,464 2112,472L 2112,480' ><title>Fk FK_Employees_Countries_NationalityId
+Employees ref Countries ( NationalityId -&gt; Id )</title></path>
+<text x='1145' y='251' transform='rotate(0 1145,251)' class='relName'>NationalityId</text>
+<!-- == Fk 'Employees_FK_Employees_EducationLevels_EducationLevelId' == -->
+<path id='Employees_FK_Employees_EducationLevels_EducationLevelId'  onmouseover="hghl(['Employees_FK_Employees_EducationLevels_EducationLevelId','dbo.Employees.EducationLevelId','dbo.EducationLevels.Id'])" onmouseout="uhghl(['Employees_FK_Employees_EducationLevels_EducationLevelId','dbo.Employees.EducationLevelId','dbo.EducationLevels.Id'])" transform='translate(8,0)' class='scene' d='M 848,224L 488,224Q 480,224 480,232L 480,256' >
+	<title>Fk FK_Employees_EducationLevels_EducationLevelId
+Employees ref EducationLevels ( EducationLevelId -&gt; Id )</title>
+</path>
+<path transform='translate(8,0)' marker-start='url(#foot0p)' marker-end='url(#arrow1)'  class='dotted '  d='M 848,224L 488,224Q 480,224 480,232L 480,256' ><title>Fk FK_Employees_EducationLevels_EducationLevelId
+Employees ref EducationLevels ( EducationLevelId -&gt; Id )</title></path>
+<text x='758' y='219' transform='rotate(0 758,219)' class='relName'>EducationLevelId</text>
+<!-- == Fk 'JobSkill_FK_JobSkill_Jobs_JobsId' == -->
+<path id='JobSkill_FK_JobSkill_Jobs_JobsId'  onmouseover="hghl(['JobSkill_FK_JobSkill_Jobs_JobsId','dbo.JobSkill.JobsId','dbo.Jobs.Id'])" onmouseout="uhghl(['JobSkill_FK_JobSkill_Jobs_JobsId','dbo.JobSkill.JobsId','dbo.Jobs.Id'])" transform='translate(8,0)' class='scene' d='M 1792,480L 1792,400' >
+	<title>Fk FK_JobSkill_Jobs_JobsId
+JobSkill ref Jobs ( JobsId -&gt; Id )</title>
+</path>
+<path transform='translate(8,0)' marker-start='url(#foot1p)' marker-end='url(#arrow1)'    d='M 1792,480L 1792,400' ><title>Fk FK_JobSkill_Jobs_JobsId
+JobSkill ref Jobs ( JobsId -&gt; Id )</title></path>
+<text x='1795' y='478' transform='rotate(270 1795,478)' class='relName'>JobsId</text>
+<!-- == Fk 'JobSkill_FK_JobSkill_Skills_SkillsId' == -->
+<path id='JobSkill_FK_JobSkill_Skills_SkillsId'  onmouseover="hghl(['JobSkill_FK_JobSkill_Skills_SkillsId','dbo.JobSkill.SkillsId','dbo.Skills.Id'])" onmouseout="uhghl(['JobSkill_FK_JobSkill_Skills_SkillsId','dbo.JobSkill.SkillsId','dbo.Skills.Id'])" transform='translate(8,0)' class='scene' d='M 1856,576L 1856,632Q 1856,640 1864,640L 1976,640Q 1984,640 1984,648L 1984,656' >
+	<title>Fk FK_JobSkill_Skills_SkillsId
+JobSkill ref Skills ( SkillsId -&gt; Id )</title>
+</path>
+<path transform='translate(8,0)' marker-start='url(#foot1p)' marker-end='url(#arrow1)'    d='M 1856,576L 1856,632Q 1856,640 1864,640L 1976,640Q 1984,640 1984,648L 1984,656' ><title>Fk FK_JobSkill_Skills_SkillsId
+JobSkill ref Skills ( SkillsId -&gt; Id )</title></path>
+<text x='1868' y='577' transform='rotate(90 1868,577)' class='relName'>SkillsId</text>
+<!-- == Fk 'Jobs_FK_Jobs_Cities_CityId' == -->
+<path id='Jobs_FK_Jobs_Cities_CityId'  onmouseover="hghl(['Jobs_FK_Jobs_Cities_CityId','dbo.Jobs.CityId','dbo.Cities.Id'])" onmouseout="uhghl(['Jobs_FK_Jobs_Cities_CityId','dbo.Jobs.CityId','dbo.Cities.Id'])" transform='translate(8,0)' class='scene' d='M 1984,400L 1984,616Q 1984,624 1992,624L 2648,624Q 2656,624 2656,632L 2656,888Q 2656,896 2664,896L 2672,896' >
+	<title>Fk FK_Jobs_Cities_CityId
+Jobs ref Cities ( CityId -&gt; Id )</title>
+</path>
+<path transform='translate(8,0)' marker-start='url(#foot1p)' marker-end='url(#arrow1)'    d='M 1984,400L 1984,616Q 1984,624 1992,624L 2648,624Q 2656,624 2656,632L 2656,888Q 2656,896 2664,896L 2672,896' ><title>Fk FK_Jobs_Cities_CityId
+Jobs ref Cities ( CityId -&gt; Id )</title></path>
+<text x='1996' y='401' transform='rotate(90 1996,401)' class='relName'>CityId</text>
+<!-- == Fk 'Jobs_FK_Jobs_Companies_CompanyId' == -->
+<path id='Jobs_FK_Jobs_Companies_CompanyId'  onmouseover="hghl(['Jobs_FK_Jobs_Companies_CompanyId','dbo.Jobs.CompanyId','dbo.Companies.Id'])" onmouseout="uhghl(['Jobs_FK_Jobs_Companies_CompanyId','dbo.Jobs.CompanyId','dbo.Companies.Id'])" transform='translate(8,0)' class='scene' d='M 2000,320L 2912,320' >
+	<title>Fk FK_Jobs_Companies_CompanyId
+Jobs ref Companies ( CompanyId -&gt; Id )</title>
+</path>
+<path transform='translate(8,0)' marker-start='url(#foot1p)' marker-end='url(#arrow1)'    d='M 2000,320L 2912,320' ><title>Fk FK_Jobs_Companies_CompanyId
+Jobs ref Companies ( CompanyId -&gt; Id )</title></path>
+<text x='2009' y='315' transform='rotate(0 2009,315)' class='relName'>CompanyId</text>
+<!-- == Fk 'Jobs_FK_Jobs_Countries_CountryId' == -->
+<path id='Jobs_FK_Jobs_Countries_CountryId'  onmouseover="hghl(['Jobs_FK_Jobs_Countries_CountryId','dbo.Jobs.CountryId','dbo.Countries.Id'])" onmouseout="uhghl(['Jobs_FK_Jobs_Countries_CountryId','dbo.Jobs.CountryId','dbo.Countries.Id'])" transform='translate(8,0)' class='scene' d='M 2000,384L 2088,384Q 2096,384 2096,392L 2096,480' >
+	<title>Fk FK_Jobs_Countries_CountryId
+Jobs ref Countries ( CountryId -&gt; Id )</title>
+</path>
+<path transform='translate(8,0)' marker-start='url(#foot1p)' marker-end='url(#arrow1)'    d='M 2000,384L 2088,384Q 2096,384 2096,392L 2096,480' ><title>Fk FK_Jobs_Countries_CountryId
+Jobs ref Countries ( CountryId -&gt; Id )</title></path>
+<text x='2009' y='379' transform='rotate(0 2009,379)' class='relName'>CountryId</text>
+<!-- == Fk 'Jobs_FK_Jobs_JobTypes_JobTypeId' == -->
+<path id='Jobs_FK_Jobs_JobTypes_JobTypeId'  onmouseover="hghl(['Jobs_FK_Jobs_JobTypes_JobTypeId','dbo.Jobs.JobTypeId','dbo.JobTypes.Id'])" onmouseout="uhghl(['Jobs_FK_Jobs_JobTypes_JobTypeId','dbo.Jobs.JobTypeId','dbo.JobTypes.Id'])" transform='translate(8,0)' class='scene' d='M 1760,272L 1160,272Q 1152,272 1152,280L 1152,488Q 1152,496 1144,496L 1024,496' >
+	<title>Fk FK_Jobs_JobTypes_JobTypeId
+Jobs ref JobTypes ( JobTypeId -&gt; Id )</title>
+</path>
+<path transform='translate(8,0)' marker-start='url(#foot1p)' marker-end='url(#arrow1)'    d='M 1760,272L 1160,272Q 1152,272 1152,280L 1152,488Q 1152,496 1144,496L 1024,496' ><title>Fk FK_Jobs_JobTypes_JobTypeId
+Jobs ref JobTypes ( JobTypeId -&gt; Id )</title></path>
+<text x='1710' y='267' transform='rotate(0 1710,267)' class='relName'>JobTypeId</text>
+<!-- == Fk 'JobsDetails_FK_JobsDetails_CareerLevels_CareerLevelId' == -->
+<path id='JobsDetails_FK_JobsDetails_CareerLevels_CareerLevelId'  onmouseover="hghl(['JobsDetails_FK_JobsDetails_CareerLevels_CareerLevelId','dbo.JobsDetails.CareerLevelId','dbo.CareerLevels.Id'])" onmouseout="uhghl(['JobsDetails_FK_JobsDetails_CareerLevels_CareerLevelId','dbo.JobsDetails.CareerLevelId','dbo.CareerLevels.Id'])" transform='translate(8,0)' class='scene' d='M 272,96L 320,96' >
+	<title>Fk FK_JobsDetails_CareerLevels_CareerLevelId
+JobsDetails ref CareerLevels ( CareerLevelId -&gt; Id )</title>
+</path>
+<path transform='translate(8,0)' marker-start='url(#foot1p)' marker-end='url(#arrow1)'    d='M 272,96L 320,96' ><title>Fk FK_JobsDetails_CareerLevels_CareerLevelId
+JobsDetails ref CareerLevels ( CareerLevelId -&gt; Id )</title></path>
+<text x='281' y='91' transform='rotate(0 281,91)' class='relName'>CareerLevelId</text>
+<!-- == Fk 'JobsDetails_FK_JobsDetails_Currencies_SalaryCurrencyId' == -->
+<path id='JobsDetails_FK_JobsDetails_Currencies_SalaryCurrencyId'  onmouseover="hghl(['JobsDetails_FK_JobsDetails_Currencies_SalaryCurrencyId','dbo.JobsDetails.SalaryCurrencyId','dbo.Currencies.Id'])" onmouseout="uhghl(['JobsDetails_FK_JobsDetails_Currencies_SalaryCurrencyId','dbo.JobsDetails.SalaryCurrencyId','dbo.Currencies.Id'])" transform='translate(8,0)' class='scene' d='M 256,352L 256,440Q 256,448 264,448L 320,448' >
+	<title>Fk FK_JobsDetails_Currencies_SalaryCurrencyId
+JobsDetails ref Currencies ( SalaryCurrencyId -&gt; Id )</title>
+</path>
+<path transform='translate(8,0)' marker-start='url(#foot1p)' marker-end='url(#arrow1)'    d='M 256,352L 256,440Q 256,448 264,448L 320,448' ><title>Fk FK_JobsDetails_Currencies_SalaryCurrencyId
+JobsDetails ref Currencies ( SalaryCurrencyId -&gt; Id )</title></path>
+<text x='268' y='353' transform='rotate(90 268,353)' class='relName'>SalaryCurrencyId</text>
+<!-- == Fk 'JobsDetails_FK_JobsDetails_EducationLevels_EducationLevelId' == -->
+<path id='JobsDetails_FK_JobsDetails_EducationLevels_EducationLevelId'  onmouseover="hghl(['JobsDetails_FK_JobsDetails_EducationLevels_EducationLevelId','dbo.JobsDetails.EducationLevelId','dbo.EducationLevels.Id'])" onmouseout="uhghl(['JobsDetails_FK_JobsDetails_EducationLevels_EducationLevelId','dbo.JobsDetails.EducationLevelId','dbo.EducationLevels.Id'])" transform='translate(8,0)' class='scene' d='M 272,272L 320,272' >
+	<title>Fk FK_JobsDetails_EducationLevels_EducationLevelId
+JobsDetails ref EducationLevels ( EducationLevelId -&gt; Id )</title>
+</path>
+<path transform='translate(8,0)' marker-start='url(#foot1p)' marker-end='url(#arrow1)'    d='M 272,272L 320,272' ><title>Fk FK_JobsDetails_EducationLevels_EducationLevelId
+JobsDetails ref EducationLevels ( EducationLevelId -&gt; Id )</title></path>
+<text x='281' y='267' transform='rotate(0 281,267)' class='relName'>EducationLevelId</text>
+<!-- == Fk 'JobsDetails_FK_JobsDetails_JobCategories_JobCategoryId' == -->
+<path id='JobsDetails_FK_JobsDetails_JobCategories_JobCategoryId'  onmouseover="hghl(['JobsDetails_FK_JobsDetails_JobCategories_JobCategoryId','dbo.JobsDetails.JobCategoryId','dbo.JobCategories.Id'])" onmouseout="uhghl(['JobsDetails_FK_JobsDetails_JobCategories_JobCategoryId','dbo.JobsDetails.JobCategoryId','dbo.JobCategories.Id'])" transform='translate(8,0)' class='scene' d='M 272,240L 824,240Q 832,240 832,248L 832,408Q 832,416 840,416L 1512,416Q 1520,416 1520,408L 1520,384' >
+	<title>Fk FK_JobsDetails_JobCategories_JobCategoryId
+JobsDetails ref JobCategories ( JobCategoryId -&gt; Id )</title>
+</path>
+<path transform='translate(8,0)' marker-start='url(#foot1p)' marker-end='url(#arrow1)'    d='M 272,240L 824,240Q 832,240 832,248L 832,408Q 832,416 840,416L 1512,416Q 1520,416 1520,408L 1520,384' ><title>Fk FK_JobsDetails_JobCategories_JobCategoryId
+JobsDetails ref JobCategories ( JobCategoryId -&gt; Id )</title></path>
+<text x='281' y='235' transform='rotate(0 281,235)' class='relName'>JobCategoryId</text>
+<!-- == Fk 'JobsDetails_FK_JobsDetails_Jobs_JobId' == -->
+<path id='JobsDetails_FK_JobsDetails_Jobs_JobId'  onmouseover="hghl(['JobsDetails_FK_JobsDetails_Jobs_JobId','dbo.JobsDetails.JobId','dbo.Jobs.Id'])" onmouseout="uhghl(['JobsDetails_FK_JobsDetails_Jobs_JobId','dbo.JobsDetails.JobId','dbo.Jobs.Id'])" transform='translate(8,0)' class='scene' d='M 256,64L 256,8Q 256,0 264,0L 2024,0Q 2032,0 2032,8L 2032,72Q 2032,80 2024,80L 2000,80' >
+	<title>Fk FK_JobsDetails_Jobs_JobId
+JobsDetails ref Jobs ( JobId -&gt; Id )</title>
+</path>
+<path transform='translate(8,0)' marker-start='url(#foot1)' marker-end='url(#arrow1)'    d='M 256,64L 256,8Q 256,0 264,0L 2024,0Q 2032,0 2032,8L 2032,72Q 2032,80 2024,80L 2000,80' ><title>Fk FK_JobsDetails_Jobs_JobId
+JobsDetails ref Jobs ( JobId -&gt; Id )</title></path>
+<text x='259' y='62' transform='rotate(270 259,62)' class='relName'>JobId</text>
+<!-- == Fk 'JobsDetails_FK_JobsDetails_SalaryRates_SalaryRateId' == -->
+<path id='JobsDetails_FK_JobsDetails_SalaryRates_SalaryRateId'  onmouseover="hghl(['JobsDetails_FK_JobsDetails_SalaryRates_SalaryRateId','dbo.JobsDetails.SalaryRateId','dbo.SalaryRates.Id'])" onmouseout="uhghl(['JobsDetails_FK_JobsDetails_SalaryRates_SalaryRateId','dbo.JobsDetails.SalaryRateId','dbo.SalaryRates.Id'])" transform='translate(8,0)' class='scene' d='M 64,352L 64,432' >
+	<title>Fk FK_JobsDetails_SalaryRates_SalaryRateId
+JobsDetails ref SalaryRates ( SalaryRateId -&gt; Id )</title>
+</path>
+<path transform='translate(8,0)' marker-start='url(#foot1p)' marker-end='url(#arrow1)'    d='M 64,352L 64,432' ><title>Fk FK_JobsDetails_SalaryRates_SalaryRateId
+JobsDetails ref SalaryRates ( SalaryRateId -&gt; Id )</title></path>
+<text x='76' y='353' transform='rotate(90 76,353)' class='relName'>SalaryRateId</text>
+<!-- == Fk 'UserLanguages_FK_UserLanguages_Employees_EmployeeId' == -->
+<path id='UserLanguages_FK_UserLanguages_Employees_EmployeeId'  onmouseover="hghl(['UserLanguages_FK_UserLanguages_Employees_EmployeeId','dbo.UserLanguages.EmployeeId','dbo.Employees.Id'])" onmouseout="uhghl(['UserLanguages_FK_UserLanguages_Employees_EmployeeId','dbo.UserLanguages.EmployeeId','dbo.Employees.Id'])" transform='translate(8,0)' class='scene' d='M 1200,64L 1136,64' >
+	<title>Fk FK_UserLanguages_Employees_EmployeeId
+UserLanguages ref Employees ( EmployeeId -&gt; Id )</title>
+</path>
+<path transform='translate(8,0)' marker-start='url(#foot1p)' marker-end='url(#arrow1)'    d='M 1200,64L 1136,64' ><title>Fk FK_UserLanguages_Employees_EmployeeId
+UserLanguages ref Employees ( EmployeeId -&gt; Id )</title></path>
+<text x='1142' y='59' transform='rotate(0 1142,59)' class='relName'>EmployeeId</text>
+<!-- == Fk 'UserLanguages_FK_UserLanguages_Languages_LanguageId' == -->
+<path id='UserLanguages_FK_UserLanguages_Languages_LanguageId'  onmouseover="hghl(['UserLanguages_FK_UserLanguages_Languages_LanguageId','dbo.UserLanguages.LanguageId','dbo.Languages.Id'])" onmouseout="uhghl(['UserLanguages_FK_UserLanguages_Languages_LanguageId','dbo.UserLanguages.LanguageId','dbo.Languages.Id'])" transform='translate(8,0)' class='scene' d='M 1344,64L 1408,64' >
+	<title>Fk FK_UserLanguages_Languages_LanguageId
+UserLanguages ref Languages ( LanguageId -&gt; Id )</title>
+</path>
+<path transform='translate(8,0)' marker-start='url(#foot1p)' marker-end='url(#arrow1)'    d='M 1344,64L 1408,64' ><title>Fk FK_UserLanguages_Languages_LanguageId
+UserLanguages ref Languages ( LanguageId -&gt; Id )</title></path>
+<text x='1353' y='59' transform='rotate(0 1353,59)' class='relName'>LanguageId</text>
+<!-- == Fk 'companyLocations_FK_companyLocations_Cities_cityId' == -->
+<path id='companyLocations_FK_companyLocations_Cities_cityId'  onmouseover="hghl(['companyLocations_FK_companyLocations_Cities_cityId','dbo.companyLocations.cityId','dbo.Cities.Id'])" onmouseout="uhghl(['companyLocations_FK_companyLocations_Cities_cityId','dbo.companyLocations.cityId','dbo.Cities.Id'])" transform='translate(8,0)' class='scene' d='M 2912,1104L 2840,1104Q 2832,1104 2832,1096L 2832,1008' >
+	<title>Fk FK_companyLocations_Cities_cityId
+companyLocations ref Cities ( cityId -&gt; Id )</title>
+</path>
+<path transform='translate(8,0)' marker-start='url(#foot1p)' marker-end='url(#arrow1)'    d='M 2912,1104L 2840,1104Q 2832,1104 2832,1096L 2832,1008' ><title>Fk FK_companyLocations_Cities_cityId
+companyLocations ref Cities ( cityId -&gt; Id )</title></path>
+<text x='2889' y='1099' transform='rotate(0 2889,1099)' class='relName'>cityId</text>
+<!-- == Fk 'companyLocations_FK_companyLocations_Companies_companyId' == -->
+<path id='companyLocations_FK_companyLocations_Companies_companyId'  onmouseover="hghl(['companyLocations_FK_companyLocations_Companies_companyId','dbo.companyLocations.companyId','dbo.Companies.Id'])" onmouseout="uhghl(['companyLocations_FK_companyLocations_Companies_companyId','dbo.companyLocations.companyId','dbo.Companies.Id'])" transform='translate(8,0)' class='scene' d='M 3040,1088L 3040,1000Q 3040,992 3048,992L 3096,992Q 3104,992 3104,984L 3104,464' >
+	<title>Fk FK_companyLocations_Companies_companyId
+companyLocations ref Companies ( companyId -&gt; Id )</title>
+</path>
+<path transform='translate(8,0)' marker-start='url(#foot1p)' marker-end='url(#arrow1)'    d='M 3040,1088L 3040,1000Q 3040,992 3048,992L 3096,992Q 3104,992 3104,984L 3104,464' ><title>Fk FK_companyLocations_Companies_companyId
+companyLocations ref Companies ( companyId -&gt; Id )</title></path>
+<text x='3043' y='1086' transform='rotate(270 3043,1086)' class='relName'>companyId</text>
+<!-- == Table 'ApplicationStatuses' == -->
+<rect class='entity' style='stroke:#ADADC9' x='2384' y='216' width='160' height='80' />
+<rect class='entity' x='2384' y='216' width='160' height='28' style='stroke:#ADADC9; fill:#4A4AA3'/>
+<a xlink:href='#dbo.ApplicationStatuses'><text x='2403' y='235' class='white'>ApplicationStatuses</text><title>Table dbo.ApplicationStatuses</title></a>
+  <use id='nn' x='2386' y='253' xlink:href='#nn'/><use id='pk' x='2386' y='252' xlink:href='#pk'><title>Pk PK_ApplicationStatuses ( Id ) </title></use><a xlink:href='#dbo.ApplicationStatuses_Id'><text id='dbo.ApplicationStatuses.Id' x='2403' y='263' onmouseover="hghl(['Applications_FK_Applications_ApplicationStatuses_ApplicationStatusId','dbo.Applications.ApplicationStatusId'])" onmouseout="uhghl(['Applications_FK_Applications_ApplicationStatuses_ApplicationStatusId','dbo.Applications.ApplicationStatusId'])">Id</text><title>Id
+* int</title></a>
+<text x='2528' y='264' text-anchor='end' class='colType'>int</text><a xlink:href='#dbo.ApplicationStatuses.Id'><use id='ref' x='2532' y='252' xlink:href='#ref'/><title>Referred by Applications ( ApplicationStatusId -&gt; Id ) </title></a>
+  <a xlink:href='#dbo.ApplicationStatuses_Name'><text id='dbo.ApplicationStatuses.Name' x='2403' y='279'>Name</text><title>Name
+nvarchar(max)</title></a>
+<text x='2528' y='280' text-anchor='end' class='colType'>nvarchar(max)</text>
+<!-- == Table 'Applications' == -->
+<rect class='entity' style='stroke:#ADADC9' x='2080' y='40' width='224' height='256' />
+<rect class='entity' x='2080' y='40' width='224' height='28' style='stroke:#ADADC9; fill:#4A4AA3'/>
+<a xlink:href='#dbo.Applications'><text x='2152' y='59' class='white'>Applications</text><title>Table dbo.Applications</title></a>
+  <use id='nn' x='2082' y='77' xlink:href='#nn'/><use id='pk' x='2082' y='76' xlink:href='#pk'><title>Pk PK_Applications ( Id ) </title></use><a xlink:href='#dbo.Applications_Id'><text id='dbo.Applications.Id' x='2099' y='87'>Id</text><title>Id
+* int</title></a>
+<text x='2288' y='88' text-anchor='end' class='colType'>int</text>  <use id='nn' x='2082' y='93' xlink:href='#nn'/><a xlink:href='#dbo.Applications_ApplyDate'><text id='dbo.Applications.ApplyDate' x='2099' y='103'>ApplyDate</text><title>ApplyDate
+* datetime2(7)</title></a>
+<text x='2288' y='104' text-anchor='end' class='colType'>datetime2(7)</text>  <a xlink:href='#dbo.Applications_Status'><text id='dbo.Applications.Status' x='2099' y='119'>Status</text><title>Status
+nvarchar(max)</title></a>
+<text x='2288' y='120' text-anchor='end' class='colType'>nvarchar(max)</text>  <use id='nn' x='2082' y='125' xlink:href='#nn'/><a xlink:href='#dbo.Applications_IsViewed'><text id='dbo.Applications.IsViewed' x='2099' y='135'>IsViewed</text><title>IsViewed
+* bit</title></a>
+<text x='2288' y='136' text-anchor='end' class='colType'>bit</text>  <use id='nn' x='2082' y='141' xlink:href='#nn'/><a xlink:href='#dbo.Applications_IsArchived'><text id='dbo.Applications.IsArchived' x='2099' y='151'>IsArchived</text><title>IsArchived
+* bit</title></a>
+<text x='2288' y='152' text-anchor='end' class='colType'>bit</text>  <a xlink:href='#dbo.Applications_ArchiveDate'><text id='dbo.Applications.ArchiveDate' x='2099' y='167'>ArchiveDate</text><title>ArchiveDate
+datetime2(7)</title></a>
+<text x='2288' y='168' text-anchor='end' class='colType'>datetime2(7)</text>  <use id='nn' x='2082' y='173' xlink:href='#nn'/><a xlink:href='#dbo.Applications_IsWithdrawn'><text id='dbo.Applications.IsWithdrawn' x='2099' y='183'>IsWithdrawn</text><title>IsWithdrawn
+* bit</title></a>
+<text x='2288' y='184' text-anchor='end' class='colType'>bit</text>  <a xlink:href='#dbo.Applications_WithDrawDate'><text id='dbo.Applications.WithDrawDate' x='2099' y='199'>WithDrawDate</text><title>WithDrawDate
+datetime2(7)</title></a>
+<text x='2288' y='200' text-anchor='end' class='colType'>datetime2(7)</text>  <a xlink:href='#dbo.Applications_WithdrawReason'><text id='dbo.Applications.WithdrawReason' x='2099' y='215'>WithdrawReason</text><title>WithdrawReason
+nvarchar(max)</title></a>
+<text x='2288' y='216' text-anchor='end' class='colType'>nvarchar(max)</text>  <use id='nn' x='2082' y='221' xlink:href='#nn'/><use id='idx' x='2082' y='220' xlink:href='#idx'><title>IX_Applications_EmployeeId ( EmployeeId ) </title></use><a xlink:href='#dbo.Applications_EmployeeId'><text id='dbo.Applications.EmployeeId' x='2099' y='231' onmouseover="hghl(['Applications_FK_Applications_Employees_EmployeeId','dbo.Employees.Id'])" onmouseout="uhghl(['Applications_FK_Applications_Employees_EmployeeId','dbo.Employees.Id'])">EmployeeId</text><title>EmployeeId
+* int default 0</title></a>
+<text x='2288' y='232' text-anchor='end' class='colType'>int</text><a xlink:href='#dbo.Applications.EmployeeId'><use id='fk' x='2292' y='220' xlink:href='#fk'/><title>References Employees ( EmployeeId -&gt; Id ) </title></a>
+  <use id='nn' x='2082' y='237' xlink:href='#nn'/><use id='idx' x='2082' y='236' xlink:href='#idx'><title>IX_Applications_JobId ( jobId ) </title></use><a xlink:href='#dbo.Applications_jobId'><text id='dbo.Applications.jobId' x='2099' y='247' onmouseover="hghl(['Applications_FK_Applications_Jobs_JobId','dbo.Jobs.Id'])" onmouseout="uhghl(['Applications_FK_Applications_Jobs_JobId','dbo.Jobs.Id'])">jobId</text><title>jobId
+* int default 0</title></a>
+<text x='2288' y='248' text-anchor='end' class='colType'>int</text><a xlink:href='#dbo.Applications.jobId'><use id='fk' x='2292' y='236' xlink:href='#fk'/><title>References Jobs ( jobId -&gt; Id ) </title></a>
+  <use id='idx' x='2082' y='252' xlink:href='#idx'><title>IX_Applications_CompanyApplicationStatusId ( CompanyApplicationStatusId ) </title></use><a xlink:href='#dbo.Applications_CompanyApplicationStatusId'><text id='dbo.Applications.CompanyApplicationStatusId' x='2099' y='263' onmouseover="hghl(['Applications_FK_Applications_CompanyApplicationStatuses_CompanyApplicationStatusId','dbo.CompanyApplicationStatuses.Id'])" onmouseout="uhghl(['Applications_FK_Applications_CompanyApplicationStatuses_CompanyApplicationStatusId','dbo.CompanyApplicationStatuses.Id'])">CompanyApplicationStatusId</text><title>CompanyApplicationStatusId
+int</title></a>
+<text x='2288' y='264' text-anchor='end' class='colType'>int</text><a xlink:href='#dbo.Applications.CompanyApplicationStatusId'><use id='fk' x='2292' y='252' xlink:href='#fk'/><title>References CompanyApplicationStatuses ( CompanyApplicationStatusId -&gt; Id ) </title></a>
+  <use id='nn' x='2082' y='269' xlink:href='#nn'/><use id='idx' x='2082' y='268' xlink:href='#idx'><title>IX_Applications_ApplicationStatusId ( ApplicationStatusId ) </title></use><a xlink:href='#dbo.Applications_ApplicationStatusId'><text id='dbo.Applications.ApplicationStatusId' x='2099' y='279' onmouseover="hghl(['Applications_FK_Applications_ApplicationStatuses_ApplicationStatusId','dbo.ApplicationStatuses.Id'])" onmouseout="uhghl(['Applications_FK_Applications_ApplicationStatuses_ApplicationStatusId','dbo.ApplicationStatuses.Id'])">ApplicationStatusId</text><title>ApplicationStatusId
+* int default 0</title></a>
+<text x='2288' y='280' text-anchor='end' class='colType'>int</text><a xlink:href='#dbo.Applications.ApplicationStatusId'><use id='fk' x='2292' y='268' xlink:href='#fk'/><title>References ApplicationStatuses ( ApplicationStatusId -&gt; Id ) </title></a>
+
+<!-- == Table 'AspNetRoleClaims' == -->
+<rect class='entity' style='stroke:#ADB7C9' x='1472' y='696' width='192' height='112' />
+<rect class='entity' x='1472' y='696' width='192' height='28' style='stroke:#ADB7C9; fill:#4A6CA3'/>
+<a xlink:href='#dbo.AspNetRoleClaims'><text x='1512' y='715' class='white'>AspNetRoleClaims</text><title>Table dbo.AspNetRoleClaims</title></a>
+  <use id='nn' x='1474' y='733' xlink:href='#nn'/><use id='pk' x='1474' y='732' xlink:href='#pk'><title>Pk PK_AspNetRoleClaims ( Id ) </title></use><a xlink:href='#dbo.AspNetRoleClaims_Id'><text id='dbo.AspNetRoleClaims.Id' x='1491' y='743'>Id</text><title>Id
+* int</title></a>
+<text x='1648' y='744' text-anchor='end' class='colType'>int</text>  <use id='nn' x='1474' y='749' xlink:href='#nn'/><use id='idx' x='1474' y='748' xlink:href='#idx'><title>IX_AspNetRoleClaims_RoleId ( RoleId ) </title></use><a xlink:href='#dbo.AspNetRoleClaims_RoleId'><text id='dbo.AspNetRoleClaims.RoleId' x='1491' y='759' onmouseover="hghl(['AspNetRoleClaims_FK_AspNetRoleClaims_AspNetRoles_RoleId','dbo.AspNetRoles.Id'])" onmouseout="uhghl(['AspNetRoleClaims_FK_AspNetRoleClaims_AspNetRoles_RoleId','dbo.AspNetRoles.Id'])">RoleId</text><title>RoleId
+* nvarchar(450)</title></a>
+<text x='1648' y='760' text-anchor='end' class='colType'>nvarchar(450)</text><a xlink:href='#dbo.AspNetRoleClaims.RoleId'><use id='fk' x='1652' y='748' xlink:href='#fk'/><title>References AspNetRoles ( RoleId -&gt; Id ) </title></a>
+  <a xlink:href='#dbo.AspNetRoleClaims_ClaimType'><text id='dbo.AspNetRoleClaims.ClaimType' x='1491' y='775'>ClaimType</text><title>ClaimType
+nvarchar(max)</title></a>
+<text x='1648' y='776' text-anchor='end' class='colType'>nvarchar(max)</text>  <a xlink:href='#dbo.AspNetRoleClaims_ClaimValue'><text id='dbo.AspNetRoleClaims.ClaimValue' x='1491' y='791'>ClaimValue</text><title>ClaimValue
+nvarchar(max)</title></a>
+<text x='1648' y='792' text-anchor='end' class='colType'>nvarchar(max)</text>
+<!-- == Table 'AspNetRoles' == -->
+<rect class='entity' style='stroke:#ADB7C9' x='1168' y='696' width='240' height='112' />
+<rect class='entity' x='1168' y='696' width='240' height='28' style='stroke:#ADB7C9; fill:#4A6CA3'/>
+<a xlink:href='#dbo.AspNetRoles'><text x='1248' y='715' class='white'>AspNetRoles</text><title>Table dbo.AspNetRoles</title></a>
+  <use id='nn' x='1170' y='733' xlink:href='#nn'/><use id='pk' x='1170' y='732' xlink:href='#pk'><title>Pk PK_AspNetRoles ( Id ) </title></use><a xlink:href='#dbo.AspNetRoles_Id'><text id='dbo.AspNetRoles.Id' x='1187' y='743' onmouseover="hghl(['AspNetRoleClaims_FK_AspNetRoleClaims_AspNetRoles_RoleId','dbo.AspNetRoleClaims.RoleId','AspNetUserRoles_FK_AspNetUserRoles_AspNetRoles_RoleId','dbo.AspNetUserRoles.RoleId'])" onmouseout="uhghl(['AspNetRoleClaims_FK_AspNetRoleClaims_AspNetRoles_RoleId','dbo.AspNetRoleClaims.RoleId','AspNetUserRoles_FK_AspNetUserRoles_AspNetRoles_RoleId','dbo.AspNetUserRoles.RoleId'])">Id</text><title>Id
+* nvarchar(450)</title></a>
+<text x='1392' y='744' text-anchor='end' class='colType'>nvarchar(450)</text><a xlink:href='#dbo.AspNetRoles.Id'><use id='ref' x='1396' y='732' xlink:href='#ref'/><title>Referred by AspNetRoleClaims ( RoleId -&gt; Id ) 
+Referred by AspNetUserRoles ( RoleId -&gt; Id ) </title></a>
+  <a xlink:href='#dbo.AspNetRoles_Name'><text id='dbo.AspNetRoles.Name' x='1187' y='759'>Name</text><title>Name
+nvarchar(256)</title></a>
+<text x='1392' y='760' text-anchor='end' class='colType'>nvarchar(256)</text>  <use id='unq' x='1170' y='764' xlink:href='#unq'><title>Unq RoleNameIndex ( NormalizedName ) </title></use><a xlink:href='#dbo.AspNetRoles_NormalizedName'><text id='dbo.AspNetRoles.NormalizedName' x='1187' y='775'>NormalizedName</text><title>NormalizedName
+nvarchar(256)</title></a>
+<text x='1392' y='776' text-anchor='end' class='colType'>nvarchar(256)</text>  <a xlink:href='#dbo.AspNetRoles_ConcurrencyStamp'><text id='dbo.AspNetRoles.ConcurrencyStamp' x='1187' y='791'>ConcurrencyStamp</text><title>ConcurrencyStamp
+nvarchar(max)</title></a>
+<text x='1392' y='792' text-anchor='end' class='colType'>nvarchar(max)</text>
+<!-- == Table 'AspNetUserClaims' == -->
+<rect class='entity' style='stroke:#ADB7C9' x='1168' y='1112' width='192' height='112' />
+<rect class='entity' x='1168' y='1112' width='192' height='28' style='stroke:#ADB7C9; fill:#4A6CA3'/>
+<a xlink:href='#dbo.AspNetUserClaims'><text x='1208' y='1131' class='white'>AspNetUserClaims</text><title>Table dbo.AspNetUserClaims</title></a>
+  <use id='nn' x='1170' y='1149' xlink:href='#nn'/><use id='pk' x='1170' y='1148' xlink:href='#pk'><title>Pk PK_AspNetUserClaims ( Id ) </title></use><a xlink:href='#dbo.AspNetUserClaims_Id'><text id='dbo.AspNetUserClaims.Id' x='1187' y='1159'>Id</text><title>Id
+* int</title></a>
+<text x='1344' y='1160' text-anchor='end' class='colType'>int</text>  <use id='nn' x='1170' y='1165' xlink:href='#nn'/><use id='idx' x='1170' y='1164' xlink:href='#idx'><title>IX_AspNetUserClaims_UserId ( UserId ) </title></use><a xlink:href='#dbo.AspNetUserClaims_UserId'><text id='dbo.AspNetUserClaims.UserId' x='1187' y='1175' onmouseover="hghl(['AspNetUserClaims_FK_AspNetUserClaims_AspNetUsers_UserId','dbo.AspNetUsers.Id'])" onmouseout="uhghl(['AspNetUserClaims_FK_AspNetUserClaims_AspNetUsers_UserId','dbo.AspNetUsers.Id'])">UserId</text><title>UserId
+* nvarchar(450)</title></a>
+<text x='1344' y='1176' text-anchor='end' class='colType'>nvarchar(450)</text><a xlink:href='#dbo.AspNetUserClaims.UserId'><use id='fk' x='1348' y='1164' xlink:href='#fk'/><title>References AspNetUsers ( UserId -&gt; Id ) </title></a>
+  <a xlink:href='#dbo.AspNetUserClaims_ClaimType'><text id='dbo.AspNetUserClaims.ClaimType' x='1187' y='1191'>ClaimType</text><title>ClaimType
+nvarchar(max)</title></a>
+<text x='1344' y='1192' text-anchor='end' class='colType'>nvarchar(max)</text>  <a xlink:href='#dbo.AspNetUserClaims_ClaimValue'><text id='dbo.AspNetUserClaims.ClaimValue' x='1187' y='1207'>ClaimValue</text><title>ClaimValue
+nvarchar(max)</title></a>
+<text x='1344' y='1208' text-anchor='end' class='colType'>nvarchar(max)</text>
+<!-- == Table 'AspNetUserLogins' == -->
+<rect class='entity' style='stroke:#ADB7C9' x='848' y='1112' width='256' height='112' />
+<rect class='entity' x='848' y='1112' width='256' height='28' style='stroke:#ADB7C9; fill:#4A6CA3'/>
+<a xlink:href='#dbo.AspNetUserLogins'><text x='921' y='1131' class='white'>AspNetUserLogins</text><title>Table dbo.AspNetUserLogins</title></a>
+  <use id='nn' x='850' y='1149' xlink:href='#nn'/><use id='pk' x='850' y='1148' xlink:href='#pk'><title>Pk PK_AspNetUserLogins ( LoginProvider, ProviderKey ) </title></use><a xlink:href='#dbo.AspNetUserLogins_LoginProvider'><text id='dbo.AspNetUserLogins.LoginProvider' x='867' y='1159'>LoginProvider</text><title>LoginProvider
+* nvarchar(450)</title></a>
+<text x='1088' y='1160' text-anchor='end' class='colType'>nvarchar(450)</text>  <use id='nn' x='850' y='1165' xlink:href='#nn'/><use id='pk' x='850' y='1164' xlink:href='#pk'><title>Pk PK_AspNetUserLogins ( LoginProvider, ProviderKey ) </title></use><a xlink:href='#dbo.AspNetUserLogins_ProviderKey'><text id='dbo.AspNetUserLogins.ProviderKey' x='867' y='1175'>ProviderKey</text><title>ProviderKey
+* nvarchar(450)</title></a>
+<text x='1088' y='1176' text-anchor='end' class='colType'>nvarchar(450)</text>  <a xlink:href='#dbo.AspNetUserLogins_ProviderDisplayName'><text id='dbo.AspNetUserLogins.ProviderDisplayName' x='867' y='1191'>ProviderDisplayName</text><title>ProviderDisplayName
+nvarchar(max)</title></a>
+<text x='1088' y='1192' text-anchor='end' class='colType'>nvarchar(max)</text>  <use id='nn' x='850' y='1197' xlink:href='#nn'/><use id='idx' x='850' y='1196' xlink:href='#idx'><title>IX_AspNetUserLogins_UserId ( UserId ) </title></use><a xlink:href='#dbo.AspNetUserLogins_UserId'><text id='dbo.AspNetUserLogins.UserId' x='867' y='1207' onmouseover="hghl(['AspNetUserLogins_FK_AspNetUserLogins_AspNetUsers_UserId','dbo.AspNetUsers.Id'])" onmouseout="uhghl(['AspNetUserLogins_FK_AspNetUserLogins_AspNetUsers_UserId','dbo.AspNetUsers.Id'])">UserId</text><title>UserId
+* nvarchar(450)</title></a>
+<text x='1088' y='1208' text-anchor='end' class='colType'>nvarchar(450)</text><a xlink:href='#dbo.AspNetUserLogins.UserId'><use id='fk' x='1092' y='1196' xlink:href='#fk'/><title>References AspNetUsers ( UserId -&gt; Id ) </title></a>
+
+<!-- == Table 'AspNetUserRoles' == -->
+<rect class='entity' style='stroke:#ADB7C9' x='1168' y='936' width='160' height='80' />
+<rect class='entity' x='1168' y='936' width='160' height='28' style='stroke:#ADB7C9; fill:#4A6CA3'/>
+<a xlink:href='#dbo.AspNetUserRoles'><text x='1195' y='955' class='white'>AspNetUserRoles</text><title>Table dbo.AspNetUserRoles</title></a>
+  <use id='nn' x='1170' y='973' xlink:href='#nn'/><use id='pk' x='1170' y='972' xlink:href='#pk'><title>Pk PK_AspNetUserRoles ( UserId, RoleId ) </title></use><a xlink:href='#dbo.AspNetUserRoles_UserId'><text id='dbo.AspNetUserRoles.UserId' x='1187' y='983' onmouseover="hghl(['AspNetUserRoles_FK_AspNetUserRoles_AspNetUsers_UserId','dbo.AspNetUsers.Id'])" onmouseout="uhghl(['AspNetUserRoles_FK_AspNetUserRoles_AspNetUsers_UserId','dbo.AspNetUsers.Id'])">UserId</text><title>UserId
+* nvarchar(450)</title></a>
+<text x='1312' y='984' text-anchor='end' class='colType'>nvarchar(450)</text><a xlink:href='#dbo.AspNetUserRoles.UserId'><use id='fk' x='1316' y='972' xlink:href='#fk'/><title>References AspNetUsers ( UserId -&gt; Id ) </title></a>
+  <use id='nn' x='1170' y='989' xlink:href='#nn'/><use id='pk' x='1170' y='988' xlink:href='#pk'><title>Pk PK_AspNetUserRoles ( UserId, RoleId ) IX_AspNetUserRoles_RoleId ( RoleId ) </title></use><a xlink:href='#dbo.AspNetUserRoles_RoleId'><text id='dbo.AspNetUserRoles.RoleId' x='1187' y='999' onmouseover="hghl(['AspNetUserRoles_FK_AspNetUserRoles_AspNetRoles_RoleId','dbo.AspNetRoles.Id'])" onmouseout="uhghl(['AspNetUserRoles_FK_AspNetUserRoles_AspNetRoles_RoleId','dbo.AspNetRoles.Id'])">RoleId</text><title>RoleId
+* nvarchar(450)</title></a>
+<text x='1312' y='1000' text-anchor='end' class='colType'>nvarchar(450)</text><a xlink:href='#dbo.AspNetUserRoles.RoleId'><use id='fk' x='1316' y='988' xlink:href='#fk'/><title>References AspNetRoles ( RoleId -&gt; Id ) </title></a>
+
+<!-- == Table 'AspNetUserTokens' == -->
+<rect class='entity' style='stroke:#ADB7C9' x='560' y='1112' width='208' height='112' />
+<rect class='entity' x='560' y='1112' width='208' height='28' style='stroke:#ADB7C9; fill:#4A6CA3'/>
+<a xlink:href='#dbo.AspNetUserTokens'><text x='606' y='1131' class='white'>AspNetUserTokens</text><title>Table dbo.AspNetUserTokens</title></a>
+  <use id='nn' x='562' y='1149' xlink:href='#nn'/><use id='pk' x='562' y='1148' xlink:href='#pk'><title>Pk PK_AspNetUserTokens ( UserId, LoginProvider, Name ) </title></use><a xlink:href='#dbo.AspNetUserTokens_UserId'><text id='dbo.AspNetUserTokens.UserId' x='579' y='1159' onmouseover="hghl(['AspNetUserTokens_FK_AspNetUserTokens_AspNetUsers_UserId','dbo.AspNetUsers.Id'])" onmouseout="uhghl(['AspNetUserTokens_FK_AspNetUserTokens_AspNetUsers_UserId','dbo.AspNetUsers.Id'])">UserId</text><title>UserId
+* nvarchar(450)</title></a>
+<text x='752' y='1160' text-anchor='end' class='colType'>nvarchar(450)</text><a xlink:href='#dbo.AspNetUserTokens.UserId'><use id='fk' x='756' y='1148' xlink:href='#fk'/><title>References AspNetUsers ( UserId -&gt; Id ) </title></a>
+  <use id='nn' x='562' y='1165' xlink:href='#nn'/><use id='pk' x='562' y='1164' xlink:href='#pk'><title>Pk PK_AspNetUserTokens ( UserId, LoginProvider, Name ) </title></use><a xlink:href='#dbo.AspNetUserTokens_LoginProvider'><text id='dbo.AspNetUserTokens.LoginProvider' x='579' y='1175'>LoginProvider</text><title>LoginProvider
+* nvarchar(450)</title></a>
+<text x='752' y='1176' text-anchor='end' class='colType'>nvarchar(450)</text>  <use id='nn' x='562' y='1181' xlink:href='#nn'/><use id='pk' x='562' y='1180' xlink:href='#pk'><title>Pk PK_AspNetUserTokens ( UserId, LoginProvider, Name ) </title></use><a xlink:href='#dbo.AspNetUserTokens_Name'><text id='dbo.AspNetUserTokens.Name' x='579' y='1191'>Name</text><title>Name
+* nvarchar(450)</title></a>
+<text x='752' y='1192' text-anchor='end' class='colType'>nvarchar(450)</text>  <a xlink:href='#dbo.AspNetUserTokens_Value'><text id='dbo.AspNetUserTokens.Value' x='579' y='1207'>Value</text><title>Value
+nvarchar(max)</title></a>
+<text x='752' y='1208' text-anchor='end' class='colType'>nvarchar(max)</text>
+<!-- == Table 'AspNetUsers' == -->
+<rect class='entity' style='stroke:#ADB7C9' x='848' y='696' width='256' height='320' />
+<rect class='entity' x='848' y='696' width='256' height='28' style='stroke:#ADB7C9; fill:#4A6CA3'/>
+<a xlink:href='#dbo.AspNetUsers'><text x='936' y='715' class='white'>AspNetUsers</text><title>Table dbo.AspNetUsers</title></a>
+  <use id='nn' x='850' y='733' xlink:href='#nn'/><use id='pk' x='850' y='732' xlink:href='#pk'><title>Pk PK_AspNetUsers ( Id ) </title></use><a xlink:href='#dbo.AspNetUsers_Id'><text id='dbo.AspNetUsers.Id' x='867' y='743' onmouseover="hghl(['AspNetUserClaims_FK_AspNetUserClaims_AspNetUsers_UserId','dbo.AspNetUserClaims.UserId','AspNetUserLogins_FK_AspNetUserLogins_AspNetUsers_UserId','dbo.AspNetUserLogins.UserId','AspNetUserRoles_FK_AspNetUserRoles_AspNetUsers_UserId','dbo.AspNetUserRoles.UserId','AspNetUserTokens_FK_AspNetUserTokens_AspNetUsers_UserId','dbo.AspNetUserTokens.UserId','CompanyManagers_FK_CompanyManagers_AspNetUsers_UserId','dbo.CompanyManagers.UserId','Employees_FK_Employees_AspNetUsers_UserId','dbo.Employees.UserId'])" onmouseout="uhghl(['AspNetUserClaims_FK_AspNetUserClaims_AspNetUsers_UserId','dbo.AspNetUserClaims.UserId','AspNetUserLogins_FK_AspNetUserLogins_AspNetUsers_UserId','dbo.AspNetUserLogins.UserId','AspNetUserRoles_FK_AspNetUserRoles_AspNetUsers_UserId','dbo.AspNetUserRoles.UserId','AspNetUserTokens_FK_AspNetUserTokens_AspNetUsers_UserId','dbo.AspNetUserTokens.UserId','CompanyManagers_FK_CompanyManagers_AspNetUsers_UserId','dbo.CompanyManagers.UserId','Employees_FK_Employees_AspNetUsers_UserId','dbo.Employees.UserId'])">Id</text><title>Id
+* nvarchar(450)</title></a>
+<text x='1088' y='744' text-anchor='end' class='colType'>nvarchar(450)</text><a xlink:href='#dbo.AspNetUsers.Id'><use id='ref' x='1092' y='732' xlink:href='#ref'/><title>Referred by AspNetUserClaims ( UserId -&gt; Id ) 
+Referred by AspNetUserLogins ( UserId -&gt; Id ) 
+Referred by AspNetUserRoles ( UserId -&gt; Id ) 
+Referred by AspNetUserTokens ( UserId -&gt; Id ) 
+Referred by CompanyManagers ( UserId -&gt; Id ) 
+Referred by Employees ( UserId -&gt; Id ) </title></a>
+  <a xlink:href='#dbo.AspNetUsers_FirstName'><text id='dbo.AspNetUsers.FirstName' x='867' y='759'>FirstName</text><title>FirstName
+nvarchar(max)</title></a>
+<text x='1088' y='760' text-anchor='end' class='colType'>nvarchar(max)</text>  <a xlink:href='#dbo.AspNetUsers_LastName'><text id='dbo.AspNetUsers.LastName' x='867' y='775'>LastName</text><title>LastName
+nvarchar(max)</title></a>
+<text x='1088' y='776' text-anchor='end' class='colType'>nvarchar(max)</text>  <a xlink:href='#dbo.AspNetUsers_UserName'><text id='dbo.AspNetUsers.UserName' x='867' y='791'>UserName</text><title>UserName
+nvarchar(256)</title></a>
+<text x='1088' y='792' text-anchor='end' class='colType'>nvarchar(256)</text>  <use id='unq' x='850' y='796' xlink:href='#unq'><title>Unq UserNameIndex ( NormalizedUserName ) </title></use><a xlink:href='#dbo.AspNetUsers_NormalizedUserName'><text id='dbo.AspNetUsers.NormalizedUserName' x='867' y='807'>NormalizedUserName</text><title>NormalizedUserName
+nvarchar(256)</title></a>
+<text x='1088' y='808' text-anchor='end' class='colType'>nvarchar(256)</text>  <a xlink:href='#dbo.AspNetUsers_Email'><text id='dbo.AspNetUsers.Email' x='867' y='823'>Email</text><title>Email
+nvarchar(256)</title></a>
+<text x='1088' y='824' text-anchor='end' class='colType'>nvarchar(256)</text>  <use id='idx' x='850' y='828' xlink:href='#idx'><title>EmailIndex ( NormalizedEmail ) </title></use><a xlink:href='#dbo.AspNetUsers_NormalizedEmail'><text id='dbo.AspNetUsers.NormalizedEmail' x='867' y='839'>NormalizedEmail</text><title>NormalizedEmail
+nvarchar(256)</title></a>
+<text x='1088' y='840' text-anchor='end' class='colType'>nvarchar(256)</text>  <use id='nn' x='850' y='845' xlink:href='#nn'/><a xlink:href='#dbo.AspNetUsers_EmailConfirmed'><text id='dbo.AspNetUsers.EmailConfirmed' x='867' y='855'>EmailConfirmed</text><title>EmailConfirmed
+* bit</title></a>
+<text x='1088' y='856' text-anchor='end' class='colType'>bit</text>  <a xlink:href='#dbo.AspNetUsers_PasswordHash'><text id='dbo.AspNetUsers.PasswordHash' x='867' y='871'>PasswordHash</text><title>PasswordHash
+nvarchar(max)</title></a>
+<text x='1088' y='872' text-anchor='end' class='colType'>nvarchar(max)</text>  <a xlink:href='#dbo.AspNetUsers_SecurityStamp'><text id='dbo.AspNetUsers.SecurityStamp' x='867' y='887'>SecurityStamp</text><title>SecurityStamp
+nvarchar(max)</title></a>
+<text x='1088' y='888' text-anchor='end' class='colType'>nvarchar(max)</text>  <a xlink:href='#dbo.AspNetUsers_ConcurrencyStamp'><text id='dbo.AspNetUsers.ConcurrencyStamp' x='867' y='903'>ConcurrencyStamp</text><title>ConcurrencyStamp
+nvarchar(max)</title></a>
+<text x='1088' y='904' text-anchor='end' class='colType'>nvarchar(max)</text>  <a xlink:href='#dbo.AspNetUsers_PhoneNumber'><text id='dbo.AspNetUsers.PhoneNumber' x='867' y='919'>PhoneNumber</text><title>PhoneNumber
+nvarchar(max)</title></a>
+<text x='1088' y='920' text-anchor='end' class='colType'>nvarchar(max)</text>  <use id='nn' x='850' y='925' xlink:href='#nn'/><a xlink:href='#dbo.AspNetUsers_PhoneNumberConfirmed'><text id='dbo.AspNetUsers.PhoneNumberConfirmed' x='867' y='935'>PhoneNumberConfirmed</text><title>PhoneNumberConfirmed
+* bit</title></a>
+<text x='1088' y='936' text-anchor='end' class='colType'>bit</text>  <use id='nn' x='850' y='941' xlink:href='#nn'/><a xlink:href='#dbo.AspNetUsers_TwoFactorEnabled'><text id='dbo.AspNetUsers.TwoFactorEnabled' x='867' y='951'>TwoFactorEnabled</text><title>TwoFactorEnabled
+* bit</title></a>
+<text x='1088' y='952' text-anchor='end' class='colType'>bit</text>  <a xlink:href='#dbo.AspNetUsers_LockoutEnd'><text id='dbo.AspNetUsers.LockoutEnd' x='867' y='967'>LockoutEnd</text><title>LockoutEnd
+datetimeoffset</title></a>
+<text x='1088' y='968' text-anchor='end' class='colType'>datetimeoffset</text>  <use id='nn' x='850' y='973' xlink:href='#nn'/><a xlink:href='#dbo.AspNetUsers_LockoutEnabled'><text id='dbo.AspNetUsers.LockoutEnabled' x='867' y='983'>LockoutEnabled</text><title>LockoutEnabled
+* bit</title></a>
+<text x='1088' y='984' text-anchor='end' class='colType'>bit</text>  <use id='nn' x='850' y='989' xlink:href='#nn'/><a xlink:href='#dbo.AspNetUsers_AccessFailedCount'><text id='dbo.AspNetUsers.AccessFailedCount' x='867' y='999'>AccessFailedCount</text><title>AccessFailedCount
+* int</title></a>
+<text x='1088' y='1000' text-anchor='end' class='colType'>int</text>
+<!-- == Table 'CareerLevels' == -->
+<rect class='entity' style='stroke:#B1C9AD' x='336' y='72' width='160' height='80' />
+<rect class='entity' x='336' y='72' width='160' height='28' style='stroke:#B1C9AD; fill:#58A34A'/>
+<a xlink:href='#dbo.CareerLevels'><text x='374' y='91' class='white'>CareerLevels</text><title>Table dbo.CareerLevels</title></a>
+  <use id='nn' x='338' y='109' xlink:href='#nn'/><use id='pk' x='338' y='108' xlink:href='#pk'><title>Pk PK_CareerLevels ( Id ) </title></use><a xlink:href='#dbo.CareerLevels_Id'><text id='dbo.CareerLevels.Id' x='355' y='119' onmouseover="hghl(['Employees_FK_Employees_CareerLevels_CareerLevelId','dbo.Employees.CareerLevelId','JobsDetails_FK_JobsDetails_CareerLevels_CareerLevelId','dbo.JobsDetails.CareerLevelId'])" onmouseout="uhghl(['Employees_FK_Employees_CareerLevels_CareerLevelId','dbo.Employees.CareerLevelId','JobsDetails_FK_JobsDetails_CareerLevels_CareerLevelId','dbo.JobsDetails.CareerLevelId'])">Id</text><title>Id
+* int</title></a>
+<text x='480' y='120' text-anchor='end' class='colType'>int</text><a xlink:href='#dbo.CareerLevels.Id'><use id='ref' x='484' y='108' xlink:href='#ref'/><title>Referred by Employees ( CareerLevelId -&gt; Id ) 
+Referred by JobsDetails ( CareerLevelId -&gt; Id ) </title></a>
+  <a xlink:href='#dbo.CareerLevels_Name'><text id='dbo.CareerLevels.Name' x='355' y='135'>Name</text><title>Name
+nvarchar(max)</title></a>
+<text x='480' y='136' text-anchor='end' class='colType'>nvarchar(max)</text>
+<!-- == Table 'Cities' == -->
+<rect class='entity' style='stroke:#ADB7C9' x='2688' y='888' width='160' height='112' />
+<rect class='entity' x='2688' y='888' width='160' height='28' style='stroke:#ADB7C9; fill:#4A6CA3'/>
+<a xlink:href='#dbo.Cities'><text x='2748' y='907' class='white'>Cities</text><title>Table dbo.Cities</title></a>
+  <use id='nn' x='2690' y='925' xlink:href='#nn'/><use id='pk' x='2690' y='924' xlink:href='#pk'><title>Pk PK_Cities ( Id ) </title></use><a xlink:href='#dbo.Cities_Id'><text id='dbo.Cities.Id' x='2707' y='935' onmouseover="hghl(['CityCompany_FK_CityCompany_Cities_LocationsId','dbo.CityCompany.LocationsId','Employees_FK_Employees_Cities_CityId','dbo.Employees.CityId','Jobs_FK_Jobs_Cities_CityId','dbo.Jobs.CityId','companyLocations_FK_companyLocations_Cities_cityId','dbo.companyLocations.cityId'])" onmouseout="uhghl(['CityCompany_FK_CityCompany_Cities_LocationsId','dbo.CityCompany.LocationsId','Employees_FK_Employees_Cities_CityId','dbo.Employees.CityId','Jobs_FK_Jobs_Cities_CityId','dbo.Jobs.CityId','companyLocations_FK_companyLocations_Cities_cityId','dbo.companyLocations.cityId'])">Id</text><title>Id
+* int</title></a>
+<text x='2832' y='936' text-anchor='end' class='colType'>int</text><a xlink:href='#dbo.Cities.Id'><use id='ref' x='2836' y='924' xlink:href='#ref'/><title>Referred by CityCompany ( LocationsId -&gt; Id ) 
+Referred by Employees ( CityId -&gt; Id ) 
+Referred by Jobs ( CityId -&gt; Id ) 
+Referred by companyLocations ( cityId -&gt; Id ) </title></a>
+  <a xlink:href='#dbo.Cities_Name'><text id='dbo.Cities.Name' x='2707' y='951'>Name</text><title>Name
+nvarchar(max)</title></a>
+<text x='2832' y='952' text-anchor='end' class='colType'>nvarchar(max)</text>  <a xlink:href='#dbo.Cities_Location'><text id='dbo.Cities.Location' x='2707' y='967'>Location</text><title>Location
+geography</title></a>
+<text x='2832' y='968' text-anchor='end' class='colType'>geography</text>  <use id='nn' x='2690' y='973' xlink:href='#nn'/><use id='idx' x='2690' y='972' xlink:href='#idx'><title>IX_Cities_CountryId ( CountryId ) </title></use><a xlink:href='#dbo.Cities_CountryId'><text id='dbo.Cities.CountryId' x='2707' y='983' onmouseover="hghl(['Cities_FK_Cities_Countries_CountryId','dbo.Countries.Id'])" onmouseout="uhghl(['Cities_FK_Cities_Countries_CountryId','dbo.Countries.Id'])">CountryId</text><title>CountryId
+* int default 0</title></a>
+<text x='2832' y='984' text-anchor='end' class='colType'>int</text><a xlink:href='#dbo.Cities.CountryId'><use id='fk' x='2836' y='972' xlink:href='#fk'/><title>References Countries ( CountryId -&gt; Id ) </title></a>
+
+<!-- == Table 'CityCompany' == -->
+<rect class='entity' style='stroke:#ADB7C9' x='2928' y='888' width='128' height='80' />
+<rect class='entity' x='2928' y='888' width='128' height='28' style='stroke:#ADB7C9; fill:#4A6CA3'/>
+<a xlink:href='#dbo.CityCompany'><text x='2950' y='907' class='white'>CityCompany</text><title>Table dbo.CityCompany</title></a>
+  <use id='nn' x='2930' y='925' xlink:href='#nn'/><use id='pk' x='2930' y='924' xlink:href='#pk'><title>Pk PK_CityCompany ( CompaniesId, LocationsId ) </title></use><a xlink:href='#dbo.CityCompany_CompaniesId'><text id='dbo.CityCompany.CompaniesId' x='2947' y='935' onmouseover="hghl(['CityCompany_FK_CityCompany_Companies_CompaniesId','dbo.Companies.Id'])" onmouseout="uhghl(['CityCompany_FK_CityCompany_Companies_CompaniesId','dbo.Companies.Id'])">CompaniesId</text><title>CompaniesId
+* int</title></a>
+<text x='3040' y='936' text-anchor='end' class='colType'>int</text><a xlink:href='#dbo.CityCompany.CompaniesId'><use id='fk' x='3044' y='924' xlink:href='#fk'/><title>References Companies ( CompaniesId -&gt; Id ) </title></a>
+  <use id='nn' x='2930' y='941' xlink:href='#nn'/><use id='pk' x='2930' y='940' xlink:href='#pk'><title>Pk PK_CityCompany ( CompaniesId, LocationsId ) IX_CityCompany_LocationsId ( LocationsId ) </title></use><a xlink:href='#dbo.CityCompany_LocationsId'><text id='dbo.CityCompany.LocationsId' x='2947' y='951' onmouseover="hghl(['CityCompany_FK_CityCompany_Cities_LocationsId','dbo.Cities.Id'])" onmouseout="uhghl(['CityCompany_FK_CityCompany_Cities_LocationsId','dbo.Cities.Id'])">LocationsId</text><title>LocationsId
+* int</title></a>
+<text x='3040' y='952' text-anchor='end' class='colType'>int</text><a xlink:href='#dbo.CityCompany.LocationsId'><use id='fk' x='3044' y='940' xlink:href='#fk'/><title>References Cities ( LocationsId -&gt; Id ) </title></a>
+
+<!-- == Table 'Companies' == -->
+<rect class='entity' style='stroke:#B6ADC9' x='2928' y='248' width='192' height='208' />
+<rect class='entity' x='2928' y='248' width='192' height='28' style='stroke:#B6ADC9; fill:#694AA3'/>
+<a xlink:href='#dbo.Companies'><text x='2989' y='267' class='white'>Companies</text><title>Table dbo.Companies</title></a>
+  <use id='nn' x='2930' y='285' xlink:href='#nn'/><use id='pk' x='2930' y='284' xlink:href='#pk'><title>Pk PK_Companies ( Id ) </title></use><a xlink:href='#dbo.Companies_Id'><text id='dbo.Companies.Id' x='2947' y='295' onmouseover="hghl(['CityCompany_FK_CityCompany_Companies_CompaniesId','dbo.CityCompany.CompaniesId','CompanyLinks_FK_CompanyLinks_Companies_CompanyId','dbo.CompanyLinks.CompanyId','CompanyManagers_FK_CompanyManagers_Companies_CompanyId','dbo.CompanyManagers.CompanyId','Jobs_FK_Jobs_Companies_CompanyId','dbo.Jobs.CompanyId','companyLocations_FK_companyLocations_Companies_companyId','dbo.companyLocations.companyId'])" onmouseout="uhghl(['CityCompany_FK_CityCompany_Companies_CompaniesId','dbo.CityCompany.CompaniesId','CompanyLinks_FK_CompanyLinks_Companies_CompanyId','dbo.CompanyLinks.CompanyId','CompanyManagers_FK_CompanyManagers_Companies_CompanyId','dbo.CompanyManagers.CompanyId','Jobs_FK_Jobs_Companies_CompanyId','dbo.Jobs.CompanyId','companyLocations_FK_companyLocations_Companies_companyId','dbo.companyLocations.companyId'])">Id</text><title>Id
+* int</title></a>
+<text x='3104' y='296' text-anchor='end' class='colType'>int</text><a xlink:href='#dbo.Companies.Id'><use id='ref' x='3108' y='284' xlink:href='#ref'/><title>Referred by CityCompany ( CompaniesId -&gt; Id ) 
+Referred by CompanyLinks ( CompanyId -&gt; Id ) 
+Referred by CompanyManagers ( CompanyId -&gt; Id ) 
+Referred by Jobs ( CompanyId -&gt; Id ) 
+Referred by companyLocations ( companyId -&gt; Id ) </title></a>
+  <a xlink:href='#dbo.Companies_Name'><text id='dbo.Companies.Name' x='2947' y='311'>Name</text><title>Name
+nvarchar(max)</title></a>
+<text x='3104' y='312' text-anchor='end' class='colType'>nvarchar(max)</text>  <a xlink:href='#dbo.Companies_Phone'><text id='dbo.Companies.Phone' x='2947' y='327'>Phone</text><title>Phone
+nvarchar(max)</title></a>
+<text x='3104' y='328' text-anchor='end' class='colType'>nvarchar(max)</text>  <a xlink:href='#dbo.Companies_Logo'><text id='dbo.Companies.Logo' x='2947' y='343'>Logo</text><title>Logo
+nvarchar(max)</title></a>
+<text x='3104' y='344' text-anchor='end' class='colType'>nvarchar(max)</text>  <a xlink:href='#dbo.Companies_AboutUs'><text id='dbo.Companies.AboutUs' x='2947' y='359'>AboutUs</text><title>AboutUs
+nvarchar(max)</title></a>
+<text x='3104' y='360' text-anchor='end' class='colType'>nvarchar(max)</text>  <use id='idx' x='2930' y='364' xlink:href='#idx'><title>IX_Companies_CompanyIndustryId ( CompanyIndustryId ) </title></use><a xlink:href='#dbo.Companies_CompanyIndustryId'><text id='dbo.Companies.CompanyIndustryId' x='2947' y='375' onmouseover="hghl(['Companies_FK_Companies_CompanyIndustries_CompanyIndustryId','dbo.CompanyIndustries.Id'])" onmouseout="uhghl(['Companies_FK_Companies_CompanyIndustries_CompanyIndustryId','dbo.CompanyIndustries.Id'])">CompanyIndustryId</text><title>CompanyIndustryId
+int</title></a>
+<text x='3104' y='376' text-anchor='end' class='colType'>int</text><a xlink:href='#dbo.Companies.CompanyIndustryId'><use id='fk' x='3108' y='364' xlink:href='#fk'/><title>References CompanyIndustries ( CompanyIndustryId -&gt; Id ) </title></a>
+  <use id='idx' x='2930' y='380' xlink:href='#idx'><title>IX_Companies_CompanySizeId ( CompanySizeId ) </title></use><a xlink:href='#dbo.Companies_CompanySizeId'><text id='dbo.Companies.CompanySizeId' x='2947' y='391' onmouseover="hghl(['Companies_FK_Companies_CompanySizes_CompanySizeId','dbo.CompanySizes.Id'])" onmouseout="uhghl(['Companies_FK_Companies_CompanySizes_CompanySizeId','dbo.CompanySizes.Id'])">CompanySizeId</text><title>CompanySizeId
+int</title></a>
+<text x='3104' y='392' text-anchor='end' class='colType'>int</text><a xlink:href='#dbo.Companies.CompanySizeId'><use id='fk' x='3108' y='380' xlink:href='#fk'/><title>References CompanySizes ( CompanySizeId -&gt; Id ) </title></a>
+  <use id='idx' x='2930' y='396' xlink:href='#idx'><title>IX_Companies_CompanyTypeId ( CompanyTypeId ) </title></use><a xlink:href='#dbo.Companies_CompanyTypeId'><text id='dbo.Companies.CompanyTypeId' x='2947' y='407' onmouseover="hghl(['Companies_FK_Companies_CompanyTypes_CompanyTypeId','dbo.CompanyTypes.Id'])" onmouseout="uhghl(['Companies_FK_Companies_CompanyTypes_CompanyTypeId','dbo.CompanyTypes.Id'])">CompanyTypeId</text><title>CompanyTypeId
+int</title></a>
+<text x='3104' y='408' text-anchor='end' class='colType'>int</text><a xlink:href='#dbo.Companies.CompanyTypeId'><use id='fk' x='3108' y='396' xlink:href='#fk'/><title>References CompanyTypes ( CompanyTypeId -&gt; Id ) </title></a>
+  <a xlink:href='#dbo.Companies_YearFounded'><text id='dbo.Companies.YearFounded' x='2947' y='423'>YearFounded</text><title>YearFounded
+datetime2(7)</title></a>
+<text x='3104' y='424' text-anchor='end' class='colType'>datetime2(7)</text>  <use id='nn' x='2930' y='429' xlink:href='#nn'/><use id='idx' x='2930' y='428' xlink:href='#idx'><title>IX_Companies_RequestStatusId ( RequestStatusId ) </title></use><a xlink:href='#dbo.Companies_RequestStatusId'><text id='dbo.Companies.RequestStatusId' x='2947' y='439' onmouseover="hghl(['Companies_FK_Companies_CompanyRequestStatus_RequestStatusId','dbo.CompanyRequestStatus.Id'])" onmouseout="uhghl(['Companies_FK_Companies_CompanyRequestStatus_RequestStatusId','dbo.CompanyRequestStatus.Id'])">RequestStatusId</text><title>RequestStatusId
+* int default 0</title></a>
+<text x='3104' y='440' text-anchor='end' class='colType'>int</text><a xlink:href='#dbo.Companies.RequestStatusId'><use id='fk' x='3108' y='428' xlink:href='#fk'/><title>References CompanyRequestStatus ( RequestStatusId -&gt; Id ) </title></a>
+
+<!-- == Table 'CompanyApplicationStatuses' == -->
+<rect class='entity' style='stroke:#ADADC9' x='2384' y='40' width='192' height='80' />
+<rect class='entity' x='2384' y='40' width='192' height='28' style='stroke:#ADADC9; fill:#4A4AA3'/>
+<a xlink:href='#dbo.CompanyApplicationStatuses'><text x='2392' y='59' class='white'>CompanyApplicationStatuses</text><title>Table dbo.CompanyApplicationStatuses</title></a>
+  <use id='nn' x='2386' y='77' xlink:href='#nn'/><use id='pk' x='2386' y='76' xlink:href='#pk'><title>Pk PK_CompanyApplicationStatuses ( Id ) </title></use><a xlink:href='#dbo.CompanyApplicationStatuses_Id'><text id='dbo.CompanyApplicationStatuses.Id' x='2403' y='87' onmouseover="hghl(['Applications_FK_Applications_CompanyApplicationStatuses_CompanyApplicationStatusId','dbo.Applications.CompanyApplicationStatusId'])" onmouseout="uhghl(['Applications_FK_Applications_CompanyApplicationStatuses_CompanyApplicationStatusId','dbo.Applications.CompanyApplicationStatusId'])">Id</text><title>Id
+* int</title></a>
+<text x='2560' y='88' text-anchor='end' class='colType'>int</text><a xlink:href='#dbo.CompanyApplicationStatuses.Id'><use id='ref' x='2564' y='76' xlink:href='#ref'/><title>Referred by Applications ( CompanyApplicationStatusId -&gt; Id ) </title></a>
+  <a xlink:href='#dbo.CompanyApplicationStatuses_Name'><text id='dbo.CompanyApplicationStatuses.Name' x='2403' y='103'>Name</text><title>Name
+nvarchar(max)</title></a>
+<text x='2560' y='104' text-anchor='end' class='colType'>nvarchar(max)</text>
+<!-- == Table 'CompanyIndustries' == -->
+<rect class='entity' style='stroke:#B6ADC9' x='3200' y='552' width='160' height='80' />
+<rect class='entity' x='3200' y='552' width='160' height='28' style='stroke:#B6ADC9; fill:#694AA3'/>
+<a xlink:href='#dbo.CompanyIndustries'><text x='3221' y='571' class='white'>CompanyIndustries</text><title>Table dbo.CompanyIndustries</title></a>
+  <use id='nn' x='3202' y='589' xlink:href='#nn'/><use id='pk' x='3202' y='588' xlink:href='#pk'><title>Pk PK_CompanyIndustries ( Id ) </title></use><a xlink:href='#dbo.CompanyIndustries_Id'><text id='dbo.CompanyIndustries.Id' x='3219' y='599' onmouseover="hghl(['Companies_FK_Companies_CompanyIndustries_CompanyIndustryId','dbo.Companies.CompanyIndustryId'])" onmouseout="uhghl(['Companies_FK_Companies_CompanyIndustries_CompanyIndustryId','dbo.Companies.CompanyIndustryId'])">Id</text><title>Id
+* int</title></a>
+<text x='3344' y='600' text-anchor='end' class='colType'>int</text><a xlink:href='#dbo.CompanyIndustries.Id'><use id='ref' x='3348' y='588' xlink:href='#ref'/><title>Referred by Companies ( CompanyIndustryId -&gt; Id ) </title></a>
+  <a xlink:href='#dbo.CompanyIndustries_Name'><text id='dbo.CompanyIndustries.Name' x='3219' y='615'>Name</text><title>Name
+nvarchar(max)</title></a>
+<text x='3344' y='616' text-anchor='end' class='colType'>nvarchar(max)</text>
+<!-- == Table 'CompanyLinks' == -->
+<rect class='entity' style='stroke:#B6ADC9' x='2688' y='40' width='160' height='112' />
+<rect class='entity' x='2688' y='40' width='160' height='28' style='stroke:#B6ADC9; fill:#694AA3'/>
+<a xlink:href='#dbo.CompanyLinks'><text x='2723' y='59' class='white'>CompanyLinks</text><title>Table dbo.CompanyLinks</title></a>
+  <use id='nn' x='2690' y='77' xlink:href='#nn'/><use id='pk' x='2690' y='76' xlink:href='#pk'><title>Pk PK_CompanyLinks ( Id ) </title></use><a xlink:href='#dbo.CompanyLinks_Id'><text id='dbo.CompanyLinks.Id' x='2707' y='87'>Id</text><title>Id
+* int</title></a>
+<text x='2832' y='88' text-anchor='end' class='colType'>int</text>  <use id='nn' x='2690' y='93' xlink:href='#nn'/><use id='idx' x='2690' y='92' xlink:href='#idx'><title>IX_CompanyLinks_CompanyId ( CompanyId ) </title></use><a xlink:href='#dbo.CompanyLinks_CompanyId'><text id='dbo.CompanyLinks.CompanyId' x='2707' y='103' onmouseover="hghl(['CompanyLinks_FK_CompanyLinks_Companies_CompanyId','dbo.Companies.Id'])" onmouseout="uhghl(['CompanyLinks_FK_CompanyLinks_Companies_CompanyId','dbo.Companies.Id'])">CompanyId</text><title>CompanyId
+* int</title></a>
+<text x='2832' y='104' text-anchor='end' class='colType'>int</text><a xlink:href='#dbo.CompanyLinks.CompanyId'><use id='fk' x='2836' y='92' xlink:href='#fk'/><title>References Companies ( CompanyId -&gt; Id ) </title></a>
+  <a xlink:href='#dbo.CompanyLinks_Name'><text id='dbo.CompanyLinks.Name' x='2707' y='119'>Name</text><title>Name
+nvarchar(max)</title></a>
+<text x='2832' y='120' text-anchor='end' class='colType'>nvarchar(max)</text>  <a xlink:href='#dbo.CompanyLinks_Link'><text id='dbo.CompanyLinks.Link' x='2707' y='135'>Link</text><title>Link
+nvarchar(max)</title></a>
+<text x='2832' y='136' text-anchor='end' class='colType'>nvarchar(max)</text>
+<!-- == Table 'CompanyManagers' == -->
+<rect class='entity' style='stroke:#B6ADC9' x='3200' y='248' width='160' height='112' />
+<rect class='entity' x='3200' y='248' width='160' height='28' style='stroke:#B6ADC9; fill:#694AA3'/>
+<a xlink:href='#dbo.CompanyManagers'><text x='3222' y='267' class='white'>CompanyManagers</text><title>Table dbo.CompanyManagers</title></a>
+  <use id='nn' x='3202' y='285' xlink:href='#nn'/><use id='pk' x='3202' y='284' xlink:href='#pk'><title>Pk PK_CompanyManagers ( Id ) </title></use><a xlink:href='#dbo.CompanyManagers_Id'><text id='dbo.CompanyManagers.Id' x='3219' y='295'>Id</text><title>Id
+* int</title></a>
+<text x='3344' y='296' text-anchor='end' class='colType'>int</text>  <use id='unq' x='3202' y='300' xlink:href='#unq'><title>Unq IX_CompanyManagers_UserId ( UserId ) </title></use><a xlink:href='#dbo.CompanyManagers_UserId'><text id='dbo.CompanyManagers.UserId' x='3219' y='311' onmouseover="hghl(['CompanyManagers_FK_CompanyManagers_AspNetUsers_UserId','dbo.AspNetUsers.Id'])" onmouseout="uhghl(['CompanyManagers_FK_CompanyManagers_AspNetUsers_UserId','dbo.AspNetUsers.Id'])">UserId</text><title>UserId
+nvarchar(450)</title></a>
+<text x='3344' y='312' text-anchor='end' class='colType'>nvarchar(450)</text><a xlink:href='#dbo.CompanyManagers.UserId'><use id='fk' x='3348' y='300' xlink:href='#fk'/><title>References AspNetUsers ( UserId -&gt; Id ) </title></a>
+  <use id='nn' x='3202' y='317' xlink:href='#nn'/><use id='idx' x='3202' y='316' xlink:href='#idx'><title>IX_CompanyManagers_CompanyId ( CompanyId ) </title></use><a xlink:href='#dbo.CompanyManagers_CompanyId'><text id='dbo.CompanyManagers.CompanyId' x='3219' y='327' onmouseover="hghl(['CompanyManagers_FK_CompanyManagers_Companies_CompanyId','dbo.Companies.Id'])" onmouseout="uhghl(['CompanyManagers_FK_CompanyManagers_Companies_CompanyId','dbo.Companies.Id'])">CompanyId</text><title>CompanyId
+* int default 0</title></a>
+<text x='3344' y='328' text-anchor='end' class='colType'>int</text><a xlink:href='#dbo.CompanyManagers.CompanyId'><use id='fk' x='3348' y='316' xlink:href='#fk'/><title>References Companies ( CompanyId -&gt; Id ) </title></a>
+  <a xlink:href='#dbo.CompanyManagers_Title'><text id='dbo.CompanyManagers.Title' x='3219' y='343'>Title</text><title>Title
+nvarchar(max)</title></a>
+<text x='3344' y='344' text-anchor='end' class='colType'>nvarchar(max)</text>
+<!-- == Table 'CompanyRequestStatus' == -->
+<rect class='entity' style='stroke:#B6ADC9' x='2688' y='552' width='160' height='80' />
+<rect class='entity' x='2688' y='552' width='160' height='28' style='stroke:#B6ADC9; fill:#694AA3'/>
+<a xlink:href='#dbo.CompanyRequestStatus'><text x='2696' y='571' class='white'>CompanyRequestStatus</text><title>Table dbo.CompanyRequestStatus</title></a>
+  <use id='nn' x='2690' y='589' xlink:href='#nn'/><use id='pk' x='2690' y='588' xlink:href='#pk'><title>Pk PK_CompanyRequestStatus ( Id ) </title></use><a xlink:href='#dbo.CompanyRequestStatus_Id'><text id='dbo.CompanyRequestStatus.Id' x='2707' y='599' onmouseover="hghl(['Companies_FK_Companies_CompanyRequestStatus_RequestStatusId','dbo.Companies.RequestStatusId'])" onmouseout="uhghl(['Companies_FK_Companies_CompanyRequestStatus_RequestStatusId','dbo.Companies.RequestStatusId'])">Id</text><title>Id
+* int</title></a>
+<text x='2832' y='600' text-anchor='end' class='colType'>int</text><a xlink:href='#dbo.CompanyRequestStatus.Id'><use id='ref' x='2836' y='588' xlink:href='#ref'/><title>Referred by Companies ( RequestStatusId -&gt; Id ) </title></a>
+  <a xlink:href='#dbo.CompanyRequestStatus_Name'><text id='dbo.CompanyRequestStatus.Name' x='2707' y='615'>Name</text><title>Name
+nvarchar(max)</title></a>
+<text x='2832' y='616' text-anchor='end' class='colType'>nvarchar(max)</text>
+<!-- == Table 'CompanySizes' == -->
+<rect class='entity' style='stroke:#B6ADC9' x='2688' y='376' width='160' height='80' />
+<rect class='entity' x='2688' y='376' width='160' height='28' style='stroke:#B6ADC9; fill:#694AA3'/>
+<a xlink:href='#dbo.CompanySizes'><text x='2723' y='395' class='white'>CompanySizes</text><title>Table dbo.CompanySizes</title></a>
+  <use id='nn' x='2690' y='413' xlink:href='#nn'/><use id='pk' x='2690' y='412' xlink:href='#pk'><title>Pk PK_CompanySizes ( Id ) </title></use><a xlink:href='#dbo.CompanySizes_Id'><text id='dbo.CompanySizes.Id' x='2707' y='423' onmouseover="hghl(['Companies_FK_Companies_CompanySizes_CompanySizeId','dbo.Companies.CompanySizeId'])" onmouseout="uhghl(['Companies_FK_Companies_CompanySizes_CompanySizeId','dbo.Companies.CompanySizeId'])">Id</text><title>Id
+* int</title></a>
+<text x='2832' y='424' text-anchor='end' class='colType'>int</text><a xlink:href='#dbo.CompanySizes.Id'><use id='ref' x='2836' y='412' xlink:href='#ref'/><title>Referred by Companies ( CompanySizeId -&gt; Id ) </title></a>
+  <a xlink:href='#dbo.CompanySizes_Name'><text id='dbo.CompanySizes.Name' x='2707' y='439'>Name</text><title>Name
+nvarchar(max)</title></a>
+<text x='2832' y='440' text-anchor='end' class='colType'>nvarchar(max)</text>
+<!-- == Table 'CompanyTypes' == -->
+<rect class='entity' style='stroke:#B6ADC9' x='2928' y='552' width='160' height='80' />
+<rect class='entity' x='2928' y='552' width='160' height='28' style='stroke:#B6ADC9; fill:#694AA3'/>
+<a xlink:href='#dbo.CompanyTypes'><text x='2961' y='571' class='white'>CompanyTypes</text><title>Table dbo.CompanyTypes</title></a>
+  <use id='nn' x='2930' y='589' xlink:href='#nn'/><use id='pk' x='2930' y='588' xlink:href='#pk'><title>Pk PK_CompanyTypes ( Id ) </title></use><a xlink:href='#dbo.CompanyTypes_Id'><text id='dbo.CompanyTypes.Id' x='2947' y='599' onmouseover="hghl(['Companies_FK_Companies_CompanyTypes_CompanyTypeId','dbo.Companies.CompanyTypeId'])" onmouseout="uhghl(['Companies_FK_Companies_CompanyTypes_CompanyTypeId','dbo.Companies.CompanyTypeId'])">Id</text><title>Id
+* int</title></a>
+<text x='3072' y='600' text-anchor='end' class='colType'>int</text><a xlink:href='#dbo.CompanyTypes.Id'><use id='ref' x='3076' y='588' xlink:href='#ref'/><title>Referred by Companies ( CompanyTypeId -&gt; Id ) </title></a>
+  <a xlink:href='#dbo.CompanyTypes_Name'><text id='dbo.CompanyTypes.Name' x='2947' y='615'>Name</text><title>Name
+nvarchar(max)</title></a>
+<text x='3072' y='616' text-anchor='end' class='colType'>nvarchar(max)</text>
+<!-- == Table 'Countries' == -->
+<rect class='entity' style='stroke:#ADADC9' x='2080' y='488' width='160' height='80' />
+<rect class='entity' x='2080' y='488' width='160' height='28' style='stroke:#ADADC9; fill:#4A4AA3'/>
+<a xlink:href='#dbo.Countries'><text x='2128' y='507' class='white'>Countries</text><title>Table dbo.Countries</title></a>
+  <use id='nn' x='2082' y='525' xlink:href='#nn'/><use id='pk' x='2082' y='524' xlink:href='#pk'><title>Pk PK_Countries ( Id ) </title></use><a xlink:href='#dbo.Countries_Id'><text id='dbo.Countries.Id' x='2099' y='535' onmouseover="hghl(['Cities_FK_Cities_Countries_CountryId','dbo.Cities.CountryId','Employees_FK_Employees_Countries_CountryId','dbo.Employees.CountryId','Employees_FK_Employees_Countries_NationalityId','dbo.Employees.NationalityId','Jobs_FK_Jobs_Countries_CountryId','dbo.Jobs.CountryId'])" onmouseout="uhghl(['Cities_FK_Cities_Countries_CountryId','dbo.Cities.CountryId','Employees_FK_Employees_Countries_CountryId','dbo.Employees.CountryId','Employees_FK_Employees_Countries_NationalityId','dbo.Employees.NationalityId','Jobs_FK_Jobs_Countries_CountryId','dbo.Jobs.CountryId'])">Id</text><title>Id
+* int</title></a>
+<text x='2224' y='536' text-anchor='end' class='colType'>int</text><a xlink:href='#dbo.Countries.Id'><use id='ref' x='2228' y='524' xlink:href='#ref'/><title>Referred by Cities ( CountryId -&gt; Id ) 
+Referred by Employees ( CountryId -&gt; Id ) 
+Referred by Employees ( NationalityId -&gt; Id ) 
+Referred by Jobs ( CountryId -&gt; Id ) </title></a>
+  <a xlink:href='#dbo.Countries_Name'><text id='dbo.Countries.Name' x='2099' y='551'>Name</text><title>Name
+nvarchar(max)</title></a>
+<text x='2224' y='552' text-anchor='end' class='colType'>nvarchar(max)</text>
+<!-- == Table 'Currencies' == -->
+<rect class='entity' style='stroke:#B1C9AD' x='336' y='440' width='176' height='112' />
+<rect class='entity' x='336' y='440' width='176' height='28' style='stroke:#B1C9AD; fill:#58A34A'/>
+<a xlink:href='#dbo.Currencies'><text x='389' y='459' class='white'>Currencies</text><title>Table dbo.Currencies</title></a>
+  <use id='nn' x='338' y='477' xlink:href='#nn'/><use id='pk' x='338' y='476' xlink:href='#pk'><title>Pk PK_Currencies ( Id ) </title></use><a xlink:href='#dbo.Currencies_Id'><text id='dbo.Currencies.Id' x='355' y='487' onmouseover="hghl(['JobsDetails_FK_JobsDetails_Currencies_SalaryCurrencyId','dbo.JobsDetails.SalaryCurrencyId'])" onmouseout="uhghl(['JobsDetails_FK_JobsDetails_Currencies_SalaryCurrencyId','dbo.JobsDetails.SalaryCurrencyId'])">Id</text><title>Id
+* int</title></a>
+<text x='496' y='488' text-anchor='end' class='colType'>int</text><a xlink:href='#dbo.Currencies.Id'><use id='ref' x='500' y='476' xlink:href='#ref'/><title>Referred by JobsDetails ( SalaryCurrencyId -&gt; Id ) </title></a>
+  <a xlink:href='#dbo.Currencies_Symbol'><text id='dbo.Currencies.Symbol' x='355' y='503'>Symbol</text><title>Symbol
+nvarchar(max)</title></a>
+<text x='496' y='504' text-anchor='end' class='colType'>nvarchar(max)</text>  <a xlink:href='#dbo.Currencies_Name'><text id='dbo.Currencies.Name' x='355' y='519'>Name</text><title>Name
+nvarchar(max)</title></a>
+<text x='496' y='520' text-anchor='end' class='colType'>nvarchar(max)</text>  <a xlink:href='#dbo.Currencies_Code'><text id='dbo.Currencies.Code' x='355' y='535'>Code</text><title>Code
+nvarchar(max)</title></a>
+<text x='496' y='536' text-anchor='end' class='colType'>nvarchar(max)</text>
+<!-- == Table 'EducationLevels' == -->
+<rect class='entity' style='stroke:#B1C9AD' x='336' y='264' width='160' height='80' />
+<rect class='entity' x='336' y='264' width='160' height='28' style='stroke:#B1C9AD; fill:#58A34A'/>
+<a xlink:href='#dbo.EducationLevels'><text x='365' y='283' class='white'>EducationLevels</text><title>Table dbo.EducationLevels</title></a>
+  <use id='nn' x='338' y='301' xlink:href='#nn'/><use id='pk' x='338' y='300' xlink:href='#pk'><title>Pk PK_EducationLevels ( Id ) </title></use><a xlink:href='#dbo.EducationLevels_Id'><text id='dbo.EducationLevels.Id' x='355' y='311' onmouseover="hghl(['Employees_FK_Employees_EducationLevels_EducationLevelId','dbo.Employees.EducationLevelId','JobsDetails_FK_JobsDetails_EducationLevels_EducationLevelId','dbo.JobsDetails.EducationLevelId'])" onmouseout="uhghl(['Employees_FK_Employees_EducationLevels_EducationLevelId','dbo.Employees.EducationLevelId','JobsDetails_FK_JobsDetails_EducationLevels_EducationLevelId','dbo.JobsDetails.EducationLevelId'])">Id</text><title>Id
+* int</title></a>
+<text x='480' y='312' text-anchor='end' class='colType'>int</text><a xlink:href='#dbo.EducationLevels.Id'><use id='ref' x='484' y='300' xlink:href='#ref'/><title>Referred by Employees ( EducationLevelId -&gt; Id ) 
+Referred by JobsDetails ( EducationLevelId -&gt; Id ) </title></a>
+  <a xlink:href='#dbo.EducationLevels_Name'><text id='dbo.EducationLevels.Name' x='355' y='327'>Name</text><title>Name
+nvarchar(max)</title></a>
+<text x='480' y='328' text-anchor='end' class='colType'>nvarchar(max)</text>
+<!-- == Table 'EmployeeJobCategory' == -->
+<rect class='entity' style='stroke:#C9BDAD' x='1216' y='296' width='208' height='80' />
+<rect class='entity' x='1216' y='296' width='208' height='28' style='stroke:#C9BDAD; fill:#A37D4A'/>
+<a xlink:href='#dbo.EmployeeJobCategory'><text x='1252' y='315' class='white'>EmployeeJobCategory</text><title>Table dbo.EmployeeJobCategory</title></a>
+  <use id='nn' x='1218' y='333' xlink:href='#nn'/><use id='pk' x='1218' y='332' xlink:href='#pk'><title>Pk PK_EmployeeJobCategory ( EmployeesId, PreferredJobCategoriesId ) </title></use><a xlink:href='#dbo.EmployeeJobCategory_EmployeesId'><text id='dbo.EmployeeJobCategory.EmployeesId' x='1235' y='343' onmouseover="hghl(['EmployeeJobCategory_FK_EmployeeJobCategory_Employees_EmployeesId','dbo.Employees.Id'])" onmouseout="uhghl(['EmployeeJobCategory_FK_EmployeeJobCategory_Employees_EmployeesId','dbo.Employees.Id'])">EmployeesId</text><title>EmployeesId
+* int</title></a>
+<text x='1408' y='344' text-anchor='end' class='colType'>int</text><a xlink:href='#dbo.EmployeeJobCategory.EmployeesId'><use id='fk' x='1412' y='332' xlink:href='#fk'/><title>References Employees ( EmployeesId -&gt; Id ) </title></a>
+  <use id='nn' x='1218' y='349' xlink:href='#nn'/><use id='pk' x='1218' y='348' xlink:href='#pk'><title>Pk PK_EmployeeJobCategory ( EmployeesId, PreferredJobCategoriesId ) IX_EmployeeJobCategory_PreferredJobCategoriesId ( PreferredJobCategoriesId ) </title></use><a xlink:href='#dbo.EmployeeJobCategory_PreferredJobCategoriesId'><text id='dbo.EmployeeJobCategory.PreferredJobCategoriesId' x='1235' y='359' onmouseover="hghl(['EmployeeJobCategory_FK_EmployeeJobCategory_JobCategories_PreferredJobCategoriesId','dbo.JobCategories.Id'])" onmouseout="uhghl(['EmployeeJobCategory_FK_EmployeeJobCategory_JobCategories_PreferredJobCategoriesId','dbo.JobCategories.Id'])">PreferredJobCategoriesId</text><title>PreferredJobCategoriesId
+* int</title></a>
+<text x='1408' y='360' text-anchor='end' class='colType'>int</text><a xlink:href='#dbo.EmployeeJobCategory.PreferredJobCategoriesId'><use id='fk' x='1412' y='348' xlink:href='#fk'/><title>References JobCategories ( PreferredJobCategoriesId -&gt; Id ) </title></a>
+
+<!-- == Table 'EmployeeJobType' == -->
+<rect class='entity' style='stroke:#C9BDAD' x='640' y='472' width='128' height='80' />
+<rect class='entity' x='640' y='472' width='128' height='28' style='stroke:#C9BDAD; fill:#A37D4A'/>
+<a xlink:href='#dbo.EmployeeJobType'><text x='647' y='491' class='white'>EmployeeJobType</text><title>Table dbo.EmployeeJobType</title></a>
+  <use id='nn' x='642' y='509' xlink:href='#nn'/><use id='pk' x='642' y='508' xlink:href='#pk'><title>Pk PK_EmployeeJobType ( EmployeesId, JobTypesId ) </title></use><a xlink:href='#dbo.EmployeeJobType_EmployeesId'><text id='dbo.EmployeeJobType.EmployeesId' x='659' y='519' onmouseover="hghl(['EmployeeJobType_FK_EmployeeJobType_Employees_EmployeesId','dbo.Employees.Id'])" onmouseout="uhghl(['EmployeeJobType_FK_EmployeeJobType_Employees_EmployeesId','dbo.Employees.Id'])">EmployeesId</text><title>EmployeesId
+* int</title></a>
+<text x='752' y='520' text-anchor='end' class='colType'>int</text><a xlink:href='#dbo.EmployeeJobType.EmployeesId'><use id='fk' x='756' y='508' xlink:href='#fk'/><title>References Employees ( EmployeesId -&gt; Id ) </title></a>
+  <use id='nn' x='642' y='525' xlink:href='#nn'/><use id='pk' x='642' y='524' xlink:href='#pk'><title>Pk PK_EmployeeJobType ( EmployeesId, JobTypesId ) IX_EmployeeJobType_JobTypesId ( JobTypesId ) </title></use><a xlink:href='#dbo.EmployeeJobType_JobTypesId'><text id='dbo.EmployeeJobType.JobTypesId' x='659' y='535' onmouseover="hghl(['EmployeeJobType_FK_EmployeeJobType_JobTypes_JobTypesId','dbo.JobTypes.Id'])" onmouseout="uhghl(['EmployeeJobType_FK_EmployeeJobType_JobTypes_JobTypesId','dbo.JobTypes.Id'])">JobTypesId</text><title>JobTypesId
+* int</title></a>
+<text x='752' y='536' text-anchor='end' class='colType'>int</text><a xlink:href='#dbo.EmployeeJobType.JobTypesId'><use id='fk' x='756' y='524' xlink:href='#fk'/><title>References JobTypes ( JobTypesId -&gt; Id ) </title></a>
+
+<!-- == Table 'EmployeeLinks' == -->
+<rect class='entity' style='stroke:#C9BDAD' x='624' y='264' width='160' height='112' />
+<rect class='entity' x='624' y='264' width='160' height='28' style='stroke:#C9BDAD; fill:#A37D4A'/>
+<a xlink:href='#dbo.EmployeeLinks'><text x='657' y='283' class='white'>EmployeeLinks</text><title>Table dbo.EmployeeLinks</title></a>
+  <use id='nn' x='626' y='301' xlink:href='#nn'/><use id='pk' x='626' y='300' xlink:href='#pk'><title>Pk PK_EmployeeLinks ( Id ) </title></use><a xlink:href='#dbo.EmployeeLinks_Id'><text id='dbo.EmployeeLinks.Id' x='643' y='311'>Id</text><title>Id
+* int</title></a>
+<text x='768' y='312' text-anchor='end' class='colType'>int</text>  <a xlink:href='#dbo.EmployeeLinks_Name'><text id='dbo.EmployeeLinks.Name' x='643' y='327'>Name</text><title>Name
+nvarchar(max)</title></a>
+<text x='768' y='328' text-anchor='end' class='colType'>nvarchar(max)</text>  <a xlink:href='#dbo.EmployeeLinks_Link'><text id='dbo.EmployeeLinks.Link' x='643' y='343'>Link</text><title>Link
+nvarchar(max)</title></a>
+<text x='768' y='344' text-anchor='end' class='colType'>nvarchar(max)</text>  <use id='nn' x='626' y='349' xlink:href='#nn'/><use id='idx' x='626' y='348' xlink:href='#idx'><title>IX_EmployeeLinks_EmployeeId ( EmployeeId ) </title></use><a xlink:href='#dbo.EmployeeLinks_EmployeeId'><text id='dbo.EmployeeLinks.EmployeeId' x='643' y='359' onmouseover="hghl(['EmployeeLinks_FK_EmployeeLinks_Employees_EmployeeId','dbo.Employees.Id'])" onmouseout="uhghl(['EmployeeLinks_FK_EmployeeLinks_Employees_EmployeeId','dbo.Employees.Id'])">EmployeeId</text><title>EmployeeId
+* int default 0</title></a>
+<text x='768' y='360' text-anchor='end' class='colType'>int</text><a xlink:href='#dbo.EmployeeLinks.EmployeeId'><use id='fk' x='772' y='348' xlink:href='#fk'/><title>References Employees ( EmployeeId -&gt; Id ) </title></a>
+
+<!-- == Table 'EmployeeSkill' == -->
+<rect class='entity' style='stroke:#C9BDAD' x='1216' y='472' width='128' height='80' />
+<rect class='entity' x='1216' y='472' width='128' height='28' style='stroke:#C9BDAD; fill:#A37D4A'/>
+<a xlink:href='#dbo.EmployeeSkill'><text x='1236' y='491' class='white'>EmployeeSkill</text><title>Table dbo.EmployeeSkill</title></a>
+  <use id='nn' x='1218' y='509' xlink:href='#nn'/><use id='pk' x='1218' y='508' xlink:href='#pk'><title>Pk PK_EmployeeSkill ( EmployeesId, SkillsId ) </title></use><a xlink:href='#dbo.EmployeeSkill_EmployeesId'><text id='dbo.EmployeeSkill.EmployeesId' x='1235' y='519' onmouseover="hghl(['EmployeeSkill_FK_EmployeeSkill_Employees_EmployeesId','dbo.Employees.Id'])" onmouseout="uhghl(['EmployeeSkill_FK_EmployeeSkill_Employees_EmployeesId','dbo.Employees.Id'])">EmployeesId</text><title>EmployeesId
+* int</title></a>
+<text x='1328' y='520' text-anchor='end' class='colType'>int</text><a xlink:href='#dbo.EmployeeSkill.EmployeesId'><use id='fk' x='1332' y='508' xlink:href='#fk'/><title>References Employees ( EmployeesId -&gt; Id ) </title></a>
+  <use id='nn' x='1218' y='525' xlink:href='#nn'/><use id='pk' x='1218' y='524' xlink:href='#pk'><title>Pk PK_EmployeeSkill ( EmployeesId, SkillsId ) IX_EmployeeSkill_SkillsId ( SkillsId ) </title></use><a xlink:href='#dbo.EmployeeSkill_SkillsId'><text id='dbo.EmployeeSkill.SkillsId' x='1235' y='535' onmouseover="hghl(['EmployeeSkill_FK_EmployeeSkill_Skills_SkillsId','dbo.Skills.Id'])" onmouseout="uhghl(['EmployeeSkill_FK_EmployeeSkill_Skills_SkillsId','dbo.Skills.Id'])">SkillsId</text><title>SkillsId
+* int</title></a>
+<text x='1328' y='536' text-anchor='end' class='colType'>int</text><a xlink:href='#dbo.EmployeeSkill.SkillsId'><use id='fk' x='1332' y='524' xlink:href='#fk'/><title>References Skills ( SkillsId -&gt; Id ) </title></a>
+
+<!-- == Table 'Employees' == -->
+<rect class='entity' style='stroke:#C9BDAD' x='864' y='40' width='272' height='336' />
+<rect class='entity' x='864' y='40' width='272' height='28' style='stroke:#C9BDAD; fill:#A37D4A'/>
+<a xlink:href='#dbo.Employees'><text x='965' y='59' class='white'>Employees</text><title>Table dbo.Employees</title></a>
+  <use id='nn' x='866' y='77' xlink:href='#nn'/><use id='pk' x='866' y='76' xlink:href='#pk'><title>Pk PK_Employees ( Id ) </title></use><a xlink:href='#dbo.Employees_Id'><text id='dbo.Employees.Id' x='883' y='87' onmouseover="hghl(['Applications_FK_Applications_Employees_EmployeeId','dbo.Applications.EmployeeId','EmployeeJobCategory_FK_EmployeeJobCategory_Employees_EmployeesId','dbo.EmployeeJobCategory.EmployeesId','EmployeeJobType_FK_EmployeeJobType_Employees_EmployeesId','dbo.EmployeeJobType.EmployeesId','EmployeeLinks_FK_EmployeeLinks_Employees_EmployeeId','dbo.EmployeeLinks.EmployeeId','EmployeeSkill_FK_EmployeeSkill_Employees_EmployeesId','dbo.EmployeeSkill.EmployeesId','UserLanguages_FK_UserLanguages_Employees_EmployeeId','dbo.UserLanguages.EmployeeId'])" onmouseout="uhghl(['Applications_FK_Applications_Employees_EmployeeId','dbo.Applications.EmployeeId','EmployeeJobCategory_FK_EmployeeJobCategory_Employees_EmployeesId','dbo.EmployeeJobCategory.EmployeesId','EmployeeJobType_FK_EmployeeJobType_Employees_EmployeesId','dbo.EmployeeJobType.EmployeesId','EmployeeLinks_FK_EmployeeLinks_Employees_EmployeeId','dbo.EmployeeLinks.EmployeeId','EmployeeSkill_FK_EmployeeSkill_Employees_EmployeesId','dbo.EmployeeSkill.EmployeesId','UserLanguages_FK_UserLanguages_Employees_EmployeeId','dbo.UserLanguages.EmployeeId'])">Id</text><title>Id
+* int</title></a>
+<text x='1120' y='88' text-anchor='end' class='colType'>int</text><a xlink:href='#dbo.Employees.Id'><use id='ref' x='1124' y='76' xlink:href='#ref'/><title>Referred by Applications ( EmployeeId -&gt; Id ) 
+Referred by EmployeeJobCategory ( EmployeesId -&gt; Id ) 
+Referred by EmployeeJobType ( EmployeesId -&gt; Id ) 
+Referred by EmployeeLinks ( EmployeeId -&gt; Id ) 
+Referred by EmployeeSkill ( EmployeesId -&gt; Id ) 
+Referred by UserLanguages ( EmployeeId -&gt; Id ) </title></a>
+  <use id='unq' x='866' y='92' xlink:href='#unq'><title>Unq IX_Employees_UserId ( UserId ) </title></use><a xlink:href='#dbo.Employees_UserId'><text id='dbo.Employees.UserId' x='883' y='103' onmouseover="hghl(['Employees_FK_Employees_AspNetUsers_UserId','dbo.AspNetUsers.Id'])" onmouseout="uhghl(['Employees_FK_Employees_AspNetUsers_UserId','dbo.AspNetUsers.Id'])">UserId</text><title>UserId
+nvarchar(450)</title></a>
+<text x='1120' y='104' text-anchor='end' class='colType'>nvarchar(450)</text><a xlink:href='#dbo.Employees.UserId'><use id='fk' x='1124' y='92' xlink:href='#fk'/><title>References AspNetUsers ( UserId -&gt; Id ) </title></a>
+  <a xlink:href='#dbo.Employees_AlternativeMobileNumber'><text id='dbo.Employees.AlternativeMobileNumber' x='883' y='119'>AlternativeMobileNumber</text><title>AlternativeMobileNumber
+nvarchar(max)</title></a>
+<text x='1120' y='120' text-anchor='end' class='colType'>nvarchar(max)</text>  <use id='nn' x='866' y='125' xlink:href='#nn'/><a xlink:href='#dbo.Employees_BirthDate'><text id='dbo.Employees.BirthDate' x='883' y='135'>BirthDate</text><title>BirthDate
+* datetime2(7) default &apos;0001-01-01T00:00:00.0000000&apos;</title></a>
+<text x='1120' y='136' text-anchor='end' class='colType'>datetime2(7)</text>  <a xlink:href='#dbo.Employees_CV'><text id='dbo.Employees.CV' x='883' y='151'>CV</text><title>CV
+nvarchar(max)</title></a>
+<text x='1120' y='152' text-anchor='end' class='colType'>nvarchar(max)</text>  <use id='idx' x='866' y='156' xlink:href='#idx'><title>IX_Employees_CareerLevelId ( CareerLevelId ) </title></use><a xlink:href='#dbo.Employees_CareerLevelId'><text id='dbo.Employees.CareerLevelId' x='883' y='167' onmouseover="hghl(['Employees_FK_Employees_CareerLevels_CareerLevelId','dbo.CareerLevels.Id'])" onmouseout="uhghl(['Employees_FK_Employees_CareerLevels_CareerLevelId','dbo.CareerLevels.Id'])">CareerLevelId</text><title>CareerLevelId
+int</title></a>
+<text x='1120' y='168' text-anchor='end' class='colType'>int</text><a xlink:href='#dbo.Employees.CareerLevelId'><use id='fk' x='1124' y='156' xlink:href='#fk'/><title>References CareerLevels ( CareerLevelId -&gt; Id ) </title></a>
+  <use id='idx' x='866' y='172' xlink:href='#idx'><title>IX_Employees_CityId ( CityId ) </title></use><a xlink:href='#dbo.Employees_CityId'><text id='dbo.Employees.CityId' x='883' y='183' onmouseover="hghl(['Employees_FK_Employees_Cities_CityId','dbo.Cities.Id'])" onmouseout="uhghl(['Employees_FK_Employees_Cities_CityId','dbo.Cities.Id'])">CityId</text><title>CityId
+int</title></a>
+<text x='1120' y='184' text-anchor='end' class='colType'>int</text><a xlink:href='#dbo.Employees.CityId'><use id='fk' x='1124' y='172' xlink:href='#fk'/><title>References Cities ( CityId -&gt; Id ) </title></a>
+  <use id='idx' x='866' y='188' xlink:href='#idx'><title>IX_Employees_CountryId ( CountryId ) </title></use><a xlink:href='#dbo.Employees_CountryId'><text id='dbo.Employees.CountryId' x='883' y='199' onmouseover="hghl(['Employees_FK_Employees_Countries_CountryId','dbo.Countries.Id'])" onmouseout="uhghl(['Employees_FK_Employees_Countries_CountryId','dbo.Countries.Id'])">CountryId</text><title>CountryId
+int</title></a>
+<text x='1120' y='200' text-anchor='end' class='colType'>int</text><a xlink:href='#dbo.Employees.CountryId'><use id='fk' x='1124' y='188' xlink:href='#fk'/><title>References Countries ( CountryId -&gt; Id ) </title></a>
+  <use id='idx' x='866' y='204' xlink:href='#idx'><title>IX_Employees_EducationLevelId ( EducationLevelId ) </title></use><a xlink:href='#dbo.Employees_EducationLevelId'><text id='dbo.Employees.EducationLevelId' x='883' y='215' onmouseover="hghl(['Employees_FK_Employees_EducationLevels_EducationLevelId','dbo.EducationLevels.Id'])" onmouseout="uhghl(['Employees_FK_Employees_EducationLevels_EducationLevelId','dbo.EducationLevels.Id'])">EducationLevelId</text><title>EducationLevelId
+int</title></a>
+<text x='1120' y='216' text-anchor='end' class='colType'>int</text><a xlink:href='#dbo.Employees.EducationLevelId'><use id='fk' x='1124' y='204' xlink:href='#fk'/><title>References EducationLevels ( EducationLevelId -&gt; Id ) </title></a>
+  <use id='nn' x='866' y='221' xlink:href='#nn'/><a xlink:href='#dbo.Employees_ExperienceYears'><text id='dbo.Employees.ExperienceYears' x='883' y='231'>ExperienceYears</text><title>ExperienceYears
+* int default 0</title></a>
+<text x='1120' y='232' text-anchor='end' class='colType'>int</text>  <use id='nn' x='866' y='237' xlink:href='#nn'/><a xlink:href='#dbo.Employees_Gender'><text id='dbo.Employees.Gender' x='883' y='247'>Gender</text><title>Gender
+* int default 0</title></a>
+<text x='1120' y='248' text-anchor='end' class='colType'>int</text>  <use id='nn' x='866' y='253' xlink:href='#nn'/><a xlink:href='#dbo.Employees_IsWillingToRelocate'><text id='dbo.Employees.IsWillingToRelocate' x='883' y='263'>IsWillingToRelocate</text><title>IsWillingToRelocate
+* bit default CONVERT([bit],(0))</title></a>
+<text x='1120' y='264' text-anchor='end' class='colType'>bit</text>  <use id='nn' x='866' y='269' xlink:href='#nn'/><a xlink:href='#dbo.Employees_MilitaryStatus'><text id='dbo.Employees.MilitaryStatus' x='883' y='279'>MilitaryStatus</text><title>MilitaryStatus
+* int default 0</title></a>
+<text x='1120' y='280' text-anchor='end' class='colType'>int</text>  <use id='nn' x='866' y='285' xlink:href='#nn'/><a xlink:href='#dbo.Employees_MinimumSalary'><text id='dbo.Employees.MinimumSalary' x='883' y='295'>MinimumSalary</text><title>MinimumSalary
+* int default 0</title></a>
+<text x='1120' y='296' text-anchor='end' class='colType'>int</text>  <a xlink:href='#dbo.Employees_MobileNumber'><text id='dbo.Employees.MobileNumber' x='883' y='311'>MobileNumber</text><title>MobileNumber
+nvarchar(max)</title></a>
+<text x='1120' y='312' text-anchor='end' class='colType'>nvarchar(max)</text>  <use id='idx' x='866' y='316' xlink:href='#idx'><title>IX_Employees_NationalityId ( NationalityId ) </title></use><a xlink:href='#dbo.Employees_NationalityId'><text id='dbo.Employees.NationalityId' x='883' y='327' onmouseover="hghl(['Employees_FK_Employees_Countries_NationalityId','dbo.Countries.Id'])" onmouseout="uhghl(['Employees_FK_Employees_Countries_NationalityId','dbo.Countries.Id'])">NationalityId</text><title>NationalityId
+int</title></a>
+<text x='1120' y='328' text-anchor='end' class='colType'>int</text><a xlink:href='#dbo.Employees.NationalityId'><use id='fk' x='1124' y='316' xlink:href='#fk'/><title>References Countries ( NationalityId -&gt; Id ) </title></a>
+  <a xlink:href='#dbo.Employees_Photo'><text id='dbo.Employees.Photo' x='883' y='343'>Photo</text><title>Photo
+nvarchar(max)</title></a>
+<text x='1120' y='344' text-anchor='end' class='colType'>nvarchar(max)</text>  <a xlink:href='#dbo.Employees_Summary'><text id='dbo.Employees.Summary' x='883' y='359'>Summary</text><title>Summary
+nvarchar(max)</title></a>
+<text x='1120' y='360' text-anchor='end' class='colType'>nvarchar(max)</text>
+<!-- == Table 'JobCategories' == -->
+<rect class='entity' style='stroke:#C9BDAD' x='1504' y='296' width='160' height='80' />
+<rect class='entity' x='1504' y='296' width='160' height='28' style='stroke:#C9BDAD; fill:#A37D4A'/>
+<a xlink:href='#dbo.JobCategories'><text x='1539' y='315' class='white'>JobCategories</text><title>Table dbo.JobCategories</title></a>
+  <use id='nn' x='1506' y='333' xlink:href='#nn'/><use id='pk' x='1506' y='332' xlink:href='#pk'><title>Pk PK_JobCategories ( Id ) </title></use><a xlink:href='#dbo.JobCategories_Id'><text id='dbo.JobCategories.Id' x='1523' y='343' onmouseover="hghl(['EmployeeJobCategory_FK_EmployeeJobCategory_JobCategories_PreferredJobCategoriesId','dbo.EmployeeJobCategory.PreferredJobCategoriesId','JobsDetails_FK_JobsDetails_JobCategories_JobCategoryId','dbo.JobsDetails.JobCategoryId'])" onmouseout="uhghl(['EmployeeJobCategory_FK_EmployeeJobCategory_JobCategories_PreferredJobCategoriesId','dbo.EmployeeJobCategory.PreferredJobCategoriesId','JobsDetails_FK_JobsDetails_JobCategories_JobCategoryId','dbo.JobsDetails.JobCategoryId'])">Id</text><title>Id
+* int</title></a>
+<text x='1648' y='344' text-anchor='end' class='colType'>int</text><a xlink:href='#dbo.JobCategories.Id'><use id='ref' x='1652' y='332' xlink:href='#ref'/><title>Referred by EmployeeJobCategory ( PreferredJobCategoriesId -&gt; Id ) 
+Referred by JobsDetails ( JobCategoryId -&gt; Id ) </title></a>
+  <a xlink:href='#dbo.JobCategories_Name'><text id='dbo.JobCategories.Name' x='1523' y='359'>Name</text><title>Name
+nvarchar(max)</title></a>
+<text x='1648' y='360' text-anchor='end' class='colType'>nvarchar(max)</text>
+<!-- == Table 'JobSkill' == -->
+<rect class='entity' style='stroke:#ADADC9' x='1776' y='488' width='96' height='80' />
+<rect class='entity' x='1776' y='488' width='96' height='28' style='stroke:#ADADC9; fill:#4A4AA3'/>
+<a xlink:href='#dbo.JobSkill'><text x='1798' y='507' class='white'>JobSkill</text><title>Table dbo.JobSkill</title></a>
+  <use id='nn' x='1778' y='525' xlink:href='#nn'/><use id='pk' x='1778' y='524' xlink:href='#pk'><title>Pk PK_JobSkill ( JobsId, SkillsId ) </title></use><a xlink:href='#dbo.JobSkill_JobsId'><text id='dbo.JobSkill.JobsId' x='1795' y='535' onmouseover="hghl(['JobSkill_FK_JobSkill_Jobs_JobsId','dbo.Jobs.Id'])" onmouseout="uhghl(['JobSkill_FK_JobSkill_Jobs_JobsId','dbo.Jobs.Id'])">JobsId</text><title>JobsId
+* int</title></a>
+<text x='1856' y='536' text-anchor='end' class='colType'>int</text><a xlink:href='#dbo.JobSkill.JobsId'><use id='fk' x='1860' y='524' xlink:href='#fk'/><title>References Jobs ( JobsId -&gt; Id ) </title></a>
+  <use id='nn' x='1778' y='541' xlink:href='#nn'/><use id='pk' x='1778' y='540' xlink:href='#pk'><title>Pk PK_JobSkill ( JobsId, SkillsId ) IX_JobSkill_SkillsId ( SkillsId ) </title></use><a xlink:href='#dbo.JobSkill_SkillsId'><text id='dbo.JobSkill.SkillsId' x='1795' y='551' onmouseover="hghl(['JobSkill_FK_JobSkill_Skills_SkillsId','dbo.Skills.Id'])" onmouseout="uhghl(['JobSkill_FK_JobSkill_Skills_SkillsId','dbo.Skills.Id'])">SkillsId</text><title>SkillsId
+* int</title></a>
+<text x='1856' y='552' text-anchor='end' class='colType'>int</text><a xlink:href='#dbo.JobSkill.SkillsId'><use id='fk' x='1860' y='540' xlink:href='#fk'/><title>References Skills ( SkillsId -&gt; Id ) </title></a>
+
+<!-- == Table 'JobTypes' == -->
+<rect class='entity' style='stroke:#C9BDAD' x='864' y='472' width='160' height='80' />
+<rect class='entity' x='864' y='472' width='160' height='28' style='stroke:#C9BDAD; fill:#A37D4A'/>
+<a xlink:href='#dbo.JobTypes'><text x='913' y='491' class='white'>JobTypes</text><title>Table dbo.JobTypes</title></a>
+  <use id='nn' x='866' y='509' xlink:href='#nn'/><use id='pk' x='866' y='508' xlink:href='#pk'><title>Pk PK_JobTypes ( Id ) </title></use><a xlink:href='#dbo.JobTypes_Id'><text id='dbo.JobTypes.Id' x='883' y='519' onmouseover="hghl(['EmployeeJobType_FK_EmployeeJobType_JobTypes_JobTypesId','dbo.EmployeeJobType.JobTypesId','Jobs_FK_Jobs_JobTypes_JobTypeId','dbo.Jobs.JobTypeId'])" onmouseout="uhghl(['EmployeeJobType_FK_EmployeeJobType_JobTypes_JobTypesId','dbo.EmployeeJobType.JobTypesId','Jobs_FK_Jobs_JobTypes_JobTypeId','dbo.Jobs.JobTypeId'])">Id</text><title>Id
+* int</title></a>
+<text x='1008' y='520' text-anchor='end' class='colType'>int</text><a xlink:href='#dbo.JobTypes.Id'><use id='ref' x='1012' y='508' xlink:href='#ref'/><title>Referred by EmployeeJobType ( JobTypesId -&gt; Id ) 
+Referred by Jobs ( JobTypeId -&gt; Id ) </title></a>
+  <a xlink:href='#dbo.JobTypes_Name'><text id='dbo.JobTypes.Name' x='883' y='535'>Name</text><title>Name
+nvarchar(max)</title></a>
+<text x='1008' y='536' text-anchor='end' class='colType'>nvarchar(max)</text>
+<!-- == Table 'Jobs' == -->
+<rect class='entity' style='stroke:#ADADC9' x='1776' y='40' width='224' height='352' />
+<rect class='entity' x='1776' y='40' width='224' height='28' style='stroke:#ADADC9; fill:#4A4AA3'/>
+<a xlink:href='#dbo.Jobs'><text x='1871' y='59' class='white'>Jobs</text><title>Table dbo.Jobs</title></a>
+  <use id='nn' x='1778' y='77' xlink:href='#nn'/><use id='pk' x='1778' y='76' xlink:href='#pk'><title>Pk PK_Jobs ( Id ) </title></use><a xlink:href='#dbo.Jobs_Id'><text id='dbo.Jobs.Id' x='1795' y='87' onmouseover="hghl(['Applications_FK_Applications_Jobs_JobId','dbo.Applications.jobId','JobSkill_FK_JobSkill_Jobs_JobsId','dbo.JobSkill.JobsId','JobsDetails_FK_JobsDetails_Jobs_JobId','dbo.JobsDetails.JobId'])" onmouseout="uhghl(['Applications_FK_Applications_Jobs_JobId','dbo.Applications.jobId','JobSkill_FK_JobSkill_Jobs_JobsId','dbo.JobSkill.JobsId','JobsDetails_FK_JobsDetails_Jobs_JobId','dbo.JobsDetails.JobId'])">Id</text><title>Id
+* int</title></a>
+<text x='1984' y='88' text-anchor='end' class='colType'>int</text><a xlink:href='#dbo.Jobs.Id'><use id='ref' x='1988' y='76' xlink:href='#ref'/><title>Referred by Applications ( jobId -&gt; Id ) 
+Referred by JobSkill ( JobsId -&gt; Id ) 
+Referred by JobsDetails ( JobId -&gt; Id ) </title></a>
+  <a xlink:href='#dbo.Jobs_Title'><text id='dbo.Jobs.Title' x='1795' y='103'>Title</text><title>Title
+nvarchar(max)</title></a>
+<text x='1984' y='104' text-anchor='end' class='colType'>nvarchar(max)</text>  <a xlink:href='#dbo.Jobs_NumberOfVacancies'><text id='dbo.Jobs.NumberOfVacancies' x='1795' y='119'>NumberOfVacancies</text><title>NumberOfVacancies
+int</title></a>
+<text x='1984' y='120' text-anchor='end' class='colType'>int</text>  <use id='nn' x='1778' y='125' xlink:href='#nn'/><a xlink:href='#dbo.Jobs_TotalClicks'><text id='dbo.Jobs.TotalClicks' x='1795' y='135'>TotalClicks</text><title>TotalClicks
+* int default 0</title></a>
+<text x='1984' y='136' text-anchor='end' class='colType'>int</text>  <use id='nn' x='1778' y='141' xlink:href='#nn'/><a xlink:href='#dbo.Jobs_ViewedApplications'><text id='dbo.Jobs.ViewedApplications' x='1795' y='151'>ViewedApplications</text><title>ViewedApplications
+* int default 0</title></a>
+<text x='1984' y='152' text-anchor='end' class='colType'>int</text>  <use id='nn' x='1778' y='157' xlink:href='#nn'/><a xlink:href='#dbo.Jobs_WithdrawnApplications'><text id='dbo.Jobs.WithdrawnApplications' x='1795' y='167'>WithdrawnApplications</text><title>WithdrawnApplications
+* int default 0</title></a>
+<text x='1984' y='168' text-anchor='end' class='colType'>int</text>  <a xlink:href='#dbo.Jobs_CreatedBy'><text id='dbo.Jobs.CreatedBy' x='1795' y='183'>CreatedBy</text><title>CreatedBy
+nvarchar(max)</title></a>
+<text x='1984' y='184' text-anchor='end' class='colType'>nvarchar(max)</text>  <a xlink:href='#dbo.Jobs_UpdatedBy'><text id='dbo.Jobs.UpdatedBy' x='1795' y='199'>UpdatedBy</text><title>UpdatedBy
+nvarchar(max)</title></a>
+<text x='1984' y='200' text-anchor='end' class='colType'>nvarchar(max)</text>  <use id='nn' x='1778' y='205' xlink:href='#nn'/><a xlink:href='#dbo.Jobs_CreatedDate'><text id='dbo.Jobs.CreatedDate' x='1795' y='215'>CreatedDate</text><title>CreatedDate
+* datetime2(7)</title></a>
+<text x='1984' y='216' text-anchor='end' class='colType'>datetime2(7)</text>  <use id='nn' x='1778' y='221' xlink:href='#nn'/><a xlink:href='#dbo.Jobs_UpdatedDate'><text id='dbo.Jobs.UpdatedDate' x='1795' y='231'>UpdatedDate</text><title>UpdatedDate
+* datetime2(7)</title></a>
+<text x='1984' y='232' text-anchor='end' class='colType'>datetime2(7)</text>  <use id='nn' x='1778' y='237' xlink:href='#nn'/><use id='idx' x='1778' y='236' xlink:href='#idx'><title>IX_Jobs_CompanyId ( CompanyId ) </title></use><a xlink:href='#dbo.Jobs_CompanyId'><text id='dbo.Jobs.CompanyId' x='1795' y='247' onmouseover="hghl(['Jobs_FK_Jobs_Companies_CompanyId','dbo.Companies.Id'])" onmouseout="uhghl(['Jobs_FK_Jobs_Companies_CompanyId','dbo.Companies.Id'])">CompanyId</text><title>CompanyId
+* int default 0</title></a>
+<text x='1984' y='248' text-anchor='end' class='colType'>int</text><a xlink:href='#dbo.Jobs.CompanyId'><use id='fk' x='1988' y='236' xlink:href='#fk'/><title>References Companies ( CompanyId -&gt; Id ) </title></a>
+  <use id='nn' x='1778' y='253' xlink:href='#nn'/><use id='idx' x='1778' y='252' xlink:href='#idx'><title>IX_Jobs_CityId ( CityId ) </title></use><a xlink:href='#dbo.Jobs_CityId'><text id='dbo.Jobs.CityId' x='1795' y='263' onmouseover="hghl(['Jobs_FK_Jobs_Cities_CityId','dbo.Cities.Id'])" onmouseout="uhghl(['Jobs_FK_Jobs_Cities_CityId','dbo.Cities.Id'])">CityId</text><title>CityId
+* int default 0</title></a>
+<text x='1984' y='264' text-anchor='end' class='colType'>int</text><a xlink:href='#dbo.Jobs.CityId'><use id='fk' x='1988' y='252' xlink:href='#fk'/><title>References Cities ( CityId -&gt; Id ) </title></a>
+  <use id='nn' x='1778' y='269' xlink:href='#nn'/><use id='idx' x='1778' y='268' xlink:href='#idx'><title>IX_Jobs_CountryId ( CountryId ) </title></use><a xlink:href='#dbo.Jobs_CountryId'><text id='dbo.Jobs.CountryId' x='1795' y='279' onmouseover="hghl(['Jobs_FK_Jobs_Countries_CountryId','dbo.Countries.Id'])" onmouseout="uhghl(['Jobs_FK_Jobs_Countries_CountryId','dbo.Countries.Id'])">CountryId</text><title>CountryId
+* int default 0</title></a>
+<text x='1984' y='280' text-anchor='end' class='colType'>int</text><a xlink:href='#dbo.Jobs.CountryId'><use id='fk' x='1988' y='268' xlink:href='#fk'/><title>References Countries ( CountryId -&gt; Id ) </title></a>
+  <use id='nn' x='1778' y='285' xlink:href='#nn'/><use id='idx' x='1778' y='284' xlink:href='#idx'><title>IX_Jobs_JobTypeId ( JobTypeId ) </title></use><a xlink:href='#dbo.Jobs_JobTypeId'><text id='dbo.Jobs.JobTypeId' x='1795' y='295' onmouseover="hghl(['Jobs_FK_Jobs_JobTypes_JobTypeId','dbo.JobTypes.Id'])" onmouseout="uhghl(['Jobs_FK_Jobs_JobTypes_JobTypeId','dbo.JobTypes.Id'])">JobTypeId</text><title>JobTypeId
+* int default 0</title></a>
+<text x='1984' y='296' text-anchor='end' class='colType'>int</text><a xlink:href='#dbo.Jobs.JobTypeId'><use id='fk' x='1988' y='284' xlink:href='#fk'/><title>References JobTypes ( JobTypeId -&gt; Id ) </title></a>
+  <use id='nn' x='1778' y='301' xlink:href='#nn'/><a xlink:href='#dbo.Jobs_IsOpen'><text id='dbo.Jobs.IsOpen' x='1795' y='311'>IsOpen</text><title>IsOpen
+* bit default CONVERT([bit],(0))</title></a>
+<text x='1984' y='312' text-anchor='end' class='colType'>bit</text>  <use id='nn' x='1778' y='317' xlink:href='#nn'/><a xlink:href='#dbo.Jobs_AcceptedApplications'><text id='dbo.Jobs.AcceptedApplications' x='1795' y='327'>AcceptedApplications</text><title>AcceptedApplications
+* int default 0</title></a>
+<text x='1984' y='328' text-anchor='end' class='colType'>int</text>  <use id='nn' x='1778' y='333' xlink:href='#nn'/><a xlink:href='#dbo.Jobs_InConsiderationApplications'><text id='dbo.Jobs.InConsiderationApplications' x='1795' y='343'>InConsiderationApplications</text><title>InConsiderationApplications
+* int default 0</title></a>
+<text x='1984' y='344' text-anchor='end' class='colType'>int</text>  <use id='nn' x='1778' y='349' xlink:href='#nn'/><a xlink:href='#dbo.Jobs_RejectedApplications'><text id='dbo.Jobs.RejectedApplications' x='1795' y='359'>RejectedApplications</text><title>RejectedApplications
+* int default 0</title></a>
+<text x='1984' y='360' text-anchor='end' class='colType'>int</text>  <use id='nn' x='1778' y='365' xlink:href='#nn'/><a xlink:href='#dbo.Jobs_TotalApplications'><text id='dbo.Jobs.TotalApplications' x='1795' y='375'>TotalApplications</text><title>TotalApplications
+* int default 0</title></a>
+<text x='1984' y='376' text-anchor='end' class='colType'>int</text>
+<!-- == Table 'JobsDetails' == -->
+<rect class='entity' style='stroke:#B1C9AD' x='48' y='72' width='224' height='272' />
+<rect class='entity' x='48' y='72' width='224' height='28' style='stroke:#B1C9AD; fill:#58A34A'/>
+<a xlink:href='#dbo.JobsDetails'><text x='123' y='91' class='white'>JobsDetails</text><title>Table dbo.JobsDetails</title></a>
+  <use id='nn' x='50' y='109' xlink:href='#nn'/><use id='pk' x='50' y='108' xlink:href='#pk'><title>Pk PK_JobsDetails ( Id ) </title></use><a xlink:href='#dbo.JobsDetails_Id'><text id='dbo.JobsDetails.Id' x='67' y='119'>Id</text><title>Id
+* int</title></a>
+<text x='256' y='120' text-anchor='end' class='colType'>int</text>  <a xlink:href='#dbo.JobsDetails_SalaryMin'><text id='dbo.JobsDetails.SalaryMin' x='67' y='135'>SalaryMin</text><title>SalaryMin
+int</title></a>
+<text x='256' y='136' text-anchor='end' class='colType'>int</text>  <use id='nn' x='50' y='141' xlink:href='#nn'/><use id='idx' x='50' y='140' xlink:href='#idx'><title>IX_JobsDetails_SalaryRateId ( SalaryRateId ) </title></use><a xlink:href='#dbo.JobsDetails_SalaryRateId'><text id='dbo.JobsDetails.SalaryRateId' x='67' y='151' onmouseover="hghl(['JobsDetails_FK_JobsDetails_SalaryRates_SalaryRateId','dbo.SalaryRates.Id'])" onmouseout="uhghl(['JobsDetails_FK_JobsDetails_SalaryRates_SalaryRateId','dbo.SalaryRates.Id'])">SalaryRateId</text><title>SalaryRateId
+* int</title></a>
+<text x='256' y='152' text-anchor='end' class='colType'>int</text><a xlink:href='#dbo.JobsDetails.SalaryRateId'><use id='fk' x='260' y='140' xlink:href='#fk'/><title>References SalaryRates ( SalaryRateId -&gt; Id ) </title></a>
+  <a xlink:href='#dbo.JobsDetails_Description'><text id='dbo.JobsDetails.Description' x='67' y='167'>Description</text><title>Description
+nvarchar(max)</title></a>
+<text x='256' y='168' text-anchor='end' class='colType'>nvarchar(max)</text>  <a xlink:href='#dbo.JobsDetails_Requirements'><text id='dbo.JobsDetails.Requirements' x='67' y='183'>Requirements</text><title>Requirements
+nvarchar(max)</title></a>
+<text x='256' y='184' text-anchor='end' class='colType'>nvarchar(max)</text>  <a xlink:href='#dbo.JobsDetails_Responsibilities'><text id='dbo.JobsDetails.Responsibilities' x='67' y='199'>Responsibilities</text><title>Responsibilities
+nvarchar(max)</title></a>
+<text x='256' y='200' text-anchor='end' class='colType'>nvarchar(max)</text>  <use id='nn' x='50' y='205' xlink:href='#nn'/><use id='unq' x='50' y='204' xlink:href='#unq'><title>Unq IX_JobsDetails_JobId ( JobId ) </title></use><a xlink:href='#dbo.JobsDetails_JobId'><text id='dbo.JobsDetails.JobId' x='67' y='215' onmouseover="hghl(['JobsDetails_FK_JobsDetails_Jobs_JobId','dbo.Jobs.Id'])" onmouseout="uhghl(['JobsDetails_FK_JobsDetails_Jobs_JobId','dbo.Jobs.Id'])">JobId</text><title>JobId
+* int</title></a>
+<text x='256' y='216' text-anchor='end' class='colType'>int</text><a xlink:href='#dbo.JobsDetails.JobId'><use id='fk' x='260' y='204' xlink:href='#fk'/><title>References Jobs ( JobId -&gt; Id ) </title></a>
+  <use id='nn' x='50' y='221' xlink:href='#nn'/><use id='idx' x='50' y='220' xlink:href='#idx'><title>IX_JobsDetails_CareerLevelId ( CareerLevelId ) </title></use><a xlink:href='#dbo.JobsDetails_CareerLevelId'><text id='dbo.JobsDetails.CareerLevelId' x='67' y='231' onmouseover="hghl(['JobsDetails_FK_JobsDetails_CareerLevels_CareerLevelId','dbo.CareerLevels.Id'])" onmouseout="uhghl(['JobsDetails_FK_JobsDetails_CareerLevels_CareerLevelId','dbo.CareerLevels.Id'])">CareerLevelId</text><title>CareerLevelId
+* int default 0</title></a>
+<text x='256' y='232' text-anchor='end' class='colType'>int</text><a xlink:href='#dbo.JobsDetails.CareerLevelId'><use id='fk' x='260' y='220' xlink:href='#fk'/><title>References CareerLevels ( CareerLevelId -&gt; Id ) </title></a>
+  <use id='nn' x='50' y='237' xlink:href='#nn'/><use id='idx' x='50' y='236' xlink:href='#idx'><title>IX_JobsDetails_EducationLevelId ( EducationLevelId ) </title></use><a xlink:href='#dbo.JobsDetails_EducationLevelId'><text id='dbo.JobsDetails.EducationLevelId' x='67' y='247' onmouseover="hghl(['JobsDetails_FK_JobsDetails_EducationLevels_EducationLevelId','dbo.EducationLevels.Id'])" onmouseout="uhghl(['JobsDetails_FK_JobsDetails_EducationLevels_EducationLevelId','dbo.EducationLevels.Id'])">EducationLevelId</text><title>EducationLevelId
+* int default 0</title></a>
+<text x='256' y='248' text-anchor='end' class='colType'>int</text><a xlink:href='#dbo.JobsDetails.EducationLevelId'><use id='fk' x='260' y='236' xlink:href='#fk'/><title>References EducationLevels ( EducationLevelId -&gt; Id ) </title></a>
+  <a xlink:href='#dbo.JobsDetails_ExperienceNeededMax'><text id='dbo.JobsDetails.ExperienceNeededMax' x='67' y='263'>ExperienceNeededMax</text><title>ExperienceNeededMax
+int</title></a>
+<text x='256' y='264' text-anchor='end' class='colType'>int</text>  <a xlink:href='#dbo.JobsDetails_ExperienceNeededMin'><text id='dbo.JobsDetails.ExperienceNeededMin' x='67' y='279'>ExperienceNeededMin</text><title>ExperienceNeededMin
+int</title></a>
+<text x='256' y='280' text-anchor='end' class='colType'>int</text>  <use id='nn' x='50' y='285' xlink:href='#nn'/><use id='idx' x='50' y='284' xlink:href='#idx'><title>IX_JobsDetails_JobCategoryId ( JobCategoryId ) </title></use><a xlink:href='#dbo.JobsDetails_JobCategoryId'><text id='dbo.JobsDetails.JobCategoryId' x='67' y='295' onmouseover="hghl(['JobsDetails_FK_JobsDetails_JobCategories_JobCategoryId','dbo.JobCategories.Id'])" onmouseout="uhghl(['JobsDetails_FK_JobsDetails_JobCategories_JobCategoryId','dbo.JobCategories.Id'])">JobCategoryId</text><title>JobCategoryId
+* int default 0</title></a>
+<text x='256' y='296' text-anchor='end' class='colType'>int</text><a xlink:href='#dbo.JobsDetails.JobCategoryId'><use id='fk' x='260' y='284' xlink:href='#fk'/><title>References JobCategories ( JobCategoryId -&gt; Id ) </title></a>
+  <use id='nn' x='50' y='301' xlink:href='#nn'/><use id='idx' x='50' y='300' xlink:href='#idx'><title>IX_JobsDetails_SalaryCurrencyId ( SalaryCurrencyId ) </title></use><a xlink:href='#dbo.JobsDetails_SalaryCurrencyId'><text id='dbo.JobsDetails.SalaryCurrencyId' x='67' y='311' onmouseover="hghl(['JobsDetails_FK_JobsDetails_Currencies_SalaryCurrencyId','dbo.Currencies.Id'])" onmouseout="uhghl(['JobsDetails_FK_JobsDetails_Currencies_SalaryCurrencyId','dbo.Currencies.Id'])">SalaryCurrencyId</text><title>SalaryCurrencyId
+* int default 0</title></a>
+<text x='256' y='312' text-anchor='end' class='colType'>int</text><a xlink:href='#dbo.JobsDetails.SalaryCurrencyId'><use id='fk' x='260' y='300' xlink:href='#fk'/><title>References Currencies ( SalaryCurrencyId -&gt; Id ) </title></a>
+  <a xlink:href='#dbo.JobsDetails_SalaryMax'><text id='dbo.JobsDetails.SalaryMax' x='67' y='327'>SalaryMax</text><title>SalaryMax
+int</title></a>
+<text x='256' y='328' text-anchor='end' class='colType'>int</text>
+<!-- == Table 'Languages' == -->
+<rect class='entity' style='stroke:#C9BDAD' x='1424' y='40' width='160' height='80' />
+<rect class='entity' x='1424' y='40' width='160' height='28' style='stroke:#C9BDAD; fill:#A37D4A'/>
+<a xlink:href='#dbo.Languages'><text x='1470' y='59' class='white'>Languages</text><title>Table dbo.Languages</title></a>
+  <use id='nn' x='1426' y='77' xlink:href='#nn'/><use id='pk' x='1426' y='76' xlink:href='#pk'><title>Pk PK_Languages ( Id ) </title></use><a xlink:href='#dbo.Languages_Id'><text id='dbo.Languages.Id' x='1443' y='87' onmouseover="hghl(['UserLanguages_FK_UserLanguages_Languages_LanguageId','dbo.UserLanguages.LanguageId'])" onmouseout="uhghl(['UserLanguages_FK_UserLanguages_Languages_LanguageId','dbo.UserLanguages.LanguageId'])">Id</text><title>Id
+* int</title></a>
+<text x='1568' y='88' text-anchor='end' class='colType'>int</text><a xlink:href='#dbo.Languages.Id'><use id='ref' x='1572' y='76' xlink:href='#ref'/><title>Referred by UserLanguages ( LanguageId -&gt; Id ) </title></a>
+  <a xlink:href='#dbo.Languages_Name'><text id='dbo.Languages.Name' x='1443' y='103'>Name</text><title>Name
+nvarchar(max)</title></a>
+<text x='1568' y='104' text-anchor='end' class='colType'>nvarchar(max)</text>
+<!-- == Table 'SalaryRates' == -->
+<rect class='entity' style='stroke:#B1C9AD' x='48' y='440' width='160' height='80' />
+<rect class='entity' x='48' y='440' width='160' height='28' style='stroke:#B1C9AD; fill:#58A34A'/>
+<a xlink:href='#dbo.SalaryRates'><text x='90' y='459' class='white'>SalaryRates</text><title>Table dbo.SalaryRates</title></a>
+  <use id='nn' x='50' y='477' xlink:href='#nn'/><use id='pk' x='50' y='476' xlink:href='#pk'><title>Pk PK_SalaryRates ( Id ) </title></use><a xlink:href='#dbo.SalaryRates_Id'><text id='dbo.SalaryRates.Id' x='67' y='487' onmouseover="hghl(['JobsDetails_FK_JobsDetails_SalaryRates_SalaryRateId','dbo.JobsDetails.SalaryRateId'])" onmouseout="uhghl(['JobsDetails_FK_JobsDetails_SalaryRates_SalaryRateId','dbo.JobsDetails.SalaryRateId'])">Id</text><title>Id
+* int</title></a>
+<text x='192' y='488' text-anchor='end' class='colType'>int</text><a xlink:href='#dbo.SalaryRates.Id'><use id='ref' x='196' y='476' xlink:href='#ref'/><title>Referred by JobsDetails ( SalaryRateId -&gt; Id ) </title></a>
+  <a xlink:href='#dbo.SalaryRates_Name'><text id='dbo.SalaryRates.Name' x='67' y='503'>Name</text><title>Name
+nvarchar(max)</title></a>
+<text x='192' y='504' text-anchor='end' class='colType'>nvarchar(max)</text>
+<!-- == Table 'Skills' == -->
+<rect class='entity' style='stroke:#ADADC9' x='1968' y='664' width='160' height='80' />
+<rect class='entity' x='1968' y='664' width='160' height='28' style='stroke:#ADADC9; fill:#4A4AA3'/>
+<a xlink:href='#dbo.Skills'><text x='2029' y='683' class='white'>Skills</text><title>Table dbo.Skills</title></a>
+  <use id='nn' x='1970' y='701' xlink:href='#nn'/><use id='pk' x='1970' y='700' xlink:href='#pk'><title>Pk PK_Skills ( Id ) </title></use><a xlink:href='#dbo.Skills_Id'><text id='dbo.Skills.Id' x='1987' y='711' onmouseover="hghl(['EmployeeSkill_FK_EmployeeSkill_Skills_SkillsId','dbo.EmployeeSkill.SkillsId','JobSkill_FK_JobSkill_Skills_SkillsId','dbo.JobSkill.SkillsId'])" onmouseout="uhghl(['EmployeeSkill_FK_EmployeeSkill_Skills_SkillsId','dbo.EmployeeSkill.SkillsId','JobSkill_FK_JobSkill_Skills_SkillsId','dbo.JobSkill.SkillsId'])">Id</text><title>Id
+* int</title></a>
+<text x='2112' y='712' text-anchor='end' class='colType'>int</text><a xlink:href='#dbo.Skills.Id'><use id='ref' x='2116' y='700' xlink:href='#ref'/><title>Referred by EmployeeSkill ( SkillsId -&gt; Id ) 
+Referred by JobSkill ( SkillsId -&gt; Id ) </title></a>
+  <a xlink:href='#dbo.Skills_Name'><text id='dbo.Skills.Name' x='1987' y='727'>Name</text><title>Name
+nvarchar(max)</title></a>
+<text x='2112' y='728' text-anchor='end' class='colType'>nvarchar(max)</text>
+<!-- == Table 'UserLanguages' == -->
+<rect class='entity' style='stroke:#C9BDAD' x='1216' y='40' width='128' height='112' />
+<rect class='entity' x='1216' y='40' width='128' height='28' style='stroke:#C9BDAD; fill:#A37D4A'/>
+<a xlink:href='#dbo.UserLanguages'><text x='1233' y='59' class='white'>UserLanguages</text><title>Table dbo.UserLanguages</title></a>
+  <use id='nn' x='1218' y='77' xlink:href='#nn'/><use id='pk' x='1218' y='76' xlink:href='#pk'><title>Pk PK_UserLanguages ( Id ) </title></use><a xlink:href='#dbo.UserLanguages_Id'><text id='dbo.UserLanguages.Id' x='1235' y='87'>Id</text><title>Id
+* int</title></a>
+<text x='1328' y='88' text-anchor='end' class='colType'>int</text>  <use id='nn' x='1218' y='93' xlink:href='#nn'/><use id='idx' x='1218' y='92' xlink:href='#idx'><title>IX_UserLanguages_LanguageId ( LanguageId ) </title></use><a xlink:href='#dbo.UserLanguages_LanguageId'><text id='dbo.UserLanguages.LanguageId' x='1235' y='103' onmouseover="hghl(['UserLanguages_FK_UserLanguages_Languages_LanguageId','dbo.Languages.Id'])" onmouseout="uhghl(['UserLanguages_FK_UserLanguages_Languages_LanguageId','dbo.Languages.Id'])">LanguageId</text><title>LanguageId
+* int</title></a>
+<text x='1328' y='104' text-anchor='end' class='colType'>int</text><a xlink:href='#dbo.UserLanguages.LanguageId'><use id='fk' x='1332' y='92' xlink:href='#fk'/><title>References Languages ( LanguageId -&gt; Id ) </title></a>
+  <use id='nn' x='1218' y='109' xlink:href='#nn'/><use id='idx' x='1218' y='108' xlink:href='#idx'><title>IX_UserLanguages_EmployeeId ( EmployeeId ) </title></use><a xlink:href='#dbo.UserLanguages_EmployeeId'><text id='dbo.UserLanguages.EmployeeId' x='1235' y='119' onmouseover="hghl(['UserLanguages_FK_UserLanguages_Employees_EmployeeId','dbo.Employees.Id'])" onmouseout="uhghl(['UserLanguages_FK_UserLanguages_Employees_EmployeeId','dbo.Employees.Id'])">EmployeeId</text><title>EmployeeId
+* int</title></a>
+<text x='1328' y='120' text-anchor='end' class='colType'>int</text><a xlink:href='#dbo.UserLanguages.EmployeeId'><use id='fk' x='1332' y='108' xlink:href='#fk'/><title>References Employees ( EmployeeId -&gt; Id ) </title></a>
+  <use id='nn' x='1218' y='125' xlink:href='#nn'/><a xlink:href='#dbo.UserLanguages_Level'><text id='dbo.UserLanguages.Level' x='1235' y='135'>Level</text><title>Level
+* int</title></a>
+<text x='1328' y='136' text-anchor='end' class='colType'>int</text>
+<!-- == Table 'companyLocations' == -->
+<rect class='entity' style='stroke:#ADB7C9' x='2928' y='1096' width='128' height='80' />
+<rect class='entity' x='2928' y='1096' width='128' height='28' style='stroke:#ADB7C9; fill:#4A6CA3'/>
+<a xlink:href='#dbo.companyLocations'><text x='2935' y='1115' class='white'>companyLocations</text><title>Table dbo.companyLocations</title></a>
+  <use id='nn' x='2930' y='1133' xlink:href='#nn'/><use id='pk' x='2930' y='1132' xlink:href='#pk'><title>Pk PK_companyLocations ( cityId, companyId ) </title></use><a xlink:href='#dbo.companyLocations_cityId'><text id='dbo.companyLocations.cityId' x='2947' y='1143' onmouseover="hghl(['companyLocations_FK_companyLocations_Cities_cityId','dbo.Cities.Id'])" onmouseout="uhghl(['companyLocations_FK_companyLocations_Cities_cityId','dbo.Cities.Id'])">cityId</text><title>cityId
+* int</title></a>
+<text x='3040' y='1144' text-anchor='end' class='colType'>int</text><a xlink:href='#dbo.companyLocations.cityId'><use id='fk' x='3044' y='1132' xlink:href='#fk'/><title>References Cities ( cityId -&gt; Id ) </title></a>
+  <use id='nn' x='2930' y='1149' xlink:href='#nn'/><use id='pk' x='2930' y='1148' xlink:href='#pk'><title>Pk PK_companyLocations ( cityId, companyId ) IX_companyLocations_companyId ( companyId ) </title></use><a xlink:href='#dbo.companyLocations_companyId'><text id='dbo.companyLocations.companyId' x='2947' y='1159' onmouseover="hghl(['companyLocations_FK_companyLocations_Companies_companyId','dbo.Companies.Id'])" onmouseout="uhghl(['companyLocations_FK_companyLocations_Companies_companyId','dbo.Companies.Id'])">companyId</text><title>companyId
+* int</title></a>
+<text x='3040' y='1160' text-anchor='end' class='colType'>int</text><a xlink:href='#dbo.companyLocations.companyId'><use id='fk' x='3044' y='1148' xlink:href='#fk'/><title>References Companies ( companyId -&gt; Id ) </title></a>
+
+<!-- == Table 'sysdiagrams' == -->
+<rect class='entity' style='stroke:#ADBCC9' x='1776' y='888' width='192' height='128' />
+<rect class='entity' x='1776' y='888' width='192' height='28' style='stroke:#ADBCC9; fill:#4A7CA3'/>
+<a xlink:href='#dbo.sysdiagrams'><text x='1833' y='907' class='white'>sysdiagrams</text><title>Table dbo.sysdiagrams</title></a>
+  <use id='nn' x='1778' y='925' xlink:href='#nn'/><use id='pk' x='1778' y='924' xlink:href='#pk'><title>Pk PK__sysdiagr__C2B05B617023F163 ( diagram_id ) </title></use><a xlink:href='#dbo.sysdiagrams_diagram_id'><text id='dbo.sysdiagrams.diagram_id' x='1795' y='935'>diagram_id</text><title>diagram_id
+* int</title></a>
+<text x='1952' y='936' text-anchor='end' class='colType'>int</text>  <use id='nn' x='1778' y='941' xlink:href='#nn'/><use id='unq' x='1778' y='940' xlink:href='#unq'><title>Unq UK_principal_name ( principal_id, name ) </title></use><a xlink:href='#dbo.sysdiagrams_name'><text id='dbo.sysdiagrams.name' x='1795' y='951'>name</text><title>name
+* sysname</title></a>
+<text x='1952' y='952' text-anchor='end' class='colType'>sysname</text>  <use id='nn' x='1778' y='957' xlink:href='#nn'/><use id='unq' x='1778' y='956' xlink:href='#unq'><title>Unq UK_principal_name ( principal_id, name ) </title></use><a xlink:href='#dbo.sysdiagrams_principal_id'><text id='dbo.sysdiagrams.principal_id' x='1795' y='967'>principal_id</text><title>principal_id
+* int</title></a>
+<text x='1952' y='968' text-anchor='end' class='colType'>int</text>  <a xlink:href='#dbo.sysdiagrams_version'><text id='dbo.sysdiagrams.version' x='1795' y='983'>version</text><title>version
+int</title></a>
+<text x='1952' y='984' text-anchor='end' class='colType'>int</text>  <a xlink:href='#dbo.sysdiagrams_definition'><text id='dbo.sysdiagrams.definition' x='1795' y='999'>definition</text><title>definition
+varbinary(max)</title></a>
+<text x='1952' y='1000' text-anchor='end' class='colType'>varbinary(max)</text>
+</g></svg>
